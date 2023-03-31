@@ -1,12 +1,14 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
+import {useSelector} from 'react-redux';
+import {selectToken} from '../features/auth/authSlice';
 import {LoginScreen, SignupScreen} from '../screens';
 import HomeNavigator from './HomeNavigator';
 
 const {Group, Navigator, Screen} = createNativeStackNavigator();
 
 const RootNavigator = () => {
-  const userToken = 'qwertyuiopasdfghjklzxcvbnm';
+  const token = useSelector(selectToken);
 
   return (
     <Navigator
@@ -14,9 +16,9 @@ const RootNavigator = () => {
         gestureEnabled: false,
         headerShown: false,
       }}>
-      {userToken ? (
+      {token ? (
         <Group>
-          <Screen name="Home" component={HomeNavigator} />
+          <Screen name="HomeNavigator" component={HomeNavigator} />
         </Group>
       ) : (
         <Group>
