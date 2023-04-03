@@ -1,20 +1,18 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import api from '../../api';
 
 export const signup = createAsyncThunk(
   'signup',
-  async (input, {rejectWithValue}) => {
+  async (input, { rejectWithValue }) =>
     // const {data} = await api.post('', input);
-    return 'qwertyuiopasdfghjklzxcvbnm';
-  },
+    'qwertyuiopasdfghjklzxcvbnm'
 );
 
 export const login = createAsyncThunk(
   'login',
-  async (input, {rejectWithValue}) => {
+  async (input, { rejectWithValue }) =>
     // const {data} = await api.post('', input);
-    return 'qwertyuiopasdfghjklzxcvbnm';
-  },
+    'qwertyuiopasdfghjklzxcvbnm'
 );
 
 const slice = createSlice({
@@ -55,7 +53,7 @@ const slice = createSlice({
   },
 });
 
-export const {logout} = slice.actions;
+export const { logout } = slice.actions;
 
 export const authReducer = slice.reducer;
 

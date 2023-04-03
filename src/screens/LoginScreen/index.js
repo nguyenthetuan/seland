@@ -1,14 +1,14 @@
-import {useNavigation} from '@react-navigation/native';
-import {Button} from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/themed';
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {login} from '../../features';
+import { SafeAreaView } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { login } from '../../features';
 import styles from './styles';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
-  const {navigate} = useNavigation();
+  const { navigate } = useNavigation();
 
   const handleLogin = () => dispatch(login());
 
@@ -16,8 +16,14 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button onPress={handleLogin} title="Login" />
-      <Button onPress={navigateToSignup} title="Go to signup" />
+      <Button
+        onPress={handleLogin}
+        title="Login"
+      />
+      <Button
+        onPress={navigateToSignup}
+        title="Go to signup"
+      />
     </SafeAreaView>
   );
 };

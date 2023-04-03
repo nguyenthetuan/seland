@@ -1,8 +1,8 @@
-import {Button} from '@rneui/themed';
+import { Button } from '@rneui/themed';
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {logout} from '../../features';
+import { SafeAreaView } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features';
 import styles from './styles';
 
 const HomeScreen = () => {
@@ -12,7 +12,10 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button onPress={handleLogout} title="Log out" />
+      <Button
+        onPress={handleLogout}
+        title="Log out"
+      />
     </SafeAreaView>
   );
 };
