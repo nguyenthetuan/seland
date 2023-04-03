@@ -10,17 +10,18 @@ import {
   REGISTER,
   REHYDRATE,
 } from 'redux-persist';
-import authReducer from '../features/auth/authSlice';
+import {authReducer} from '../features';
 
-const persistedReducer = persistReducer(
-  {
-    key: 'root',
-    storage: AsyncStorage,
-  },
-  combineReducers({
-    auth: authReducer,
-  }),
-);
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,

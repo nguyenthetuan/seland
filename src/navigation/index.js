@@ -1,7 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {selectToken} from '../features/auth/authSlice';
+import {selectToken} from '../features';
 import {LoginScreen, SignupScreen} from '../screens';
 import HomeNavigator from './HomeNavigator';
 
