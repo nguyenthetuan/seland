@@ -4,12 +4,13 @@ import {
   FLUSH,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
   REHYDRATE,
-  persistReducer,
-  persistStore,
 } from 'redux-persist';
+
 import { authReducer } from '../features';
 
 const persistConfig = {

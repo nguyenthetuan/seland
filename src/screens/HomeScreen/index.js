@@ -2,6 +2,7 @@ import { Button } from '@rneui/themed';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
+
 import { logout } from '../../features';
 import styles from './styles';
 
