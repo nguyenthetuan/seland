@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { CheckBox } from '@rneui/themed';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { ImageBackground, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -13,8 +14,21 @@ import styles from './styles';
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      phone_number: '',
+      password: '',
+    },
+    mode: 'onTouched',
+  });
 
-  const handleLogin = () => dispatch(login());
+  const onSubmit = data => {
+    dispatch(login(data));
+  };
 
   const navigateToSignup = () => navigate('Signup');
 
@@ -33,13 +47,21 @@ const LoginScreen = () => {
         <Input
           autoComplete="tel"
           autoFocus
+          control={control}
+          errorMessage={errors.phone_number && 'Số điện thoại không hợp lệ'}
           inputMode="tel"
           label="Số điện thoại"
+          name="phone_number"
+          rules={{ required: true, minLength: 10, maxLength: 10 }}
         />
         <Input
           autoComplete="current-password"
+          control={control}
+          errorMessage={errors.password && 'Mật khẩu không hợp lệ'}
           isPassword
           label="Mật khẩu"
+          name="password"
+          rules={{ required: true }}
         />
         <View style={styles.row}>
           <CheckBox
@@ -56,6 +78,7 @@ const LoginScreen = () => {
         </View>
         <Button
           buttonStyle={styles.button}
+          onPress={handleSubmit(onSubmit)}
           title="Đăng nhập"
         />
         <Text style={styles.nonmember}>
