@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import styles from './styles';
 
-const Input = ({ isPassword, label, ...props }) => {
+const Input = ({ isPassword, label, placeholder, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -28,6 +28,7 @@ const Input = ({ isPassword, label, ...props }) => {
           />
         )
       }
+      placeholder={placeholder || label}
       secureTextEntry={isPassword && !passwordVisible}
       {...props}
     />
@@ -37,11 +38,13 @@ const Input = ({ isPassword, label, ...props }) => {
 Input.defaultProps = {
   isPassword: false,
   label: '',
+  placeholder: '',
 };
 
 Input.propTypes = {
   isPassword: PropTypes.bool,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default Input;
