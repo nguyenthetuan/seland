@@ -1,27 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLACK_2,
-  COLOR_BLUE_2,
-  COLOR_WHITE,
-} from '../../constants';
+import { COLOR_BLACK_2, COLOR_BLUE_2 } from '../../constants';
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
     marginHorizontal: 8,
     marginTop: 24,
   },
-  buttonTitle: {
-    color: COLOR_WHITE,
-    fontWeight: 500,
-  },
   checkbox: {
     padding: 0,
-  },
-  checkboxTitle: {
-    color: COLOR_BLACK_1,
   },
   container: {
     marginHorizontal: 24,
@@ -55,10 +42,6 @@ const styles = StyleSheet.create({
   signup: {
     color: COLOR_BLUE_2,
     textDecorationLine: 'underline',
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 24,
   },
 });
 

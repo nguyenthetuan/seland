@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, CheckBox, Text } from '@rneui/themed';
+import { CheckBox } from '@rneui/themed';
 import React from 'react';
 import { ImageBackground, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { Logo, SeLand } from '../../assets';
-import { Heading, Input, Screen } from '../../components';
+import { Button, Heading, Input, Screen, Text } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY } from '../../constants/colors';
 import { login } from '../../features';
 import styles from './styles';
@@ -48,24 +48,17 @@ const LoginScreen = () => {
             checkedIcon="check-box"
             containerStyle={styles.checkbox}
             iconType="material"
-            title=" Nhớ tài khoản"
-            titleProps={{
-              style: [styles.text, styles.checkboxTitle],
-            }}
+            title={<Text> Nhớ tài khoản</Text>}
             uncheckedColor={COLOR_GRAY}
             uncheckedIcon="check-box-outline-blank"
           />
-          <Text style={[styles.text, styles.forgotPassword]}>
-            Quên mật khẩu?
-          </Text>
+          <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
         </View>
         <Button
           buttonStyle={styles.button}
-          color={COLOR_BLUE_1}
           title="Đăng nhập"
-          titleStyle={[styles.text, styles.buttonTitle]}
         />
-        <Text style={[styles.text, styles.nonmember]}>
+        <Text style={styles.nonmember}>
           Chưa là thành viên?{' '}
           <Text
             style={styles.signup}
