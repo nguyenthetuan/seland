@@ -32,9 +32,17 @@ module.exports = {
         props: false,
       },
     ],
+    'react/forbid-prop-types': [
+      2,
+      {
+        forbid: [],
+      },
+    ],
     'react/function-component-definition': [
       2,
-      { namedComponents: 'arrow-function' },
+      {
+        namedComponents: 'arrow-function',
+      },
     ],
     'react/jsx-filename-extension': [
       1,
