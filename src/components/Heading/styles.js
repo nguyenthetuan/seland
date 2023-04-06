@@ -5,7 +5,7 @@ import { COLOR_BLACK_2, COLOR_BLUE_1 } from '../../constants/colors';
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 8,
-    paddingVertical: 12,
+    paddingVertical: 16,
   },
   heading: {
     color: COLOR_BLUE_1,
