@@ -4,6 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ImageBackground, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { isMobilePhone } from 'validator';
 
 import { Logo, SeLand } from '../../assets';
 import { Button, Heading, Input, Screen, Text } from '../../components';
@@ -52,7 +53,9 @@ const LoginScreen = () => {
           inputMode="tel"
           label="Số điện thoại"
           name="phone_number"
-          rules={{ required: true, minLength: 10, maxLength: 10 }}
+          rules={{
+            validate: value => /^\d{10}$/.test(value) && isMobilePhone(value),
+          }}
         />
         <Input
           autoComplete="current-password"
