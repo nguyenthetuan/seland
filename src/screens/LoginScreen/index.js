@@ -64,7 +64,10 @@ const LoginScreen = () => {
           isPassword
           label="Mật khẩu"
           name="password"
-          rules={{ required: true }}
+          rules={{
+            validate: value =>
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,64}$/.test(value),
+          }}
         />
         <View style={styles.row}>
           <CheckBox
