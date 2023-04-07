@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { CheckBox } from '@rneui/themed';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ImageBackground, View } from 'react-native';
@@ -7,7 +6,14 @@ import { useDispatch } from 'react-redux';
 import { isMobilePhone } from 'validator';
 
 import { Logo, SeLand } from '../../assets';
-import { Button, Heading, Input, Screen, Text } from '../../components';
+import {
+  Button,
+  CheckBox,
+  Heading,
+  Input,
+  Screen,
+  Text,
+} from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY } from '../../constants/colors';
 import { login } from '../../features';
 import styles from './styles';
@@ -17,19 +23,18 @@ const LoginScreen = () => {
   const { navigate } = useNavigation();
   const {
     control,
-    handleSubmit,
     formState: { errors },
+    handleSubmit,
   } = useForm({
     defaultValues: {
       phone_number: '',
       password: '',
+      remember_login: true,
     },
     mode: 'onTouched',
   });
 
-  const onSubmit = data => {
-    dispatch(login(data));
-  };
+  const onSubmit = data => dispatch(login(data));
 
   const navigateToSignup = () => navigate('Signup');
 
@@ -71,12 +76,13 @@ const LoginScreen = () => {
         />
         <View style={styles.row}>
           <CheckBox
-            checked
             checkedColor={COLOR_BLUE_1}
             checkedIcon="check-box"
             containerStyle={styles.checkbox}
+            control={control}
             iconType="material"
-            title={<Text> Nhớ tài khoản</Text>}
+            name="remember_login"
+            title=" Nhớ tài khoản"
             uncheckedColor={COLOR_GRAY}
             uncheckedIcon="check-box-outline-blank"
           />
