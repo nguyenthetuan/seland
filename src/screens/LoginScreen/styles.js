@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_BLUE_2 } from '../../constants';
+import { COLOR_BLACK_2, COLOR_BLUE_2, COLOR_RED } from '../../constants';
 
 const styles = StyleSheet.create({
   button: {
@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 24,
     marginVertical: 16,
+  },
+  error: {
+    color: COLOR_RED,
+    marginTop: 8,
+    textAlign: 'center',
   },
   forgotPassword: {
     color: COLOR_BLUE_2,

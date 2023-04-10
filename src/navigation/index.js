@@ -2,14 +2,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectToken } from '../features';
+import { selectAuth } from '../features';
 import { LoginScreen, SignupScreen } from '../screens';
 import HomeNavigator from './HomeNavigator';
 
 const { Group, Navigator, Screen } = createNativeStackNavigator();
 
 const RootNavigator = () => {
-  const token = useSelector(selectToken);
+  const { token, error } = useSelector(selectAuth);
 
   return (
     <Navigator
@@ -18,7 +18,7 @@ const RootNavigator = () => {
         headerShown: false,
       }}
     >
-      {token ? (
+      {token && !error ? (
         <Group>
           <Screen
             name="HomeNavigator"

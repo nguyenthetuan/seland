@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { ImageBackground, View } from 'react-native';
+import { Alert, ImageBackground, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { isMobilePhone } from 'validator';
 
@@ -34,7 +34,13 @@ const LoginScreen = () => {
     mode: 'onTouched',
   });
 
-  const onSubmit = data => dispatch(login(data));
+  const onSubmit = async data => {
+    try {
+      await dispatch(login(data)).unwrap();
+    } catch (error) {
+      Alert.alert(error);
+    }
+  };
 
   const navigateToSignup = () => navigate('Signup');
 

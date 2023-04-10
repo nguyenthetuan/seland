@@ -1,18 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import api from '../../api';
+
+import { requestLogin } from '../api';
 
 export const signup = createAsyncThunk(
   'signup',
-  async (input, { rejectWithValue }) =>
-    // const {data} = await api.post('', input);
+  async (input, { fulfillWithValue, rejectWithValue }) =>
     'qwertyuiopasdfghjklzxcvbnm'
 );
 
 export const login = createAsyncThunk(
   'login',
-  async (input, { rejectWithValue }) =>
-    // const {data} = await api.post('', input);
-    'qwertyuiopasdfghjklzxcvbnm'
+  async (input, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestLogin(input);
+      return fulfillWithValue(data?.user?.auth_token);
+    } catch (error) {
+      return rejectWithValue(error.response.data?.data?.error);
+    }
+  }
 );
 
 const slice = createSlice({
@@ -34,9 +39,11 @@ const slice = createSlice({
     builder.addCase(signup.fulfilled, (state, action) => {
       state.loading = false;
       state.token = action.payload;
+      state.error = '';
     });
     builder.addCase(signup.rejected, (state, action) => {
       state.loading = false;
+      state.token = '';
       state.error = action.payload;
     });
     builder.addCase(login.pending, state => {
@@ -45,9 +52,11 @@ const slice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.loading = false;
       state.token = action.payload;
+      state.error = '';
     });
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;
+      state.token = '';
       state.error = action.payload;
     });
   },
@@ -57,4 +66,4 @@ export const { logout } = slice.actions;
 
 export const authReducer = slice.reducer;
 
-export const selectToken = state => state.auth.token;
+export const selectAuth = state => state.auth;
