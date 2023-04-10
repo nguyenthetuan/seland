@@ -31,6 +31,7 @@ const Input = ({
 
   return (
     <RNEInput
+      errorStyle={styles.error}
       inputContainerStyle={styles.input(isFocused)}
       label={<Text style={styles.label}>{label}</Text>}
       onBlur={handleBlur}

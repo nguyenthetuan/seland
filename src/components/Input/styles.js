@@ -4,9 +4,17 @@ import {
   COLOR_BLACK_1,
   COLOR_BLUE_3,
   COLOR_GRAY,
+  COLOR_RED,
 } from '../../constants/colors';
 
 const styles = StyleSheet.create({
+  error: {
+    color: COLOR_RED,
+    fontSize: 16,
+    lineHeight: 24,
+    marginHorizontal: 0,
+    marginVertical: 8,
+  },
   input: isFocused => ({
     borderColor: isFocused ? COLOR_BLUE_3 : COLOR_GRAY,
     borderRadius: 8,
