@@ -6,7 +6,14 @@ import { COLOR_BLUE_1 } from '../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-const Button = ({ buttonStyle, color, title, titleStyle, ...props }) => (
+const Button = ({
+  buttonStyle,
+  color,
+  loading,
+  title,
+  titleStyle,
+  ...props
+}) => (
   <RNEButton
     buttonStyle={
       Array.isArray(buttonStyle)
@@ -14,6 +21,8 @@ const Button = ({ buttonStyle, color, title, titleStyle, ...props }) => (
         : [styles.button, buttonStyle]
     }
     color={color}
+    disabled={loading}
+    loading={loading}
     title={<Text style={styles.title}>{title}</Text>}
     titleStyle={
       Array.isArray(titleStyle)
@@ -27,6 +36,7 @@ const Button = ({ buttonStyle, color, title, titleStyle, ...props }) => (
 Button.defaultProps = {
   buttonStyle: {},
   color: COLOR_BLUE_1,
+  loading: false,
   title: '',
   titleStyle: {},
 };
@@ -34,6 +44,7 @@ Button.defaultProps = {
 Button.propTypes = {
   buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   color: PropTypes.string,
+  loading: PropTypes.bool,
   title: PropTypes.string,
   titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };

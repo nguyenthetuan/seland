@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, ImageBackground, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { isMobilePhone } from 'validator';
 
 import { Logo, SeLand } from '../../assets';
@@ -15,11 +15,12 @@ import {
   Text,
 } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY } from '../../constants/colors';
-import { login } from '../../features';
+import { login, selectAuth } from '../../features';
 import styles from './styles';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
+  const { loading } = useSelector(selectAuth);
   const { navigate } = useNavigation();
   const {
     control,
@@ -60,6 +61,7 @@ const LoginScreen = () => {
           autoComplete="tel"
           autoFocus
           control={control}
+          disabled={loading}
           errorMessage={errors.phone_number && 'Số điện thoại không hợp lệ'}
           inputMode="tel"
           label="Số điện thoại"
@@ -71,6 +73,7 @@ const LoginScreen = () => {
         <Input
           autoComplete="current-password"
           control={control}
+          disabled={loading}
           errorMessage={errors.password && 'Mật khẩu không hợp lệ'}
           isPassword
           label="Mật khẩu"
@@ -96,6 +99,7 @@ const LoginScreen = () => {
         </View>
         <Button
           buttonStyle={styles.button}
+          loading={loading}
           onPress={handleSubmit(onSubmit)}
           title="Đăng nhập"
         />
