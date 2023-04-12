@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestLogin } from '../api';
+import { requestLogin, requestLogout } from '../api';
+
+export const selectAuth = state => state.auth;
 
 export const signup = createAsyncThunk(
   'signup',
@@ -20,17 +22,25 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  'logout',
+  async (_, { fulfillWithValue, getState, rejectWithValue }) => {
+    try {
+      const { token } = selectAuth(getState());
+      const { data } = await requestLogout(token);
+      return fulfillWithValue(data?.message);
+    } catch (error) {
+      return rejectWithValue(error.response.data?.error);
+    }
+  }
+);
+
 const slice = createSlice({
   name: 'auth',
   initialState: {
     loading: false,
     token: '',
     error: '',
-  },
-  reducers: {
-    logout: state => {
-      state.token = '';
-    },
   },
   extraReducers: builder => {
     builder.addCase(signup.pending, state => {
@@ -59,11 +69,18 @@ const slice = createSlice({
       state.token = '';
       state.error = action.payload;
     });
+    builder.addCase(logout.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(logout.fulfilled, state => {
+      state.loading = false;
+      state.token = '';
+    });
+    builder.addCase(logout.rejected, state => {
+      state.loading = false;
+      state.token = '';
+    });
   },
 });
 
-export const { logout } = slice.actions;
-
 export const authReducer = slice.reducer;
-
-export const selectAuth = state => state.auth;
