@@ -67,7 +67,8 @@ const LoginScreen = () => {
           label="Số điện thoại"
           name="phone_number"
           rules={{
-            validate: value => /^\d{10}$/.test(value) && isMobilePhone(value),
+            validate: value =>
+              /^\d{10}$/.test(value) && isMobilePhone(value, 'vi-VN'),
           }}
         />
         <Input
