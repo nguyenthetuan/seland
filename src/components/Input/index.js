@@ -10,6 +10,7 @@ const Input = ({
   isPassword,
   label,
   name,
+  onFocus,
   placeholder,
   rules,
   ...props
@@ -25,7 +26,10 @@ const Input = ({
     setIsFocused(false);
   };
 
-  const handleFocus = () => setIsFocused(true);
+  const handleFocus = () => {
+    onFocus();
+    setIsFocused(true);
+  };
 
   const togglePasswordVisible = () => setPasswordVisible(pv => !pv);
 
@@ -56,8 +60,9 @@ const Input = ({
 Input.defaultProps = {
   isPassword: false,
   label: '',
-  rules: {},
+  onFocus: () => {},
   placeholder: '',
+  rules: {},
 };
 
 Input.propTypes = {
@@ -65,8 +70,9 @@ Input.propTypes = {
   isPassword: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
-  rules: PropTypes.object,
+  onFocus: PropTypes.func,
   placeholder: PropTypes.string,
+  rules: PropTypes.object,
 };
 
 export default Input;

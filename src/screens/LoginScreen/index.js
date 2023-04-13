@@ -30,6 +30,7 @@ const LoginScreen = () => {
   const { loading } = useSelector(selectAuth);
   const { navigate } = useNavigation();
   const {
+    clearErrors,
     control,
     formState: { errors },
     handleSubmit,
@@ -39,7 +40,7 @@ const LoginScreen = () => {
       password: '',
       remember_login: true,
     },
-    mode: 'onTouched',
+    mode: 'onBlur',
     resolver: yupResolver(schema),
   });
 
@@ -67,13 +68,13 @@ const LoginScreen = () => {
         <Heading hasHello>Đăng nhập để tiếp tục</Heading>
         <Input
           autoComplete="tel"
-          autoFocus
           control={control}
           disabled={loading}
           errorMessage={errors.phone_number?.message}
           inputMode="tel"
           label="Số điện thoại"
           name="phone_number"
+          onFocus={() => clearErrors('phone_number')}
         />
         <Input
           autoComplete="current-password"
@@ -83,6 +84,7 @@ const LoginScreen = () => {
           isPassword
           label="Mật khẩu"
           name="password"
+          onFocus={() => clearErrors('password')}
         />
         <View style={styles.row}>
           <CheckBox
