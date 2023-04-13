@@ -26,6 +26,7 @@ module.exports = {
     'import/first': 2,
     'import/newline-after-import': 2,
     'import/no-duplicates': 2,
+    'no-nested-ternary': 0,
     'no-param-reassign': [
       2,
       {
