@@ -1,9 +1,9 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, ImageBackground, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { isMobilePhone } from 'validator';
 
 import { Logo, SeLand } from '../../assets';
 import {
@@ -16,7 +16,14 @@ import {
 } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY } from '../../constants/colors';
 import { login, selectAuth } from '../../features';
+import { yup } from '../../utils';
 import styles from './styles';
+
+const schema = yup.object({
+  phone_number: yup.string().isValidPhoneNumber(),
+  password: yup.string().isValidPassword(),
+  remember_login: yup.boolean(),
+});
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -33,6 +40,7 @@ const LoginScreen = () => {
       remember_login: true,
     },
     mode: 'onTouched',
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async data => {
@@ -62,27 +70,19 @@ const LoginScreen = () => {
           autoFocus
           control={control}
           disabled={loading}
-          errorMessage={errors.phone_number && 'Số điện thoại không hợp lệ'}
+          errorMessage={errors.phone_number?.message}
           inputMode="tel"
           label="Số điện thoại"
           name="phone_number"
-          rules={{
-            validate: value =>
-              /^\d{10}$/.test(value) && isMobilePhone(value, 'vi-VN'),
-          }}
         />
         <Input
           autoComplete="current-password"
           control={control}
           disabled={loading}
-          errorMessage={errors.password && 'Mật khẩu không hợp lệ'}
+          errorMessage={errors.password?.message}
           isPassword
           label="Mật khẩu"
           name="password"
-          rules={{
-            validate: value =>
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,64}$/.test(value),
-          }}
         />
         <View style={styles.row}>
           <CheckBox
