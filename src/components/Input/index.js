@@ -8,6 +8,7 @@ import styles from './styles';
 const Input = ({
   control,
   isPassword,
+  isPhoneNumber,
   label,
   name,
   onFocus,
@@ -26,6 +27,16 @@ const Input = ({
     setIsFocused(false);
   };
 
+  const handleChange = text => {
+    onChange(
+      isPhoneNumber
+        ? text.replace(/[^\d]/g, '')
+        : isPassword
+        ? text.replace(/\s/g, '')
+        : text
+    );
+  };
+
   const handleFocus = () => {
     onFocus();
     setIsFocused(true);
@@ -39,7 +50,7 @@ const Input = ({
       inputContainerStyle={styles.input(isFocused)}
       label={<Text style={styles.label}>{label}</Text>}
       onBlur={handleBlur}
-      onChangeText={onChange}
+      onChangeText={handleChange}
       onFocus={handleFocus}
       placeholder={placeholder || label}
       rightIcon={
@@ -59,6 +70,7 @@ const Input = ({
 
 Input.defaultProps = {
   isPassword: false,
+  isPhoneNumber: false,
   label: '',
   onFocus: () => {},
   placeholder: '',
@@ -68,6 +80,7 @@ Input.defaultProps = {
 Input.propTypes = {
   control: PropTypes.any.isRequired,
   isPassword: PropTypes.bool,
+  isPhoneNumber: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   onFocus: PropTypes.func,

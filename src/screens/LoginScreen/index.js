@@ -72,6 +72,7 @@ const LoginScreen = () => {
           disabled={loading}
           errorMessage={errors.phone_number?.message}
           inputMode="tel"
+          isPhoneNumber
           label="Số điện thoại"
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}
