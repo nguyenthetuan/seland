@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Alert, ImageBackground, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -29,6 +30,7 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
   const {
     clearErrors,
     control,
@@ -65,7 +67,7 @@ const LoginScreen = () => {
         </View>
       </ImageBackground>
       <View style={styles.container}>
-        <Heading hasHello>Đăng nhập để tiếp tục</Heading>
+        <Heading hasHello>{t('heading.loginToContinue')}</Heading>
         <Input
           autoComplete="tel"
           control={control}
@@ -73,7 +75,7 @@ const LoginScreen = () => {
           errorMessage={errors.phone_number?.message}
           inputMode="tel"
           isPhoneNumber
-          label="Số điện thoại"
+          label={t('input.phoneNumber')}
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}
         />
@@ -83,7 +85,7 @@ const LoginScreen = () => {
           disabled={loading}
           errorMessage={errors.password?.message}
           isPassword
-          label="Mật khẩu"
+          label={t('input.password')}
           name="password"
           onFocus={() => clearErrors('password')}
         />
@@ -95,25 +97,27 @@ const LoginScreen = () => {
             control={control}
             iconType="material"
             name="remember_login"
-            title=" Nhớ tài khoản"
+            title={` ${t('checkbox.rememberLogin')}`}
             uncheckedColor={COLOR_GRAY}
             uncheckedIcon="check-box-outline-blank"
           />
-          <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
+          <Text style={styles.forgotPassword}>
+            {t('common.forgotPassword')}
+          </Text>
         </View>
         <Button
           buttonStyle={styles.button}
           loading={loading}
           onPress={handleSubmit(onSubmit)}
-          title="Đăng nhập"
+          title={t('button.login')}
         />
         <Text style={styles.nonmember}>
-          Chưa là thành viên?{' '}
+          {t('common.nonmember')}{' '}
           <Text
             style={styles.signup}
             onPress={navigateToSignup}
           >
-            Đăng ký
+            {t('common.signup')}
           </Text>
         </Text>
       </View>

@@ -1,0 +1,32 @@
+{
+  "button": {
+    "login": "Đăng nhập"
+  },
+  "checkbox": {
+    "rememberLogin": "Nhớ tài khoản"
+  },
+  "common": {
+    "forgotPassword": "Quên mật khẩu?",
+    "nonmember": "Chưa là thành viên?",
+    "signup": "Đăng ký"
+  },
+  "error": {
+    "phoneNumber": {
+      "required": "Vui lòng nhập số điện thoại",
+      "format": "Số điện thoại không đúng định dạng"
+    },
+    "password": {
+      "required": "Vui lòng nhập mật khẩu",
+      "length": "Độ dài mật khẩu: 8-64 kí tự",
+      "format": "Mật khẩu không đúng định dạng"
+    }
+  },
+  "heading": {
+    "hello": "Xin chào bạn",
+    "loginToContinue": "Đăng nhập để tiếp tục"
+  },
+  "input": {
+    "phoneNumber": "Số điện thoại",
+    "password": "Mật khẩu"
+  }
+}
