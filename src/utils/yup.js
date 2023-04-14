@@ -40,4 +40,15 @@ yup.addMethod(
   }
 );
 
+yup.addMethod(
+  yup.string,
+  'isValidPasswordConfirmation',
+  function validatePasswordConfirmation() {
+    return this.trim().oneOf(
+      [yup.ref('password')],
+      t('error.passwordConfirmation')
+    );
+  }
+);
+
 export default yup;
