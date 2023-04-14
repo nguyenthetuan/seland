@@ -10,9 +10,6 @@ const styles = StyleSheet.create({
   checkbox: {
     padding: 0,
   },
-  container: {
-    margin: 16,
-  },
   error: {
     color: COLOR_RED,
     marginTop: 8,

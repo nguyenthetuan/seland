@@ -10,6 +10,7 @@ import {
   AuthBackground,
   Button,
   CheckBox,
+  Container,
   Heading,
   Input,
   Screen,
@@ -59,7 +60,7 @@ const LoginScreen = () => {
   return (
     <Screen>
       <AuthBackground />
-      <View style={styles.container}>
+      <Container>
         <Heading hasHello>{t('heading.loginToContinue')}</Heading>
         <Input
           autoComplete="tel"
@@ -113,7 +114,7 @@ const LoginScreen = () => {
             {t('common.signup')}
           </Text>
         </Text>
-      </View>
+      </Container>
     </Screen>
   );
 };
