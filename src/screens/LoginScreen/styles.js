@@ -11,8 +11,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   container: {
-    marginHorizontal: 24,
-    marginVertical: 16,
+    margin: 16,
   },
   error: {
     color: COLOR_RED,
@@ -24,15 +23,6 @@ const styles = StyleSheet.create({
     marginRight: 8,
     textAlign: 'right',
     textDecorationLine: 'underline',
-  },
-  image: {
-    height: 200,
-    width: '100%',
-  },
-  logo: {
-    flex: 1,
-    justifyContent: 'center',
-    marginLeft: '7%',
   },
   nonmember: {
     color: COLOR_BLACK_2,

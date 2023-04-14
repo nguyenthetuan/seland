@@ -3,11 +3,11 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, ImageBackground, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Logo, SeLand } from '../../assets';
 import {
+  AuthBackground,
   Button,
   CheckBox,
   Heading,
@@ -58,14 +58,7 @@ const LoginScreen = () => {
 
   return (
     <Screen>
-      <ImageBackground
-        source={SeLand}
-        style={styles.image}
-      >
-        <View style={styles.logo}>
-          <Logo />
-        </View>
-      </ImageBackground>
+      <AuthBackground />
       <View style={styles.container}>
         <Heading hasHello>{t('heading.loginToContinue')}</Heading>
         <Input
