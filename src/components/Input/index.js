@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { COLOR_GRAY } from '../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -53,6 +54,7 @@ const Input = ({
   return (
     <>
       <RNEInput
+        disabledInputStyle={styles.disabled}
         errorStyle={styles.error}
         inputContainerStyle={styles.input(isFocused)}
         label={<Text style={styles.label}>{label}</Text>}
@@ -60,6 +62,7 @@ const Input = ({
         onChangeText={handleChange}
         onFocus={handleFocus}
         placeholder={placeholder || label}
+        placeholderTextColor={COLOR_GRAY}
         renderErrorMessage={!passwordPolicyVisible}
         rightIcon={
           isPassword && (
