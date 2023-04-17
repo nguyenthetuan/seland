@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectAuth } from '../features';
-import { LoginScreen, SignupScreen } from '../screens';
+import { LoginScreen, OtpScreen, SignupScreen } from '../screens';
 import HomeNavigator from './HomeNavigator';
 
 const { Group, Navigator, Screen } = createNativeStackNavigator();
@@ -28,12 +28,16 @@ const RootNavigator = () => {
       ) : (
         <Group>
           <Screen
-            name="Login"
-            component={LoginScreen}
-          />
-          <Screen
             name="Signup"
             component={SignupScreen}
+          />
+          <Screen
+            name="Otp"
+            component={OtpScreen}
+          />
+          <Screen
+            name="Login"
+            component={LoginScreen}
           />
         </Group>
       )}

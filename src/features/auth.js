@@ -1,13 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestLogin, requestLogout } from '../api';
+import { requestLogin, requestLogout, requestSignup } from '../api';
 
 export const selectAuth = state => state.auth;
 
 export const signup = createAsyncThunk(
   'signup',
-  async (input, { fulfillWithValue, rejectWithValue }) =>
-    'qwertyuiopasdfghjklzxcvbnm'
+  async (input, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestSignup(input);
+      return fulfillWithValue(data?.user?.phone_number);
+    } catch (error) {
+      return rejectWithValue(error.response.data?.data?.phone_number?.[0]);
+    }
+  }
 );
 
 export const login = createAsyncThunk(
@@ -46,14 +52,12 @@ const slice = createSlice({
     builder.addCase(signup.pending, state => {
       state.loading = true;
     });
-    builder.addCase(signup.fulfilled, (state, action) => {
+    builder.addCase(signup.fulfilled, state => {
       state.loading = false;
-      state.token = action.payload;
       state.error = '';
     });
     builder.addCase(signup.rejected, (state, action) => {
       state.loading = false;
-      state.token = '';
       state.error = action.payload;
     });
     builder.addCase(login.pending, state => {
