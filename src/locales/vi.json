@@ -1,7 +1,8 @@
 {
   "button": {
     "login": "Đăng nhập",
-    "continue": "Tiếp tục"
+    "continue": "Tiếp tục",
+    "verify": "Xác minh"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -15,7 +16,12 @@
     "tnc2": "Điều khoản sử dụng",
     "tnc3": "của chúng tôi",
     "hadAccount": "Bạn đã có tài khoản?",
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "otpSent": "Chúng tôi đã gửi mã xác minh gồm 6 chữ số tới số điện thoại",
+    "otpValidity": "Mã có hiệu lực trong 5 phút",
+    "resendOtp": "Gửi lại mã xác minh",
+    "resendOtpAfter1": "Gửi lại mã sau",
+    "resendOtpAfter2": "giây"
   },
   "error": {
     "phoneNumber": {
@@ -32,7 +38,8 @@
   "heading": {
     "hello": "Xin chào bạn",
     "loginToContinue": "Đăng nhập để tiếp tục",
-    "registerNewAccount": "Đăng ký tài khoản mới"
+    "registerNewAccount": "Đăng ký tài khoản mới",
+    "inputOtp": "Nhập mã xác minh"
   },
   "input": {
     "phoneNumber": "Số điện thoại",

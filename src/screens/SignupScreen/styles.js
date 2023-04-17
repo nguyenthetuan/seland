@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_BLUE_2, COLOR_RED } from '../../constants';
+import { COLOR_BLUE_2, COLOR_RED } from '../../constants';
 
 const styles = StyleSheet.create({
   button: {
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   hadAccount: {
-    color: COLOR_BLACK_2,
     marginVertical: 16,
     textAlign: 'center',
   },
