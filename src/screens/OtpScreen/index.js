@@ -1,8 +1,9 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import OtpInputs from 'react-native-otp-inputs';
+import { useDispatch } from 'react-redux';
 
 import {
   AuthBackground,
@@ -13,16 +14,33 @@ import {
   Text,
 } from '../../components';
 import { RESEND_OTP_TIMEOUT } from '../../constants';
+import { generateOtp } from '../../features';
 import styles from './styles';
 
 const OtpScreen = () => {
+  const dispatch = useDispatch();
   const { navigate } = useNavigation();
   const { params } = useRoute();
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(RESEND_OTP_TIMEOUT);
 
-  const phoneNumber = params?.phoneNumber;
+  const phone_number = params?.phone_number;
+
+  useEffect(() => {
+    const handleGenerateOtp = async () => {
+      try {
+        await dispatch(
+          generateOtp({
+            phone_number,
+          })
+        ).unwrap();
+      } catch (error) {
+        Alert.alert(error);
+      }
+    };
+    handleGenerateOtp();
+  }, [dispatch, phone_number]);
 
   useEffect(() => {
     const interval = setInterval(
@@ -41,7 +59,7 @@ const OtpScreen = () => {
         <Heading hasBack>{t('heading.inputOtp')}</Heading>
         <Text>{t('common.otpSent')}</Text>
         <View style={styles.phoneNumber}>
-          <Heading>{phoneNumber}</Heading>
+          <Heading>{phone_number}</Heading>
         </View>
         <OtpInputs
           handleChange={setOtp}

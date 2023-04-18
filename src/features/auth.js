@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestLogin, requestLogout, requestSignup } from '../api';
+import {
+  requestGenerateOtp,
+  requestLogin,
+  requestLogout,
+  requestSignup,
+} from '../api';
 
 export const selectAuth = state => state.auth;
 
@@ -36,7 +41,19 @@ export const logout = createAsyncThunk(
       const { data } = await requestLogout(token);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return rejectWithValue(error.response.data?.error);
+      return rejectWithValue(error.response.data?.data?.error);
+    }
+  }
+);
+
+export const generateOtp = createAsyncThunk(
+  'generateOtp',
+  async (input, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestGenerateOtp(input);
+      return fulfillWithValue(data?.message);
+    } catch (error) {
+      return rejectWithValue(error.response.data?.data?.phone_number?.[0]);
     }
   }
 );
@@ -83,6 +100,17 @@ const slice = createSlice({
     builder.addCase(logout.rejected, state => {
       state.loading = false;
       state.token = '';
+    });
+    builder.addCase(generateOtp.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(generateOtp.fulfilled, state => {
+      state.loading = false;
+      state.error = '';
+    });
+    builder.addCase(generateOtp.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     });
   },
 });

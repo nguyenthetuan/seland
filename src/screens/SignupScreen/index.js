@@ -47,8 +47,11 @@ const SignupScreen = () => {
 
   const onSubmit = async data => {
     try {
-      const response = await dispatch(signup(data)).unwrap();
-      navigate('Otp', { phoneNumber: response });
+      await dispatch(signup(data)).unwrap();
+      navigate('Otp', {
+        phone_number: data.phone_number,
+        password: data.password,
+      });
     } catch (error) {
       Alert.alert(error);
     }

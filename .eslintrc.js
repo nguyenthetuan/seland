@@ -23,6 +23,7 @@ module.exports = {
   },
   plugins: ['import', 'react', 'react-native', 'simple-import-sort'],
   rules: {
+    camelcase: 0,
     'import/first': 2,
     'import/newline-after-import': 2,
     'import/no-duplicates': 2,
