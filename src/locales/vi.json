@@ -21,7 +21,8 @@
     "otpValidity": "Mã có hiệu lực trong 5 phút",
     "resendOtp": "Gửi lại mã xác minh",
     "resendOtpAfter1": "Gửi lại mã sau",
-    "resendOtpAfter2": "giây"
+    "resendOtpAfter2": "giây",
+    "skip": "Bỏ qua"
   },
   "error": {
     "phoneNumber": {

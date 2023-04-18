@@ -9,12 +9,16 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 8,
-    marginTop: 24,
+    marginVertical: 24,
   },
   centerText: {
     textAlign: 'center',
   },
+  grayText: {
+    color: COLOR_BLACK_2,
+  },
   hadAccount: {
+    marginBottom: 16,
     marginTop: 32,
   },
   otp: {
@@ -26,9 +30,6 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     paddingHorizontal: 12,
     paddingVertical: 8,
-  },
-  otpValidity: {
-    color: COLOR_BLACK_2,
   },
   phoneNumber: {
     alignItems: 'center',

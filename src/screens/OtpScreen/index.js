@@ -12,6 +12,7 @@ import {
   Screen,
   Text,
 } from '../../components';
+import { RESEND_OTP_TIMEOUT } from '../../constants';
 import styles from './styles';
 
 const OtpScreen = () => {
@@ -19,27 +20,17 @@ const OtpScreen = () => {
   const { params } = useRoute();
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [seconds, setSeconds] = useState(RESEND_OTP_TIMEOUT);
 
-  let timer;
-
-  const startTimer = () => {
-    timer = setTimeout(() => {
-      if (timeLeft <= 0) return clearTimeout(timer);
-      return setTimeLeft(timeLeft - 1);
-    }, 1000);
-  };
+  const phoneNumber = params?.phoneNumber;
 
   useEffect(() => {
-    startTimer();
-    return () => clearTimeout(timer);
-  });
-
-  const restartTimer = () => {
-    setTimeLeft(60);
-    clearTimeout(timer);
-    startTimer();
-  };
+    const interval = setInterval(
+      () => (seconds > 0 ? setSeconds(seconds - 1) : clearInterval(interval)),
+      1000
+    );
+    return () => clearInterval(interval);
+  }, [seconds]);
 
   const navigateToLogin = () => navigate('Login');
 
@@ -50,20 +41,20 @@ const OtpScreen = () => {
         <Heading hasBack>{t('heading.inputOtp')}</Heading>
         <Text>{t('common.otpSent')}</Text>
         <View style={styles.phoneNumber}>
-          <Heading>{params?.phoneNumber}</Heading>
+          <Heading>{phoneNumber}</Heading>
         </View>
         <OtpInputs
           handleChange={setOtp}
           numberOfInputs={6}
           inputStyles={styles.otp}
         />
-        <Text style={[styles.centerText, styles.otpValidity, styles.smallText]}>
+        <Text style={[styles.centerText, styles.grayText, styles.smallText]}>
           {t('common.otpValidity')}
         </Text>
-        {timeLeft <= 0 ? (
+        {seconds <= 0 ? (
           <Text
             style={[styles.blueText, styles.centerText, styles.smallText]}
-            onPress={restartTimer}
+            onPress={() => setSeconds(RESEND_OTP_TIMEOUT)}
           >
             {t('common.resendOtp')}
           </Text>
@@ -71,7 +62,7 @@ const OtpScreen = () => {
           <Text style={[styles.centerText, styles.smallText]}>
             {t('common.resendOtpAfter1')}{' '}
             <Text style={[styles.blueText, styles.smallText]}>
-              00:{timeLeft <= 9 ? `0${timeLeft}` : timeLeft}
+              00:{seconds <= 9 ? `0${seconds}` : seconds}
             </Text>{' '}
             {t('common.resendOtpAfter2')}
           </Text>
@@ -81,6 +72,14 @@ const OtpScreen = () => {
           onPress={() => {}}
           title={t('button.verify')}
         />
+        {seconds === 0 && (
+          <Text
+            style={[styles.centerText, styles.grayText]}
+            onPress={() => {}}
+          >
+            {t('common.skip')}
+          </Text>
+        )}
         <Text style={[styles.centerText, styles.hadAccount]}>
           {t('common.hadAccount')}{' '}
           <Text
