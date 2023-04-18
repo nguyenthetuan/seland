@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -16,7 +15,7 @@ import {
   Text,
 } from '../../components';
 import { selectAuth, signup } from '../../features';
-import { yup } from '../../utils';
+import { dispatchThunk, yup } from '../../utils';
 import styles from './styles';
 
 const schema = yup.object({
@@ -45,17 +44,13 @@ const SignupScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async data => {
-    try {
-      await dispatch(signup(data)).unwrap();
+  const onSubmit = data =>
+    dispatchThunk(dispatch, signup(data), () =>
       navigate('Otp', {
         phone_number: data.phone_number,
         password: data.password,
-      });
-    } catch (error) {
-      Alert.alert(error);
-    }
-  };
+      })
+    );
 
   const navigateToLogin = () => navigate('Login');
 

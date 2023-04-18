@@ -4,12 +4,13 @@ import { SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { logout } from '../../features';
+import { dispatchThunk } from '../../utils';
 import styles from './styles';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
 
-  const handleLogout = () => dispatch(logout());
+  const handleLogout = () => dispatchThunk(dispatch, logout());
 
   return (
     <SafeAreaView style={styles.container}>

@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import OtpInputs from 'react-native-otp-inputs';
 import { useDispatch } from 'react-redux';
 
@@ -15,6 +15,7 @@ import {
 } from '../../components';
 import { RESEND_OTP_TIMEOUT } from '../../constants';
 import { generateOtp, login, verifyOtp } from '../../features';
+import { dispatchThunk } from '../../utils';
 import styles from './styles';
 
 const OtpScreen = () => {
@@ -28,18 +29,12 @@ const OtpScreen = () => {
   const phone_number = params?.phone_number;
 
   useEffect(() => {
-    const handleGenerateOtp = async () => {
-      try {
-        await dispatch(
-          generateOtp({
-            phone_number,
-          })
-        ).unwrap();
-      } catch (error) {
-        Alert.alert(error);
-      }
-    };
-    handleGenerateOtp();
+    dispatchThunk(
+      dispatch,
+      generateOtp({
+        phone_number,
+      })
+    );
   }, [dispatch, phone_number]);
 
   useEffect(() => {
@@ -50,27 +45,17 @@ const OtpScreen = () => {
     return () => clearInterval(interval);
   }, [seconds]);
 
-  const handleLogin = async () => {
-    try {
-      await dispatch(login(params)).unwrap();
-    } catch (error) {
-      Alert.alert(error);
-    }
-  };
+  const handleLogin = () => dispatchThunk(dispatch, login(params));
 
-  const handleVerifyOtp = async () => {
-    try {
-      await dispatch(
-        verifyOtp({
-          phone_number,
-          otp,
-        })
-      ).unwrap();
-      await handleLogin();
-    } catch (error) {
-      Alert.alert(error);
-    }
-  };
+  const handleVerifyOtp = () =>
+    dispatchThunk(
+      dispatch,
+      verifyOtp({
+        phone_number,
+        otp,
+      }),
+      handleLogin
+    );
 
   const navigateToLogin = () => navigate('Login');
 
