@@ -14,7 +14,7 @@ import {
   Text,
 } from '../../components';
 import { RESEND_OTP_TIMEOUT } from '../../constants';
-import { generateOtp } from '../../features';
+import { generateOtp, login } from '../../features';
 import styles from './styles';
 
 const OtpScreen = () => {
@@ -49,6 +49,14 @@ const OtpScreen = () => {
     );
     return () => clearInterval(interval);
   }, [seconds]);
+
+  const handleLogin = async () => {
+    try {
+      await dispatch(login(params)).unwrap();
+    } catch (error) {
+      Alert.alert(error);
+    }
+  };
 
   const navigateToLogin = () => navigate('Login');
 
@@ -93,7 +101,7 @@ const OtpScreen = () => {
         {seconds === 0 && (
           <Text
             style={[styles.centerText, styles.grayText]}
-            onPress={() => {}}
+            onPress={handleLogin}
           >
             {t('common.skip')}
           </Text>
