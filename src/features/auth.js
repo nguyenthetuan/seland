@@ -5,6 +5,7 @@ import {
   requestLogin,
   requestLogout,
   requestSignup,
+  requestVerifyOtp,
 } from '../api';
 
 export const selectAuth = state => state.auth;
@@ -54,6 +55,19 @@ export const generateOtp = createAsyncThunk(
       return fulfillWithValue(data?.message);
     } catch (error) {
       return rejectWithValue(error.response.data?.data?.phone_number?.[0]);
+    }
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  'verifyOtp',
+  async (input, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestVerifyOtp(input);
+      return fulfillWithValue(data?.data?.is_phone_verified);
+    } catch (error) {
+      const { data } = error.response;
+      return rejectWithValue(data?.data?.error || data?.data?.otp?.[0]);
     }
   }
 );
@@ -109,6 +123,17 @@ const slice = createSlice({
       state.error = '';
     });
     builder.addCase(generateOtp.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(verifyOtp.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(verifyOtp.fulfilled, state => {
+      state.loading = false;
+      state.error = '';
+    });
+    builder.addCase(verifyOtp.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

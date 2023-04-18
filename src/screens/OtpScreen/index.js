@@ -14,7 +14,7 @@ import {
   Text,
 } from '../../components';
 import { RESEND_OTP_TIMEOUT } from '../../constants';
-import { generateOtp, login } from '../../features';
+import { generateOtp, login, verifyOtp } from '../../features';
 import styles from './styles';
 
 const OtpScreen = () => {
@@ -58,6 +58,20 @@ const OtpScreen = () => {
     }
   };
 
+  const handleVerifyOtp = async () => {
+    try {
+      await dispatch(
+        verifyOtp({
+          phone_number,
+          otp,
+        })
+      ).unwrap();
+      await handleLogin();
+    } catch (error) {
+      Alert.alert(error);
+    }
+  };
+
   const navigateToLogin = () => navigate('Login');
 
   return (
@@ -95,7 +109,7 @@ const OtpScreen = () => {
         )}
         <Button
           buttonStyle={styles.button}
-          onPress={() => {}}
+          onPress={handleVerifyOtp}
           title={t('button.verify')}
         />
         {seconds === 0 && (

@@ -6,6 +6,7 @@ import {
   LOGIN_ROUTE,
   LOGOUT_ROUTE,
   SIGNUP_ROUTE,
+  VERIFY_OTP_ROUTE,
 } from '../constants';
 
 const instance = axios.create({
@@ -27,3 +28,5 @@ export const requestLogout = token =>
 
 export const requestGenerateOtp = data =>
   instance.post(GENERATE_OTP_ROUTE, data);
+
+export const requestVerifyOtp = data => instance.post(VERIFY_OTP_ROUTE, data);
