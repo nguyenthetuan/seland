@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectAuth } from '../features';
 import {
   ForgotPasswordScreen1,
+  ForgotPasswordScreen2,
   LoginScreen,
   OtpScreen,
   SignupScreen,
@@ -47,6 +48,10 @@ const RootNavigator = () => {
           <Screen
             name="ForgotPassword1"
             component={ForgotPasswordScreen1}
+          />
+          <Screen
+            name="ForgotPassword2"
+            component={ForgotPasswordScreen2}
           />
         </Group>
       )}

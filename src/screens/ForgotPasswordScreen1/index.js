@@ -39,7 +39,7 @@ const ForgotPasswordScreen1 = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => navigate('ForgotPassword2', data);
 
   const navigateToLogin = () => navigate('Login');
 
