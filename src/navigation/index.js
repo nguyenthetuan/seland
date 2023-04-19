@@ -3,7 +3,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectAuth } from '../features';
-import { LoginScreen, OtpScreen, SignupScreen } from '../screens';
+import {
+  ForgotPasswordScreen1,
+  LoginScreen,
+  OtpScreen,
+  SignupScreen,
+} from '../screens';
 import HomeNavigator from './HomeNavigator';
 
 const { Group, Navigator, Screen } = createNativeStackNavigator();
@@ -38,6 +43,10 @@ const RootNavigator = () => {
           <Screen
             name="Login"
             component={LoginScreen}
+          />
+          <Screen
+            name="ForgotPassword1"
+            component={ForgotPasswordScreen1}
           />
         </Group>
       )}

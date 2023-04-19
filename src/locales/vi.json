@@ -40,11 +40,14 @@
     "hello": "Xin chào bạn",
     "loginToContinue": "Đăng nhập để tiếp tục",
     "registerNewAccount": "Đăng ký tài khoản mới",
-    "inputOtp": "Nhập mã xác minh"
+    "inputOtp": "Nhập mã xác minh",
+    "forgotPassword": "Quên mật khẩu"
   },
   "input": {
     "phoneNumber": "Số điện thoại",
     "password": "Mật khẩu",
-    "passwordConfirmation": "Xác nhận mật khẩu"
+    "passwordConfirmation": "Xác nhận mật khẩu",
+    "inputPhoneNumberEmail": "Nhập số điện thoại hoặc email bạn đã dùng để đăng ký",
+    "phoneNumberEmail": "Số điện thoại hoặc email"
   }
 }

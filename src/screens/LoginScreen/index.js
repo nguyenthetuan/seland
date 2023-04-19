@@ -49,6 +49,8 @@ const LoginScreen = () => {
 
   const onSubmit = data => dispatchThunk(dispatch, login(data));
 
+  const navigateToForgotPassword1 = () => navigate('ForgotPassword1');
+
   const navigateToSignup = () => navigate('Signup');
 
   return (
@@ -89,7 +91,10 @@ const LoginScreen = () => {
             uncheckedColor={COLOR_GRAY}
             uncheckedIcon="check-box-outline-blank"
           />
-          <Text style={styles.forgotPassword}>
+          <Text
+            style={styles.forgotPassword}
+            onPress={navigateToForgotPassword1}
+          >
             {t('common.forgotPassword')}
           </Text>
         </View>
