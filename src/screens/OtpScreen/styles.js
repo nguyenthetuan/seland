@@ -8,11 +8,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   button: {
-    marginHorizontal: 8,
     marginVertical: 24,
   },
   centerText: {
     textAlign: 'center',
+  },
+  container: {
+    marginHorizontal: 8,
   },
   grayText: {
     color: COLOR_BLACK_2,
