@@ -22,6 +22,7 @@ const Button = ({
     }
     color={color}
     disabled={loading}
+    disabledStyle={styles.disabled}
     loading={loading}
     title={<Text style={styles.title}>{title}</Text>}
     titleStyle={

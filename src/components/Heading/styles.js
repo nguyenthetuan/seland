@@ -13,6 +13,10 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     lineHeight: 32,
   },
+  headingContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   hello: {
     color: COLOR_BLACK_2,
     fontSize: 16,

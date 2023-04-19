@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -18,7 +18,7 @@ import {
 } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY } from '../../constants/colors';
 import { login, selectAuth } from '../../features';
-import { yup } from '../../utils';
+import { dispatchThunk, yup } from '../../utils';
 import styles from './styles';
 
 const schema = yup.object({
@@ -47,13 +47,7 @@ const LoginScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async data => {
-    try {
-      await dispatch(login(data)).unwrap();
-    } catch (error) {
-      Alert.alert(error);
-    }
-  };
+  const onSubmit = data => dispatchThunk(dispatch, login(data));
 
   const navigateToSignup = () => navigate('Signup');
 

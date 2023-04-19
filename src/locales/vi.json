@@ -1,6 +1,8 @@
 {
   "button": {
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "continue": "Tiếp tục",
+    "verify": "Xác minh"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -8,7 +10,19 @@
   "common": {
     "forgotPassword": "Quên mật khẩu?",
     "nonmember": "Chưa là thành viên?",
-    "signup": "Đăng ký"
+    "signup": "Đăng ký",
+    "passwordPolicy": "Mật khẩu yêu cầu 8-64 kí tự\nBao gồm tổ hợp:\nKí tự thường, kí tự viết hoa, số và kí tự đặc biệt: !@#$%^&*`",
+    "tnc1": "Bằng việc tiếp tục, bạn đồng ý với",
+    "tnc2": "Điều khoản sử dụng",
+    "tnc3": "của chúng tôi",
+    "hadAccount": "Bạn đã có tài khoản?",
+    "login": "Đăng nhập",
+    "otpSent": "Chúng tôi đã gửi mã xác minh gồm 6 chữ số tới số điện thoại",
+    "otpValidity": "Mã có hiệu lực trong 5 phút",
+    "resendOtp": "Gửi lại mã xác minh",
+    "resendOtpAfter1": "Gửi lại mã sau",
+    "resendOtpAfter2": "giây",
+    "skip": "Bỏ qua"
   },
   "error": {
     "phoneNumber": {
@@ -19,14 +33,18 @@
       "required": "Vui lòng nhập mật khẩu",
       "length": "Độ dài mật khẩu: 8-64 kí tự",
       "format": "Mật khẩu không đúng định dạng"
-    }
+    },
+    "passwordConfirmation": "Mật khẩu không trùng khớp"
   },
   "heading": {
     "hello": "Xin chào bạn",
-    "loginToContinue": "Đăng nhập để tiếp tục"
+    "loginToContinue": "Đăng nhập để tiếp tục",
+    "registerNewAccount": "Đăng ký tài khoản mới",
+    "inputOtp": "Nhập mã xác minh"
   },
   "input": {
     "phoneNumber": "Số điện thoại",
-    "password": "Mật khẩu"
+    "password": "Mật khẩu",
+    "passwordConfirmation": "Xác nhận mật khẩu"
   }
 }
