@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_BLUE_2, COLOR_RED } from '../../constants';
+import { COLOR_BLACK_2, COLOR_BLUE_2 } from '../../constants';
 
 const styles = StyleSheet.create({
   button: {
@@ -9,11 +9,6 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     padding: 0,
-  },
-  error: {
-    color: COLOR_RED,
-    marginTop: 8,
-    textAlign: 'center',
   },
   forgotPassword: {
     color: COLOR_BLUE_2,

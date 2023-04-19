@@ -1,19 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_2, COLOR_RED } from '../../constants';
+import { COLOR_BLUE_2 } from '../../constants';
 
 const styles = StyleSheet.create({
   button: {
     marginHorizontal: 8,
     marginTop: 24,
-  },
-  checkbox: {
-    padding: 0,
-  },
-  error: {
-    color: COLOR_RED,
-    marginTop: 8,
-    textAlign: 'center',
   },
   hadAccount: {
     marginVertical: 16,
@@ -22,11 +14,6 @@ const styles = StyleSheet.create({
   login: {
     color: COLOR_BLUE_2,
     textDecorationLine: 'underline',
-  },
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   tnc1: {
     fontSize: 12,
