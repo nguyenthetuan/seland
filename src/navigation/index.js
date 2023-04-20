@@ -6,6 +6,7 @@ import { selectAuth } from '../features';
 import {
   ForgotPasswordScreen1,
   ForgotPasswordScreen2,
+  ForgotPasswordScreen3,
   LoginScreen,
   OtpScreen,
   SignupScreen,
@@ -52,6 +53,10 @@ const RootNavigator = () => {
           <Screen
             name="ForgotPassword2"
             component={ForgotPasswordScreen2}
+          />
+          <Screen
+            name="ForgotPassword3"
+            component={ForgotPasswordScreen3}
           />
         </Group>
       )}

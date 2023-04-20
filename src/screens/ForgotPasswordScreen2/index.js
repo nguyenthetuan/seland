@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
@@ -22,21 +22,15 @@ import styles from './styles';
 const OtpScreen = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
+  const { navigate } = useNavigation();
   const { params } = useRoute();
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(RESEND_OTP_TIMEOUT);
 
-  const phone_number = params?.phone_number;
-
   useEffect(() => {
-    dispatchThunk(
-      dispatch,
-      generateOtp({
-        phone_number,
-      })
-    );
-  }, [dispatch, phone_number]);
+    dispatchThunk(dispatch, generateOtp(params));
+  }, [dispatch, params]);
 
   useEffect(() => {
     const interval = setInterval(
@@ -46,14 +40,17 @@ const OtpScreen = () => {
     return () => clearInterval(interval);
   }, [seconds]);
 
+  const navigateToForgotPasswordScreen3 = () =>
+    navigate('ForgotPassword3', params);
+
   const handleVerifyOtp = () =>
     dispatchThunk(
       dispatch,
       verifyOtp({
-        phone_number,
+        ...params,
         otp,
       }),
-      console.log
+      navigateToForgotPasswordScreen3
     );
 
   return (
@@ -64,7 +61,7 @@ const OtpScreen = () => {
         <View style={styles.container}>
           <Text>{t('common.otpSent')}</Text>
           <View style={styles.phoneNumber}>
-            <Heading>{phone_number}</Heading>
+            <Heading>{params.phone_number}</Heading>
           </View>
           <OtpInputs
             handleChange={setOtp}

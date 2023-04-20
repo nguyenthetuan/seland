@@ -5,6 +5,7 @@ import { COLOR_BLUE_2 } from '../../constants';
 const styles = StyleSheet.create({
   button: {
     marginHorizontal: 8,
+    marginVertical: 24,
   },
   hadAccount: {
     marginVertical: 16,

@@ -41,7 +41,8 @@
     "loginToContinue": "Đăng nhập để tiếp tục",
     "registerNewAccount": "Đăng ký tài khoản mới",
     "inputOtp": "Nhập mã xác minh",
-    "forgotPassword": "Quên mật khẩu"
+    "forgotPassword": "Quên mật khẩu",
+    "createNewPassword": "Tạo mật khẩu mới"
   },
   "input": {
     "phoneNumber": "Số điện thoại",
