@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,12 +28,14 @@ const SignupScreen = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
   const { navigate } = useNavigation();
+  const { params } = useRoute();
   const { t } = useTranslation();
   const {
     clearErrors,
     control,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     defaultValues: {
       phone_number: '',
@@ -43,6 +45,10 @@ const SignupScreen = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
   });
+
+  useLayoutEffect(() => {
+    if (params) setValue('phone_number', params.phone_number);
+  }, [params, setValue]);
 
   const onSubmit = data =>
     dispatchThunk(dispatch, signup(data), () =>

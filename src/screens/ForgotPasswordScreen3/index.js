@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AuthBackground,
@@ -13,8 +13,8 @@ import {
   Input,
   Screen,
 } from '../../components';
-import { selectAuth } from '../../features';
-import { yup } from '../../utils';
+import { forgotPassword, selectAuth } from '../../features';
+import { dispatchThunk, yup } from '../../utils';
 import styles from './styles';
 
 const schema = yup.object({
@@ -23,7 +23,9 @@ const schema = yup.object({
 });
 
 const ForgotPasswordScreen3 = () => {
+  const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
+  const { navigate } = useNavigation();
   const { params } = useRoute();
   const { t } = useTranslation();
   const {
@@ -40,7 +42,14 @@ const ForgotPasswordScreen3 = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => console.log({ ...params, ...data });
+  const navigateToLogin = () => navigate('Login');
+
+  const onSubmit = data =>
+    dispatchThunk(
+      dispatch,
+      forgotPassword({ ...params, ...data }),
+      navigateToLogin
+    );
 
   return (
     <Screen>
@@ -72,7 +81,7 @@ const ForgotPasswordScreen3 = () => {
           buttonStyle={styles.button}
           loading={loading}
           onPress={handleSubmit(onSubmit)}
-          title={t('button.continue')}
+          title={t('button.finish')}
         />
       </Container>
     </Screen>

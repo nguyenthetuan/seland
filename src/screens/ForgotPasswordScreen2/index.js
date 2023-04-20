@@ -14,7 +14,7 @@ import {
   Text,
 } from '../../components';
 import { RESEND_OTP_TIMEOUT } from '../../constants';
-import { generateOtp, verifyOtp } from '../../features';
+import { verifyOtp } from '../../features';
 import { selectAuth } from '../../features/auth';
 import { dispatchThunk } from '../../utils';
 import styles from './styles';
@@ -27,10 +27,6 @@ const OtpScreen = () => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(RESEND_OTP_TIMEOUT);
-
-  useEffect(() => {
-    dispatchThunk(dispatch, generateOtp(params));
-  }, [dispatch, params]);
 
   useEffect(() => {
     const interval = setInterval(
@@ -61,7 +57,7 @@ const OtpScreen = () => {
         <View style={styles.container}>
           <Text>{t('common.otpSent')}</Text>
           <View style={styles.phoneNumber}>
-            <Heading>{params.phone_number}</Heading>
+            <Heading>{params?.phone_number}</Heading>
           </View>
           <OtpInputs
             handleChange={setOtp}

@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AuthBackground,
@@ -14,7 +14,7 @@ import {
   Screen,
   Text,
 } from '../../components';
-import { selectAuth } from '../../features';
+import { generateOtp, selectAuth } from '../../features';
 import { yup } from '../../utils';
 import styles from './styles';
 
@@ -23,6 +23,7 @@ const schema = yup.object({
 });
 
 const ForgotPasswordScreen1 = () => {
+  const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
   const { navigate } = useNavigation();
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ const ForgotPasswordScreen1 = () => {
     control,
     formState: { errors },
     handleSubmit,
+    getValues,
   } = useForm({
     defaultValues: {
       phone_number: '',
@@ -38,8 +40,23 @@ const ForgotPasswordScreen1 = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema),
   });
+  const [errorVisible, setErrorVisible] = useState(false);
 
-  const onSubmit = data => navigate('ForgotPassword2', data);
+  const handleFocus = () => {
+    clearErrors('phone_number');
+    setErrorVisible(false);
+  };
+
+  const onSubmit = async data => {
+    try {
+      await dispatch(generateOtp(data)).unwrap();
+      navigate('ForgotPassword2', data);
+    } catch (error) {
+      setErrorVisible(true);
+    }
+  };
+
+  const navigateToSignup = () => navigate('Signup', getValues());
 
   const navigateToLogin = () => navigate('Login');
 
@@ -57,9 +74,21 @@ const ForgotPasswordScreen1 = () => {
           isPhoneNumber
           label={t('input.inputPhoneNumberEmail')}
           name="phone_number"
-          onFocus={() => clearErrors('phone_number')}
+          onFocus={handleFocus}
           placeholder={t('input.phoneNumberEmail')}
+          renderErrorMessage={!errorVisible}
         />
+        {errorVisible && (
+          <Text style={styles.error}>
+            {t('error.phoneNumber.signupRequired1')}{' '}
+            <Text
+              style={styles.blueUnderlineText}
+              onPress={navigateToSignup}
+            >
+              {t('error.phoneNumber.signupRequired2')}
+            </Text>
+          </Text>
+        )}
         <Button
           buttonStyle={styles.button}
           loading={loading}
@@ -69,7 +98,7 @@ const ForgotPasswordScreen1 = () => {
         <Text style={styles.hadAccount}>
           {t('common.hadAccount')}{' '}
           <Text
-            style={styles.login}
+            style={styles.blueUnderlineText}
             onPress={navigateToLogin}
           >
             {t('common.login')}

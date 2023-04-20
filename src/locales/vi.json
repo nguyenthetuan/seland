@@ -2,7 +2,8 @@
   "button": {
     "login": "Đăng nhập",
     "continue": "Tiếp tục",
-    "verify": "Xác minh"
+    "verify": "Xác minh",
+    "finish": "Hoàn tất"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -27,7 +28,9 @@
   "error": {
     "phoneNumber": {
       "required": "Vui lòng nhập số điện thoại",
-      "format": "Số điện thoại không đúng định dạng"
+      "format": "Số điện thoại không đúng định dạng",
+      "signupRequired1": "Số điện thoại chưa được đăng ký.\nVui lòng đăng ký",
+      "signupRequired2": "tại đây."
     },
     "password": {
       "required": "Vui lòng nhập mật khẩu",
