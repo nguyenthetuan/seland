@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -42,12 +43,21 @@ const ForgotPasswordScreen3 = () => {
     resolver: yupResolver(schema),
   });
 
-  const navigateToLogin = () => navigate('Login');
+  const navigateToLogin = response => {
+    Toast.show({
+      position: 'bottom',
+      text1: response,
+    });
+    navigate('Login');
+  };
 
   const onSubmit = data =>
     dispatchThunk(
       dispatch,
-      forgotPassword({ ...params, ...data }),
+      forgotPassword({
+        ...params,
+        ...data,
+      }),
       navigateToLogin
     );
 
