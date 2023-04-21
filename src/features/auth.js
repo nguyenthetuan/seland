@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
+  requestForgotPassword,
   requestGenerateOtp,
   requestLogin,
   requestLogout,
   requestSignup,
   requestVerifyOtp,
 } from '../api';
+import { handleThunkError } from '../utils';
 
 export const selectAuth = state => state.auth;
 
@@ -29,7 +31,7 @@ export const login = createAsyncThunk(
       const { data } = await requestLogin(input);
       return fulfillWithValue(data?.user?.auth_token);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.error);
+      return handleThunkError(rejectWithValue, error);
     }
   }
 );
@@ -42,7 +44,7 @@ export const logout = createAsyncThunk(
       const { data } = await requestLogout(token);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.error);
+      return handleThunkError(rejectWithValue, error);
     }
   }
 );
@@ -54,7 +56,7 @@ export const generateOtp = createAsyncThunk(
       const { data } = await requestGenerateOtp(input);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.phone_number?.[0]);
+      return handleThunkError(rejectWithValue, error);
     }
   }
 );
@@ -64,10 +66,21 @@ export const verifyOtp = createAsyncThunk(
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestVerifyOtp(input);
-      return fulfillWithValue(data?.data?.is_phone_verified);
+      return fulfillWithValue(data?.data?.message);
     } catch (error) {
-      const { data } = error.response;
-      return rejectWithValue(data?.data?.error || data?.data?.otp?.[0]);
+      return handleThunkError(rejectWithValue, error);
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk(
+  'forgotPassword',
+  async (input, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestForgotPassword(input);
+      return fulfillWithValue(data?.message);
+    } catch (error) {
+      return handleThunkError(rejectWithValue, error);
     }
   }
 );
@@ -134,6 +147,17 @@ const slice = createSlice({
       state.error = '';
     });
     builder.addCase(verifyOtp.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(forgotPassword.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(forgotPassword.fulfilled, state => {
+      state.loading = false;
+      state.error = '';
+    });
+    builder.addCase(forgotPassword.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

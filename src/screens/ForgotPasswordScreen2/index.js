@@ -14,7 +14,7 @@ import {
   Text,
 } from '../../components';
 import { RESEND_OTP_TIMEOUT } from '../../constants';
-import { generateOtp, login, verifyOtp } from '../../features';
+import { verifyOtp } from '../../features';
 import { selectAuth } from '../../features/auth';
 import { dispatchThunk } from '../../utils';
 import styles from './styles';
@@ -28,17 +28,6 @@ const OtpScreen = () => {
   const [otp, setOtp] = useState('');
   const [seconds, setSeconds] = useState(RESEND_OTP_TIMEOUT);
 
-  const phone_number = params?.phone_number;
-
-  useEffect(() => {
-    dispatchThunk(
-      dispatch,
-      generateOtp({
-        phone_number,
-      })
-    );
-  }, [dispatch, phone_number]);
-
   useEffect(() => {
     const interval = setInterval(
       () => (seconds > 0 ? setSeconds(seconds - 1) : clearInterval(interval)),
@@ -47,29 +36,28 @@ const OtpScreen = () => {
     return () => clearInterval(interval);
   }, [seconds]);
 
-  const handleLogin = () => dispatchThunk(dispatch, login(params));
+  const navigateToForgotPasswordScreen3 = () =>
+    navigate('ForgotPassword3', params);
 
   const handleVerifyOtp = () =>
     dispatchThunk(
       dispatch,
       verifyOtp({
-        phone_number,
+        ...params,
         otp,
       }),
-      handleLogin
+      navigateToForgotPasswordScreen3
     );
-
-  const navigateToLogin = () => navigate('Login');
 
   return (
     <Screen>
       <AuthBackground />
       <Container>
-        <Heading hasBack>{t('heading.inputOtp')}</Heading>
+        <Heading hasBack>{t('heading.forgotPassword')}</Heading>
         <View style={styles.container}>
           <Text>{t('common.otpSent')}</Text>
           <View style={styles.phoneNumber}>
-            <Heading>{phone_number}</Heading>
+            <Heading>{params?.phone_number}</Heading>
           </View>
           <OtpInputs
             handleChange={setOtp}
@@ -101,23 +89,6 @@ const OtpScreen = () => {
             onPress={handleVerifyOtp}
             title={t('button.verify')}
           />
-          {seconds === 0 && (
-            <Text
-              style={[styles.centerText, styles.grayText]}
-              onPress={handleLogin}
-            >
-              {t('common.skip')}
-            </Text>
-          )}
-          <Text style={[styles.centerText, styles.hadAccount]}>
-            {t('common.hadAccount')}{' '}
-            <Text
-              style={styles.blueText}
-              onPress={navigateToLogin}
-            >
-              {t('common.login')}
-            </Text>
-          </Text>
         </View>
       </Container>
     </Screen>

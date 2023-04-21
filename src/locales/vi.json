@@ -2,7 +2,8 @@
   "button": {
     "login": "Đăng nhập",
     "continue": "Tiếp tục",
-    "verify": "Xác minh"
+    "verify": "Xác minh",
+    "finish": "Hoàn tất"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -27,7 +28,9 @@
   "error": {
     "phoneNumber": {
       "required": "Vui lòng nhập số điện thoại",
-      "format": "Số điện thoại không đúng định dạng"
+      "format": "Số điện thoại không đúng định dạng",
+      "signupRequired1": "Số điện thoại chưa được đăng ký.\nVui lòng đăng ký",
+      "signupRequired2": "tại đây."
     },
     "password": {
       "required": "Vui lòng nhập mật khẩu",
@@ -40,11 +43,15 @@
     "hello": "Xin chào bạn",
     "loginToContinue": "Đăng nhập để tiếp tục",
     "registerNewAccount": "Đăng ký tài khoản mới",
-    "inputOtp": "Nhập mã xác minh"
+    "inputOtp": "Nhập mã xác minh",
+    "forgotPassword": "Quên mật khẩu",
+    "createNewPassword": "Tạo mật khẩu mới"
   },
   "input": {
     "phoneNumber": "Số điện thoại",
     "password": "Mật khẩu",
-    "passwordConfirmation": "Xác nhận mật khẩu"
+    "passwordConfirmation": "Xác nhận mật khẩu",
+    "inputPhoneNumberEmail": "Nhập số điện thoại hoặc email bạn đã dùng để đăng ký",
+    "phoneNumberEmail": "Số điện thoại hoặc email"
   }
 }

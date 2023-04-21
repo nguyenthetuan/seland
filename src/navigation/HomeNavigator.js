@@ -8,6 +8,7 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 const HomeNavigator = () => (
   <Navigator
+    initialRouteName="Account"
     screenOptions={{
       gestureEnabled: false,
       headerShown: false,
