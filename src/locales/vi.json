@@ -49,9 +49,10 @@
   },
   "input": {
     "phoneNumber": "Số điện thoại",
-    "password": "Mật khẩu",
-    "passwordConfirmation": "Xác nhận mật khẩu",
+    "inputPhoneNumber": "Nhập số điện thoại bạn đã dùng để đăng ký",
+    "phoneNumberEmail": "Số điện thoại hoặc email",
     "inputPhoneNumberEmail": "Nhập số điện thoại hoặc email bạn đã dùng để đăng ký",
-    "phoneNumberEmail": "Số điện thoại hoặc email"
+    "password": "Mật khẩu",
+    "passwordConfirmation": "Xác nhận mật khẩu"
   }
 }

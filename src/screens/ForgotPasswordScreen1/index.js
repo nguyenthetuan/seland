@@ -72,10 +72,10 @@ const ForgotPasswordScreen1 = () => {
           errorMessage={errors.phone_number?.message}
           inputMode="tel"
           isPhoneNumber
-          label={t('input.inputPhoneNumberEmail')}
+          label={t('input.inputPhoneNumber')}
           name="phone_number"
           onFocus={handleFocus}
-          placeholder={t('input.phoneNumberEmail')}
+          placeholder={t('input.phoneNumber')}
           renderErrorMessage={!errorVisible}
         />
         {errorVisible && (
