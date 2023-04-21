@@ -66,9 +66,10 @@ export const verifyOtp = createAsyncThunk(
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestVerifyOtp(input);
-      return fulfillWithValue(data?.data?.message);
+      return fulfillWithValue(data?.data?.is_phone_verified);
     } catch (error) {
-      return handleThunkError(rejectWithValue, error);
+      const { data } = error.response;
+      return rejectWithValue(data?.data?.otp?.[0] || data?.data?.error);
     }
   }
 );
