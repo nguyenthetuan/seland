@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { selectAuth } from '../features';
 import {
+  ChangePasswordScreen,
   ForgotPasswordScreen1,
   ForgotPasswordScreen2,
   ForgotPasswordScreen3,
@@ -30,6 +31,10 @@ const RootNavigator = () => {
           <Screen
             name="HomeNavigator"
             component={HomeNavigator}
+          />
+          <Screen
+            name="ChangePassword"
+            component={ChangePasswordScreen}
           />
         </Group>
       ) : (
