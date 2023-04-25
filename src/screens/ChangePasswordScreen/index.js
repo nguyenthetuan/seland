@@ -2,7 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AuthBackground,
@@ -12,8 +13,8 @@ import {
   Input,
   Screen,
 } from '../../components';
-import { selectAuth } from '../../features';
-import { yup } from '../../utils';
+import { changePassword, selectAuth } from '../../features';
+import { dispatchThunk, yup } from '../../utils';
 import styles from './styles';
 
 const schema = yup.object({
@@ -23,6 +24,7 @@ const schema = yup.object({
 });
 
 const ChangePasswordScreen = () => {
+  const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
   const { t } = useTranslation();
   const {
@@ -30,6 +32,7 @@ const ChangePasswordScreen = () => {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({
     defaultValues: {
       old_password: '',
@@ -40,7 +43,15 @@ const ChangePasswordScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => console.log(data);
+  const handleSuccess = response => {
+    Toast.show({
+      text1: response,
+    });
+    reset();
+  };
+
+  const onSubmit = data =>
+    dispatchThunk(dispatch, changePassword(data), handleSuccess);
 
   return (
     <Screen>

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
+  requestChangePassword,
   requestForgotPassword,
   requestGenerateOtp,
   requestLogin,
@@ -8,7 +9,6 @@ import {
   requestSignup,
   requestVerifyOtp,
 } from '../api';
-import { handleThunkError } from '../utils';
 
 export const selectAuth = state => state.auth;
 
@@ -31,7 +31,7 @@ export const login = createAsyncThunk(
       const { data } = await requestLogin(input);
       return fulfillWithValue(data?.user?.auth_token);
     } catch (error) {
-      return handleThunkError(rejectWithValue, error);
+      return rejectWithValue(error.response.data?.data?.error);
     }
   }
 );
@@ -44,7 +44,7 @@ export const logout = createAsyncThunk(
       const { data } = await requestLogout(token);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return handleThunkError(rejectWithValue, error);
+      return rejectWithValue(error.response.data?.data?.error);
     }
   }
 );
@@ -56,7 +56,7 @@ export const generateOtp = createAsyncThunk(
       const { data } = await requestGenerateOtp(input);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return handleThunkError(rejectWithValue, error);
+      return rejectWithValue(error.response.data?.data?.error);
     }
   }
 );
@@ -81,7 +81,20 @@ export const forgotPassword = createAsyncThunk(
       const { data } = await requestForgotPassword(input);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return handleThunkError(rejectWithValue, error);
+      return rejectWithValue(error.response.data?.data?.error);
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  'changePassword',
+  async (input, { fulfillWithValue, getState, rejectWithValue }) => {
+    try {
+      const { token } = selectAuth(getState());
+      const { data } = await requestChangePassword(input, token);
+      return fulfillWithValue(data?.message);
+    } catch (error) {
+      return rejectWithValue(error.response.data?.data?.error);
     }
   }
 );
@@ -161,6 +174,15 @@ const slice = createSlice({
     builder.addCase(forgotPassword.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    });
+    builder.addCase(changePassword.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(changePassword.fulfilled, state => {
+      state.loading = false;
+    });
+    builder.addCase(changePassword.rejected, state => {
+      state.loading = false;
     });
   },
 });

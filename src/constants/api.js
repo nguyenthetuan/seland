@@ -5,3 +5,4 @@ export const LOGOUT_ROUTE = '/auth/logout';
 export const GENERATE_OTP_ROUTE = '/generateOtp';
 export const VERIFY_OTP_ROUTE = '/verifyOtp';
 export const FORGOT_PASSWORD_ROUTE = '/forgotPassword';
+export const CHANGE_PASSWORD_ROUTE = '/auth/changePassword';

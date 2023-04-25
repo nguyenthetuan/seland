@@ -45,7 +45,6 @@ const ForgotPasswordScreen3 = () => {
 
   const navigateToLogin = response => {
     Toast.show({
-      position: 'bottom',
       text1: response,
     });
     navigate('Login');
