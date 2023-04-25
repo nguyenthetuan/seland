@@ -37,6 +37,11 @@ const toastConfig = {
   ),
 };
 
-const Toast = () => <RNTMToast config={toastConfig} />;
+const Toast = () => (
+  <RNTMToast
+    config={toastConfig}
+    position="bottom"
+  />
+);
 
 export default Toast;

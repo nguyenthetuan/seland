@@ -1,3 +1,4 @@
+export { default as ChangePasswordScreen } from './ChangePasswordScreen';
 export { default as ForgotPasswordScreen1 } from './ForgotPasswordScreen1';
 export { default as ForgotPasswordScreen2 } from './ForgotPasswordScreen2';
 export { default as ForgotPasswordScreen3 } from './ForgotPasswordScreen3';

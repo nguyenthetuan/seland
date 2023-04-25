@@ -8,6 +8,3 @@ export const dispatchThunk = async (dispatch, thunk, callback) => {
     Alert.alert(error);
   }
 };
-
-export const handleThunkError = (rejectWithValue, error) =>
-  rejectWithValue(error.response.data?.data?.error);
