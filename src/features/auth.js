@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import uuid from 'react-native-uuid';
 
 import {
   requestChangePassword,
@@ -11,6 +12,8 @@ import {
 } from '../api';
 
 export const selectAuth = state => state.auth;
+
+export const setDeviceId = createAction('setDeviceId');
 
 export const signup = createAsyncThunk(
   'signup',
@@ -26,10 +29,22 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
   'login',
-  async (input, { fulfillWithValue, rejectWithValue }) => {
+  async (input, { dispatch, fulfillWithValue, getState, rejectWithValue }) => {
     try {
-      const { data } = await requestLogin(input);
-      return fulfillWithValue(data?.user?.auth_token);
+      const { deviceId } = selectAuth(getState());
+
+      let deviceUuid = '';
+      if (!deviceId) {
+        deviceUuid = uuid.v4();
+        dispatch(setDeviceId(deviceUuid));
+      }
+
+      const params = {
+        ...input,
+        device_id: deviceId || deviceUuid,
+      };
+      const { data } = await requestLogin(params);
+      return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data?.data?.error);
     }
@@ -105,8 +120,13 @@ const slice = createSlice({
     loading: false,
     token: '',
     error: '',
+    deviceId: '',
+    remember_me: true,
   },
   extraReducers: builder => {
+    builder.addCase(setDeviceId, (state, action) => {
+      state.deviceId = action.payload;
+    });
     builder.addCase(signup.pending, state => {
       state.loading = true;
     });

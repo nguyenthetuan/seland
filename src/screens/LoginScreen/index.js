@@ -24,7 +24,7 @@ import styles from './styles';
 const schema = yup.object({
   phone_number: yup.string().isValidPhoneNumber(),
   password: yup.string().isValidPassword(),
-  remember_login: yup.boolean(),
+  remember_me: yup.boolean(),
 });
 
 const LoginScreen = () => {
@@ -41,7 +41,7 @@ const LoginScreen = () => {
     defaultValues: {
       phone_number: '',
       password: '',
-      remember_login: true,
+      remember_me: true,
     },
     mode: 'onBlur',
     resolver: yupResolver(schema),
@@ -86,7 +86,7 @@ const LoginScreen = () => {
             containerStyle={styles.checkbox}
             control={control}
             iconType="material"
-            name="remember_login"
+            name="remember_me"
             title={` ${t('checkbox.rememberLogin')}`}
             uncheckedColor={COLOR_GRAY}
             uncheckedIcon="check-box-outline-blank"
