@@ -38,6 +38,7 @@ const ForgotPasswordScreen1 = () => {
       phone_number: '',
     },
     mode: 'onBlur',
+    reValidateMode: 'onBlur',
     resolver: yupResolver(schema),
   });
   const [errorVisible, setErrorVisible] = useState(false);

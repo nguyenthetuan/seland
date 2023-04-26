@@ -44,6 +44,7 @@ const LoginScreen = () => {
       remember_login: true,
     },
     mode: 'onBlur',
+    reValidateMode: 'onBlur',
     resolver: yupResolver(schema),
   });
 

@@ -43,6 +43,7 @@ const SignupScreen = () => {
       password_confirmation: '',
     },
     mode: 'onBlur',
+    reValidateMode: 'onBlur',
     resolver: yupResolver(schema),
   });
 
