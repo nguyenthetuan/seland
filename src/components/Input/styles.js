@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 8,
+    height: 40,
   }),
+  inputText: { fontSize: 16 },
   label: {
     color: COLOR_BLACK_1,
     fontSize: 16,
