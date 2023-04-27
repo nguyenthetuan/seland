@@ -15,7 +15,7 @@ const routes = [
   },
   {
     component: PersonalInformationScreen,
-    name: 'Personal Information',
+    name: 'PersonalInformation',
   },
 ];
 
