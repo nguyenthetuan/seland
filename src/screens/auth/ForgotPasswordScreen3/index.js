@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AuthBackground,
+  AuthHeading,
   Button,
   Container,
-  Heading,
   Input,
   Screen,
 } from '../../../components';
@@ -65,7 +65,7 @@ const ForgotPasswordScreen3 = () => {
     <Screen>
       <AuthBackground />
       <Container>
-        <Heading>{t('heading.createNewPassword')}</Heading>
+        <AuthHeading>{t('heading.createNewPassword')}</AuthHeading>
         <Input
           autoComplete="new-password"
           control={control}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground, View } from 'react-native';
 
-import { Logo, SeLand } from '../../assets';
+import { Logo, SeLand } from '../../../assets';
 import styles from './styles';
 
 const AuthBackground = () => (

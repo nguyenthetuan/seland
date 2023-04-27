@@ -5,11 +5,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
-import { COLOR_BLUE_1 } from '../../constants';
-import Text from '../Text';
+import { COLOR_BLUE_1 } from '../../../constants';
+import Text from '../../common/Text';
 import styles from './styles';
 
-const Heading = ({ hasBack, hasHello, children }) => {
+const AuthHeading = ({ hasBack, hasHello, children }) => {
   const { goBack } = useNavigation();
   const { t } = useTranslation();
 
@@ -34,15 +34,15 @@ const Heading = ({ hasBack, hasHello, children }) => {
   );
 };
 
-Heading.defaultProps = {
+AuthHeading.defaultProps = {
   hasBack: false,
   hasHello: false,
 };
 
-Heading.propTypes = {
+AuthHeading.propTypes = {
   children: PropTypes.node.isRequired,
   hasBack: PropTypes.bool,
   hasHello: PropTypes.bool,
 };
 
-export default Heading;
+export default AuthHeading;

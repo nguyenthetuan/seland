@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AuthBackground,
+  AuthHeading,
   Button,
   Container,
-  Heading,
   Screen,
   Text,
 } from '../../../components';
@@ -53,11 +53,11 @@ const OtpScreen = () => {
     <Screen>
       <AuthBackground />
       <Container>
-        <Heading hasBack>{t('heading.forgotPassword')}</Heading>
+        <AuthHeading hasBack>{t('heading.forgotPassword')}</AuthHeading>
         <View style={styles.container}>
           <Text>{t('common.otpSent')}</Text>
           <View style={styles.phoneNumber}>
-            <Heading>{params?.phone_number}</Heading>
+            <AuthHeading>{params?.phone_number}</AuthHeading>
           </View>
           <OtpInputs
             handleChange={setOtp}

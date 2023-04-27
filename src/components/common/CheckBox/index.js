@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useController } from 'react-hook-form';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 

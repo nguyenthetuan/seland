@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AuthBackground,
+  AuthHeading,
   Button,
   CheckBox,
   Container,
-  Heading,
   Input,
   Screen,
   Text,
@@ -58,7 +58,7 @@ const LoginScreen = () => {
     <Screen>
       <AuthBackground />
       <Container>
-        <Heading hasHello>{t('heading.loginToContinue')}</Heading>
+        <AuthHeading hasHello>{t('heading.loginToContinue')}</AuthHeading>
         <Input
           autoComplete="tel"
           control={control}

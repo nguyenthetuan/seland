@@ -6,7 +6,7 @@ import {
   COLOR_BLUE_3,
   COLOR_GRAY_2,
   COLOR_RED,
-} from '../../constants/colors';
+} from '../../../constants/colors';
 
 const styles = StyleSheet.create({
   disabled: {

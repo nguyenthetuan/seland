@@ -2,7 +2,7 @@ import { Button as RNEButton } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { COLOR_BLUE_1 } from '../../constants';
+import { COLOR_BLUE_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 

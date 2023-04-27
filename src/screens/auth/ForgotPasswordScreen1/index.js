@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AuthBackground,
+  AuthHeading,
   Button,
   Container,
-  Heading,
   Input,
   Screen,
   Text,
@@ -65,7 +65,7 @@ const ForgotPasswordScreen1 = () => {
     <Screen>
       <AuthBackground />
       <Container>
-        <Heading hasHello>{t('heading.forgotPassword')}</Heading>
+        <AuthHeading hasHello>{t('heading.forgotPassword')}</AuthHeading>
         <Input
           autoComplete="tel"
           control={control}
