@@ -22,7 +22,7 @@ export const signup = createAsyncThunk(
       const { data } = await requestSignup(input);
       return fulfillWithValue(data?.user?.phone_number);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.phone_number?.[0]);
+      return rejectWithValue(error.data?.phone_number?.[0]);
     }
   }
 );
@@ -43,23 +43,22 @@ export const login = createAsyncThunk(
         ...input,
         device_id: deviceId || deviceUuid,
       };
-      const { data } = await requestLogin(params);
-      return fulfillWithValue(data);
+      const data = await requestLogin(params);
+      return fulfillWithValue(data?.user?.auth_token);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.error);
+      return rejectWithValue(error?.data?.error);
     }
   }
 );
 
 export const logout = createAsyncThunk(
   'logout',
-  async (_, { fulfillWithValue, getState, rejectWithValue }) => {
+  async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { token } = selectAuth(getState());
-      const { data } = await requestLogout(token);
+      const data = await requestLogout();
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.error);
+      return rejectWithValue(error?.data?.error);
     }
   }
 );
@@ -71,7 +70,7 @@ export const generateOtp = createAsyncThunk(
       const { data } = await requestGenerateOtp(input);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.error);
+      return rejectWithValue(error?.data?.error);
     }
   }
 );
@@ -83,8 +82,7 @@ export const verifyOtp = createAsyncThunk(
       const { data } = await requestVerifyOtp(input);
       return fulfillWithValue(data?.data?.is_phone_verified);
     } catch (error) {
-      const { data } = error.response;
-      return rejectWithValue(data?.data?.otp?.[0] || data?.data?.error);
+      return rejectWithValue(error?.data?.otp?.[0] || error?.data?.error);
     }
   }
 );
@@ -96,7 +94,7 @@ export const forgotPassword = createAsyncThunk(
       const { data } = await requestForgotPassword(input);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.error);
+      return rejectWithValue(error?.data?.error);
     }
   }
 );
@@ -109,7 +107,7 @@ export const changePassword = createAsyncThunk(
       const { data } = await requestChangePassword(input, token);
       return fulfillWithValue(data?.message);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.error);
+      return rejectWithValue(error?.data?.error);
     }
   }
 );
@@ -121,7 +119,6 @@ const slice = createSlice({
     token: '',
     error: '',
     deviceId: '',
-    remember_me: true,
   },
   extraReducers: builder => {
     builder.addCase(setDeviceId, (state, action) => {
