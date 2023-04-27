@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_GRAY_1, COLOR_ORANGE } from '../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_1, COLOR_ORANGE_2 } from '../../constants';
 
 const styles = StyleSheet.create({
   createPost: {
     alignItems: 'center',
-    backgroundColor: COLOR_ORANGE,
+    backgroundColor: COLOR_ORANGE_2,
     borderRadius: 24,
     height: 48,
     justifyContent: 'center',
