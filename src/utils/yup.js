@@ -51,4 +51,11 @@ yup.addMethod(
   }
 );
 
+yup.addMethod(yup.string, 'isValidName', function validateName() {
+  return this.trim()
+    .required(t('error.name.required'))
+    .min(5, t('error.name.length'))
+    .max(128, t('error.name.length'));
+});
+
 export default yup;

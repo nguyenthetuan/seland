@@ -38,7 +38,11 @@
       "length": "Độ dài mật khẩu: 8-64 kí tự",
       "format": "Mật khẩu không đúng định dạng"
     },
-    "passwordConfirmation": "Mật khẩu không trùng khớp"
+    "passwordConfirmation": "Mật khẩu không trùng khớp",
+    "name": {
+      "required": "Vui lòng nhập họ tên",
+      "length": "Độ dài họ tên: 5-128 kí tự"
+    }
   },
   "heading": {
     "hello": "Xin chào bạn",
@@ -56,7 +60,13 @@
     "password": "Mật khẩu",
     "passwordConfirmation": "Xác nhận mật khẩu",
     "currentPassword": "Mật khẩu hiện tại",
-    "newPassword": "Mật khẩu mới"
+    "newPassword": "Mật khẩu mới",
+    "name": "Họ tên",
+    "email": "Email",
+    "address": "Địa chỉ",
+    "companyName": "Tên công ty",
+    "taxCode": "Mã số thuế",
+    "website": "Website"
   },
   "tabBar": {
     "home": "Trang chủ",
