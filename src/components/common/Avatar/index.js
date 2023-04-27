@@ -6,12 +6,13 @@ import { TouchableOpacity, View } from 'react-native';
 import Text from '../Text';
 import styles from './styles';
 
-const Avatar = ({ loading, url, size }) => (
+const Avatar = ({ loading, uri, size }) => (
   <View style={styles.boxAvatar(size)}>
-    {url ? (
+    {uri ? (
       <Image
-        source={{ uri: url }}
         style={styles.avatar(size)}
+        source={{ uri }}
+        transition
       />
     ) : (
       <View style={[styles.avatar(size), styles.notAvatar]}>
@@ -31,13 +32,13 @@ const Avatar = ({ loading, url, size }) => (
 );
 Avatar.defaultProps = {
   loading: false,
-  url: '',
-  size: 100,
+  uri: '',
+  size: 75,
 };
 
 Avatar.propTypes = {
   loading: PropTypes.bool,
-  url: PropTypes.string,
+  uri: PropTypes.string,
   size: PropTypes.number,
 };
 
