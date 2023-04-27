@@ -57,5 +57,12 @@
     "passwordConfirmation": "Xác nhận mật khẩu",
     "currentPassword": "Mật khẩu hiện tại",
     "newPassword": "Mật khẩu mới"
+  },
+  "tabBar": {
+    "home": "Trang chủ",
+    "history": "Lịch sử",
+    "createPost": "Đăng tin",
+    "managePost": "Quản lý tin",
+    "account": "Tài khoản"
   }
 }
