@@ -40,6 +40,7 @@ const ForgotPasswordScreen3 = () => {
       password_confirmation: '',
     },
     mode: 'onBlur',
+    reValidateMode: 'onBlur',
     resolver: yupResolver(schema),
   });
 
