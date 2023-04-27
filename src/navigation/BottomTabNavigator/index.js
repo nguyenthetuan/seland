@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
 import { Text } from '../../components';
-import { COLOR_BLUE_1, COLOR_GRAY_1, COLOR_WHITE } from '../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../constants';
 import { getScreens } from '../../utils';
 import routes from './routes';
 import styles from './styles';
@@ -32,7 +32,7 @@ const BottomTabNavigator = () => {
       function tabBarIcon({ focused }) {
         return (
           <Icon
-            color={focused ? COLOR_BLUE_1 : COLOR_GRAY_1}
+            color={focused ? COLOR_BLUE_1 : COLOR_GRAY_2}
             name={name}
           />
         );

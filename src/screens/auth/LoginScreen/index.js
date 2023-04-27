@@ -16,7 +16,7 @@ import {
   Screen,
   Text,
 } from '../../../components';
-import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants/colors';
+import { COLOR_BLUE_1, COLOR_GRAY_5 } from '../../../constants/colors';
 import { login, selectAuth } from '../../../features';
 import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
@@ -89,7 +89,7 @@ const LoginScreen = () => {
             iconType="material"
             name="remember_login"
             title={` ${t('checkbox.rememberLogin')}`}
-            uncheckedColor={COLOR_GRAY_2}
+            uncheckedColor={COLOR_GRAY_5}
             uncheckedIcon="check-box-outline-blank"
           />
           <Text

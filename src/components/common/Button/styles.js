@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
+import { COLOR_GRAY_5, COLOR_WHITE } from '../../../constants';
 
 const styles = StyleSheet.create({
   button: {
     borderRadius: 8,
   },
   disabled: {
-    backgroundColor: COLOR_GRAY_2,
+    backgroundColor: COLOR_GRAY_5,
   },
   title: {
     color: COLOR_WHITE,

@@ -3,14 +3,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import RNTMToast, { SuccessToast } from 'react-native-toast-message';
 
-import { COLOR_BLACK_1, COLOR_GREEN } from '../constants';
+import { COLOR_BLACK_1, COLOR_GREEN_2 } from '../constants';
 
 const styles = StyleSheet.create({
   icon: {
     justifyContent: 'center',
   },
   successBackground: {
-    backgroundColor: COLOR_GREEN,
+    backgroundColor: COLOR_GREEN_2,
   },
   text1: {
     color: COLOR_BLACK_1,

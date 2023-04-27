@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_BLUE_2, COLOR_GRAY_2 } from '../../../constants';
+import { COLOR_BLACK_2, COLOR_BLUE_2, COLOR_GRAY_5 } from '../../../constants';
 
 const styles = StyleSheet.create({
   blueText: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     color: COLOR_BLACK_2,
   },
   otp: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLOR_GRAY_5,
     borderRadius: 8,
     borderWidth: 1,
     fontSize: 24,
