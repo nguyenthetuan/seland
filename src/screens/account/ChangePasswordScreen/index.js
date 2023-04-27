@@ -58,7 +58,7 @@ const ChangePasswordScreen = () => {
     <Screen>
       <AuthBackground />
       <Container>
-        <AuthHeading>{t('heading.createNewPassword')}</AuthHeading>
+        <AuthHeading hasBack>{t('heading.createNewPassword')}</AuthHeading>
         <Input
           autoComplete="current-password"
           control={control}

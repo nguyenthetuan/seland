@@ -7,17 +7,17 @@ import { View } from 'react-native';
 import { Text } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY_1, COLOR_WHITE } from '../../constants';
 import {
-  AccountScreen,
   CreatePostScreen,
   HistoryScreen,
   HomeScreen,
   ManagePostScreen,
 } from '../../screens';
+import AccountNavigator from './AccountNavigator';
 import styles from './styles';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const HomeNavigator = () => {
+const BottomTabNavigator = () => {
   const { t } = useTranslation();
 
   const getCreatePostTabBarIcon = useCallback(
@@ -57,7 +57,7 @@ const HomeNavigator = () => {
 
   return (
     <Navigator
-      initialRouteName="Account"
+      initialRouteName="AccountNavigator"
       screenOptions={{
         gestureEnabled: false,
         headerShown: false,
@@ -96,8 +96,8 @@ const HomeNavigator = () => {
         }}
       />
       <Screen
-        name="Account"
-        component={AccountScreen}
+        name="AccountNavigator"
+        component={AccountNavigator}
         options={{
           tabBarIcon: getTabBarIcon('person-outline'),
           tabBarLabel: getTabBarLabel('account'),
@@ -107,4 +107,4 @@ const HomeNavigator = () => {
   );
 };
 
-export default HomeNavigator;
+export default BottomTabNavigator;
