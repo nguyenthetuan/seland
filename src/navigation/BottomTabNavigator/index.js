@@ -6,13 +6,11 @@ import { View } from 'react-native';
 
 import { Text } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY_1, COLOR_WHITE } from '../../constants';
-import {
-  CreatePostScreen,
-  HistoryScreen,
-  HomeScreen,
-  ManagePostScreen,
-} from '../../screens';
 import AccountNavigator from './AccountNavigator';
+import CreatePostNavigator from './CreatePostNavigator';
+import HistoryNavigator from './HistoryNavigator';
+import HomeNavigator from './HomeNavigator';
+import ManagePostNavigator from './ManagePostNavigator';
 import styles from './styles';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -64,32 +62,32 @@ const BottomTabNavigator = () => {
       }}
     >
       <Screen
-        name="Home"
-        component={HomeScreen}
+        name="HomeNavigator"
+        component={HomeNavigator}
         options={{
           tabBarIcon: getTabBarIcon('home'),
           tabBarLabel: getTabBarLabel('home'),
         }}
       />
       <Screen
-        name="History"
-        component={HistoryScreen}
+        name="HistoryNavigator"
+        component={HistoryNavigator}
         options={{
           tabBarIcon: getTabBarIcon('history'),
           tabBarLabel: getTabBarLabel('history'),
         }}
       />
       <Screen
-        name="CreatePost"
-        component={CreatePostScreen}
+        name="CreatePostNavigator"
+        component={CreatePostNavigator}
         options={{
           tabBarIcon: getCreatePostTabBarIcon,
           tabBarLabel: getTabBarLabel('createPost'),
         }}
       />
       <Screen
-        name="ManagePost"
-        component={ManagePostScreen}
+        name="ManagePostNavigator"
+        component={ManagePostNavigator}
         options={{
           tabBarIcon: getTabBarIcon('fact-check'),
           tabBarLabel: getTabBarLabel('managePost'),
