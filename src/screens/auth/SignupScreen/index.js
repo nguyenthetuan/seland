@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -12,30 +12,33 @@ import {
   Heading,
   Input,
   Screen,
-} from '../../components';
-import { changePassword, selectAuth } from '../../features';
-import { dispatchThunk, yup } from '../../utils';
+  Text,
+} from '../../../components';
+import { selectAuth, signup } from '../../../features';
+import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
 
 const schema = yup.object({
-  old_password: yup.string().isValidPassword(),
+  phone_number: yup.string().isValidPhoneNumber(),
   password: yup.string().isValidPassword(true),
   password_confirmation: yup.string().isValidPasswordConfirmation(),
 });
 
-const ChangePasswordScreen = () => {
+const SignupScreen = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
+  const { navigate } = useNavigation();
+  const { params } = useRoute();
   const { t } = useTranslation();
   const {
     clearErrors,
     control,
     formState: { errors },
     handleSubmit,
-    reset,
+    setValue,
   } = useForm({
     defaultValues: {
-      old_password: '',
+      phone_number: '',
       password: '',
       password_confirmation: '',
     },
@@ -44,30 +47,35 @@ const ChangePasswordScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleSuccess = response => {
-    Toast.show({
-      text1: response,
-    });
-    reset();
-  };
+  useLayoutEffect(() => {
+    if (params) setValue('phone_number', params.phone_number);
+  }, [params, setValue]);
 
   const onSubmit = data =>
-    dispatchThunk(dispatch, changePassword(data), handleSuccess);
+    dispatchThunk(dispatch, signup(data), () =>
+      navigate('Otp', {
+        phone_number: data.phone_number,
+        password: data.password,
+      })
+    );
+
+  const navigateToLogin = () => navigate('Login');
 
   return (
     <Screen>
       <AuthBackground />
       <Container>
-        <Heading>{t('heading.createNewPassword')}</Heading>
+        <Heading hasHello>{t('heading.registerNewAccount')}</Heading>
         <Input
-          autoComplete="current-password"
+          autoComplete="tel"
           control={control}
           disabled={loading}
-          errorMessage={errors.old_password?.message}
-          isPassword
-          label={t('input.currentPassword')}
-          name="old_password"
-          onFocus={() => clearErrors('old_password')}
+          errorMessage={errors.phone_number?.message}
+          inputMode="tel"
+          isPhoneNumber
+          label={t('input.phoneNumber')}
+          name="phone_number"
+          onFocus={() => clearErrors('phone_number')}
         />
         <Input
           autoComplete="new-password"
@@ -75,7 +83,7 @@ const ChangePasswordScreen = () => {
           disabled={loading}
           errorMessage={errors.password?.message}
           isPassword
-          label={t('input.newPassword')}
+          label={t('input.password')}
           name="password"
           onFocus={() => clearErrors('password')}
           showPasswordPolicy
@@ -94,11 +102,25 @@ const ChangePasswordScreen = () => {
           buttonStyle={styles.button}
           loading={loading}
           onPress={handleSubmit(onSubmit)}
-          title={t('button.save')}
+          title={t('button.continue')}
         />
+        <Text style={styles.tnc1}>
+          {t('common.tnc1')}{' '}
+          <Text style={[styles.tnc1, styles.tnc2]}>{t('common.tnc2')}</Text>{' '}
+          {t('common.tnc3')}
+        </Text>
+        <Text style={styles.hadAccount}>
+          {t('common.hadAccount')}{' '}
+          <Text
+            style={styles.login}
+            onPress={navigateToLogin}
+          >
+            {t('common.login')}
+          </Text>
+        </Text>
       </Container>
     </Screen>
   );
 };
 
-export default ChangePasswordScreen;
+export default SignupScreen;

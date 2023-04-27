@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,29 +12,30 @@ import {
   Heading,
   Input,
   Screen,
-} from '../../components';
-import { forgotPassword, selectAuth } from '../../features';
-import { dispatchThunk, yup } from '../../utils';
+} from '../../../components';
+import { changePassword, selectAuth } from '../../../features';
+import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
 
 const schema = yup.object({
+  old_password: yup.string().isValidPassword(),
   password: yup.string().isValidPassword(true),
   password_confirmation: yup.string().isValidPasswordConfirmation(),
 });
 
-const ForgotPasswordScreen3 = () => {
+const ChangePasswordScreen = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector(selectAuth);
-  const { navigate } = useNavigation();
-  const { params } = useRoute();
   const { t } = useTranslation();
   const {
     clearErrors,
     control,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({
     defaultValues: {
+      old_password: '',
       password: '',
       password_confirmation: '',
     },
@@ -44,22 +44,15 @@ const ForgotPasswordScreen3 = () => {
     resolver: yupResolver(schema),
   });
 
-  const navigateToLogin = response => {
+  const handleSuccess = response => {
     Toast.show({
       text1: response,
     });
-    navigate('Login');
+    reset();
   };
 
   const onSubmit = data =>
-    dispatchThunk(
-      dispatch,
-      forgotPassword({
-        ...params,
-        ...data,
-      }),
-      navigateToLogin
-    );
+    dispatchThunk(dispatch, changePassword(data), handleSuccess);
 
   return (
     <Screen>
@@ -67,12 +60,22 @@ const ForgotPasswordScreen3 = () => {
       <Container>
         <Heading>{t('heading.createNewPassword')}</Heading>
         <Input
+          autoComplete="current-password"
+          control={control}
+          disabled={loading}
+          errorMessage={errors.old_password?.message}
+          isPassword
+          label={t('input.currentPassword')}
+          name="old_password"
+          onFocus={() => clearErrors('old_password')}
+        />
+        <Input
           autoComplete="new-password"
           control={control}
           disabled={loading}
           errorMessage={errors.password?.message}
           isPassword
-          label={t('input.password')}
+          label={t('input.newPassword')}
           name="password"
           onFocus={() => clearErrors('password')}
           showPasswordPolicy
@@ -91,11 +94,11 @@ const ForgotPasswordScreen3 = () => {
           buttonStyle={styles.button}
           loading={loading}
           onPress={handleSubmit(onSubmit)}
-          title={t('button.finish')}
+          title={t('button.save')}
         />
       </Container>
     </Screen>
   );
 };
 
-export default ForgotPasswordScreen3;
+export default ChangePasswordScreen;

@@ -13,9 +13,9 @@ import {
   Input,
   Screen,
   Text,
-} from '../../components';
-import { generateOtp, selectAuth } from '../../features';
-import { yup } from '../../utils';
+} from '../../../components';
+import { generateOtp, selectAuth } from '../../../features';
+import { yup } from '../../../utils';
 import styles from './styles';
 
 const schema = yup.object({

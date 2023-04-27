@@ -3,9 +3,9 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import { Button } from '../../components';
-import { logout } from '../../features';
-import { dispatchThunk } from '../../utils';
+import { Button } from '../../../components';
+import { logout } from '../../../features';
+import { dispatchThunk } from '../../../utils';
 import styles from './styles';
 
 const HomeScreen = () => {

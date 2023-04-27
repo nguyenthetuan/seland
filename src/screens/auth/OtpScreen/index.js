@@ -12,11 +12,11 @@ import {
   Heading,
   Screen,
   Text,
-} from '../../components';
-import { RESEND_OTP_TIMEOUT } from '../../constants';
-import { generateOtp, login, verifyOtp } from '../../features';
-import { selectAuth } from '../../features/auth';
-import { dispatchThunk } from '../../utils';
+} from '../../../components';
+import { RESEND_OTP_TIMEOUT } from '../../../constants';
+import { generateOtp, login, verifyOtp } from '../../../features';
+import { selectAuth } from '../../../features/auth';
+import { dispatchThunk } from '../../../utils';
 import styles from './styles';
 
 const OtpScreen = () => {
