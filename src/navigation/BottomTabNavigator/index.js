@@ -6,11 +6,8 @@ import { View } from 'react-native';
 
 import { Text } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY_1, COLOR_WHITE } from '../../constants';
-import AccountNavigator from './AccountNavigator';
-import CreatePostNavigator from './CreatePostNavigator';
-import HistoryNavigator from './HistoryNavigator';
-import HomeNavigator from './HomeNavigator';
-import ManagePostNavigator from './ManagePostNavigator';
+import { getScreens } from '../../utils';
+import routes from './routes';
 import styles from './styles';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -53,6 +50,29 @@ const BottomTabNavigator = () => {
     [t]
   );
 
+  const options = [
+    {
+      tabBarIcon: getTabBarIcon('home'),
+      tabBarLabel: getTabBarLabel('home'),
+    },
+    {
+      tabBarIcon: getTabBarIcon('history'),
+      tabBarLabel: getTabBarLabel('history'),
+    },
+    {
+      tabBarIcon: getCreatePostTabBarIcon,
+      tabBarLabel: getTabBarLabel('createPost'),
+    },
+    {
+      tabBarIcon: getTabBarIcon('fact-check'),
+      tabBarLabel: getTabBarLabel('managePost'),
+    },
+    {
+      tabBarIcon: getTabBarIcon('person-outline'),
+      tabBarLabel: getTabBarLabel('account'),
+    },
+  ];
+
   return (
     <Navigator
       initialRouteName="AccountNavigator"
@@ -61,46 +81,7 @@ const BottomTabNavigator = () => {
         headerShown: false,
       }}
     >
-      <Screen
-        name="HomeNavigator"
-        component={HomeNavigator}
-        options={{
-          tabBarIcon: getTabBarIcon('home'),
-          tabBarLabel: getTabBarLabel('home'),
-        }}
-      />
-      <Screen
-        name="HistoryNavigator"
-        component={HistoryNavigator}
-        options={{
-          tabBarIcon: getTabBarIcon('history'),
-          tabBarLabel: getTabBarLabel('history'),
-        }}
-      />
-      <Screen
-        name="CreatePostNavigator"
-        component={CreatePostNavigator}
-        options={{
-          tabBarIcon: getCreatePostTabBarIcon,
-          tabBarLabel: getTabBarLabel('createPost'),
-        }}
-      />
-      <Screen
-        name="ManagePostNavigator"
-        component={ManagePostNavigator}
-        options={{
-          tabBarIcon: getTabBarIcon('fact-check'),
-          tabBarLabel: getTabBarLabel('managePost'),
-        }}
-      />
-      <Screen
-        name="AccountNavigator"
-        component={AccountNavigator}
-        options={{
-          tabBarIcon: getTabBarIcon('person-outline'),
-          tabBarLabel: getTabBarLabel('account'),
-        }}
-      />
+      {getScreens(Screen, routes, options)}
     </Navigator>
   );
 };

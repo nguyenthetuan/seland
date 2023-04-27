@@ -1,11 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import {
-  AccountScreen,
-  ChangePasswordScreen,
-  PersonalInformationScreen,
-} from '../../../screens';
+import { getScreens } from '../../../utils';
+import routes from './routes';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -16,18 +13,7 @@ const AccountNavigator = () => (
       headerShown: false,
     }}
   >
-    <Screen
-      name="Account"
-      component={AccountScreen}
-    />
-    <Screen
-      name="ChangePassword"
-      component={ChangePasswordScreen}
-    />
-    <Screen
-      name="PersonalInformation"
-      component={PersonalInformationScreen}
-    />
+    {getScreens(Screen, routes)}
   </Navigator>
 );
 
