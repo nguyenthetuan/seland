@@ -57,6 +57,7 @@ const Input = ({
         disabledInputStyle={styles.disabled}
         errorStyle={styles.error}
         inputContainerStyle={styles.input(isFocused)}
+        style={styles.inputText}
         label={<Text style={styles.label}>{label}</Text>}
         onBlur={handleBlur}
         onChangeText={handleChange}
