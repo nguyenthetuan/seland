@@ -23,9 +23,19 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_WHITE,
     borderRadius: 40,
     bottom: 0,
+    elevation: 5,
     padding: 7,
     position: 'absolute',
+
     right: 0,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+
+    shadowRadius: 3.84,
   },
   notAvatar: {
     alignItems: 'center',

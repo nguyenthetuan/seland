@@ -6,19 +6,16 @@ import { TouchableOpacity, View } from 'react-native';
 import Text from '../Text';
 import styles from './styles';
 
-const Avatar = ({ loading, uri, size }) => (
+const Avatar = ({ size, uri, placeholderContent }) => (
   <View style={styles.boxAvatar(size)}>
-    {uri ? (
-      <Image
-        style={styles.avatar(size)}
-        source={{ uri }}
-        transition
-      />
-    ) : (
-      <View style={[styles.avatar(size), styles.notAvatar]}>
-        <Text style={styles.text}>U</Text>
-      </View>
-    )}
+    <Image
+      style={styles.avatar(size)}
+      source={{ uri }}
+      transition
+      PlaceholderContent={<Text style={styles.text}>{placeholderContent}</Text>}
+      placeholderStyle={[styles.boxAvatar(size), styles.notAvatar]}
+    />
+
     <TouchableOpacity
       style={styles.camera}
       activeOpacity={0.8}
@@ -31,13 +28,13 @@ const Avatar = ({ loading, uri, size }) => (
   </View>
 );
 Avatar.defaultProps = {
-  loading: false,
+  placeholderContent: '',
   uri: '',
   size: 75,
 };
 
 Avatar.propTypes = {
-  loading: PropTypes.bool,
+  placeholderContent: PropTypes.string,
   uri: PropTypes.string,
   size: PropTypes.number,
 };
