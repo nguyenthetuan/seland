@@ -3,7 +3,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectAuth } from '../features';
-import { ChangePasswordScreen } from '../screens';
 import AuthNavigator from './AuthNavigator';
 import BottomTabNavigator from './BottomTabNavigator';
 
@@ -24,10 +23,6 @@ const RootNavigator = () => {
           <Screen
             name="BottomTabNavigator"
             component={BottomTabNavigator}
-          />
-          <Screen
-            name="ChangePassword"
-            component={ChangePasswordScreen}
           />
         </Group>
       ) : (

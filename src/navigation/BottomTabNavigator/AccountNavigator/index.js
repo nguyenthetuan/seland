@@ -12,7 +12,6 @@ const AccountNavigator = () => (
       gestureEnabled: false,
       headerShown: false,
     }}
-    initialRouteName="PersonalInformation"
   >
     {getScreens(Screen, routes)}
   </Navigator>
