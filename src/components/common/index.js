@@ -4,4 +4,5 @@ export { default as Container } from './Container';
 export { default as DashedButton } from './DashedButton';
 export { default as Input } from './Input';
 export { default as Screen } from './Screen';
+export { default as Select } from './Select';
 export { default as Text } from './Text';
