@@ -58,4 +58,22 @@ yup.addMethod(yup.string, 'isValidName', function validateName() {
     .max(128, t('error.name.length'));
 });
 
+yup.addMethod(yup.string, 'isValidAddress', function validateAddress() {
+  return this.trim().max(255, t('error.address.maxLength'));
+});
+
+yup.addMethod(yup.string, 'isValidCompanyName', function validateCompanyName() {
+  return this.trim()
+    .min(3, t('error.companyName.length'))
+    .max(128, t('error.companyName.length'));
+});
+
+yup.addMethod(yup.string, 'isValidTaxCode', function validateTaxCode() {
+  return this.trim().max(13, t('error.taxCode.maxLength'));
+});
+
+yup.addMethod(yup.string, 'isValidWebsite', function validateWebsite() {
+  return this.trim().max(255, t('error.website.maxLength'));
+});
+
 export default yup;

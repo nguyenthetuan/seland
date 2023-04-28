@@ -20,7 +20,22 @@ const slice = createSlice({
   name: 'user',
   initialState: {
     loading: false,
-    user: {},
+    user: {
+      avatar: '',
+      name: '',
+      sex: null,
+      birthday: '',
+      phone_number: '',
+      email: '',
+      address: '',
+      ward_id: null,
+      district_id: null,
+      province_id: null,
+      name_company: '',
+      company_address: '',
+      tax_code: '',
+      website: '',
+    },
     error: '',
   },
   extraReducers: builder => {
