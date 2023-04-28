@@ -6,3 +6,4 @@ export const GENERATE_OTP_ROUTE = '/generateOtp';
 export const VERIFY_OTP_ROUTE = '/verifyOtp';
 export const FORGOT_PASSWORD_ROUTE = '/forgotPassword';
 export const CHANGE_PASSWORD_ROUTE = '/auth/changePassword';
+export const GET_PROFILE_ROUTE = '/auth/getProfile';

@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 8,
+    height: 40,
   }),
   label: {
     color: COLOR_BLACK_1,
@@ -36,6 +37,10 @@ const styles = StyleSheet.create({
     color: COLOR_BLACK_2,
     marginBottom: 8,
     marginLeft: 8,
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 24,
   },
 });
 
