@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 import {
   COLOR_GRAY_1,
   COLOR_GRAY_4,
-  COLOR_ORANGE_4,
+  COLOR_GRAY_6,
 } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   btnMenu: {
     alignItems: 'center',
-    backgroundColor: COLOR_ORANGE_4,
+    backgroundColor: COLOR_GRAY_6,
     borderColor: COLOR_GRAY_4,
     borderRadius: 8,
     borderWidth: 1,
