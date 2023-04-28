@@ -29,7 +29,7 @@ function subscribeTokenRefresh(cb) {
   refreshSubscribers.push(cb);
 }
 
-const onRefreshed = token => {
+const onRefresh = token => {
   refreshSubscribers.map(cb => cb(token));
 };
 
@@ -37,8 +37,8 @@ const successHandler = response => {
   if (__DEV__) {
     console.log(`Response success API: ${response.config.url}`, response.data);
   }
-  const { data } = response;
-  if (!data || response.status !== 200) {
+  const { data, status } = response;
+  if (!data || status !== 200) {
     return;
   }
   return data;
