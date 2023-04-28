@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import {
   COLOR_ORANGE_1,
-  COLOR_ORANGE_5,
+  COLOR_ORANGE_4,
   COLOR_WHITE,
 } from '../../../constants';
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     width: '100%',
   }),
   boxAvatar: size => ({
-    backgroundColor: COLOR_ORANGE_5,
+    backgroundColor: COLOR_ORANGE_4,
     borderRadius: size,
     color: COLOR_WHITE,
     height: size,
