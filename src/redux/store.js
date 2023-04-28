@@ -11,15 +11,17 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 
-import { authReducer } from '../features';
+import { authReducer, userReducer } from '../features';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['auth'],
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
