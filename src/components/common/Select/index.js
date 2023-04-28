@@ -27,7 +27,7 @@ const Select = ({ control, data, label, name, ...props }) => {
 
   return (
     <>
-      <Text style={styles.label}>Giới tính</Text>
+      {label && <Text style={styles.label}>{label}</Text>}
       <SelectDropdown
         buttonStyle={[styles.button, styles.row]}
         buttonTextAfterSelection={selectedItem => selectedItem.label}
