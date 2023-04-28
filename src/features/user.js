@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { requestGetProfile } from '../api/user';
 
+export const selectUser = state => state.user;
+
 export const getProfile = createAsyncThunk(
   'getProfile',
   async (_, { fulfillWithValue, rejectWithValue }) => {

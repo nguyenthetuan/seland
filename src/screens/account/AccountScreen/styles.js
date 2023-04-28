@@ -6,11 +6,16 @@ import {
   COLOR_GRAY_3,
   COLOR_GRAY_4,
   COLOR_GREEN_1,
+  COLOR_ORANGE_1,
   COLOR_ORANGE_2,
+  COLOR_ORANGE_4,
   COLOR_WHITE,
 } from '../../../constants';
 
 const styles = StyleSheet.create({
+  boxAvatar: {
+    backgroundColor: COLOR_ORANGE_4,
+  },
   boxHeaderLeft: {
     flexDirection: 'row',
   },
@@ -99,6 +104,12 @@ const styles = StyleSheet.create({
   phone: {
     color: COLOR_GRAY_3,
     fontSize: 14,
+  },
+  text: {
+    color: COLOR_ORANGE_1,
+    fontSize: 20,
+    fontWeight: 'bold',
+    lineHeight: 28,
   },
   txtPayment: {
     color: COLOR_WHITE,

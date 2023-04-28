@@ -1,163 +1,185 @@
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from '@rneui/base';
+import { Avatar, Icon } from '@rneui/base';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
+import { Container, DashedButton, Screen, Text } from '../../../components';
 import {
-  Avatar,
-  Container,
-  DashedButton,
-  Screen,
-  Text,
-} from '../../../components';
-import { COLOR_GREEN_1, COLOR_ORANGE_2, COLOR_WHITE } from '../../../constants';
+  COLOR_GREEN_1,
+  COLOR_ORANGE_2,
+  COLOR_WHITE,
+  SCREENS,
+} from '../../../constants';
+import { selectUser } from '../../../features';
 import AccountMenu from './components/AccountMenu';
 import styles from './styles';
 
 const AccountScreen = () => {
   const { navigate } = useNavigation();
+  const { user } = useSelector(selectUser);
+
+  const navigateToPersonalInformation = () =>
+    navigate(SCREENS.PERSONAL_INFORMATION);
+
+  const navigateToChangePassword = () => navigate(SCREENS.CHANGE_PASSWORD);
 
   const activityHistory = [
     {
-      name: 'Tin đã xem',
+      name: 'viewedPosts',
       onPress: () => {},
     },
     {
-      name: 'Tin yêu thích',
+      name: 'favoritePosts',
       onPress: () => {},
     },
     {
-      name: 'Tin đã liên hệ',
+      name: 'contactedPosts',
       onPress: () => {},
     },
     {
-      name: 'Tin nhắn',
+      name: 'message',
       onPress: () => {},
     },
   ];
 
   const managerPost = [
     {
-      name: 'Tin đang hiển thị',
+      name: 'shownPosts',
       onPress: () => {},
     },
     {
-      name: 'Tin riêng tư',
+      name: 'privatePosts',
       onPress: () => {},
     },
     {
-      name: 'Tin nháp',
+      name: 'draftPosts',
       onPress: () => {},
     },
     {
-      name: 'Chờ duyệt',
+      name: 'reviewPending',
       onPress: () => {},
     },
     {
-      name: 'Không duyệt',
+      name: 'rejected',
       onPress: () => {},
     },
     {
-      name: 'Hết hạn',
+      name: 'expired',
       onPress: () => {},
     },
   ];
 
   const realEstateManagement = [
     {
-      name: 'Kho bất động sản của tôi',
+      name: 'myRealEstates',
       onPress: () => {},
     },
   ];
 
   const appointmentManagement = [
     {
-      name: 'Lịch hẹn của khách hàng',
+      name: 'customerAppointments',
       onPress: () => {},
     },
     {
-      name: 'Lịch hẹn của bạn',
+      name: 'yourAppointments',
       onPress: () => {},
     },
   ];
   const transactionManagement = [
     {
-      name: 'Lịch sử giao dịch',
+      name: 'transactionHistory',
       onPress: () => {},
     },
     {
-      name: 'Danh sách khuyến mãi',
+      name: 'listPromotion',
       onPress: () => {},
     },
   ];
 
   const advertisingManagement = [
     {
-      name: 'Đăng tin nhà đấtn',
+      name: 'postsRealEstate',
       onPress: () => {},
     },
     {
-      name: 'Đặt logo thương hiệu',
+      name: 'setLogoTrademark',
       onPress: () => {},
     },
     {
-      name: 'Đặt banner',
+      name: 'setBanner',
       onPress: () => {},
     },
     {
-      name: 'Bài viết PR',
+      name: 'postsPr',
       onPress: () => {},
     },
     {
-      name: 'Quảng cáo dự án',
+      name: 'advertisementProject',
       onPress: () => {},
     },
   ];
+
   const accountManager = [
     {
-      name: 'Thông tin cá nhân',
+      name: 'informationAccount',
+      onPress: navigateToPersonalInformation,
+    },
+    {
+      name: 'informationAgency',
       onPress: () => {},
     },
     {
-      name: 'Thông tin đại lý',
+      name: 'upgradeAccount',
       onPress: () => {},
     },
     {
-      name: 'Nâng cấp tài khoản',
+      name: 'changePassword',
+      onPress: navigateToChangePassword,
+    },
+    {
+      name: 'notification',
       onPress: () => {},
     },
     {
-      name: 'Đổi mật khẩu',
-      onPress: () => navigate('ChangePassword'),
-    },
-    {
-      name: 'Thông báo',
-      onPress: () => {},
-    },
-    {
-      name: 'Quyền riêng tư',
+      name: 'privacy',
       onPress: () => {},
     },
   ];
+
   return (
     <Screen>
       <Container>
         <View style={styles.header}>
           <View style={styles.boxHeaderLeft}>
-            <Avatar uri={null} />
+            <Avatar
+              rounded
+              icon={<Icon name="photo-camera" />}
+              size={75}
+              containerStyle={styles.boxAvatar}
+              renderPlaceholderContent={<Text style={styles.text}>U</Text>}
+            >
+              <Avatar.Accessory size={23} />
+            </Avatar>
             <View style={styles.boxInfo}>
               <View style={styles.boxName}>
-                <Text style={styles.name}>Mr.Abc</Text>
+                <Text style={styles.name}>{user?.name}</Text>
                 <Icon
                   name="border-color"
                   size={20}
                 />
               </View>
-              <Text style={styles.phone}>0388227325</Text>
-              <Text style={styles.phone}>tuan@gmail.com</Text>
+              <Text style={styles.phone}>{user?.phone_number}</Text>
+              <Text style={styles.phone}>{user?.email}</Text>
             </View>
           </View>
-          <Text style={styles.myPage}>Trang cá nhân</Text>
+          <Text
+            style={styles.myPage}
+            onPress={navigateToPersonalInformation}
+          >
+            Trang cá nhân
+          </Text>
         </View>
         <View style={styles.boxRankAccount}>
           <View>
@@ -191,7 +213,7 @@ const AccountScreen = () => {
                 color={COLOR_GREEN_1}
               />
             </View>
-            <Text style={styles.valuePromotion}>2,450,000 đ</Text>
+            <Text style={styles.valuePromotion}>50,000 đ</Text>
           </View>
           <TouchableOpacity style={styles.payment}>
             <Icon

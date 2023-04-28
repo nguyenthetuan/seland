@@ -1,28 +1,33 @@
 import { Icon } from '@rneui/base';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 
 import { Text } from '../../../../../components';
 import styles from './styles';
 
-const AccountMenu = ({ label, options }) => (
-  <View>
-    <Text style={styles.label}>{label}</Text>
+const AccountMenu = ({ label, options }) => {
+  const { t } = useTranslation();
+
+  return (
     <View>
-      {options?.map((item, index) => (
-        <TouchableOpacity
-          style={styles.btnMenu}
-          onPress={item?.onPress}
-          key={`accountMenu${item}${index}`}
-        >
-          <Text style={styles.name}>{item?.name}</Text>
-          <Icon name="navigate-next" />
-        </TouchableOpacity>
-      ))}
+      <Text style={styles.label}>{label}</Text>
+      <View>
+        {options?.map(item => (
+          <TouchableOpacity
+            style={styles.btnMenu}
+            onPress={item?.onPress}
+            key={`accountMenu${item?.name}`}
+          >
+            <Text style={styles.name}>{t(`button.${item?.name}`)}</Text>
+            <Icon name="navigate-next" />
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 AccountMenu.defaultProps = {
   label: '',

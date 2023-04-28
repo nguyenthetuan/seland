@@ -1,11 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from '@rneui/themed';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import { Text } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../constants';
+import { getProfile } from '../../features';
 import { getScreens } from '../../utils';
 import routes from './routes';
 import styles from './styles';
@@ -14,6 +16,12 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   const { t } = useTranslation();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
 
   const getCreatePostTabBarIcon = useCallback(
     () => (
