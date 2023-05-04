@@ -155,12 +155,16 @@ const AccountScreen = () => {
           <View style={styles.boxHeaderLeft}>
             <Avatar
               rounded
-              icon={<Icon name="photo-camera" />}
               size={75}
               containerStyle={styles.boxAvatar}
-              renderPlaceholderContent={<Text style={styles.text}>U</Text>}
+              renderPlaceholderContent={
+                <Text style={styles.text}>{user?.name.charAt(0)}</Text>
+              }
             >
-              <Avatar.Accessory size={23} />
+              <Avatar.Accessory
+                size={23}
+                name="photo-camera"
+              />
             </Avatar>
             <View style={styles.boxInfo}>
               <View style={styles.boxName}>

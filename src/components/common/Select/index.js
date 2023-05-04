@@ -2,13 +2,14 @@ import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { useController } from 'react-hook-form';
+import { StyleSheet } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
 import { COLOR_BLACK_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-const Select = ({ control, data, label, name, ...props }) => {
+const Select = ({ control, data, label, name, styleLabel, ...props }) => {
   const {
     field: { onChange, value },
   } = useController({ control, name });
@@ -27,7 +28,11 @@ const Select = ({ control, data, label, name, ...props }) => {
 
   return (
     <>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && (
+        <Text style={StyleSheet.flatten([styles.label, styleLabel])}>
+          {label}
+        </Text>
+      )}
       <SelectDropdown
         buttonStyle={[styles.button, styles.row]}
         buttonTextAfterSelection={selectedItem => selectedItem.label}
@@ -55,6 +60,8 @@ Select.propTypes = {
   data: PropTypes.array,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
+  styleLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    .isRequired,
 };
 
 export default Select;

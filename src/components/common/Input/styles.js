@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   input: isFocused => ({
     borderColor: isFocused ? COLOR_BLUE_4 : COLOR_GRAY_5,
-    borderRadius: 8,
+    borderRadius: 2,
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    lineHeight: 24,
+    // lineHeight: 24,
   },
 });
 
