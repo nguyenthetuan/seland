@@ -17,8 +17,7 @@ export const getHeaders = customHeaders => {
     delete header.Authorization;
   } else {
     const { token } = store.getState().auth;
-    const authToken = token;
-    header.Authorization = `Bearer ${authToken}`;
+    header.Authorization = `Bearer ${token}`;
   }
   return { ...header };
 };
