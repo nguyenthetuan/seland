@@ -35,6 +35,7 @@ const slice = createSlice({
       company_address: '',
       tax_code: '',
       website: '',
+      is_phone_verified: 0,
     },
     error: '',
   },

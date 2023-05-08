@@ -54,9 +54,9 @@ const DateTimePicker = ({ control, name, label, styleLabel }) => {
         onCancel={() => {
           setOpen1(false);
         }}
-        confirmText={t('confirm')}
-        cancelText={t('cancel')}
-        title={t('select_date')}
+        confirmText="Xác nhận"
+        cancelText="Huỷ"
+        title="chọn ngày sinh"
         timeZoneOffsetInMinutes={-1 * new Date().getTimezoneOffset()}
       />
     </View>

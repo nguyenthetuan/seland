@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Avatar, Icon } from '@rneui/base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
@@ -21,7 +21,6 @@ import {
 import {
   COLOR_BLUE_1,
   COLOR_BLUE_2,
-  COLOR_GRAY_2,
   COLOR_GRAY_5,
   COLOR_WHITE,
 } from '../../../constants';
@@ -65,6 +64,7 @@ const PersonalInformationScreen = () => {
     control,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     defaultValues: {
       name: '',
@@ -86,6 +86,15 @@ const PersonalInformationScreen = () => {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    if (user) {
+      setValue('name', user?.name);
+      setValue('phone_number', user?.phone_number);
+      setValue('email', user?.email);
+      setValue('website', user?.website);
+    }
+  }, [user]);
+
   const onSubmit = data => console.log(data);
 
   const ListIAm = [
@@ -106,6 +115,10 @@ const PersonalInformationScreen = () => {
       key: 4,
     },
   ];
+  console.log(
+    '🚀 ~ file: index.js:244 ~ PersonalInformationScreen ~ user?.is_phone_verified:',
+    user?.is_phone_verified
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: COLOR_WHITE }}>
@@ -333,6 +346,7 @@ const PersonalInformationScreen = () => {
           buttonStyle={{
             marginHorizontal: 8,
             marginTop: 24,
+            marginBottom: 50,
           }}
           onPress={handleSubmit(onSubmit)}
           title={t('button.save')}
