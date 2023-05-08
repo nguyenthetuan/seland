@@ -12,13 +12,15 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
   },
-  defaultInput: {
+  input: {
+    alignItems: 'center',
     backgroundColor: COLOR_WHITE,
     borderColor: COLOR_GRAY_5,
     borderRadius: 2,
     borderWidth: 1,
-    padding: 7,
-    paddingLeft: 16,
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
   label: {
     marginBottom: 8,

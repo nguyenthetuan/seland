@@ -30,6 +30,8 @@
     "changePassword": "Thay đổi mật khẩu",
     "notification": "Thông báo",
     "privacy": "Quyền riêng tư",
+    "confirm": "Xác nhận",
+    "cancel": "Huỷ",
     "save": "Lưu"
   },
   "checkbox": {
