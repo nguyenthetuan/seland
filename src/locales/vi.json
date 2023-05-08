@@ -30,6 +30,10 @@
     "changePassword": "Thay đổi mật khẩu",
     "notification": "Thông báo",
     "privacy": "Quyền riêng tư",
+    "customer": "Khách hàng",
+    "investor": "Nhà đầu tư",
+    "landlord": "Chủ đất",
+    "broker": "Môi giới",
     "confirm": "Xác nhận",
     "cancel": "Huỷ",
     "save": "Lưu"
@@ -52,7 +56,14 @@
     "resendOtp": "Gửi lại mã xác minh",
     "resendOtpAfter1": "Gửi lại mã sau",
     "resendOtpAfter2": "giây",
-    "skip": "Bỏ qua"
+    "skip": "Bỏ qua",
+    "iam": "Tôi là",
+    "accountRank": "Hạng tài khoản",
+    "professionalAccount": "Tài khoản chuyên nghiệp",
+    "viewMoreAccountPackages": "Xem thêm gói tài khoản",
+    "personalInformation": "Thông tin cá nhân",
+    "contactInformation": "Thông tin liên hệ",
+    "invoiceInformation": "Thông tin xuất hoá đơn"
   },
   "error": {
     "phoneNumber": {
@@ -84,6 +95,9 @@
       "maxLength": "Giới hạn độ dài website: 255 kí tự"
     }
   },
+  "header": {
+    "personalInformation": "Thông tin cá nhân"
+  },
   "heading": {
     "hello": "Xin chào bạn",
     "loginToContinue": "Đăng nhập để tiếp tục",
@@ -107,6 +121,12 @@
     "companyName": "Tên công ty",
     "taxCode": "Mã số thuế",
     "website": "Website"
+  },
+  "select": {
+    "sex": "Giới tính",
+    "province": "Tỉnh/thành phố",
+    "district": "Quận/huyện",
+    "ward": "Phường/xã"
   },
   "tabBar": {
     "home": "Trang chủ",

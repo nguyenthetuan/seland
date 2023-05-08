@@ -18,12 +18,6 @@ import {
   Select,
   Text,
 } from '../../../components';
-import {
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_WHITE,
-} from '../../../constants';
 import { selectUser } from '../../../features';
 import { yup } from '../../../utils';
 import styles from './styles';
@@ -49,6 +43,25 @@ const PersonalInformationScreen = () => {
   const { user } = useSelector(selectUser);
   const [Iam, setIam] = useState(1);
 
+  const Iams = [
+    {
+      key: 1,
+      name: 'customer',
+    },
+    {
+      key: 2,
+      name: 'investor',
+    },
+    {
+      key: 3,
+      name: 'landlord',
+    },
+    {
+      key: 4,
+      name: 'broker',
+    },
+  ];
+
   const sexes = [
     {
       label: 'Nam',
@@ -59,6 +72,7 @@ const PersonalInformationScreen = () => {
       value: 2,
     },
   ];
+
   const {
     clearErrors,
     control,
@@ -88,127 +102,65 @@ const PersonalInformationScreen = () => {
 
   useEffect(() => {
     if (user) {
-      setValue('name', user?.name);
-      setValue('phone_number', user?.phone_number);
-      setValue('email', user?.email);
-      setValue('website', user?.website);
+      setValue('name', user.name);
+      setValue('phone_number', user.phone_number);
+      setValue('email', user.email);
+      setValue('website', user.website);
     }
-  }, [user]);
+  }, [user, setValue]);
 
   const onSubmit = data => console.log(data);
 
-  const ListIAm = [
-    {
-      name: 'Khách hàng',
-      key: 1,
-    },
-    {
-      name: 'Nhà đầu từ',
-      key: 2,
-    },
-    {
-      name: 'Chủ đất',
-      key: 3,
-    },
-    {
-      name: 'Môi giới',
-      key: 4,
-    },
-  ];
-  console.log(
-    '🚀 ~ file: index.js:244 ~ PersonalInformationScreen ~ user?.is_phone_verified:',
-    user?.is_phone_verified
-  );
-
   return (
-    <View style={{ flex: 1, backgroundColor: COLOR_WHITE }}>
-      <Header title="Thông tin cá nhân" />
+    <View style={styles.container}>
+      <Header title={t('header.personalInformation')} />
       <Screen>
         <Container>
           <Avatar
-            rounded
-            icon={<Icon name="photo-camera" />}
-            size={120}
             containerStyle={styles.boxAvatar}
+            icon={<Icon name="photo-camera" />}
             renderPlaceholderContent={
               <Text style={styles.text}>{user?.name?.charAt(0)}</Text>
             }
+            rounded
+            size={120}
           >
             <Avatar.Accessory
-              size={30}
               name="photo-camera"
+              size={30}
             />
           </Avatar>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              marginVertical: 8,
-            }}
-          >
-            Tôi là
-          </Text>
+          <Text style={styles.mainLabel}>{t('common.iam')}</Text>
           <FlatList
-            data={ListIAm}
+            data={Iams}
+            keyExtractor={item => `iam${item.key}`}
             numColumns={2}
-            keyExtractor={item => `iam${item?.key}`}
             renderItem={({ item }) => (
-              <View
-                style={{
-                  flex: 0.5,
-                  marginHorizontal: 4,
-                  marginBottom: 6,
-                }}
-              >
+              <View style={styles.iamButtonContainer}>
                 <Button
-                  title={item?.name}
-                  type="outline"
-                  titleStyle={{ color: COLOR_BLUE_1 }}
-                  buttonStyle={{
-                    borderWidth: 2,
-                    borderColor:
-                      item?.key === Iam ? COLOR_BLUE_2 : COLOR_GRAY_5,
-                  }}
+                  buttonStyle={styles.iamButton(item.key === Iam)}
                   onPress={() => setIam(item.key)}
+                  title={t(`button.${item.name}`)}
+                  titleStyle={styles.iamButtonTitle}
+                  type="outline"
                 />
-                {item?.key === Iam ? (
-                  <View style={{ position: 'absolute', right: 4, top: 4 }}>
+                {item?.key === Iam && (
+                  <View style={styles.checked}>
                     <TickButton />
                   </View>
-                ) : null}
+                )}
               </View>
             )}
           />
-
-          <Text
-            style={{
-              fontWeight: 'bold',
-              marginVertical: 8,
-            }}
-          >
-            Hạng tài khoản
-          </Text>
-          <View
-            style={{
-              alignItems: 'flex-end',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <DashedButton title="Tài khoản chuyên nghiệp" />
-            <Text
-              style={{
-                color: COLOR_BLUE_2,
-                fontSize: 14,
-                lineHeight: 22,
-                textAlign: 'right',
-                textDecorationLine: 'underline',
-              }}
-            >
-              Xem thêm gói tài khoản
+          <Text style={styles.mainLabel}>{t('common.accountRank')}</Text>
+          <View style={styles.accountRank}>
+            <DashedButton title={t('common.professionalAccount')} />
+            <Text style={styles.viewMoreAccountPackages}>
+              {t('common.viewMoreAccountPackages')}
             </Text>
           </View>
         </Container>
-        <Text style={styles.label}>Thông tin cá nhân</Text>
+        <Text style={styles.label}>{t('common.personalInformation')}</Text>
         <Input
           autoComplete="name"
           control={control}
@@ -218,31 +170,27 @@ const PersonalInformationScreen = () => {
           onFocus={() => clearErrors('name')}
           labelStyle={styles.inputLabel}
         />
-        <View
-          style={{
-            marginHorizontal: 8,
-          }}
-        >
+        <View style={styles.sex}>
           <Select
             control={control}
             data={sexes}
             defaultButtonText="Please Select"
-            label="Giới tính"
+            label={t('select.sex')}
             name="sex"
             labelStyle={styles.inputLabel}
           />
         </View>
-
         <DateTimePicker
           labelStyle={styles.inputLabel}
           label="Ngày sinh"
           control={control}
           name="birthday"
         />
-        <Text style={styles.label}>Thông tin liên hệ</Text>
+        <Text style={styles.label}>{t('common.contactInformation')}</Text>
         <Input
           autoComplete="tel"
           control={control}
+          disabled={user?.is_phone_verified === 1}
           errorMessage={errors.phone_number?.message}
           inputMode="tel"
           isPhoneNumber
@@ -269,7 +217,7 @@ const PersonalInformationScreen = () => {
           onFocus={() => clearErrors('address')}
           labelStyle={styles.inputLabel}
         />
-        <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+        <View style={styles.address}>
           <Select
             control={control}
             data={[
@@ -278,24 +226,24 @@ const PersonalInformationScreen = () => {
                 value: 1,
               },
             ]}
-            defaultButtonText="Tỉnh/thành phố"
-            name="sex"
+            defaultButtonText={t('select.province')}
             labelStyle={styles.inputLabel}
+            name="province_id"
           />
-          <View style={{ width: 6, height: 10 }} />
-          <Select
-            control={control}
-            data={[
-              {
-                label: 'Quận/huyện',
-                value: 1,
-              },
-            ]}
-            defaultButtonText="Quận/huyện"
-            name="sex"
-            labelStyle={styles.inputLabel}
-          />
-          <View style={{ width: 6, height: 10 }} />
+          <View style={styles.addressMiddle}>
+            <Select
+              control={control}
+              data={[
+                {
+                  label: 'Quận/huyện',
+                  value: 1,
+                },
+              ]}
+              defaultButtonText={t('select.district')}
+              labelStyle={styles.inputLabel}
+              name="district_id"
+            />
+          </View>
           <Select
             control={control}
             data={[
@@ -304,50 +252,46 @@ const PersonalInformationScreen = () => {
                 value: 1,
               },
             ]}
-            defaultButtonText="Phường/xã"
-            name="sex"
+            defaultButtonText={t('select.ward')}
             labelStyle={styles.inputLabel}
+            name="ward_id"
           />
         </View>
-        <Text style={styles.label}>Thông tin xuất hoá đơn</Text>
+        <Text style={styles.label}>{t('common.invoiceInformation')}</Text>
         <Input
           control={control}
           errorMessage={errors.name_company?.message}
           label={t('input.companyName')}
+          labelStyle={styles.inputLabel}
           name="name_company"
           onFocus={() => clearErrors('name_company')}
-          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
           errorMessage={errors.company_address?.message}
           label={t('input.address')}
+          labelStyle={styles.inputLabel}
           name="company_address"
           onFocus={() => clearErrors('company_address')}
-          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
           errorMessage={errors.tax_code?.message}
           label={t('input.taxCode')}
+          labelStyle={styles.inputLabel}
           name="tax_code"
           onFocus={() => clearErrors('tax_code')}
-          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
           errorMessage={errors.website?.message}
           label={t('input.website')}
+          labelStyle={styles.inputLabel}
           name="website"
           onFocus={() => clearErrors('website')}
-          labelStyle={styles.inputLabel}
         />
         <Button
-          buttonStyle={{
-            marginHorizontal: 8,
-            marginTop: 24,
-            marginBottom: 50,
-          }}
+          buttonStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
           title={t('button.save')}
         />
