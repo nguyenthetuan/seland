@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { COLOR_GRAY_5 } from '../../../constants';
 import Text from '../Text';
@@ -18,7 +18,7 @@ const Input = ({
   onFocus,
   placeholder,
   showPasswordPolicy,
-  styleLabel,
+  labelStyle,
   ...props
 }) => {
   const {
@@ -61,7 +61,7 @@ const Input = ({
         errorStyle={styles.error}
         inputContainerStyle={styles.input(isFocused)}
         label={
-          <Text style={StyleSheet.flatten([styles.label, styleLabel])}>
+          <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
             {label}
           </Text>
         }
@@ -94,6 +94,7 @@ Input.defaultProps = {
   isPassword: false,
   isPhoneNumber: false,
   label: '',
+  labelStyle: {},
   onFocus: () => {},
   placeholder: '',
   showPasswordPolicy: false,
@@ -104,12 +105,11 @@ Input.propTypes = {
   isPassword: PropTypes.bool,
   isPhoneNumber: PropTypes.bool,
   label: PropTypes.string,
+  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
   showPasswordPolicy: PropTypes.bool,
-  styleLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
-    .isRequired,
 };
 
 export default Input;

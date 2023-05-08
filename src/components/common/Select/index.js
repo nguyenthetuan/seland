@@ -9,7 +9,7 @@ import { COLOR_BLACK_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-const Select = ({ control, data, label, name, styleLabel, ...props }) => {
+const Select = ({ control, data, label, labelStyle, name, ...props }) => {
   const {
     field: { onChange, value },
   } = useController({ control, name });
@@ -29,7 +29,7 @@ const Select = ({ control, data, label, name, styleLabel, ...props }) => {
   return (
     <>
       {label && (
-        <Text style={StyleSheet.flatten([styles.label, styleLabel])}>
+        <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
         </Text>
       )}
@@ -53,15 +53,15 @@ const Select = ({ control, data, label, name, styleLabel, ...props }) => {
 Select.defaultProps = {
   data: [],
   label: '',
+  labelStyle: {},
 };
 
 Select.propTypes = {
   control: PropTypes.any.isRequired,
   data: PropTypes.array,
   label: PropTypes.string,
+  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
-  styleLabel: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
-    .isRequired,
 };
 
 export default Select;
