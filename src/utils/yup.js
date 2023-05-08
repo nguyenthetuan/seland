@@ -63,9 +63,12 @@ yup.addMethod(yup.string, 'isValidAddress', function validateAddress() {
 });
 
 yup.addMethod(yup.string, 'isValidCompanyName', function validateCompanyName() {
-  return this.trim()
-    .min(3, t('error.companyName.length'))
-    .max(128, t('error.companyName.length'));
+  return this.trim().test(
+    'isValidCompanyName',
+    t('error.companyName.length'),
+    companyName =>
+      !companyName || (companyName.length >= 3 && companyName <= 128)
+  );
 });
 
 yup.addMethod(yup.string, 'isValidTaxCode', function validateTaxCode() {
