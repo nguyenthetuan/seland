@@ -16,11 +16,7 @@ const Button = ({
   ...props
 }) => (
   <RNEButton
-    buttonStyle={
-      Array.isArray(buttonStyle)
-        ? [styles.button, ...buttonStyle]
-        : [styles.button, buttonStyle]
-    }
+    buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
     color={color}
     disabled={loading}
     disabledStyle={styles.disabled}
@@ -52,4 +48,3 @@ Button.propTypes = {
 };
 
 export default Button;
-// 'clear' | 'outline' | 'solid',
