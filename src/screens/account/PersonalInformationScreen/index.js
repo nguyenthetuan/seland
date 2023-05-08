@@ -131,7 +131,7 @@ const PersonalInformationScreen = () => {
             size={120}
             containerStyle={styles.boxAvatar}
             renderPlaceholderContent={
-              <Text style={styles.text}>{user?.name.charAt(0)}</Text>
+              <Text style={styles.text}>{user?.name?.charAt(0)}</Text>
             }
           >
             <Avatar.Accessory
@@ -216,7 +216,7 @@ const PersonalInformationScreen = () => {
           label={t('input.name')}
           name="name"
           onFocus={() => clearErrors('name')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <View
           style={{
@@ -229,12 +229,12 @@ const PersonalInformationScreen = () => {
             defaultButtonText="Please Select"
             label="Giới tính"
             name="sex"
-            styleLabel={styles.inputLabel}
+            labelStyle={styles.inputLabel}
           />
         </View>
 
         <DateTimePicker
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
           label="Ngày sinh"
           control={control}
           name="birthday"
@@ -249,7 +249,7 @@ const PersonalInformationScreen = () => {
           label={t('input.phoneNumber')}
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <Input
           autoComplete="email"
@@ -259,7 +259,7 @@ const PersonalInformationScreen = () => {
           label={t('input.email')}
           name="email"
           onFocus={() => clearErrors('email')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
@@ -267,7 +267,7 @@ const PersonalInformationScreen = () => {
           label={t('input.address')}
           name="address"
           onFocus={() => clearErrors('address')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
           <Select
@@ -280,7 +280,7 @@ const PersonalInformationScreen = () => {
             ]}
             defaultButtonText="Tỉnh/thành phố"
             name="sex"
-            styleLabel={styles.inputLabel}
+            labelStyle={styles.inputLabel}
           />
           <View style={{ width: 6, height: 10 }} />
           <Select
@@ -293,7 +293,7 @@ const PersonalInformationScreen = () => {
             ]}
             defaultButtonText="Quận/huyện"
             name="sex"
-            styleLabel={styles.inputLabel}
+            labelStyle={styles.inputLabel}
           />
           <View style={{ width: 6, height: 10 }} />
           <Select
@@ -306,7 +306,7 @@ const PersonalInformationScreen = () => {
             ]}
             defaultButtonText="Phường/xã"
             name="sex"
-            styleLabel={styles.inputLabel}
+            labelStyle={styles.inputLabel}
           />
         </View>
         <Text style={styles.label}>Thông tin xuất hoá đơn</Text>
@@ -316,7 +316,7 @@ const PersonalInformationScreen = () => {
           label={t('input.companyName')}
           name="name_company"
           onFocus={() => clearErrors('name_company')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
@@ -324,7 +324,7 @@ const PersonalInformationScreen = () => {
           label={t('input.address')}
           name="company_address"
           onFocus={() => clearErrors('company_address')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
@@ -332,7 +332,7 @@ const PersonalInformationScreen = () => {
           label={t('input.taxCode')}
           name="tax_code"
           onFocus={() => clearErrors('tax_code')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
@@ -340,7 +340,7 @@ const PersonalInformationScreen = () => {
           label={t('input.website')}
           name="website"
           onFocus={() => clearErrors('website')}
-          styleLabel={styles.inputLabel}
+          labelStyle={styles.inputLabel}
         />
         <Button
           buttonStyle={{

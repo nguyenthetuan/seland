@@ -158,7 +158,7 @@ const AccountScreen = () => {
               size={75}
               containerStyle={styles.boxAvatar}
               renderPlaceholderContent={
-                <Text style={styles.text}>{user?.name.charAt(0)}</Text>
+                <Text style={styles.text}>{user?.name?.charAt(0)}</Text>
               }
             >
               <Avatar.Accessory

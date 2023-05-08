@@ -16,27 +16,29 @@ export const getProfile = createAsyncThunk(
   }
 );
 
+const initialUser = {
+  avatar: '',
+  name: '',
+  sex: null,
+  birthday: '',
+  phone_number: '',
+  email: '',
+  address: '',
+  ward_id: null,
+  district_id: null,
+  province_id: null,
+  name_company: '',
+  company_address: '',
+  tax_code: '',
+  website: '',
+  is_phone_verified: 0,
+};
+
 const slice = createSlice({
   name: 'user',
   initialState: {
     loading: false,
-    user: {
-      avatar: '',
-      name: '',
-      sex: null,
-      birthday: '',
-      phone_number: '',
-      email: '',
-      address: '',
-      ward_id: null,
-      district_id: null,
-      province_id: null,
-      name_company: '',
-      company_address: '',
-      tax_code: '',
-      website: '',
-      is_phone_verified: 0,
-    },
+    user: initialUser,
     error: '',
   },
   extraReducers: builder => {
@@ -50,7 +52,7 @@ const slice = createSlice({
     });
     builder.addCase(getProfile.rejected, (state, action) => {
       state.loading = false;
-      state.user = {};
+      state.user = initialUser;
       state.error = action.payload;
     });
   },
