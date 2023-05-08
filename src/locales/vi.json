@@ -4,7 +4,8 @@
     "continue": "Tiếp tục",
     "verify": "Xác minh",
     "finish": "Hoàn tất",
-    "save": "Lưu"
+    "save": "Lưu",
+    "seeAll": "Xem tất cả"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"

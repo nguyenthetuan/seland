@@ -44,7 +44,7 @@ const listCategory = [
     icon: '5',
   },
   {
-    name: 'Tính dòng tiền',
+    name: 'Tính dòng\ntiền',
     icon: '6',
   },
   {

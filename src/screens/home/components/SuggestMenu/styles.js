@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_2 } from '../../../../constants';
+import { COLOR_BLUE_1, COLOR_BLUE_2 } from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxItemSuggest: {
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     width: '22%',
   },
   content: {
+    color: COLOR_BLUE_1,
     fontSize: 12,
     lineHeight: 14,
     textAlign: 'center',
