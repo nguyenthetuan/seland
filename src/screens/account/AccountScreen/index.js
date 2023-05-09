@@ -16,8 +16,8 @@ import AccountMenu from './components/AccountMenu';
 import styles from './styles';
 
 const AccountScreen = () => {
+  const { data: user } = useSelector(selectUser);
   const { navigate } = useNavigation();
-  const { user } = useSelector(selectUser);
 
   const navigateToPersonalInformation = () =>
     navigate(SCREENS.PERSONAL_INFORMATION);
@@ -43,7 +43,7 @@ const AccountScreen = () => {
     },
   ];
 
-  const managerPost = [
+  const postManagement = [
     {
       name: 'shownPosts',
       onPress: () => {},
@@ -235,7 +235,7 @@ const AccountScreen = () => {
         />
         <AccountMenu
           label="Quản lý tin đăng"
-          options={managerPost}
+          options={postManagement}
         />
         <AccountMenu
           label="Quản lý kho bất động sản"

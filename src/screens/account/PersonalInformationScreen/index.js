@@ -39,8 +39,8 @@ const schema = yup.object({
 });
 
 const PersonalInformationScreen = () => {
+  const { data: user } = useSelector(selectUser);
   const { t } = useTranslation();
-  const { user } = useSelector(selectUser);
   const [Iam, setIam] = useState(1);
 
   const Iams = [

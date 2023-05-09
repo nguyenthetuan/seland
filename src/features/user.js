@@ -38,7 +38,7 @@ const slice = createSlice({
   name: 'user',
   initialState: {
     loading: false,
-    user: initialUser,
+    data: initialUser,
     error: '',
   },
   extraReducers: builder => {
