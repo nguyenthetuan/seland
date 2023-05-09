@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetProfile } from '../api/user';
+import { requestGetProfile, requestUpdateProfile } from '../api/user';
 
 export const selectUser = state => state.user;
 
@@ -16,8 +16,22 @@ export const getProfile = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  'updateProfile',
+  async (input, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestUpdateProfile(input);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error?.data?.error);
+    }
+  }
+);
+
 const initialUser = {
+  id: 0,
   avatar: '',
+  user_type_id: 1,
   name: '',
   sex: null,
   birthday: '',
@@ -53,6 +67,18 @@ const slice = createSlice({
     builder.addCase(getProfile.rejected, (state, action) => {
       state.loading = false;
       state.data = initialUser;
+      state.error = action.payload;
+    });
+    builder.addCase(updateProfile.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+      state.error = '';
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.loading = false;
       state.error = action.payload;
     });
   },

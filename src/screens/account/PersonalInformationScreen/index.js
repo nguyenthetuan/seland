@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../assets';
 import {
@@ -18,20 +18,20 @@ import {
   Select,
   Text,
 } from '../../../components';
-import { selectUser } from '../../../features';
-import { yup } from '../../../utils';
+import { selectUser, updateProfile } from '../../../features';
+import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
 
 const schema = yup.object({
   name: yup.string().isValidName(),
-  sex: yup.number(),
+  sex: yup.number().nullable(),
   birthday: yup.string(),
   phone_number: yup.string().isValidPhoneNumber(),
   email: yup.string().email(),
   address: yup.string().isValidAddress(),
-  ward_id: yup.number(),
-  district_id: yup.number(),
-  province_id: yup.number(),
+  ward_id: yup.number().nullable(),
+  district_id: yup.number().nullable(),
+  province_id: yup.number().nullable(),
   name_company: yup.string().isValidCompanyName(),
   company_address: yup.string().isValidAddress(),
   tax_code: yup.string().isValidTaxCode(),
@@ -39,9 +39,10 @@ const schema = yup.object({
 });
 
 const PersonalInformationScreen = () => {
+  const dispatch = useDispatch();
   const { data: user } = useSelector(selectUser);
   const { t } = useTranslation();
-  const [Iam, setIam] = useState(1);
+  const [Iam, setIam] = useState(user.user_type_id || 1);
 
   const Iams = [
     {
@@ -109,7 +110,15 @@ const PersonalInformationScreen = () => {
     }
   }, [user, setValue]);
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data =>
+    dispatchThunk(
+      dispatch,
+      updateProfile({
+        ...data,
+        id: user.id,
+        user_type_id: Iam,
+      })
+    );
 
   return (
     <View style={styles.container}>
