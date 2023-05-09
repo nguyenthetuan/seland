@@ -97,7 +97,8 @@
       "format": "Mã số thuế không đúng định dạng"
     },
     "website": {
-      "maxLength": "Giới hạn độ dài website: 255 kí tự"
+      "maxLength": "Giới hạn độ dài website: 255 kí tự",
+      "format": "Website không đúng định dạng"
     }
   },
   "header": {

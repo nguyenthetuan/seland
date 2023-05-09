@@ -95,7 +95,9 @@ yup.addMethod(yup.string, 'isValidTaxCode', function validateTaxCode() {
 });
 
 yup.addMethod(yup.string, 'isValidWebsite', function validateWebsite() {
-  return this.trim().max(255, t('error.website.maxLength'));
+  return this.trim()
+    .max(255, t('error.website.maxLength'))
+    .url(t('error.website.format'));
 });
 
 export default yup;
