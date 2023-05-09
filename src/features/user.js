@@ -8,10 +8,10 @@ export const getProfile = createAsyncThunk(
   'getProfile',
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGetProfile('');
+      const { data } = await requestGetProfile();
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.phone_number?.[0]);
+      return rejectWithValue(error?.data?.phone_number?.[0]);
     }
   }
 );
@@ -47,12 +47,12 @@ const slice = createSlice({
     });
     builder.addCase(getProfile.fulfilled, (state, action) => {
       state.loading = false;
-      state.user = action.payload;
+      state.data = action.payload;
       state.error = '';
     });
     builder.addCase(getProfile.rejected, (state, action) => {
       state.loading = false;
-      state.user = initialUser;
+      state.data = initialUser;
       state.error = action.payload;
     });
   },

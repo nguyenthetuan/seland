@@ -7,19 +7,13 @@ export const api = axios.create({
   baseURL: BASE_URL,
 });
 
-const initHeader = { isAuth: true };
-
 export const getHeaders = customHeaders => {
-  const header = customHeaders || {};
-  const initCustomHeader = customHeaders || initHeader;
-
-  if (!initCustomHeader?.isAuth) {
-    delete header.Authorization;
-  } else {
-    const { token } = store.getState().auth;
-    header.Authorization = `Bearer ${token}`;
+  const headers = { ...customHeaders };
+  const { token } = store.getState().auth;
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
   }
-  return { ...header };
+  return { ...headers };
 };
 
 let isRefreshing = false;
@@ -74,12 +68,12 @@ api.interceptors.response.use(
 );
 
 const get = async (url, params, customHeaders, responseType) => {
-  const headers = await getHeaders(customHeaders);
+  const headers = getHeaders(customHeaders);
   return api.get(url, { params, headers, responseType });
 };
 
 const post = async (url, data, customHeaders) => {
-  const headers = await getHeaders(customHeaders);
+  const headers = getHeaders(customHeaders);
   return api.post(url, { ...data }, { headers });
 };
 
