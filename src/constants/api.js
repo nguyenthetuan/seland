@@ -8,3 +8,6 @@ export const FORGOT_PASSWORD_ROUTE = '/forgotPassword';
 export const CHANGE_PASSWORD_ROUTE = '/auth/changePassword';
 export const GET_PROFILE_ROUTE = '/auth/getProfile';
 export const UPDATE_PROFILE_ROUTE = 'auth/updateUserDetail';
+export const GET_PROVINCES_ROUTE = '/getProvinces';
+export const GET_DISTRICTS_ROUTE = '/getDistricts';
+export const GET_WARDS_ROUTE = '/getWards';

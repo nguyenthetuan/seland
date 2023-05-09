@@ -18,24 +18,30 @@ import {
   Select,
   Text,
 } from '../../../components';
-import { selectUser, updateProfile } from '../../../features';
+import {
+  getDistricts,
+  getProvinces,
+  getWards,
+  selectUser,
+  updateProfile,
+} from '../../../features';
 import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
 
 const schema = yup.object({
   name: yup.string().isValidName(),
   sex: yup.number().nullable(),
-  birthday: yup.string(),
+  birthday: yup.string().nullable(),
   phone_number: yup.string().isValidPhoneNumber(),
-  email: yup.string().isValidEmail(),
-  address: yup.string().isValidAddress(),
+  email: yup.string().nullable().isValidEmail(),
+  address: yup.string().nullable().isValidAddress(),
   ward_id: yup.number().nullable(),
   district_id: yup.number().nullable(),
-  province_id: yup.number().nullable(),
-  name_company: yup.string().isValidCompanyName(),
-  company_address: yup.string().isValidAddress(),
-  tax_code: yup.string().isValidTaxCode(),
-  website: yup.string().isValidWebsite(),
+  province_id: yup.string().nullable(),
+  name_company: yup.string().nullable().isValidCompanyName(),
+  company_address: yup.string().nullable().isValidAddress(),
+  tax_code: yup.string().nullable().isValidTaxCode(),
+  website: yup.string().nullable().isValidWebsite(),
 });
 
 const PersonalInformationScreen = () => {
@@ -43,6 +49,9 @@ const PersonalInformationScreen = () => {
   const { loading, data: user } = useSelector(selectUser);
   const { t } = useTranslation();
   const [Iam, setIam] = useState(user.user_type_id || 1);
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
 
   const Iams = [
     {
@@ -78,6 +87,7 @@ const PersonalInformationScreen = () => {
     clearErrors,
     control,
     formState: { errors },
+    getValues,
     handleSubmit,
     setValue,
   } = useForm({
@@ -101,16 +111,46 @@ const PersonalInformationScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    if (user) {
-      setValue('name', user.name);
-      setValue('phone_number', user.phone_number);
-      setValue('email', user.email);
-      setValue('website', user.website);
-    }
-  }, [user, setValue]);
+  const fetchDistricts = (params, callback) =>
+    dispatchThunk(dispatch, getDistricts(params), callback);
 
-  const onSubmit = data =>
+  const fetchWards = (params, callback) =>
+    dispatchThunk(dispatch, getWards(params), callback);
+
+  const refresh = async () => {
+    await dispatchThunk(dispatch, getProvinces(), async ps => {
+      setProvinces(ps);
+      const { district_id, province_id } = user;
+      if (province_id) {
+        await fetchDistricts(
+          {
+            province_code: province_id,
+          },
+          async ds => {
+            setDistricts(ds);
+            if (district_id) {
+              await fetchWards(
+                {
+                  province_code: province_id,
+                  district_code: district_id,
+                },
+                ws => {
+                  setWards(ws);
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+    Object.entries(user).forEach(([key, value]) => setValue(key, value));
+  };
+
+  useEffect(() => {
+    refresh();
+  }, []);
+
+  const onSubmit = data => {
     dispatchThunk(
       dispatch,
       updateProfile({
@@ -119,6 +159,7 @@ const PersonalInformationScreen = () => {
         user_type_id: Iam,
       })
     );
+  };
 
   return (
     <View style={styles.container}>
@@ -233,40 +274,42 @@ const PersonalInformationScreen = () => {
         <View style={styles.address}>
           <Select
             control={control}
-            data={[
-              {
-                label: 'Tỉnh/thành phố',
-                value: 1,
-              },
-            ]}
+            data={provinces}
             defaultButtonText={t('select.province')}
             disabled={loading}
             labelStyle={styles.inputLabel}
             name="province_id"
+            onSelect={selectedItem =>
+              fetchDistricts(
+                {
+                  province_code: selectedItem.value,
+                },
+                setDistricts
+              )
+            }
           />
           <View style={styles.addressMiddle}>
             <Select
               control={control}
-              data={[
-                {
-                  label: 'Quận/huyện',
-                  value: 1,
-                },
-              ]}
+              data={districts}
               defaultButtonText={t('select.district')}
               disabled={loading}
               labelStyle={styles.inputLabel}
               name="district_id"
+              onSelect={selectedItem =>
+                fetchWards(
+                  {
+                    province_code: getValues().province_id,
+                    district_code: selectedItem.value,
+                  },
+                  setWards
+                )
+              }
             />
           </View>
           <Select
             control={control}
-            data={[
-              {
-                label: 'Phường/xã',
-                value: 1,
-              },
-            ]}
+            data={wards}
             defaultButtonText={t('select.ward')}
             disabled={loading}
             labelStyle={styles.inputLabel}

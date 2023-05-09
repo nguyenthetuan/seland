@@ -9,12 +9,23 @@ import { COLOR_BLACK_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-const Select = ({ control, data, label, labelStyle, name, ...props }) => {
+const Select = ({
+  control,
+  data,
+  label,
+  labelStyle,
+  name,
+  onSelect,
+  ...props
+}) => {
   const {
     field: { onChange, value },
   } = useController({ control, name });
 
-  const handleChange = selectedItem => onChange(selectedItem.value);
+  const handleChange = selectedItem => {
+    if (onSelect) onSelect(selectedItem);
+    onChange(selectedItem.value);
+  };
 
   const renderDropdownIcon = useCallback(
     () => (
@@ -54,6 +65,7 @@ Select.defaultProps = {
   data: [],
   label: '',
   labelStyle: {},
+  onSelect: () => {},
 };
 
 Select.propTypes = {
@@ -62,6 +74,7 @@ Select.propTypes = {
   label: PropTypes.string,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
+  onSelect: PropTypes.func,
 };
 
 export default Select;
