@@ -11,8 +11,9 @@ import styles from './styles';
 
 const Input = ({
   control,
+  isNumeric,
   isPassword,
-  isPhoneNumber,
+  isWebsite,
   label,
   name,
   onFocus,
@@ -37,9 +38,9 @@ const Input = ({
 
   const handleChange = text => {
     onChange(
-      isPhoneNumber
+      isNumeric
         ? text.replace(/[^\d]/g, '')
-        : isPassword
+        : isPassword || isWebsite
         ? text.replace(/\s/g, '')
         : text
     );
@@ -91,8 +92,9 @@ const Input = ({
 };
 
 Input.defaultProps = {
+  isNumeric: false,
   isPassword: false,
-  isPhoneNumber: false,
+  isWebsite: false,
   label: '',
   labelStyle: {},
   onFocus: () => {},
@@ -102,8 +104,9 @@ Input.defaultProps = {
 
 Input.propTypes = {
   control: PropTypes.any.isRequired,
+  isNumeric: PropTypes.bool,
   isPassword: PropTypes.bool,
-  isPhoneNumber: PropTypes.bool,
+  isWebsite: PropTypes.bool,
   label: PropTypes.string,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,

@@ -82,6 +82,10 @@
       "required": "Vui lòng nhập họ tên",
       "length": "Độ dài họ tên: 5-128 kí tự"
     },
+    "email": {
+      "maxLength": "Giới hạn độ dài email: 255 kí tự",
+      "format": "Email không đúng định dạng"
+    },
     "address": {
       "maxLength": "Giới hạn độ dài địa chỉ: 255 kí tự"
     },
@@ -89,7 +93,8 @@
       "length": "Độ dài tên công ty: 3-128 kí tự"
     },
     "taxCode": {
-      "maxLength": "Giới hạn độ dài mã số thuế: 13 kí tự"
+      "maxLength": "Giới hạn độ dài mã số thuế: 13 kí tự",
+      "format": "Mã số thuế không đúng định dạng"
     },
     "website": {
       "maxLength": "Giới hạn độ dài website: 255 kí tự"

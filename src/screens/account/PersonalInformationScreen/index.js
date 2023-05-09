@@ -27,7 +27,7 @@ const schema = yup.object({
   sex: yup.number().nullable(),
   birthday: yup.string(),
   phone_number: yup.string().isValidPhoneNumber(),
-  email: yup.string().email(),
+  email: yup.string().isValidEmail(),
   address: yup.string().isValidAddress(),
   ward_id: yup.number().nullable(),
   district_id: yup.number().nullable(),
@@ -40,7 +40,7 @@ const schema = yup.object({
 
 const PersonalInformationScreen = () => {
   const dispatch = useDispatch();
-  const { data: user } = useSelector(selectUser);
+  const { loading, data: user } = useSelector(selectUser);
   const { t } = useTranslation();
   const [Iam, setIam] = useState(user.user_type_id || 1);
 
@@ -173,6 +173,7 @@ const PersonalInformationScreen = () => {
         <Input
           autoComplete="name"
           control={control}
+          disabled={loading}
           errorMessage={errors.name?.message}
           label={t('input.name')}
           name="name"
@@ -184,6 +185,7 @@ const PersonalInformationScreen = () => {
             control={control}
             data={sexes}
             defaultButtonText="Please Select"
+            disabled={loading}
             label={t('select.sex')}
             name="sex"
             labelStyle={styles.inputLabel}
@@ -199,10 +201,10 @@ const PersonalInformationScreen = () => {
         <Input
           autoComplete="tel"
           control={control}
-          disabled={user?.is_phone_verified === 1}
+          disabled={user?.is_phone_verified === 1 || loading}
           errorMessage={errors.phone_number?.message}
-          inputMode="tel"
-          isPhoneNumber
+          inputMode="numeric"
+          isNumeric
           label={t('input.phoneNumber')}
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}
@@ -211,6 +213,7 @@ const PersonalInformationScreen = () => {
         <Input
           autoComplete="email"
           control={control}
+          disabled={loading}
           errorMessage={errors.email?.message}
           inputMode="email"
           label={t('input.email')}
@@ -220,6 +223,7 @@ const PersonalInformationScreen = () => {
         />
         <Input
           control={control}
+          disabled={loading}
           errorMessage={errors.address?.message}
           label={t('input.address')}
           name="address"
@@ -236,6 +240,7 @@ const PersonalInformationScreen = () => {
               },
             ]}
             defaultButtonText={t('select.province')}
+            disabled={loading}
             labelStyle={styles.inputLabel}
             name="province_id"
           />
@@ -249,6 +254,7 @@ const PersonalInformationScreen = () => {
                 },
               ]}
               defaultButtonText={t('select.district')}
+              disabled={loading}
               labelStyle={styles.inputLabel}
               name="district_id"
             />
@@ -262,6 +268,7 @@ const PersonalInformationScreen = () => {
               },
             ]}
             defaultButtonText={t('select.ward')}
+            disabled={loading}
             labelStyle={styles.inputLabel}
             name="ward_id"
           />
@@ -269,6 +276,7 @@ const PersonalInformationScreen = () => {
         <Text style={styles.label}>{t('common.invoiceInformation')}</Text>
         <Input
           control={control}
+          disabled={loading}
           errorMessage={errors.name_company?.message}
           label={t('input.companyName')}
           labelStyle={styles.inputLabel}
@@ -277,6 +285,7 @@ const PersonalInformationScreen = () => {
         />
         <Input
           control={control}
+          disabled={loading}
           errorMessage={errors.company_address?.message}
           label={t('input.address')}
           labelStyle={styles.inputLabel}
@@ -285,7 +294,9 @@ const PersonalInformationScreen = () => {
         />
         <Input
           control={control}
+          disabled={loading}
           errorMessage={errors.tax_code?.message}
+          inputMode="numeric"
           label={t('input.taxCode')}
           labelStyle={styles.inputLabel}
           name="tax_code"
@@ -293,7 +304,9 @@ const PersonalInformationScreen = () => {
         />
         <Input
           control={control}
+          disabled={loading}
           errorMessage={errors.website?.message}
+          isWebsite
           label={t('input.website')}
           labelStyle={styles.inputLabel}
           name="website"
@@ -301,6 +314,7 @@ const PersonalInformationScreen = () => {
         />
         <Button
           buttonStyle={styles.button}
+          loading={loading}
           onPress={handleSubmit(onSubmit)}
           title={t('button.save')}
         />

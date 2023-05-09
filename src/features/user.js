@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetProfile, requestUpdateProfile } from '../api/user';
+import { requestGetProfile, requestUpdateProfile } from '../api';
 
 export const selectUser = state => state.user;
 
