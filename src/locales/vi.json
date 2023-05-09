@@ -25,7 +25,14 @@
     "resendOtp": "Gửi lại mã xác minh",
     "resendOtpAfter1": "Gửi lại mã sau",
     "resendOtpAfter2": "giây",
-    "skip": "Bỏ qua"
+    "skip": "Bỏ qua",
+    "millionPerM2": "triệu/m²",
+    "m2": "m2",
+    "loading": "Đang tải...",
+    "lease": "Cho thuê",
+    "buy": "Bán",
+    "monopoly": "Độc quyền",
+    "numberPhoneNotSupport": "Số điện thoại không hỗ trợ."
   },
   "error": {
     "phoneNumber": {
@@ -47,7 +54,8 @@
     "registerNewAccount": "Đăng ký tài khoản mới",
     "inputOtp": "Nhập mã xác minh",
     "forgotPassword": "Quên mật khẩu",
-    "createNewPassword": "Tạo mật khẩu mới"
+    "createNewPassword": "Tạo mật khẩu mới",
+    "checkZoning": "Tra quy hoạch"
   },
   "input": {
     "phoneNumber": "Số điện thoại",
