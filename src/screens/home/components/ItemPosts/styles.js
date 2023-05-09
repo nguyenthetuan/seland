@@ -5,6 +5,11 @@ import {
   COLOR_BLACK_2,
   COLOR_BLACK_3,
   COLOR_BLUE_1,
+  COLOR_GRAY_7,
+  COLOR_GREEN_3,
+  COLOR_GREEN_4,
+  COLOR_GREEN_5,
+  COLOR_ORANGE_5,
   COLOR_PURPLE_1,
   COLOR_PURPLE_2,
   COLOR_RED,
@@ -33,7 +38,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   boxMonopoly: {
-    backgroundColor: '#FA8C16',
+    backgroundColor: COLOR_ORANGE_5,
     borderRadius: 15,
     elevation: 5,
     justifyContent: 'center',
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxType: {
-    backgroundColor: '#E6F7FF',
+    backgroundColor: COLOR_GREEN_4,
     borderRadius: 10,
     marginBottom: 8,
     marginRight: 10,
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
     width: 80,
   },
   call: {
-    backgroundColor: '#389E0D',
+    backgroundColor: COLOR_GREEN_5,
     borderRadius: 40,
     margin: 5,
     padding: 8,
@@ -109,7 +114,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   location: {
-    color: '#595959',
+    color: COLOR_GRAY_7,
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 8,

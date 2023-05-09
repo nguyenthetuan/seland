@@ -32,7 +32,9 @@
     "lease": "Cho thuê",
     "buy": "Bán",
     "monopoly": "Độc quyền",
-    "numberPhoneNotSupport": "Số điện thoại không hỗ trợ."
+    "numberPhoneNotSupport": "Số điện thoại không hỗ trợ.",
+    "new": "Mới nhất",
+    "old": "Cũ"
   },
   "error": {
     "phoneNumber": {
@@ -73,5 +75,11 @@
     "createPost": "Đăng tin",
     "managePost": "Quản lý tin",
     "account": "Tài khoản"
+  },
+  "select": {
+    "typeHousing": "Loại nhà đất",
+    "area": "Khu vực",
+    "type": "Loại hình",
+    "sortWith": "Sắp xếp theo: nameType"
   }
 }

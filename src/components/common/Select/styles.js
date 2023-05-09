@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     flex: 1,
+    height: 30,
     width: '100%',
   },
   label: {

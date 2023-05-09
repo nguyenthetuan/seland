@@ -13,7 +13,14 @@ import {
   Love,
 } from '../../../../assets';
 import { Text } from '../../../../components';
-import { COLOR_BLACK_1, COLOR_RED, COLOR_WHITE } from '../../../../constants';
+import {
+  COLOR_BLACK_1,
+  COLOR_GRAY_7,
+  COLOR_GREEN_3,
+  COLOR_ORANGE_5,
+  COLOR_RED,
+  COLOR_WHITE,
+} from '../../../../constants';
 import styles from './styles';
 
 const ItemInfo = ({ value, icon }) => (
@@ -60,9 +67,9 @@ const ItemPosts = ({ item }) => {
       case 1:
         return COLOR_BLACK_1;
       case 2:
-        return '#52C41A';
+        return COLOR_GREEN_3;
       case 3:
-        return '#FA8C16';
+        return COLOR_ORANGE_5;
       default:
         return COLOR_RED;
     }
@@ -142,7 +149,7 @@ const ItemPosts = ({ item }) => {
       <View style={styles.boxLocation}>
         <Icon
           name="location-on"
-          color="#595959"
+          color={COLOR_GRAY_7}
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>

@@ -3,8 +3,18 @@ import { StyleSheet } from 'react-native';
 import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
 
 const styles = StyleSheet.create({
+  areaRange: {
+    marginHorizontal: 5,
+    width: '26%',
+  },
   boxListPost: {
     flex: 1,
+  },
+  boxRealEstate: {
+    width: '33%',
+  },
+  boxStatus: {
+    width: '27%',
   },
   boxZoning: {
     alignItems: 'center',
@@ -16,7 +26,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 36,
     justifyContent: 'center',
+    marginRight: 5,
     width: 36,
+  },
+  buttonSelect: {
+    borderColor: COLOR_GRAY_2,
+    borderRadius: 2,
+    height: 36,
+  },
+  buttonSort: {
+    marginTop: 10,
+    width: '50%',
   },
   checkZoning: {
     fontSize: 10,
@@ -60,10 +80,19 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_WHITE,
     paddingHorizontal: 10,
   },
+  rowTextStyle: {
+    fontSize: 12,
+    lineHeight: 15,
+  },
   spinnerTextStyle: {
     color: COLOR_BLUE_1,
     fontSize: 16,
     lineHeight: 24,
+  },
+  textButtonSelect: {
+    fontSize: 12,
+    lineHeight: 15,
+    marginHorizontal: 2,
   },
 });
 
