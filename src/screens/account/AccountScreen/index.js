@@ -87,24 +87,25 @@ const AccountScreen = () => {
       onPress: () => {},
     },
   ];
+
   const transactionManagement = [
     {
       name: 'transactionHistory',
       onPress: () => {},
     },
     {
-      name: 'listPromotion',
+      name: 'promotionList',
       onPress: () => {},
     },
   ];
 
   const advertisingManagement = [
     {
-      name: 'postsRealEstate',
+      name: 'createRealEstatePost',
       onPress: () => {},
     },
     {
-      name: 'setLogoTrademark',
+      name: 'setBrandLogo',
       onPress: () => {},
     },
     {
@@ -112,22 +113,22 @@ const AccountScreen = () => {
       onPress: () => {},
     },
     {
-      name: 'postsPr',
+      name: 'prPosts',
       onPress: () => {},
     },
     {
-      name: 'advertisementProject',
+      name: 'projectAds',
       onPress: () => {},
     },
   ];
 
-  const accountManager = [
+  const accountManagement = [
     {
-      name: 'informationAccount',
+      name: 'personalInformation',
       onPress: navigateToPersonalInformation,
     },
     {
-      name: 'informationAgency',
+      name: 'agencyInformation',
       onPress: () => {},
     },
     {
@@ -154,16 +155,16 @@ const AccountScreen = () => {
         <View style={styles.header}>
           <View style={styles.boxHeaderLeft}>
             <Avatar
-              rounded
-              size={75}
               containerStyle={styles.boxAvatar}
               renderPlaceholderContent={
                 <Text style={styles.text}>{user?.name?.charAt(0)}</Text>
               }
+              rounded
+              size={75}
             >
               <Avatar.Accessory
-                size={23}
                 name="photo-camera"
+                size={23}
               />
             </Avatar>
             <View style={styles.boxInfo}>
@@ -200,9 +201,9 @@ const AccountScreen = () => {
             <View style={styles.boxLabelItem}>
               <Text>Số dư</Text>
               <Icon
+                color={COLOR_ORANGE_2}
                 name="monetization-on"
                 size={20}
-                color={COLOR_ORANGE_2}
               />
             </View>
             <Text style={styles.valueSurplus}>2,450,000 đ</Text>
@@ -212,18 +213,18 @@ const AccountScreen = () => {
             <View style={styles.boxLabelItem}>
               <Text>Khuyến mãi</Text>
               <Icon
+                color={COLOR_GREEN_1}
                 name="redeem"
                 size={20}
-                color={COLOR_GREEN_1}
               />
             </View>
             <Text style={styles.valuePromotion}>50,000 đ</Text>
           </View>
           <TouchableOpacity style={styles.payment}>
             <Icon
+              color={COLOR_WHITE}
               name="account-balance-wallet"
               size={20}
-              color={COLOR_WHITE}
             />
             <Text style={styles.txtPayment}>Nạp tiền</Text>
           </TouchableOpacity>
@@ -254,10 +255,11 @@ const AccountScreen = () => {
         />
         <AccountMenu
           label="Quản lý tài khoản"
-          options={accountManager}
+          options={accountManagement}
         />
       </Container>
     </Screen>
   );
 };
+
 export default AccountScreen;
