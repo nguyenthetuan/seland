@@ -13,8 +13,12 @@ const Select = ({
   control,
   data,
   label,
-  labelStyle,
   name,
+  rowStyle,
+  rowTextStyle,
+  buttonTextStyle,
+  buttonStyle,
+  labelStyle,
   onSelect,
   ...props
 }) => {
@@ -45,16 +49,16 @@ const Select = ({
         </Text>
       )}
       <SelectDropdown
-        buttonStyle={[styles.button, styles.row]}
+        buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
         buttonTextAfterSelection={selectedItem => selectedItem.label}
-        buttonTextStyle={styles.text}
+        buttonTextStyle={StyleSheet.flatten([styles.text, buttonTextStyle])}
         data={data}
         defaultValueByIndex={data.findIndex(item => item.value === value)}
         onSelect={handleChange}
         renderDropdownIcon={renderDropdownIcon}
-        rowStyle={styles.row}
+        rowStyle={StyleSheet.flatten([rowStyle])}
         rowTextForSelection={item => item.label}
-        rowTextStyle={styles.text}
+        rowTextStyle={StyleSheet.flatten(styles.text, rowTextStyle)}
         {...props}
       />
     </>
@@ -64,6 +68,10 @@ const Select = ({
 Select.defaultProps = {
   data: [],
   label: '',
+  rowTextStyle: {},
+  rowStyle: {},
+  buttonTextStyle: {},
+  buttonStyle: {},
   labelStyle: {},
   onSelect: () => {},
 };
@@ -71,9 +79,13 @@ Select.defaultProps = {
 Select.propTypes = {
   control: PropTypes.any.isRequired,
   data: PropTypes.array,
+  rowTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  buttonTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   label: PropTypes.string,
-  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
+  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onSelect: PropTypes.func,
 };
 

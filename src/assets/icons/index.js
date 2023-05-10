@@ -1,2 +1,12 @@
+export { default as Acreage } from './acreage.svg';
+export { default as Bathroom } from './bathroom.svg';
+export { default as Bedroom } from './bedroom.svg';
+export { default as IconBell } from './bell.svg';
+export { default as Compass } from './compass.svg';
+export { default as LocationMaps } from './location-maps.svg';
 export { default as Logo } from './logo.svg';
+export { default as LogoSeland } from './logo-S.svg';
+export { default as LogoZoning } from './logo-zoning.svg';
+export { default as Love } from './love.svg';
+export { default as MenuThreeLine } from './menu-three-line.svg';
 export { default as TickButton } from './tick.svg';

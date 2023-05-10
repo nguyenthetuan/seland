@@ -11,7 +11,7 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 
-import { authReducer, userReducer } from '../features';
+import { authReducer, realEstatesReducer, userReducer } from '../features';
 
 const persistConfig = {
   key: 'root',
@@ -21,6 +21,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  realEstates: realEstatesReducer,
   user: userReducer,
 });
 

@@ -32,7 +32,7 @@ const successHandler = response => {
   }
   const { data, status } = response;
   if (!data || status !== 200) {
-    return;
+    return {};
   }
   return data;
 };
