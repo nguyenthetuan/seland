@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/base';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -16,9 +15,6 @@ import styles from './styles';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const { navigate } = useNavigation();
-
-  const navigateToChangePassword = () => navigate('ChangePassword');
 
   const handleLogout = () => dispatchThunk(dispatch, logout());
 

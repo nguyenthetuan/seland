@@ -1,6 +1,7 @@
 import { Button as RNEButton } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { StyleSheet } from 'react-native';
 
 import { COLOR_BLUE_1 } from '../../../constants';
 import Text from '../Text';
@@ -15,21 +16,17 @@ const Button = ({
   ...props
 }) => (
   <RNEButton
-    buttonStyle={
-      Array.isArray(buttonStyle)
-        ? [styles.button, ...buttonStyle]
-        : [styles.button, buttonStyle]
-    }
+    buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
     color={color}
     disabled={loading}
     disabledStyle={styles.disabled}
     loading={loading}
-    title={<Text style={styles.title}>{title}</Text>}
-    titleStyle={
-      Array.isArray(titleStyle)
-        ? [styles.title, ...titleStyle]
-        : [styles.title, titleStyle]
+    title={
+      <Text style={StyleSheet.flatten([styles.title, titleStyle])}>
+        {title}
+      </Text>
     }
+    titleStyle={StyleSheet.flatten([styles.title, titleStyle])}
     {...props}
   />
 );

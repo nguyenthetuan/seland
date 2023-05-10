@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: COLOR_WHITE,
     borderColor: COLOR_GRAY_5,
-    borderRadius: 8,
+    borderRadius: 2,
     borderWidth: 1,
     flex: 1,
     height: 30,

@@ -71,8 +71,8 @@ const SignupScreen = () => {
           control={control}
           disabled={loading}
           errorMessage={errors.phone_number?.message}
-          inputMode="tel"
-          isPhoneNumber
+          inputMode="numeric"
+          isNumeric
           label={t('input.phoneNumber')}
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}

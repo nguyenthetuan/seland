@@ -3,20 +3,23 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 
-import { COLOR_GRAY_2 } from '../../../constants';
+import { COLOR_GRAY_5 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
 const Input = ({
   control,
+  isNumeric,
   isPassword,
-  isPhoneNumber,
+  isWebsite,
   label,
   name,
   onFocus,
   placeholder,
   showPasswordPolicy,
+  labelStyle,
   ...props
 }) => {
   const {
@@ -35,9 +38,9 @@ const Input = ({
 
   const handleChange = text => {
     onChange(
-      isPhoneNumber
+      isNumeric
         ? text.replace(/[^\d]/g, '')
-        : isPassword
+        : isPassword || isWebsite
         ? text.replace(/\s/g, '')
         : text
     );
@@ -54,16 +57,20 @@ const Input = ({
   return (
     <>
       <RNEInput
+        style={styles.text}
         disabledInputStyle={styles.disabled}
         errorStyle={styles.error}
         inputContainerStyle={styles.input(isFocused)}
-        style={styles.text}
-        label={<Text style={styles.label}>{label}</Text>}
+        label={
+          <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
+            {label}
+          </Text>
+        }
         onBlur={handleBlur}
         onChangeText={handleChange}
         onFocus={handleFocus}
         placeholder={placeholder || label}
-        placeholderTextColor={COLOR_GRAY_2}
+        placeholderTextColor={COLOR_GRAY_5}
         renderErrorMessage={!passwordPolicyVisible}
         rightIcon={
           isPassword && (
@@ -85,9 +92,11 @@ const Input = ({
 };
 
 Input.defaultProps = {
+  isNumeric: false,
   isPassword: false,
-  isPhoneNumber: false,
+  isWebsite: false,
   label: '',
+  labelStyle: {},
   onFocus: () => {},
   placeholder: '',
   showPasswordPolicy: false,
@@ -95,9 +104,11 @@ Input.defaultProps = {
 
 Input.propTypes = {
   control: PropTypes.any.isRequired,
+  isNumeric: PropTypes.bool,
   isPassword: PropTypes.bool,
-  isPhoneNumber: PropTypes.bool,
+  isWebsite: PropTypes.bool,
   label: PropTypes.string,
+  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,

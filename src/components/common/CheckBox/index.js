@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useController } from 'react-hook-form';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_5 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -24,7 +24,7 @@ const CheckBox = ({ control, name, title, ...props }) => {
       onBlur={onBlur}
       onPress={handlePress}
       title={<Text>{title}</Text>}
-      uncheckedColor={COLOR_GRAY_2}
+      uncheckedColor={COLOR_GRAY_5}
       uncheckedIcon="check-box-outline-blank"
       {...props}
     />

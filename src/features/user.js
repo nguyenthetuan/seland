@@ -1,24 +1,58 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetProfile } from '../api/user';
+import { requestGetProfile, requestUpdateProfile } from '../api';
+
+export const selectUser = state => state.user;
 
 export const getProfile = createAsyncThunk(
   'getProfile',
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGetProfile('');
+      const { data } = await requestGetProfile();
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue(error.response.data?.data?.phone_number?.[0]);
+      return rejectWithValue(error?.data?.phone_number?.[0]);
     }
   }
 );
+
+export const updateProfile = createAsyncThunk(
+  'updateProfile',
+  async (input, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestUpdateProfile(input);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error?.data?.error);
+    }
+  }
+);
+
+const initialUser = {
+  id: 0,
+  avatar: '',
+  user_type_id: 1,
+  name: '',
+  sex: null,
+  birthday: '',
+  phone_number: '',
+  email: '',
+  address: '',
+  ward_id: null,
+  district_id: null,
+  province_id: null,
+  name_company: '',
+  company_address: '',
+  tax_code: '',
+  website: '',
+  is_phone_verified: 0,
+};
 
 const slice = createSlice({
   name: 'user',
   initialState: {
     loading: false,
-    user: {},
+    data: initialUser,
     error: '',
   },
   extraReducers: builder => {
@@ -27,12 +61,24 @@ const slice = createSlice({
     });
     builder.addCase(getProfile.fulfilled, (state, action) => {
       state.loading = false;
-      state.user = action.payload;
+      state.data = action.payload;
       state.error = '';
     });
     builder.addCase(getProfile.rejected, (state, action) => {
       state.loading = false;
-      state.user = {};
+      state.data = initialUser;
+      state.error = action.payload;
+    });
+    builder.addCase(updateProfile.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+      state.error = '';
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.loading = false;
       state.error = action.payload;
     });
   },

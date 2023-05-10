@@ -101,11 +101,10 @@ export const forgotPassword = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
   'changePassword',
-  async (input, { fulfillWithValue, getState, rejectWithValue }) => {
+  async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { token } = selectAuth(getState());
-      const { data } = await requestChangePassword(input, token);
-      return fulfillWithValue(data?.message);
+      const response = await requestChangePassword(input);
+      return fulfillWithValue(response?.message);
     } catch (error) {
       return rejectWithValue(error?.data?.error);
     }

@@ -51,4 +51,53 @@ yup.addMethod(
   }
 );
 
+yup.addMethod(yup.string, 'isValidName', function validateName() {
+  return this.trim()
+    .required(t('error.name.required'))
+    .min(5, t('error.name.length'))
+    .max(128, t('error.name.length'));
+});
+
+yup.addMethod(yup.string, 'isValidEmail', function validateEmail(message) {
+  return this.trim()
+    .max(255, t('error.email.maxLength'))
+    .email(t('error.email.format'))
+    .matches(/^[^A-Z]*$/, t('error.email.format'))
+    .test('isValidEmail', message, (value, context) => {
+      const localPart = value.split('@')[0];
+      return (
+        !value ||
+        (localPart.length >= 4 && localPart.length <= 64) ||
+        context.createError({
+          message: message || t('error.email.format'),
+        })
+      );
+    });
+});
+
+yup.addMethod(yup.string, 'isValidAddress', function validateAddress() {
+  return this.trim().max(255, t('error.address.maxLength'));
+});
+
+yup.addMethod(yup.string, 'isValidCompanyName', function validateCompanyName() {
+  return this.trim().test(
+    'isValidCompanyName',
+    t('error.companyName.length'),
+    companyName =>
+      !companyName || (companyName.length >= 3 && companyName <= 128)
+  );
+});
+
+yup.addMethod(yup.string, 'isValidTaxCode', function validateTaxCode() {
+  return this.trim()
+    .max(13, t('error.taxCode.maxLength'))
+    .matches(/^\d*$/, t('error.taxCode.format'));
+});
+
+yup.addMethod(yup.string, 'isValidWebsite', function validateWebsite() {
+  return this.trim()
+    .max(255, t('error.website.maxLength'))
+    .url(t('error.website.format'));
+});
+
 export default yup;

@@ -71,8 +71,8 @@ const ForgotPasswordScreen1 = () => {
           control={control}
           disabled={loading}
           errorMessage={errors.phone_number?.message}
-          inputMode="tel"
-          isPhoneNumber
+          inputMode="numeric"
+          isNumeric
           label={t('input.inputPhoneNumber')}
           name="phone_number"
           onFocus={handleFocus}

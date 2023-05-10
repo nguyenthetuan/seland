@@ -18,13 +18,18 @@ const Select = ({
   rowTextStyle,
   buttonTextStyle,
   buttonStyle,
+  labelStyle,
+  onSelect,
   ...props
 }) => {
   const {
     field: { onChange, value },
   } = useController({ control, name });
 
-  const handleChange = selectedItem => onChange(selectedItem.value);
+  const handleChange = selectedItem => {
+    if (onSelect) onSelect(selectedItem);
+    onChange(selectedItem.value);
+  };
 
   const renderDropdownIcon = useCallback(
     () => (
@@ -63,6 +68,8 @@ Select.defaultProps = {
   rowStyle: {},
   buttonTextStyle: {},
   buttonStyle: {},
+  labelStyle: {},
+  onSelect: () => {},
 };
 
 Select.propTypes = {
@@ -74,6 +81,8 @@ Select.propTypes = {
   rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
+  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  onSelect: PropTypes.func,
 };
 
 export default Select;

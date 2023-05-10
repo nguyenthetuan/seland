@@ -9,3 +9,4 @@ export { default as LogoSeland } from './logo-S.svg';
 export { default as LogoZoning } from './logo-zoning.svg';
 export { default as Love } from './love.svg';
 export { default as MenuThreeLine } from './menu-three-line.svg';
+export { default as TickButton } from './tick.svg';
