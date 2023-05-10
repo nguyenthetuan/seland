@@ -23,8 +23,14 @@ const type = [
   { label: 'Bán', value: '2' },
 ];
 const sortBy = [
-  { label: 'Mới nhất', value: 'asc' },
-  { label: 'Cũ', value: 'desc' },
+  { label: 'Mới nhất', value: 'createAt' },
+  { label: 'Giá giảm dần', value: 'price_asc' },
+  { label: 'Giá tăng dần', value: 'price_desc' },
+  { label: 'Diện tích tăng dần', value: 'area_asc' },
+  { label: 'Diện tích giảm dần', value: 'area_desc' },
+  { label: 'Tin có video', value: 'videos' },
+  { label: 'Giá /m2 thấp', value: 'price_per_m_asc' },
+  { label: 'Giá /m2 cao', value: 'price_per_m_desc' },
 ];
 
 const ListPostsScreen = () => {
