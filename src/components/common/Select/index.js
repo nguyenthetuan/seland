@@ -43,7 +43,11 @@ const Select = ({
 
   return (
     <>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && (
+        <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
+          {label}
+        </Text>
+      )}
       <SelectDropdown
         buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
         buttonTextAfterSelection={selectedItem => selectedItem.label}
