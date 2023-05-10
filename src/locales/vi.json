@@ -44,7 +44,8 @@
     "bedroom": "Phòng ngủ",
     "bathroom": "Phòng tắm",
     "location": "Vị trí",
-    "legalDocuments": "Giấy tờ pháp lý"
+    "legalDocuments": "Giấy tờ pháp lý",
+    "noResults": "Không tìm thấy kết quả."
   },
   "error": {
     "phoneNumber": {
@@ -91,6 +92,14 @@
     "typeHousing": "Loại nhà đất",
     "area": "Khu vực",
     "type": "Loại hình",
-    "sortWith": "Sắp xếp theo: nameType"
+    "sortWith": "Sắp xếp theo: nameType",
+    "news": "Mới nhất",
+    "priceAsc": "Giá giảm dần",
+    "priceDesc": "Giá tăng dần",
+    "areaAsc": "Diện tích tăng dần",
+    "areaDesc": "Diện tích giảm dần",
+    "postVideo": "Tin có video",
+    "pricePerAsc": "Giá /m2 thấp",
+    "pricePerDesc": "Giá /m2 cao"
   }
 }

@@ -6,7 +6,7 @@ import { FlatList, TouchableOpacity, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Select } from '../../../components';
+import { NoResults, Select } from '../../../components';
 import { COLOR_BLUE_1 } from '../../../constants';
 import {
   getListRealEstates,
@@ -23,14 +23,14 @@ const type = [
   { label: 'Bán', value: '2' },
 ];
 const sortBy = [
-  { label: 'Mới nhất', value: 'createAt' },
-  { label: 'Giá giảm dần', value: 'price_asc' },
-  { label: 'Giá tăng dần', value: 'price_desc' },
-  { label: 'Diện tích tăng dần', value: 'area_asc' },
-  { label: 'Diện tích giảm dần', value: 'area_desc' },
-  { label: 'Tin có video', value: 'videos' },
-  { label: 'Giá /m2 thấp', value: 'price_per_m_asc' },
-  { label: 'Giá /m2 cao', value: 'price_per_m_desc' },
+  { label: 'news', value: 'createAt' },
+  { label: 'priceAsc', value: 'price_asc' },
+  { label: 'priceDesc', value: 'price_desc' },
+  { label: 'areaAsc', value: 'area_asc' },
+  { label: 'areaDesc', value: 'area_desc' },
+  { label: 'postVideo', value: 'videos' },
+  { label: 'pricePerAsc', value: 'price_per_m_asc' },
+  { label: 'pricePerDesc', value: 'price_per_m_desc' },
 ];
 
 const ListPostsScreen = () => {
@@ -78,6 +78,7 @@ const ListPostsScreen = () => {
           data={listPosts}
           renderItem={({ item }) => <ItemPosts item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}
+          ListEmptyComponent={<NoResults />}
           ListHeaderComponent={
             <View>
               <View style={styles.filter}>
@@ -134,11 +135,11 @@ const ListPostsScreen = () => {
                 buttonTextStyle={styles.textButtonSelect}
                 rowStyle={styles.buttonSelect}
                 rowTextStyle={styles.rowTextStyle}
-                buttonTextAfterSelection={selectedItem =>
-                  t('select.sortWith').replace('nameType', selectedItem.label)
-                }
                 control={control}
-                data={sortBy}
+                data={sortBy.map(item => ({
+                  ...item,
+                  label: t(`select.${item?.label}`),
+                }))}
                 defaultButtonText={t('select.sortWith').replace(
                   'nameType',
                   t('common.new')
