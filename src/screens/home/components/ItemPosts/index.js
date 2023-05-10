@@ -145,7 +145,12 @@ const ItemPosts = ({ item }) => {
         />
       </View>
       <Text style={styles.title(backgroundRank())}>{item?.title}</Text>
-      <Text style={styles.content}>{item?.description}</Text>
+      <Text
+        style={styles.content}
+        numberOfLines={3}
+      >
+        {item?.description}
+      </Text>
       <View style={styles.boxLocation}>
         <Icon
           name="location-on"
