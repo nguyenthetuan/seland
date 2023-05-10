@@ -83,7 +83,8 @@
     "viewMoreAccountPackages": "Xem thêm gói tài khoản",
     "personalInformation": "Thông tin cá nhân",
     "contactInformation": "Thông tin liên hệ",
-    "invoiceInformation": "Thông tin xuất hoá đơn"
+    "invoiceInformation": "Thông tin xuất hoá đơn",
+    "noResults": "Không tìm thấy kết quả."
   },
   "error": {
     "phoneNumber": {
@@ -158,7 +159,15 @@
     "typeHousing": "Loại nhà đất",
     "area": "Khu vực",
     "type": "Loại hình",
-    "sortWith": "Sắp xếp theo: nameType"
+    "sortWith": "Sắp xếp theo: nameType",
+    "news": "Mới nhất",
+    "priceAsc": "Giá giảm dần",
+    "priceDesc": "Giá tăng dần",
+    "areaAsc": "Diện tích tăng dần",
+    "areaDesc": "Diện tích giảm dần",
+    "postVideo": "Tin có video",
+    "pricePerAsc": "Giá /m2 thấp",
+    "pricePerDesc": "Giá /m2 cao"
   },
   "tabBar": {
     "home": "Trang chủ",

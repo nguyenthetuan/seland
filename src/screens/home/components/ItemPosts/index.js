@@ -43,21 +43,20 @@ const ItemPosts = ({ item }) => {
   const { t } = useTranslation();
 
   const onPressCall = () => {
-    let phoneNumber = item?.contact_info?.phone_number;
+    let phoneNumber = item?.phone_number;
     if (Platform.OS !== 'android') {
-      phoneNumber = `telprompt:${item?.contact_info?.phone_number}`;
+      phoneNumber = `telprompt:${item?.phone_number}`;
     } else {
-      phoneNumber = `tel:${item?.contact_info?.phone_number}`;
+      phoneNumber = `tel:${item?.phone_number}`;
     }
-    Linking.canOpenURL(phoneNumber)
-      .then(supported => {
-        if (!supported) {
-          Alert.alert(t('common.numberPhoneNotSupport'));
-        } else {
-          return Linking.openURL(phoneNumber);
-        }
-      })
-      .catch(err => console.log(err));
+
+    Linking.canOpenURL(phoneNumber).then(supported => {
+      if (!supported) {
+        Alert.alert(t('common.numberPhoneNotSupport'));
+      } else {
+        Linking.openURL(phoneNumber);
+      }
+    });
   };
 
   const onToLocation = () => {};
