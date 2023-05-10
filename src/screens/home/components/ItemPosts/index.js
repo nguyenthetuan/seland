@@ -132,15 +132,15 @@ const ItemPosts = ({ item }) => {
           icon={<Acreage />}
         />
         <ItemInfo
-          value={item?.bedroom}
+          value={`${item?.bedroom}`}
           icon={<Bedroom />}
         />
         <ItemInfo
-          value={item?.bathroom}
+          value={`${item?.bathroom}`}
           icon={<Bathroom />}
         />
         <ItemInfo
-          value={item?.main_direction_name}
+          value={`${item?.main_direction_name}`}
           icon={<Compass />}
         />
       </View>

@@ -5,7 +5,9 @@
     "verify": "Xác minh",
     "finish": "Hoàn tất",
     "save": "Lưu",
-    "seeAll": "Xem tất cả"
+    "seeAll": "Xem tất cả",
+    "reset": "Đặt lại",
+    "apply": "Áp dụng"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -34,7 +36,15 @@
     "monopoly": "Độc quyền",
     "numberPhoneNotSupport": "Số điện thoại không hỗ trợ.",
     "new": "Mới nhất",
-    "old": "Cũ"
+    "old": "Cũ",
+    "priceRange": "Khoảng giá",
+    "acreage": "Diện tích",
+    "compass": "Hướng",
+    "numberFloors": "Số tầng",
+    "bedroom": "Phòng ngủ",
+    "bathroom": "Phòng tắm",
+    "location": "Vị trí",
+    "legalDocuments": "Giấy tờ pháp lý"
   },
   "error": {
     "phoneNumber": {
@@ -57,7 +67,8 @@
     "inputOtp": "Nhập mã xác minh",
     "forgotPassword": "Quên mật khẩu",
     "createNewPassword": "Tạo mật khẩu mới",
-    "checkZoning": "Tra quy hoạch"
+    "checkZoning": "Tra quy hoạch",
+    "filterPost": "Lọc tin"
   },
   "input": {
     "phoneNumber": "Số điện thoại",

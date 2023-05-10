@@ -1,5 +1,5 @@
 import { Icon } from '@rneui/base';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, TouchableOpacity, View } from 'react-native';
@@ -13,11 +13,12 @@ import {
   selectRealEstates,
 } from '../../../features/realEstates';
 import { dispatchThunk } from '../../../utils';
+import Filter from '../components/FilterModal';
 import HeaderListPosts from '../components/HeaderListPosts';
 import ItemPosts from '../components/ItemPosts';
 import styles from './styles';
 
-const status = [
+const type = [
   { label: 'Mua', value: '1' },
   { label: 'Bán', value: '2' },
 ];
@@ -36,6 +37,7 @@ const ListPostsScreen = () => {
     },
     // mode: 'onSelect',
   });
+  const filterRef = useRef();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
@@ -49,6 +51,10 @@ const ListPostsScreen = () => {
 
   const onSelect = value => {
     console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
+  };
+
+  const onOpenFilter = () => {
+    filterRef.current.onOpen();
   };
 
   return (
@@ -69,7 +75,10 @@ const ListPostsScreen = () => {
           ListHeaderComponent={
             <View>
               <View style={styles.filter}>
-                <TouchableOpacity style={styles.btnFilter}>
+                <TouchableOpacity
+                  style={styles.btnFilter}
+                  onPress={onOpenFilter}
+                >
                   <Icon name="filter-list" />
                 </TouchableOpacity>
 
@@ -107,9 +116,9 @@ const ListPostsScreen = () => {
                     rowStyle={styles.buttonSelect}
                     rowTextStyle={styles.rowTextStyle}
                     control={control}
-                    data={status}
+                    data={type}
                     defaultButtonText={t('select.type')}
-                    name="status"
+                    name="type"
                     onSelect={handleSubmit(onSelect)}
                   />
                 </View>
@@ -135,6 +144,7 @@ const ListPostsScreen = () => {
           }
         />
       </View>
+      <Filter ref={filterRef} />
     </>
   );
 };

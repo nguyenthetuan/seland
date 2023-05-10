@@ -7,6 +7,7 @@ export const COLOR_BLUE_3 = '#40a9ff';
 export const COLOR_GRAY_1 = '#666';
 export const COLOR_GRAY_2 = '#d9d9d9';
 export const COLOR_GRAY_7 = '#595959';
+export const COLOR_GRAY_8 = '#333333';
 export const COLOR_GREEN = '#ebf6e7';
 export const COLOR_GREEN_3 = '#52C41A';
 export const COLOR_GREEN_4 = '#e6f7ff';
