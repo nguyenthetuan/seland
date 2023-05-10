@@ -64,9 +64,9 @@ yup.addMethod(yup.string, 'isValidEmail', function validateEmail(message) {
     .email(t('error.email.format'))
     .matches(/^[^A-Z]*$/, t('error.email.format'))
     .test('isValidEmail', message, (value, context) => {
+      if (!value) return true;
       const localPart = value.split('@')[0];
       return (
-        !value ||
         (localPart.length >= 4 && localPart.length <= 64) ||
         context.createError({
           message: message || t('error.email.format'),
@@ -79,14 +79,22 @@ yup.addMethod(yup.string, 'isValidAddress', function validateAddress() {
   return this.trim().max(255, t('error.address.maxLength'));
 });
 
-yup.addMethod(yup.string, 'isValidCompanyName', function validateCompanyName() {
-  return this.trim().test(
-    'isValidCompanyName',
-    t('error.companyName.length'),
-    companyName =>
-      !companyName || (companyName.length >= 3 && companyName <= 128)
-  );
-});
+yup.addMethod(
+  yup.string,
+  'isValidCompanyName',
+  function validateCompanyName(message) {
+    return this.trim().test(
+      'isValidCompanyName',
+      message,
+      (value, context) =>
+        !value ||
+        (value.length >= 3 && value.length <= 128) ||
+        context.createError({
+          message: message || t('error.companyName.length'),
+        })
+    );
+  }
+);
 
 yup.addMethod(yup.string, 'isValidTaxCode', function validateTaxCode() {
   return this.trim()
