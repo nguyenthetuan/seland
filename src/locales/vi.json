@@ -7,7 +7,9 @@
     "save": "Lưu",
     "seeAll": "Xem tất cả",
     "reset": "Đặt lại",
-    "apply": "Áp dụng"
+    "apply": "Áp dụng",
+    "seeMore": "Xem thêm",
+    "collapse": "Thu gọn"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -45,6 +47,14 @@
     "bathroom": "Phòng tắm",
     "location": "Vị trí",
     "legalDocuments": "Giấy tờ pháp lý",
+    "posts": "Bài đăng",
+    "lookUpPlanning": "Tra quy hoạch",
+    "seLand": "Se Land",
+    "project": "Dự án",
+    "hottestRealEstate": "Bất động sản hot nhất",
+    "realEstateNews": "Tin nhà đất",
+    "featuredBusiness": "Doanh nghiệp nổi bật",
+    "realEstateByLocation": "Bất động sản theo địa điểm",
     "noResults": "Không tìm thấy kết quả."
   },
   "error": {
@@ -79,7 +89,8 @@
     "password": "Mật khẩu",
     "passwordConfirmation": "Xác nhận mật khẩu",
     "currentPassword": "Mật khẩu hiện tại",
-    "newPassword": "Mật khẩu mới"
+    "newPassword": "Mật khẩu mới",
+    "projectSunriseCity": "Dự án Sunrise City"
   },
   "tabBar": {
     "home": "Trang chủ",
