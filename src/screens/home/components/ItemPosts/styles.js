@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 12,
     lineHeight: 15,
+    marginBottom: 8,
     marginHorizontal: 10,
-    marginVertical: 8,
   },
   footer: {
     alignItems: 'center',
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   image: {
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
     height: '100%',
     width: '100%',
   },
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     color: COLOR_RED,
     fontSize: 18,
     fontWeight: 'bold',
-    lineHeight: 24,
+    lineHeight: 27,
   },
   rank: color => ({
     backgroundColor: color,
@@ -162,6 +162,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     textTransform: 'uppercase',
+    marginBottom: 8,
+    alignItems: 'center',
   }),
   type: {
     color: COLOR_BLUE_1,

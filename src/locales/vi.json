@@ -56,6 +56,9 @@
     "featuredBusiness": "Doanh nghiệp nổi bật",
     "realEstateByLocation": "Bất động sản theo địa điểm",
     "by": "Bởi",
+    "vipSilver": "VIP Bạc",
+    "vipGold": "VIP Vàng",
+    "vipDiamond": "VIP Kim cương",
     "noResults": "Không tìm thấy kết quả."
   },
   "error": {

@@ -74,6 +74,17 @@ const ItemPosts = ({ item }) => {
     }
   };
 
+  const rankName = () => {
+    switch (item?.rank_id) {
+      case 2:
+        return 'common.vipSilver';
+      case 3:
+        return 'common.vipGold';
+      default:
+        return 'common.vipDiamond';
+    }
+  };
+
   return (
     <TouchableOpacity style={styles.boxItem}>
       <View style={styles.boxImage}>
@@ -89,7 +100,7 @@ const ItemPosts = ({ item }) => {
           <View>
             {[2, 3, 4].includes(item?.rank_id) && (
               <View style={styles.rank(backgroundRank())}>
-                <Text style={styles.rankName}>{item?.rank_name}</Text>
+                <Text style={styles.rankName}>{t(rankName())}</Text>
               </View>
             )}
           </View>
@@ -113,14 +124,15 @@ const ItemPosts = ({ item }) => {
             {`${item?.price_per_m} ${t('common.millionPerM2')}`}
           </Text>
         </Text>
-        <View style={styles.boxMonopoly}>
+        {/* TODO: tạm thời comment để check type sau */}
+        {/* <View style={styles.boxMonopoly}>
           <Text
             style={styles.monopoly}
             onPress={() => Alert.alert('ok')}
           >
             {t('common.monopoly')}
           </Text>
-        </View>
+        </View> */}
       </View>
       <View style={styles.boxTypeHouse}>
         <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
@@ -143,13 +155,18 @@ const ItemPosts = ({ item }) => {
           icon={<Compass />}
         />
       </View>
-      <Text style={styles.title(backgroundRank())}>{item?.title}</Text>
-      <Text
-        style={styles.content}
-        numberOfLines={3}
-      >
-        {item?.description}
+      <Text style={styles.title(backgroundRank())}>
+        {`${item?.rank_id === 4 && '★'} ${item?.title}`}
       </Text>
+      {[2, 3, 4].includes(item?.rank_id) && (
+        <Text
+          style={styles.content}
+          numberOfLines={3}
+        >
+          {item?.description}
+        </Text>
+      )}
+
       <View style={styles.boxLocation}>
         <Icon
           name="location-on"
