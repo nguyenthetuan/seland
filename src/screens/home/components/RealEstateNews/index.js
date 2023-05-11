@@ -28,7 +28,7 @@ const RealEstateNews = () => {
           return (
             <View
               key={`RealEstateNews${index}`}
-              style={{ marginBottom: 10 }}
+              style={styles.boxItem}
             >
               <Image
                 source={{ uri: item?.image }}
@@ -52,13 +52,13 @@ const RealEstateNews = () => {
         return (
           <View
             key={`RealEstateNews${index}`}
-            style={styles.boxItem}
+            style={styles.boxItem1}
           >
             <Image
               source={{ uri: item?.image }}
               style={styles.image1}
             />
-            <View style={{ flex: 1 }}>
+            <View style={styles.boxContent}>
               <Text style={styles.time}>
                 {t('common.by')}{' '}
                 <Text style={styles.name}>{item?.createBy}</Text>

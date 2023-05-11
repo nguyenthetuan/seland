@@ -11,7 +11,13 @@ import {
 const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+  boxContent: {
+    flex: 1,
+  },
   boxItem: {
+    marginBottom: 10,
+  },
+  boxItem1: {
     flexDirection: 'row',
     flex: 1,
     marginVertical: 8,
