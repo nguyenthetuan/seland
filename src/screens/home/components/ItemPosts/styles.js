@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   acreage: {
     color: COLOR_BLACK_1,
     fontSize: 15,
-    lineHeight: 18,
+    lineHeight: 24,
     paddingLeft: 8,
   },
   boxImage: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     color: COLOR_RED,
     fontSize: 18,
     fontWeight: 'bold',
-    lineHeight: 27,
+    lineHeight: 24,
   },
   rank: color => ({
     backgroundColor: color,
