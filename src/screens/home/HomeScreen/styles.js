@@ -81,6 +81,10 @@ const styles = StyleSheet.create({
   scroll: {
     backgroundColor: COLOR_WHITE,
   },
+  txtProject: {
+    marginLeft: 5,
+    marginTop: 5,
+  },
   viewSearch: {
     alignItems: 'center',
     backgroundColor: COLOR_ORANGE_6,
