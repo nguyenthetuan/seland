@@ -93,6 +93,25 @@ const PersonalInformationScreen = () => {
     },
   ];
 
+  const emptyProvinceOption = {
+    label: t('select.province'),
+    value: null,
+  };
+  const emptyDistrictOption = {
+    label: t('select.district'),
+    value: null,
+  };
+  //  const emptyWardOption = {
+  //   label: t('select.ward'),
+  //   value: null
+  // }
+  const provinceOptions = [emptyProvinceOption, ...provinces];
+  const districtOptions = [emptyDistrictOption, ...districts];
+  // const wardOptions = [emptyWardOption, ...wards];
+  const companyProvinceOptions = [emptyProvinceOption, ...companyProvinces];
+  const companyDistrictOptions = [emptyDistrictOption, ...companyDistricts];
+  // const wardOptions = [emptyWardOption, ...companyWards];
+
   const {
     clearErrors,
     control,
@@ -172,34 +191,53 @@ const PersonalInformationScreen = () => {
         );
       }
     });
-    Object.entries(user).forEach(([key, value]) => setValue(key, value));
   };
 
   useEffect(() => {
     refresh();
   }, []);
 
-  const handleSelectProvince = selectedItem =>
-    fetchDistricts({
-      province_code: selectedItem.value,
-    });
+  useEffect(() => {
+    Object.entries(user).forEach(([key, value]) => setValue(key, value));
+  }, [user, setValue]);
 
-  const handleSelectDistrict = selectedItem =>
-    fetchWards({
-      province_code: getValues().province_id,
-      district_code: selectedItem.value,
-    });
+  const handleSelectProvince = selectedItem => {
+    const { value } = selectedItem;
 
-  const handleSelectCompanyProvince = selectedItem =>
-    fetchCompanyDistricts({
-      province_code: selectedItem.value,
-    });
+    if (value)
+      fetchDistricts({
+        province_code: selectedItem.value,
+      });
+  };
 
-  const handleSelectCompanyDistrict = selectedItem =>
-    fetchCompanyWards({
-      province_code: getValues().company_province_id,
-      district_code: selectedItem.value,
-    });
+  const handleSelectDistrict = selectedItem => {
+    const { value } = selectedItem;
+
+    if (value)
+      fetchWards({
+        province_code: getValues().province_id,
+        district_code: selectedItem.value,
+      });
+  };
+
+  const handleSelectCompanyProvince = selectedItem => {
+    const { value } = selectedItem;
+
+    if (value)
+      fetchCompanyDistricts({
+        province_code: selectedItem.value,
+      });
+  };
+
+  const handleSelectCompanyDistrict = selectedItem => {
+    const { value } = selectedItem;
+
+    if (value)
+      fetchCompanyWards({
+        province_code: getValues().company_province_id,
+        district_code: selectedItem.value,
+      });
+  };
 
   const onSubmit = data => {
     dispatchThunk(
@@ -336,7 +374,7 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={provinces}
+              data={provinceOptions}
               defaultButtonText={t('select.province')}
               disabled={loading}
               labelStyle={styles.inputLabel}
@@ -349,7 +387,7 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={districts}
+              data={districtOptions}
               defaultButtonText={t('select.district')}
               disabled={loading}
               labelStyle={styles.inputLabel}
@@ -361,7 +399,7 @@ const PersonalInformationScreen = () => {
           {/* <Select
             buttonStyle={styles.select}
             control={control}
-            data={wards}
+            data={wardOptions}
             defaultButtonText={t('select.ward')}
             disabled={loading}
             labelStyle={styles.inputLabel}
@@ -392,7 +430,7 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={companyProvinces}
+              data={companyProvinceOptions}
               defaultButtonText={t('select.province')}
               disabled={loading}
               labelStyle={styles.inputLabel}
@@ -405,7 +443,7 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={companyDistricts}
+              data={companyDistrictOptions}
               defaultButtonText={t('select.district')}
               disabled={loading}
               labelStyle={styles.inputLabel}
@@ -417,7 +455,7 @@ const PersonalInformationScreen = () => {
           {/* <Select
             buttonStyle={styles.select}
             control={control}
-            data={companyWards}
+            data={companyWardOptions}
             defaultButtonText={t('select.ward')}
             disabled={loading}
             labelStyle={styles.inputLabel}
