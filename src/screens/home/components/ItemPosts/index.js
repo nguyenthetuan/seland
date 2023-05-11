@@ -156,7 +156,7 @@ const ItemPosts = ({ item }) => {
         />
       </View>
       <Text style={styles.title(backgroundRank())}>
-        {`${item?.rank_id === 4 && '★'} ${item?.title}`}
+        {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
       </Text>
       {[2, 3, 4].includes(item?.rank_id) && (
         <Text
