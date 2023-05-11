@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
     padding: 7,
     paddingHorizontal: 14,
   },
+  buttonLogout: {
+    marginTop: 20,
+  },
   container: {
     alignItems: 'center',
     flex: 1,

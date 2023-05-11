@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import { Avatar, Icon } from '@rneui/base';
+import { Avatar, Button, Icon } from '@rneui/base';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, DashedButton, Screen, Text } from '../../../components';
 import {
@@ -11,13 +12,18 @@ import {
   COLOR_WHITE,
   SCREENS,
 } from '../../../constants';
-import { selectUser } from '../../../features';
+import { logout, selectUser } from '../../../features';
+import { dispatchThunk } from '../../../utils';
 import AccountMenu from './components/AccountMenu';
 import styles from './styles';
 
 const AccountScreen = () => {
   const { data: user } = useSelector(selectUser);
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => dispatchThunk(dispatch, logout());
 
   const navigateToPersonalInformation = () =>
     navigate(SCREENS.PERSONAL_INFORMATION);
@@ -256,6 +262,13 @@ const AccountScreen = () => {
         <AccountMenu
           label="Quản lý tài khoản"
           options={accountManagement}
+        />
+        <Button
+          style={styles.buttonLogout}
+          onPress={handleLogout}
+          title={t('button.logout')}
+          type="outline"
+          radius={5}
         />
       </Container>
     </Screen>

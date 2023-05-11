@@ -11,15 +11,16 @@ import styles from './styles';
 
 const Input = ({
   control,
+  isEmail,
   isNumeric,
   isPassword,
   isWebsite,
   label,
+  labelStyle,
   name,
   onFocus,
   placeholder,
   showPasswordPolicy,
-  labelStyle,
   ...props
 }) => {
   const {
@@ -40,7 +41,7 @@ const Input = ({
     onChange(
       isNumeric
         ? text.replace(/[^\d]/g, '')
-        : isPassword || isWebsite
+        : isEmail || isPassword || isWebsite
         ? text.replace(/\s/g, '')
         : text
     );
@@ -58,7 +59,6 @@ const Input = ({
     <>
       <RNEInput
         style={styles.text}
-        disabledInputStyle={styles.disabled}
         errorStyle={styles.error}
         inputContainerStyle={styles.input(isFocused)}
         label={
@@ -92,6 +92,7 @@ const Input = ({
 };
 
 Input.defaultProps = {
+  isEmail: false,
   isNumeric: false,
   isPassword: false,
   isWebsite: false,
@@ -104,6 +105,7 @@ Input.defaultProps = {
 
 Input.propTypes = {
   control: PropTypes.any.isRequired,
+  isEmail: PropTypes.bool,
   isNumeric: PropTypes.bool,
   isPassword: PropTypes.bool,
   isWebsite: PropTypes.bool,

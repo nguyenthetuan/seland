@@ -5,7 +5,6 @@ import {
   COLOR_BLUE_2,
   COLOR_GRAY_5,
   COLOR_GRAY_7,
-  COLOR_GRAY_8,
   COLOR_ORANGE_1,
   COLOR_ORANGE_4,
   COLOR_WHITE,
@@ -19,7 +18,12 @@ const styles = StyleSheet.create({
   },
   address: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
     marginHorizontal: 8,
+  },
+  addressItem: {
+    width: '49%',
   },
   addressMiddle: {
     marginHorizontal: 8,
@@ -60,16 +64,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   label: {
-    color: COLOR_GRAY_8,
-    fontWeight: 500,
+    fontWeight: 'bold',
     marginLeft: 8,
     marginVertical: 16,
   },
   mainLabel: {
     fontWeight: 'bold',
-    marginVertical: 8,
+    marginVertical: 16,
+  },
+  select: {
+    height: 40,
   },
   sex: {
+    marginBottom: 8,
     marginHorizontal: 8,
   },
   text: {

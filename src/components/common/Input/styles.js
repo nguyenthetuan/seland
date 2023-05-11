@@ -9,9 +9,6 @@ import {
 } from '../../../constants/colors';
 
 const styles = StyleSheet.create({
-  disabled: {
-    color: COLOR_GRAY_5,
-  },
   error: {
     color: COLOR_RED,
     fontSize: 16,
