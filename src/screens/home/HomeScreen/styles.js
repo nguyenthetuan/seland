@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
   containerScreen: {
     flex: 1,
   },
+  contentContainer: {
+    paddingBottom: 50,
+  },
   dot: {
     borderRadius: 7,
     height: 10,

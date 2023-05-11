@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 32,
     marginTop: 10,
+    padding: 0,
     width: width * 0.94,
   },
   container: {

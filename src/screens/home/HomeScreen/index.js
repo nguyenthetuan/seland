@@ -23,7 +23,10 @@ const HomeScreen = () => {
   return (
     <View style={styles.containerScreen}>
       <HeaderHome />
-      <ScrollView style={styles.scroll}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.contentContainer}
+      >
         <SliderBox
           autoplay
           circleLoop
@@ -74,9 +77,9 @@ const HomeScreen = () => {
           isSeeAll={false}
         >
           <ScrollView
+            style={styles.carousel}
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={styles.carousel}
           >
             <View style={styles.row}>
               {[...Array(4)].map((_, index) => (

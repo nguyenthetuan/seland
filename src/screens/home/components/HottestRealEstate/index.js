@@ -63,9 +63,9 @@ const mockData = [...Array(4)].map(() => ({
 const HottestRealEstate = () => (
   <View>
     <ScrollView
+      style={styles.carousel}
       horizontal
       showsHorizontalScrollIndicator={false}
-      style={styles.carousel}
     >
       {mockData.map((item, index) => (
         <ItemHottestRealEstate
