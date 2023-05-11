@@ -89,14 +89,14 @@ const ProjectCategory = () => {
           buttonStyle={styles.btnSelect}
           titleStyle={styles.txtSelect}
           onPress={() => handleSelectOptions(true)}
-          title={t('button.buy')}
+          title={t('button.all')}
           type={isBuy ? 'solid' : 'outline'}
         />
         <Button
           buttonStyle={styles.btnSelect}
           titleStyle={styles.txtSelect}
           onPress={() => handleSelectOptions(false)}
-          title={t('button.lease')}
+          title={t('button.monopoly')}
           type={isBuy ? 'outline' : 'solid'}
         />
       </View>
