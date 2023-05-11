@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/base';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,12 +8,17 @@ import { SliderBox } from 'react-native-image-slider-box';
 import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
 import Category from '../components/Category';
 import HeaderHome from '../components/HeaderHome';
+import HottestRealEstate from '../components/HottestRealEstate';
 import RealEstateByLocation from '../components/RealEstateByLocation';
+import RealEstateNews from '../components/RealEstateNews';
 import SuggestMenu from '../components/SuggestMenu';
 import styles from './styles';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
+  const { navigate } = useNavigation();
+
+  const goToAllListPost = () => navigate('');
 
   return (
     <View style={styles.containerScreen}>
@@ -45,7 +51,12 @@ const HomeScreen = () => {
           </View>
         </View>
         <SuggestMenu />
-        <Category label={t('common.hottestRealEstate')} />
+        <Category
+          label={t('common.hottestRealEstate')}
+          onSeeAll={goToAllListPost}
+        >
+          <HottestRealEstate />
+        </Category>
         <Category
           label={t('common.realEstateByLocation')}
           isSeeAll={false}
@@ -55,7 +66,9 @@ const HomeScreen = () => {
         <Category
           label={t('common.realEstateNews')}
           isSeeAll={false}
-        />
+        >
+          <RealEstateNews />
+        </Category>
         <Category
           label={t('common.featuredBusiness')}
           isSeeAll={false}
