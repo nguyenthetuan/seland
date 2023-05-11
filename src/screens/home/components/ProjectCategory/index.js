@@ -93,7 +93,7 @@ const ProjectCategory = () => {
           type={isBuy ? 'solid' : 'outline'}
         />
         <Button
-          buttonStyle={styles.btnSelect}
+          buttonStyle={styles.btnSelectMonopoly}
           titleStyle={styles.txtSelect}
           onPress={() => handleSelectOptions(false)}
           title={t('button.monopoly')}

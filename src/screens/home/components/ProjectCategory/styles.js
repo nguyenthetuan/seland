@@ -12,6 +12,13 @@ const styles = StyleSheet.create({
     padding: 0,
     width: 80,
   },
+  btnSelectMonopoly: {
+    borderRadius: 5,
+    height: 26,
+    marginLeft: 10,
+    padding: 0,
+    width: 90,
+  },
   txtSelect: {
     fontSize: 14,
     lineHeight: 18,
