@@ -1,34 +1,39 @@
 import { Icon } from '@rneui/base';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
 import { Text } from '../../../../components';
 import { COLOR_BLUE_2 } from '../../../../constants';
 import styles from './styles';
 
-const Category = ({ children, label, isSeeAll, onSeeAll }) => (
-  <View style={{ marginBottom: 17 }}>
-    <View style={styles.boxLabelCategory}>
-      <Text style={styles.label}>{label}</Text>
-      {isSeeAll ? (
-        <View style={{ flexDirection: 'row' }}>
-          <Text
-            style={styles.seeAll}
-            onPress={onSeeAll}
-          >
-            Xem thêm
-          </Text>
-          <Icon
-            name="navigate-next"
-            color={COLOR_BLUE_2}
-          />
-        </View>
-      ) : null}
+const Category = ({ children, label, isSeeAll, onSeeAll }) => {
+  const { t } = useTranslation();
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.boxLabelCategory}>
+        <Text style={styles.label}>{label}</Text>
+        {isSeeAll ? (
+          <View style={styles.row}>
+            <Text
+              style={styles.seeAll}
+              onPress={onSeeAll}
+            >
+              {t('button.seeMore')}
+            </Text>
+            <Icon
+              name="navigate-next"
+              color={COLOR_BLUE_2}
+            />
+          </View>
+        ) : null}
+      </View>
+      {children}
     </View>
-    {children}
-  </View>
-);
+  );
+};
 
 Category.defaultProps = {
   label: '',

@@ -8,10 +8,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 10,
   },
+  container: {
+    marginBottom: 17,
+  },
   label: {
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 28,
+  },
+  row: {
+    flexDirection: 'row',
   },
   seeAll: {
     color: COLOR_BLUE_2,

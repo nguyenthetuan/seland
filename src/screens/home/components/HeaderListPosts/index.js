@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
 import { Input } from '@rneui/themed';
 import React from 'react';
@@ -11,11 +12,15 @@ import styles from './styles';
 
 const HeaderListPosts = () => {
   const { t } = useTranslation();
+  const { goBack } = useNavigation();
 
   return (
     <SafeAreaView style={{ backgroundColor: COLOR_WHITE }}>
       <View style={styles.headerListPosts}>
-        <Icon name="arrow-back" />
+        <Icon
+          name="arrow-back"
+          onPress={goBack}
+        />
         <Input
           containerStyle={styles.inputContainer}
           inputContainerStyle={styles.inputSearch}
