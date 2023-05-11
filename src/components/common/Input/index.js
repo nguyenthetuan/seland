@@ -59,7 +59,6 @@ const Input = ({
     <>
       <RNEInput
         style={styles.text}
-        disabledInputStyle={styles.disabled}
         errorStyle={styles.error}
         inputContainerStyle={styles.input(isFocused)}
         label={
