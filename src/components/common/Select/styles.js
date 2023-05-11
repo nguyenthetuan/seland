@@ -19,9 +19,6 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 8,
   },
-  row: {
-    height: 40,
-  },
   text: {
     color: COLOR_BLACK_1,
     fontSize: 16,

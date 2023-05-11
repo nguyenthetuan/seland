@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 16,
   },
+  select: {
+    height: 40,
+  },
   sex: {
     marginBottom: 8,
     marginHorizontal: 8,

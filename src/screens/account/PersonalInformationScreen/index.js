@@ -278,6 +278,7 @@ const PersonalInformationScreen = () => {
         />
         <View style={styles.sex}>
           <Select
+            buttonStyle={styles.select}
             control={control}
             data={sexes.map(sex => ({
               ...sex,
@@ -333,6 +334,7 @@ const PersonalInformationScreen = () => {
         <View style={styles.address}>
           <View style={styles.addressItem}>
             <Select
+              buttonStyle={styles.select}
               control={control}
               data={provinces}
               defaultButtonText={t('select.province')}
@@ -345,6 +347,7 @@ const PersonalInformationScreen = () => {
           {/* <View style={styles.addressMiddle}> */}
           <View style={styles.addressItem}>
             <Select
+              buttonStyle={styles.select}
               control={control}
               data={districts}
               defaultButtonText={t('select.district')}
@@ -356,6 +359,7 @@ const PersonalInformationScreen = () => {
           </View>
           {/* </View> */}
           {/* <Select
+            buttonStyle={styles.select}
             control={control}
             data={wards}
             defaultButtonText={t('select.ward')}
@@ -386,6 +390,7 @@ const PersonalInformationScreen = () => {
         <View style={styles.address}>
           <View style={styles.addressItem}>
             <Select
+              buttonStyle={styles.select}
               control={control}
               data={companyProvinces}
               defaultButtonText={t('select.province')}
@@ -398,6 +403,7 @@ const PersonalInformationScreen = () => {
           {/* <View style={styles.addressMiddle}> */}
           <View style={styles.addressItem}>
             <Select
+              buttonStyle={styles.select}
               control={control}
               data={companyDistricts}
               defaultButtonText={t('select.district')}
@@ -409,6 +415,7 @@ const PersonalInformationScreen = () => {
           </View>
           {/* </View> */}
           {/* <Select
+            buttonStyle={styles.select}
             control={control}
             data={companyWards}
             defaultButtonText={t('select.ward')}
