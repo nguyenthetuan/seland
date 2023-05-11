@@ -169,6 +169,8 @@
   },
   "select": {
     "sex": "Giới tính",
+    "male": "Nam",
+    "female": "Nữ",
     "province": "Tỉnh/thành phố",
     "district": "Quận/huyện",
     "ward": "Phường/xã",

@@ -19,9 +19,13 @@ import {
   Text,
 } from '../../../components';
 import {
+  getCompanyDistricts,
+  getCompanyProvinces,
+  getCompanyWards,
   getDistricts,
   getProvinces,
   getWards,
+  selectCommon,
   selectUser,
   updateProfile,
 } from '../../../features';
@@ -49,9 +53,15 @@ const PersonalInformationScreen = () => {
   const { loading, data: user } = useSelector(selectUser);
   const { t } = useTranslation();
   const [Iam, setIam] = useState(user.user_type_id || 1);
-  const [provinces, setProvinces] = useState([]);
-  const [districts, setDistricts] = useState([]);
-  const [wards, setWards] = useState([]);
+
+  const {
+    provinces,
+    districts,
+    // wards,
+    companyProvinces,
+    companyDistricts,
+    // companyWards,
+  } = useSelector(selectCommon);
 
   const Iams = [
     {
@@ -74,11 +84,11 @@ const PersonalInformationScreen = () => {
 
   const sexes = [
     {
-      label: 'Nam',
+      label: 'male',
       value: 1,
     },
     {
-      label: 'Nữ',
+      label: 'female',
       value: 2,
     },
   ];
@@ -103,6 +113,9 @@ const PersonalInformationScreen = () => {
       province_id: null,
       name_company: '',
       company_address: '',
+      company_ward_id: null,
+      company_district_id: null,
+      company_province_id: null,
       tax_code: '',
       website: '',
     },
@@ -114,30 +127,46 @@ const PersonalInformationScreen = () => {
   const fetchDistricts = (params, callback) =>
     dispatchThunk(dispatch, getDistricts(params), callback);
 
-  const fetchWards = (params, callback) =>
-    dispatchThunk(dispatch, getWards(params), callback);
+  const fetchWards = params => dispatchThunk(dispatch, getWards(params));
+
+  const fetchCompanyDistricts = (params, callback) =>
+    dispatchThunk(dispatch, getCompanyDistricts(params), callback);
+
+  const fetchCompanyWards = params =>
+    dispatchThunk(dispatch, getCompanyWards(params));
 
   const refresh = async () => {
-    await dispatchThunk(dispatch, getProvinces(), async ps => {
-      setProvinces(ps);
+    await dispatchThunk(dispatch, getProvinces(), async () => {
       const { district_id, province_id } = user;
       if (province_id) {
         await fetchDistricts(
           {
             province_code: province_id,
           },
-          async ds => {
-            setDistricts(ds);
+          async () => {
             if (district_id) {
-              await fetchWards(
-                {
-                  province_code: province_id,
-                  district_code: district_id,
-                },
-                ws => {
-                  setWards(ws);
-                }
-              );
+              await fetchWards({
+                province_code: province_id,
+                district_code: district_id,
+              });
+            }
+          }
+        );
+      }
+    });
+    await dispatchThunk(dispatch, getCompanyProvinces(), async () => {
+      const { company_district_id, company_province_id } = user;
+      if (company_province_id) {
+        await fetchCompanyDistricts(
+          {
+            province_code: company_province_id,
+          },
+          async () => {
+            if (company_district_id) {
+              await fetchCompanyWards({
+                province_code: company_province_id,
+                district_code: company_district_id,
+              });
             }
           }
         );
@@ -150,6 +179,28 @@ const PersonalInformationScreen = () => {
     refresh();
   }, []);
 
+  const handleSelectProvince = selectedItem =>
+    fetchDistricts({
+      province_code: selectedItem.value,
+    });
+
+  const handleSelectDistrict = selectedItem =>
+    fetchWards({
+      province_code: getValues().province_id,
+      district_code: selectedItem.value,
+    });
+
+  const handleSelectCompanyProvince = selectedItem =>
+    fetchCompanyDistricts({
+      province_code: selectedItem.value,
+    });
+
+  const handleSelectCompanyDistrict = selectedItem =>
+    fetchCompanyWards({
+      province_code: getValues().company_province_id,
+      district_code: selectedItem.value,
+    });
+
   const onSubmit = data => {
     dispatchThunk(
       dispatch,
@@ -157,6 +208,10 @@ const PersonalInformationScreen = () => {
         ...data,
         id: user.id,
         user_type_id: Iam,
+        name: data.name.trim(),
+        address: data.address.trim(),
+        name_company: data.name_company.trim(),
+        company_address: data.company_address.trim(),
       })
     );
   };
@@ -224,7 +279,10 @@ const PersonalInformationScreen = () => {
         <View style={styles.sex}>
           <Select
             control={control}
-            data={sexes}
+            data={sexes.map(sex => ({
+              ...sex,
+              label: t(`select.${sex.label}`),
+            }))}
             defaultButtonText="Please Select"
             disabled={loading}
             label={t('select.sex')}
@@ -242,14 +300,14 @@ const PersonalInformationScreen = () => {
         <Input
           autoComplete="tel"
           control={control}
-          disabled={user?.is_phone_verified === 1 || loading}
+          disabled
           errorMessage={errors.phone_number?.message}
           inputMode="numeric"
           isNumeric
           label={t('input.phoneNumber')}
+          labelStyle={styles.inputLabel}
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}
-          labelStyle={styles.inputLabel}
         />
         <Input
           autoComplete="email"
@@ -257,38 +315,35 @@ const PersonalInformationScreen = () => {
           disabled={loading}
           errorMessage={errors.email?.message}
           inputMode="email"
+          isEmail
           label={t('input.email')}
+          labelStyle={styles.inputLabel}
           name="email"
           onFocus={() => clearErrors('email')}
-          labelStyle={styles.inputLabel}
         />
         <Input
           control={control}
           disabled={loading}
           errorMessage={errors.address?.message}
           label={t('input.address')}
+          labelStyle={styles.inputLabel}
           name="address"
           onFocus={() => clearErrors('address')}
-          labelStyle={styles.inputLabel}
         />
         <View style={styles.address}>
-          <Select
-            control={control}
-            data={provinces}
-            defaultButtonText={t('select.province')}
-            disabled={loading}
-            labelStyle={styles.inputLabel}
-            name="province_id"
-            onSelect={selectedItem =>
-              fetchDistricts(
-                {
-                  province_code: selectedItem.value,
-                },
-                setDistricts
-              )
-            }
-          />
-          <View style={styles.addressMiddle}>
+          <View style={styles.addressItem}>
+            <Select
+              control={control}
+              data={provinces}
+              defaultButtonText={t('select.province')}
+              disabled={loading}
+              labelStyle={styles.inputLabel}
+              name="province_id"
+              onSelect={handleSelectProvince}
+            />
+          </View>
+          {/* <View style={styles.addressMiddle}> */}
+          <View style={styles.addressItem}>
             <Select
               control={control}
               data={districts}
@@ -296,25 +351,18 @@ const PersonalInformationScreen = () => {
               disabled={loading}
               labelStyle={styles.inputLabel}
               name="district_id"
-              onSelect={selectedItem =>
-                fetchWards(
-                  {
-                    province_code: getValues().province_id,
-                    district_code: selectedItem.value,
-                  },
-                  setWards
-                )
-              }
+              onSelect={handleSelectDistrict}
             />
           </View>
-          <Select
+          {/* </View> */}
+          {/* <Select
             control={control}
             data={wards}
             defaultButtonText={t('select.ward')}
             disabled={loading}
             labelStyle={styles.inputLabel}
             name="ward_id"
-          />
+          /> */}
         </View>
         <Text style={styles.label}>{t('common.invoiceInformation')}</Text>
         <Input
@@ -335,6 +383,40 @@ const PersonalInformationScreen = () => {
           name="company_address"
           onFocus={() => clearErrors('company_address')}
         />
+        <View style={styles.address}>
+          <View style={styles.addressItem}>
+            <Select
+              control={control}
+              data={companyProvinces}
+              defaultButtonText={t('select.province')}
+              disabled={loading}
+              labelStyle={styles.inputLabel}
+              name="company_province_id"
+              onSelect={handleSelectCompanyProvince}
+            />
+          </View>
+          {/* <View style={styles.addressMiddle}> */}
+          <View style={styles.addressItem}>
+            <Select
+              control={control}
+              data={companyDistricts}
+              defaultButtonText={t('select.district')}
+              disabled={loading}
+              labelStyle={styles.inputLabel}
+              name="company_district_id"
+              onSelect={handleSelectCompanyDistrict}
+            />
+          </View>
+          {/* </View> */}
+          {/* <Select
+            control={control}
+            data={companyWards}
+            defaultButtonText={t('select.ward')}
+            disabled={loading}
+            labelStyle={styles.inputLabel}
+            name="company_ward_id"
+          /> */}
+        </View>
         <Input
           control={control}
           disabled={loading}

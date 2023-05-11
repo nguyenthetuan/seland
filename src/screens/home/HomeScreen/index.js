@@ -1,11 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
+import { useSelector } from 'react-redux';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_2, SCREENS } from '../../../constants';
+import { selectUser } from '../../../features';
 import Category from '../components/Category';
 import HeaderHome from '../components/HeaderHome';
 import HottestRealEstate from '../components/HottestRealEstate';
@@ -15,10 +17,18 @@ import SuggestMenu from '../components/SuggestMenu';
 import styles from './styles';
 
 const HomeScreen = () => {
-  const { t } = useTranslation();
+  const { loading, data: user } = useSelector(selectUser);
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
 
   const goToAllListPost = () => navigate('ListPostsScreen');
+
+  useEffect(() => {
+    if (!loading && !user.name)
+      navigate('AccountNavigator', {
+        screen: SCREENS.PERSONAL_INFORMATION,
+      });
+  }, [loading, user.name, navigate]);
 
   return (
     <View style={styles.containerScreen}>

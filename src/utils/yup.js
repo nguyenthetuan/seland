@@ -1,4 +1,4 @@
-import { isMobilePhone } from 'validator';
+import { isEmail, isMobilePhone } from 'validator';
 import * as yup from 'yup';
 
 import i18n from './i18n';
@@ -61,13 +61,15 @@ yup.addMethod(yup.string, 'isValidName', function validateName() {
 yup.addMethod(yup.string, 'isValidEmail', function validateEmail(message) {
   return this.trim()
     .max(255, t('error.email.maxLength'))
-    .email(t('error.email.format'))
     .matches(/^[^A-Z]*$/, t('error.email.format'))
     .test('isValidEmail', message, (value, context) => {
       if (!value) return true;
       const localPart = value.split('@')[0];
       return (
-        (localPart.length >= 4 && localPart.length <= 64) ||
+        (/^[^A-Z]*$/.test(value) &&
+          localPart.length >= 4 &&
+          localPart.length <= 64 &&
+          isEmail(value)) ||
         context.createError({
           message: message || t('error.email.format'),
         })

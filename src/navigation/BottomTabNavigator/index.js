@@ -15,9 +15,8 @@ import styles from './styles';
 const { Navigator, Screen } = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
-  const { t } = useTranslation();
-
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getProfile());
@@ -83,7 +82,6 @@ const BottomTabNavigator = () => {
 
   return (
     <Navigator
-      initialRouteName="AccountNavigator"
       screenOptions={{
         gestureEnabled: false,
         headerShown: false,
