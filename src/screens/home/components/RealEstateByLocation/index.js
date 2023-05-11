@@ -1,7 +1,7 @@
 import { Button } from '@rneui/base';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
+import { ImageBackground, StyleSheet, View } from 'react-native';
 
 import { Text } from '../../../../components';
 import styles from './styles';
@@ -37,8 +37,6 @@ const data = [
   },
 ];
 
-const { width } = Dimensions.get('screen');
-
 const RealEstateByLocation = () => {
   const { t } = useTranslation();
 
@@ -50,46 +48,8 @@ const RealEstateByLocation = () => {
             <ImageBackground
               key={`realEstateByLocation${item?.name}`}
               source={{ uri: item?.image }}
-              style={StyleSheet.flatten([
-                styles.boxItem,
-                {
-                  width: '100%',
-                  marginBottom: 5,
-                },
-              ])}
-              imageStyle={{ borderRadius: 7 }}
-            >
-              <Text
-                style={styles.name}
-                numberOfLines
-              >
-                {item?.name}
-              </Text>
-              <Text
-                style={styles.numberPost}
-              >{`${item?.numberPost} bài đăng`}</Text>
-            </ImageBackground>
-          );
-        }
-        return (
-          <View
-            key={`realEstateByLocation${item?.name}`}
-            style={StyleSheet.flatten([
-              styles.boxItem,
-              {
-                width: width * 0.46,
-                marginVertical: 5,
-              },
-            ])}
-          >
-            <ImageBackground
-              key={`realEstateByLocation${item?.name}`}
-              source={{ uri: item?.image }}
-              style={{
-                height: width * 0.46,
-                width: '100%',
-              }}
-              imageStyle={{ borderRadius: 7 }}
+              style={StyleSheet.flatten([styles.boxItem, styles.boxItem2])}
+              imageStyle={styles.image}
             >
               <Text
                 style={styles.name}
@@ -97,9 +57,32 @@ const RealEstateByLocation = () => {
               >
                 {item?.name}
               </Text>
+              <Text style={styles.numberPost}>{`${item?.numberPost} ${t(
+                'common.posts'
+              )}`}</Text>
+            </ImageBackground>
+          );
+        }
+        return (
+          <View
+            key={`realEstateByLocation${item?.name}`}
+            style={StyleSheet.flatten([styles.boxItem, styles.boxItem3])}
+          >
+            <ImageBackground
+              key={`realEstateByLocation${item?.name}`}
+              source={{ uri: item?.image }}
+              style={styles.boxImage}
+              imageStyle={styles.image}
+            >
               <Text
-                style={styles.numberPost}
-              >{`${item?.numberPost} bài đăng`}</Text>
+                style={styles.name}
+                numberOfLines={1}
+              >
+                {item?.name}
+              </Text>
+              <Text style={styles.numberPost}>{`${item?.numberPost} ${t(
+                'common.posts'
+              )}`}</Text>
             </ImageBackground>
           </View>
         );

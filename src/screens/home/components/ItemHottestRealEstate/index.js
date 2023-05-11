@@ -1,8 +1,8 @@
-import { Icon, Image } from '@rneui/base';
+import { Icon } from '@rneui/base';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, TouchableOpacity, View } from 'react-native';
 
 import {
   Acreage,
@@ -39,27 +39,8 @@ ItemInfo.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-const ItemPosts = ({ item }) => {
+const ItemHottestRealEstate = ({ item }) => {
   const { t } = useTranslation();
-
-  const onPressCall = () => {
-    let phoneNumber = item?.phone_number;
-    if (Platform.OS !== 'android') {
-      phoneNumber = `telprompt:${item?.phone_number}`;
-    } else {
-      phoneNumber = `tel:${item?.phone_number}`;
-    }
-
-    Linking.canOpenURL(phoneNumber).then(supported => {
-      if (!supported) {
-        Alert.alert(t('common.numberPhoneNotSupport'));
-      } else {
-        Linking.openURL(phoneNumber);
-      }
-    });
-  };
-
-  const onToLocation = () => {};
 
   const backgroundRank = () => {
     switch (item?.rank_id) {
@@ -74,19 +55,12 @@ const ItemPosts = ({ item }) => {
     }
   };
 
-  const rankName = () => {
-    switch (item?.rank_id) {
-      case 2:
-        return 'common.vipSilver';
-      case 3:
-        return 'common.vipGold';
-      default:
-        return 'common.vipDiamond';
-    }
-  };
+  const onPressCall = () => {};
+
+  const onToLocation = () => {};
 
   return (
-    <TouchableOpacity style={styles.boxItem}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.boxImage}>
         <Image
           style={styles.image}
@@ -97,12 +71,13 @@ const ItemPosts = ({ item }) => {
           }}
         />
         <View style={styles.boxRank}>
-          <View>
-            {[2, 3, 4].includes(item?.rank_id) && (
-              <View style={styles.rank(backgroundRank())}>
-                <Text style={styles.rankName}>{t(rankName())}</Text>
-              </View>
-            )}
+          <View style={styles.boxMonopoly}>
+            <Text
+              style={styles.monopoly}
+              onPress={() => Alert.alert('ok')}
+            >
+              {t('common.monopoly')}
+            </Text>
           </View>
           <TouchableOpacity
             style={styles.call}
@@ -124,15 +99,6 @@ const ItemPosts = ({ item }) => {
             {`${item?.price_per_m} ${t('common.millionPerM2')}`}
           </Text>
         </Text>
-        {/* TODO: tạm thời comment để check type sau */}
-        {/* <View style={styles.boxMonopoly}>
-          <Text
-            style={styles.monopoly}
-            onPress={() => Alert.alert('ok')}
-          >
-            {t('common.monopoly')}
-          </Text>
-        </View> */}
       </View>
       <View style={styles.boxTypeHouse}>
         <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
@@ -155,24 +121,24 @@ const ItemPosts = ({ item }) => {
           icon={<Compass />}
         />
       </View>
-      <Text style={styles.title(backgroundRank())}>
-        {`${item?.rank_id === 4 && '★'} ${item?.title}`}
+      <Text
+        style={styles.content}
+        numberOfLines={2}
+      >
+        {item?.title}
       </Text>
-      {[2, 3, 4].includes(item?.rank_id) && (
-        <Text
-          style={styles.content}
-          numberOfLines={3}
-        >
-          {item?.description}
-        </Text>
-      )}
-
       <View style={styles.boxLocation}>
         <Icon
-          name="location-on"
           color={COLOR_GRAY_7}
+          name="location-on"
+          size={18}
         />
-        <Text style={styles.location}>{item?.location}</Text>
+        <Text
+          style={styles.location}
+          numberOfLines={1}
+        >
+          {item?.location}
+        </Text>
       </View>
       <View style={styles.footer}>
         <View style={styles.row}>
@@ -196,12 +162,12 @@ const ItemPosts = ({ item }) => {
   );
 };
 
-ItemPosts.defaultProps = {
+ItemHottestRealEstate.defaultProps = {
   item: {},
 };
 
-ItemPosts.propTypes = {
+ItemHottestRealEstate.propTypes = {
   item: PropTypes.object,
 };
 
-export default ItemPosts;
+export default ItemHottestRealEstate;

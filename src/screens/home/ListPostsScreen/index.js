@@ -78,7 +78,7 @@ const ListPostsScreen = () => {
           data={listPosts}
           renderItem={({ item }) => <ItemPosts item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}
-          ListEmptyComponent={<NoResults />}
+          ListEmptyComponent={loadingListPost ? null : <NoResults />}
           ListHeaderComponent={
             <View>
               <View style={styles.filter}>

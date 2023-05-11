@@ -1,6 +1,7 @@
 import { Icon } from '@rneui/base';
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 
 import { Text } from '../../../../components';
@@ -75,6 +76,7 @@ const listCategory = [
 
 const SuggestMenu = () => {
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
 
   const listSuggest = useMemo(() => {
     let array = [];
@@ -101,7 +103,9 @@ const SuggestMenu = () => {
         style={styles.expand}
         onPress={() => setShow(!show)}
       >
-        <Text style={styles.txtExpand}>{show ? 'Thu gọn' : 'Xem thêm'}</Text>
+        <Text style={styles.txtExpand}>
+          {t(show ? 'button.collapse' : 'button.seeMore')}
+        </Text>
         <Icon
           name={show ? 'expand-less' : 'keyboard-arrow-down'}
           size={20}

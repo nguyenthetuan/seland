@@ -40,7 +40,9 @@
     "broker": "Môi giới",
     "confirm": "Xác nhận",
     "cancel": "Huỷ",
-    "save": "Lưu"
+    "save": "Lưu",
+    "seeMore": "Xem thêm",
+    "collapse": "Thu gọn"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -85,6 +87,18 @@
     "personalInformation": "Thông tin cá nhân",
     "contactInformation": "Thông tin liên hệ",
     "invoiceInformation": "Thông tin xuất hoá đơn",
+    "posts": "Bài đăng",
+    "lookUpPlanning": "Tra quy hoạch",
+    "seLand": "Se Land",
+    "project": "Dự án",
+    "hottestRealEstate": "Bất động sản hot nhất",
+    "realEstateNews": "Tin nhà đất",
+    "featuredBusiness": "Doanh nghiệp nổi bật",
+    "realEstateByLocation": "Bất động sản theo địa điểm",
+    "by": "Bởi",
+    "vipSilver": "VIP Bạc",
+    "vipGold": "VIP Vàng",
+    "vipDiamond": "VIP Kim cương",
     "noResults": "Không tìm thấy kết quả."
   },
   "error": {
@@ -150,7 +164,8 @@
     "address": "Địa chỉ",
     "companyName": "Tên công ty",
     "taxCode": "Mã số thuế",
-    "website": "Website"
+    "website": "Website",
+    "projectSunriseCity": "Dự án Sunrise City"
   },
   "select": {
     "sex": "Giới tính",

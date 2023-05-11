@@ -1,27 +1,29 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/base';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
-import { useDispatch } from 'react-redux';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
-import { logout } from '../../../features';
-import { dispatchThunk } from '../../../utils';
+import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
 import Category from '../components/Category';
 import HeaderHome from '../components/HeaderHome';
+import HottestRealEstate from '../components/HottestRealEstate';
 import RealEstateByLocation from '../components/RealEstateByLocation';
+import RealEstateNews from '../components/RealEstateNews';
 import SuggestMenu from '../components/SuggestMenu';
 import styles from './styles';
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { navigate } = useNavigation();
 
-  const handleLogout = () => dispatchThunk(dispatch, logout());
+  const goToAllListPost = () => navigate('ListPostsScreen');
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.containerScreen}>
       <HeaderHome />
-      <ScrollView style={{ backgroundColor: COLOR_WHITE }}>
+      <ScrollView style={styles.scroll}>
         <SliderBox
           autoplay
           circleLoop
@@ -42,34 +44,41 @@ const HomeScreen = () => {
             containerStyle={styles.inputContainer}
             inputContainerStyle={styles.inputSearch}
             rightIcon={<Icon name="search" />}
-            placeholder="Dự án Sunrise City"
+            placeholder={t('input.projectSunriseCity')}
           />
           <View style={styles.boxLocation}>
             <Icon name="my-location" />
           </View>
         </View>
         <SuggestMenu />
-        <Category label="Bất động sản hot nhất" />
         <Category
-          label="Bất động sản theo địa điểm"
+          label={t('common.hottestRealEstate')}
+          onSeeAll={goToAllListPost}
+        >
+          <HottestRealEstate />
+        </Category>
+        <Category
+          label={t('common.realEstateByLocation')}
           isSeeAll={false}
         >
           <RealEstateByLocation />
         </Category>
         <Category
-          label="Tin nhà đất"
+          label={t('common.realEstateNews')}
           isSeeAll={false}
-        />
+        >
+          <RealEstateNews />
+        </Category>
         <Category
-          label="Doanh nghiệp nổi bật"
+          label={t('common.featuredBusiness')}
           isSeeAll={false}
         >
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{ paddingHorizontal: 5, marginTop: 10 }}
+            style={styles.carousel}
           >
-            <View style={{ flexDirection: 'row' }}>
+            <View style={styles.row}>
               {[...Array(4)].map((_, index) => (
                 <View
                   key={`itemFeaturedBusiness${index}`}
@@ -81,9 +90,9 @@ const HomeScreen = () => {
                       uri: 'https://ledinhphong.vn/wp-content/uploads/2020/04/logo-dat-xanh-group.jpg',
                     }}
                   />
-                  <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+                  <View style={styles.boxNameBusiness}>
                     <Icon name="location-city" />
-                    <Text>11 Dự án</Text>
+                    <Text>{t('common.project')}</Text>
                   </View>
                 </View>
               ))}

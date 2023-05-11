@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_3, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
+import {
+  COLOR_BLACK_3,
+  COLOR_GRAY_2,
+  COLOR_ORANGE_6,
+  COLOR_WHITE,
+} from '../../../constants';
 
 const styles = StyleSheet.create({
   boxItem: {
@@ -18,6 +23,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 6,
   },
+  boxNameBusiness: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
   businessLabel: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -25,10 +34,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
   },
+  carousel: {
+    marginTop: 10,
+    paddingHorizontal: 5,
+  },
   container: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
+  },
+  containerScreen: {
+    flex: 1,
   },
   dot: {
     borderRadius: 7,
@@ -56,9 +72,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
+  row: {
+    flexDirection: 'row',
+  },
+  scroll: {
+    backgroundColor: COLOR_WHITE,
+  },
   viewSearch: {
     alignItems: 'center',
-    backgroundColor: '#EDA749',
+    backgroundColor: COLOR_ORANGE_6,
     flexDirection: 'row',
     padding: 8,
   },
