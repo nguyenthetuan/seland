@@ -8,8 +8,10 @@ import { SliderBox } from 'react-native-image-slider-box';
 import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
 import Category from '../components/Category';
 import HeaderHome from '../components/HeaderHome';
-import HottestRealEstate from '../components/HottestRealEstate';
+import HottestRealEstateCategory from '../components/HottestRealEstateCategory';
+import ProjectCategory from '../components/ProjectCategory';
 import RealEstateByLocation from '../components/RealEstateByLocation';
+import RealEstateForYouCategory from '../components/RealEstateForYouCategory';
 import RealEstateNews from '../components/RealEstateNews';
 import SuggestMenu from '../components/SuggestMenu';
 import styles from './styles';
@@ -18,12 +20,15 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
-  const goToAllListPost = () => navigate('ListPostsScreen');
+  const goToAllListPost = () => navigate('');
 
   return (
     <View style={styles.containerScreen}>
       <HeaderHome />
-      <ScrollView style={styles.scroll}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.contentContainer}
+      >
         <SliderBox
           autoplay
           circleLoop
@@ -55,7 +60,19 @@ const HomeScreen = () => {
           label={t('common.hottestRealEstate')}
           onSeeAll={goToAllListPost}
         >
-          <HottestRealEstate />
+          <HottestRealEstateCategory />
+        </Category>
+        <Category
+          label={t('common.realEstateForYou')}
+          onSeeAll={goToAllListPost}
+        >
+          <RealEstateForYouCategory />
+        </Category>
+        <Category
+          label={t('common.project')}
+          onSeeAll={goToAllListPost}
+        >
+          <ProjectCategory />
         </Category>
         <Category
           label={t('common.realEstateByLocation')}
@@ -74,9 +91,9 @@ const HomeScreen = () => {
           isSeeAll={false}
         >
           <ScrollView
+            style={styles.carousel}
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={styles.carousel}
           >
             <View style={styles.row}>
               {[...Array(4)].map((_, index) => (
@@ -92,7 +109,7 @@ const HomeScreen = () => {
                   />
                   <View style={styles.boxNameBusiness}>
                     <Icon name="location-city" />
-                    <Text>{t('common.project')}</Text>
+                    <Text style={styles.txtProject}>{t('common.project')}</Text>
                   </View>
                 </View>
               ))}

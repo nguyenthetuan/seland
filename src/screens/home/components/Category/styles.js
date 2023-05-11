@@ -6,7 +6,10 @@ const styles = StyleSheet.create({
   boxLabelCategory: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
+    marginLeft: 10,
+  },
+  container: {
+    marginBottom: 17,
   },
   container: {
     marginBottom: 17,

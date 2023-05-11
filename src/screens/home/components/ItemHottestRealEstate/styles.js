@@ -6,6 +6,7 @@ import {
   COLOR_BLACK_3,
   COLOR_BLUE_1,
   COLOR_GRAY_7,
+  COLOR_GREEN_3,
   COLOR_GREEN_4,
   COLOR_GREEN_5,
   COLOR_ORANGE_5,
@@ -21,7 +22,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     lineHeight: 18,
-    paddingLeft: 8,
+  },
+  boxContent: {
+    paddingHorizontal: 10,
+  },
+  boxFooterProject: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between',
+    marginVertical: 2,
   },
   boxImage: {
     height: 130,
@@ -29,7 +38,6 @@ const styles = StyleSheet.create({
   },
   boxLocation: {
     flexDirection: 'row',
-    marginHorizontal: 5,
   },
   boxMonopoly: {
     backgroundColor: COLOR_ORANGE_5,
@@ -51,7 +59,6 @@ const styles = StyleSheet.create({
   boxPrice: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
     marginTop: 10,
   },
   boxRank: {
@@ -60,19 +67,38 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
   },
+  boxSale: {
+    backgroundColor: COLOR_GREEN_3,
+    borderRadius: 10,
+    height: 16,
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  boxScale: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 6,
+  },
+  boxTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+    marginTop: 10,
+  },
   boxType: {
     backgroundColor: COLOR_GREEN_4,
     borderRadius: 10,
     marginBottom: 8,
     marginRight: 5,
+    marginTop: 6,
     padding: 3,
     paddingHorizontal: 10,
   },
   boxTypeHouse: {
     backgroundColor: COLOR_PURPLE_2,
     borderRadius: 10,
-    marginBottom: 5,
-    marginLeft: 10,
+    marginBottom: 3,
+    paddingTop: 5,
     padding: 3,
     width: 60,
   },
@@ -93,7 +119,6 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 12,
     lineHeight: 15,
-    marginHorizontal: 10,
     marginVertical: 8,
   },
   footer: {
@@ -101,11 +126,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 5,
-    marginHorizontal: 10,
+    marginTop: 5,
   },
   image: {
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
     height: '100%',
     width: '100%',
   },
@@ -115,17 +140,21 @@ const styles = StyleSheet.create({
   itemInfo: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginLeft: 10,
+    marginRight: 5,
   },
   location: {
     color: COLOR_GRAY_7,
     flex: 1,
     fontSize: 12,
     lineHeight: 20,
-    marginBottom: 8,
   },
   love: {
     paddingLeft: 10,
+  },
+  map: {
+    fontSize: 14,
+    lineHeight: 15,
+    marginLeft: 2,
   },
   monopoly: {
     color: COLOR_WHITE,
@@ -155,16 +184,25 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
+  sale: {
+    color: COLOR_WHITE,
+    fontSize: 9,
+    lineHeight: 11,
+  },
+  scale: {
+    fontSize: 12,
+    lineHeight: 15,
+  },
   time: {
     color: COLOR_BLACK_2,
     fontSize: 12,
     lineHeight: 20,
+    marginTop: 7,
   },
   title: color => ({
     color,
     fontSize: 15,
     lineHeight: 18,
-    marginHorizontal: 10,
     marginTop: 10,
     textTransform: 'uppercase',
   }),
@@ -181,7 +219,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   valueInfo: {
-    marginLeft: 7,
+    fontSize: 11,
+    lineHeight: 15,
+    marginLeft: 4,
   },
 });
 

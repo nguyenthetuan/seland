@@ -42,6 +42,9 @@ const styles = StyleSheet.create({
     fontSize: 10,
     lineHeight: 12,
   },
+  contentContainer: {
+    paddingBottom: 50,
+  },
   filter: {
     flexDirection: 'row',
     marginTop: 10,

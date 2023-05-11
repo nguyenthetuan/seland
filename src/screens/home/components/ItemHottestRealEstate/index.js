@@ -5,22 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Image, TouchableOpacity, View } from 'react-native';
 
 import {
-  Acreage,
+  AcreageSmall,
   Bathroom,
   Bedroom,
   Compass,
-  LocationMaps,
-  Love,
+  LocationMapsSmall,
+  LoveSmall,
 } from '../../../../assets';
 import { Text } from '../../../../components';
-import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_7,
-  COLOR_GREEN_3,
-  COLOR_ORANGE_5,
-  COLOR_RED,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLOR_GRAY_7, COLOR_WHITE } from '../../../../constants';
+import REAL_ESTATE from '../../../../constants/realEstate';
 import styles from './styles';
 
 const ItemInfo = ({ value, icon }) => (
@@ -39,21 +33,8 @@ ItemInfo.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-const ItemHottestRealEstate = ({ item }) => {
+const ItemHottestRealEstate = ({ item, type }) => {
   const { t } = useTranslation();
-
-  const backgroundRank = () => {
-    switch (item?.rank_id) {
-      case 1:
-        return COLOR_BLACK_1;
-      case 2:
-        return COLOR_GREEN_3;
-      case 3:
-        return COLOR_ORANGE_5;
-      default:
-        return COLOR_RED;
-    }
-  };
 
   const onPressCall = () => {};
 
@@ -71,91 +52,155 @@ const ItemHottestRealEstate = ({ item }) => {
           }}
         />
         <View style={styles.boxRank}>
-          <View style={styles.boxMonopoly}>
-            <Text
-              style={styles.monopoly}
-              onPress={() => Alert.alert('ok')}
+          <View>
+            {[REAL_ESTATE.PROJECT, REAL_ESTATE.REAL_ESTATE_FOR_YOU].includes(
+              type
+            ) && (
+              <View style={styles.boxMonopoly}>
+                <Text
+                  style={styles.monopoly}
+                  onPress={() => Alert.alert('ok')}
+                >
+                  {t('common.monopoly')}
+                </Text>
+              </View>
+            )}
+          </View>
+          {type === REAL_ESTATE.PROJECT ? (
+            <View />
+          ) : (
+            <TouchableOpacity
+              style={styles.call}
+              activeOpacity={0.8}
+              onPress={onPressCall}
             >
-              {t('common.monopoly')}
+              <Icon
+                name="phone"
+                size={23}
+                color={COLOR_WHITE}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+      <View style={styles.boxContent}>
+        {type === REAL_ESTATE.PROJECT ? (
+          <>
+            <View style={styles.boxTitle}>
+              <Text>Urban Hill</Text>
+              <View style={styles.boxTypeHouse}>
+                <Text style={styles.typeHouse}>
+                  {item?.real_estate_type_name}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.price}>
+              {`${item?.price} ${item?.price_unit_name}`}
             </Text>
-          </View>
-          <TouchableOpacity
-            style={styles.call}
-            activeOpacity={0.8}
-            onPress={onPressCall}
+            <Text style={styles.acreage}>
+              {`39.13 - 44.44 ${t('common.millionPerM2')}`}
+            </Text>
+            <View style={styles.boxScale}>
+              <Icon
+                name="domain"
+                size={14}
+              />
+              <Text style={styles.scale}>Quy mô: 2 block, 164 căn hộ</Text>
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={styles.boxPrice}>
+              <Text style={styles.price}>
+                {`${item?.price} ${item?.price_unit_name}`}{' '}
+                <Text style={styles.acreage}>
+                  {`${item?.price_per_m} ${t('common.millionPerM2')}`}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.boxTypeHouse}>
+              <Text style={styles.typeHouse}>
+                {item?.real_estate_type_name}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <ItemInfo
+                value={`${item?.area}${t('m2')}`}
+                icon={<AcreageSmall />}
+              />
+              <ItemInfo
+                value={`${item?.bedroom}`}
+                icon={<Bedroom />}
+              />
+              <ItemInfo
+                value={`${item?.bathroom}`}
+                icon={<Bathroom />}
+              />
+              <ItemInfo
+                value={`${item?.main_direction_name}`}
+                icon={<Compass />}
+              />
+            </View>
+            <Text
+              style={styles.content}
+              numberOfLines={2}
+            >
+              {item?.title}
+            </Text>
+          </>
+        )}
+        <View style={styles.boxLocation}>
+          <Icon
+            color={COLOR_GRAY_7}
+            name="location-on"
+            size={18}
+          />
+          <Text
+            style={styles.location}
+            numberOfLines={1}
           >
-            <Icon
-              name="phone"
-              size={23}
-              color={COLOR_WHITE}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.boxPrice}>
-        <Text style={styles.price}>
-          {`${item?.price} ${item?.price_unit_name}`}{' '}
-          <Text style={styles.acreage}>
-            {`${item?.price_per_m} ${t('common.millionPerM2')}`}
+            {item?.location}
           </Text>
-        </Text>
-      </View>
-      <View style={styles.boxTypeHouse}>
-        <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
-      </View>
-      <View style={styles.row}>
-        <ItemInfo
-          value={`${item?.area}${t('m2')}`}
-          icon={<Acreage />}
-        />
-        <ItemInfo
-          value={`${item?.bedroom}`}
-          icon={<Bedroom />}
-        />
-        <ItemInfo
-          value={`${item?.bathroom}`}
-          icon={<Bathroom />}
-        />
-        <ItemInfo
-          value={`${item?.main_direction_name}`}
-          icon={<Compass />}
-        />
-      </View>
-      <Text
-        style={styles.content}
-        numberOfLines={2}
-      >
-        {item?.title}
-      </Text>
-      <View style={styles.boxLocation}>
-        <Icon
-          color={COLOR_GRAY_7}
-          name="location-on"
-          size={18}
-        />
-        <Text
-          style={styles.location}
-          numberOfLines={1}
-        >
-          {item?.location}
-        </Text>
-      </View>
-      <View style={styles.footer}>
-        <View style={styles.row}>
-          <View style={styles.boxType}>
-            <Text style={styles.type}>
-              {t(item?.demand_id === 1 ? 'common.buy' : 'common.lease')}
-            </Text>
-          </View>
-          <Text style={styles.time}>2 phút trước</Text>
         </View>
-        <View style={styles.row}>
-          <TouchableOpacity onPress={onToLocation}>
-            <LocationMaps />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.love}>
-            <Love />
-          </TouchableOpacity>
+        <View style={styles.footer}>
+          {type === REAL_ESTATE.PROJECT ? (
+            <View style={styles.boxFooterProject}>
+              <View style={styles.boxSale}>
+                <Text style={styles.sale}>{t('common.onSale')}</Text>
+              </View>
+              <View style={styles.row}>
+                <TouchableOpacity
+                  style={styles.row}
+                  onPress={onToLocation}
+                >
+                  <LocationMapsSmall />
+                  <Text style={styles.map}>{t('common.map')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.love}>
+                  <LoveSmall />
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : (
+            <>
+              <View style={styles.row}>
+                <View style={styles.boxType}>
+                  <Text style={styles.type}>
+                    {t(item?.demand_id === 1 ? 'common.buy' : 'common.lease')}
+                  </Text>
+                </View>
+                <Text style={styles.time}>2 phút trước</Text>
+              </View>
+              <View style={styles.row}>
+                <TouchableOpacity onPress={onToLocation}>
+                  <LocationMapsSmall />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.love}>
+                  <LoveSmall />
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -164,9 +209,11 @@ const ItemHottestRealEstate = ({ item }) => {
 
 ItemHottestRealEstate.defaultProps = {
   item: {},
+  type: '',
 };
 
 ItemHottestRealEstate.propTypes = {
+  type: PropTypes.string,
   item: PropTypes.object,
 };
 
