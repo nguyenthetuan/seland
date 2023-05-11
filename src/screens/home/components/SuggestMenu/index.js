@@ -4,12 +4,25 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 
+import {
+  BDSHome,
+  BecomeAnAgentHome,
+  BuySellHome,
+  CalculateCashFlowHome,
+  IndustrialLandHome,
+  LandFeverAreaHome,
+  LeaseHome,
+  LogoZoning,
+  NewsHome,
+  ProjectHome,
+  TrainHome,
+} from '../../../../assets';
 import { Text } from '../../../../components';
 import styles from './styles';
 
 const ItemCategory = ({ icon, content }) => (
   <View style={styles.boxItemSuggest}>
-    {icon && <Text>{icon}</Text>}
+    {icon && typeof icon === 'string' ? <Text>{icon}</Text> : icon}
     <Text style={styles.content}>{content}</Text>
   </View>
 );
@@ -26,51 +39,51 @@ ItemCategory.propTypes = {
 const listCategory = [
   {
     name: 'Mua sắm',
-    icon: '1',
+    icon: <BuySellHome />,
   },
   {
     name: 'Cho thuê',
-    icon: '2',
+    icon: <LeaseHome />,
   },
   {
     name: 'Dự án',
-    icon: '3',
+    icon: <ProjectHome />,
   },
   {
     name: 'Đất CN',
-    icon: '4',
+    icon: <IndustrialLandHome />,
   },
   {
     name: 'Khu vực\nsốt đất',
-    icon: '5',
+    icon: <LandFeverAreaHome />,
   },
   {
     name: 'Tính dòng\ntiền',
-    icon: '6',
+    icon: <CalculateCashFlowHome />,
   },
   {
     name: 'BDS\nquanh bạn',
-    icon: '7',
+    icon: <BDSHome />,
   },
   {
     name: 'Kho hàng',
-    icon: '8',
+    icon: <LogoZoning />,
   },
   {
     name: 'Đào tạo',
-    icon: '9',
+    icon: <TrainHome />,
   },
   {
     name: 'Tin tức',
-    icon: '10',
+    icon: <NewsHome />,
   },
   {
     name: 'Trở thành\nđại lý',
-    icon: '11',
+    icon: <BecomeAnAgentHome />,
   },
   {
     name: 'Xem\nquy hoạch',
-    icon: '12',
+    icon: <LogoZoning />,
   },
 ];
 

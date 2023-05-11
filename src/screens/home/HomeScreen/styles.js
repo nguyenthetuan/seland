@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
   containerScreen: {
     flex: 1,
   },
+  contentContainer: {
+    paddingBottom: 50,
+  },
   dot: {
     borderRadius: 7,
     height: 10,
@@ -77,6 +80,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     backgroundColor: COLOR_WHITE,
+  },
+  txtProject: {
+    marginLeft: 5,
+    marginTop: 5,
   },
   viewSearch: {
     alignItems: 'center',

@@ -42,7 +42,11 @@
     "cancel": "Huỷ",
     "save": "Lưu",
     "seeMore": "Xem thêm",
-    "collapse": "Thu gọn"
+    "collapse": "Thu gọn",
+    "buy": "Bán",
+    "lease": "Cho thuê",
+    "all": "Tất cả",
+    "monopoly": "Độc quyền"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -99,6 +103,9 @@
     "vipSilver": "VIP Bạc",
     "vipGold": "VIP Vàng",
     "vipDiamond": "VIP Kim cương",
+    "realEstateForYou": "Bất động dành cho bạn",
+    "map": "Bản đồ",
+    "onSale": "Đang mở bán",
     "noResults": "Không tìm thấy kết quả."
   },
   "error": {
@@ -167,6 +174,13 @@
     "website": "Website",
     "projectSunriseCity": "Dự án Sunrise City"
   },
+  "tabBar": {
+    "home": "Trang chủ",
+    "history": "Lịch sử",
+    "createPost": "Đăng tin",
+    "managePost": "Quản lý tin",
+    "account": "Tài khoản"
+  },
   "select": {
     "sex": "Giới tính",
     "male": "Nam",
@@ -186,12 +200,5 @@
     "postVideo": "Tin có video",
     "pricePerAsc": "Giá /m2 thấp",
     "pricePerDesc": "Giá /m2 cao"
-  },
-  "tabBar": {
-    "home": "Trang chủ",
-    "history": "Lịch sử",
-    "createPost": "Đăng tin",
-    "managePost": "Quản lý tin",
-    "account": "Tài khoản"
   }
 }

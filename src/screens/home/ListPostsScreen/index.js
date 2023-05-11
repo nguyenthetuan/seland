@@ -75,6 +75,7 @@ const ListPostsScreen = () => {
         <HeaderListPosts />
         <FlatList
           style={styles.list}
+          contentContainerStyle={styles.contentContainer}
           data={listPosts}
           renderItem={({ item }) => <ItemPosts item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}
