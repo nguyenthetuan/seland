@@ -20,7 +20,7 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
-  const goToAllListPost = () => navigate('');
+  const navigateToListPosts = () => navigate('ListPosts');
 
   return (
     <View style={styles.containerScreen}>
@@ -58,19 +58,19 @@ const HomeScreen = () => {
         <SuggestMenu />
         <Category
           label={t('common.hottestRealEstate')}
-          onSeeAll={goToAllListPost}
+          onSeeAll={navigateToListPosts}
         >
           <HottestRealEstateCategory />
         </Category>
         <Category
           label={t('common.realEstateForYou')}
-          onSeeAll={goToAllListPost}
+          onSeeAll={navigateToListPosts}
         >
           <RealEstateForYouCategory />
         </Category>
         <Category
           label={t('common.project')}
-          onSeeAll={goToAllListPost}
+          onSeeAll={navigateToListPosts}
         >
           <ProjectCategory />
         </Category>

@@ -7,7 +7,7 @@ const routes = [
   },
   {
     component: ListPostsScreen,
-    name: 'ListPostsScreen',
+    name: 'ListPosts',
   },
 ];
 
