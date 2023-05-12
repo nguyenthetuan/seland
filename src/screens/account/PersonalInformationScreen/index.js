@@ -201,60 +201,64 @@ const PersonalInformationScreen = () => {
   }, [user, setValue]);
 
   const handleSelectProvince = selectedItem => {
+    setValue('district_id', null);
+    // setValue('ward_id', null);
+
     const { value } = selectedItem;
 
-    if (value)
+    if (value) {
       fetchDistricts({
         province_code: selectedItem.value,
       });
-    else {
+    } else {
       dispatch(clearDistricts());
       // dispatch(clearWards());
-      setValue('district_id', null);
-      // setValue('ward_id', null);
     }
   };
 
   // const handleSelectDistrict = selectedItem => {
+  //   setValue('ward_id', null);
+
   //   const { value } = selectedItem;
 
-  //   if (value)
+  //   if (value) {
   //     fetchWards({
   //       province_code: getValues().province_id,
   //       district_code: selectedItem.value,
   //     });
-  //   else {
+  //   } else {
   //     dispatch(clearWards());
-  //     setValue('ward_id', null);
   //   }
   // };
 
   const handleSelectCompanyProvince = selectedItem => {
+    setValue('company_district_id', null);
+    // setValue('company_ward_id', null);
+
     const { value } = selectedItem;
 
-    if (value)
+    if (value) {
       fetchCompanyDistricts({
         province_code: selectedItem.value,
       });
-    else {
+    } else {
       dispatch(clearCompanyDistricts());
       // dispatch(clearCompanyWards());
-      setValue('company_district_id', null);
-      // setValue('company_ward_id', null);
     }
   };
 
   // const handleSelectCompanyDistrict = selectedItem => {
+  //   setValue('company_ward_id', null);
+
   //   const { value } = selectedItem;
 
-  //   if (value)
+  //   if (value) {
   //     fetchCompanyWards({
   //       province_code: getValues().company_province_id,
   //       district_code: selectedItem.value,
   //     });
-  //   else {
+  //   } else {
   //     dispatch(clearCompanyWards());
-  //     setValue('company_ward_id', null);
   //   }
   // };
 
