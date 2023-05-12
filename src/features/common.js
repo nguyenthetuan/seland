@@ -74,6 +74,20 @@ const slice = createSlice({
     companyWards: [],
     error: '',
   },
+  reducers: {
+    clearDistricts: state => {
+      state.districts = [];
+    },
+    clearWards: state => {
+      state.wards = [];
+    },
+    clearCompanyDistricts: state => {
+      state.companyDistricts = [];
+    },
+    clearCompanyWards: state => {
+      state.companyWards = [];
+    },
+  },
   extraReducers: builder => {
     builder.addCase(getProvinces.pending, state => {
       state.loading = true;
@@ -125,5 +139,12 @@ const slice = createSlice({
     });
   },
 });
+
+export const {
+  clearDistricts,
+  clearWards,
+  clearCompanyDistricts,
+  clearCompanyWards,
+} = slice.actions;
 
 export const commonReducer = slice.reducer;

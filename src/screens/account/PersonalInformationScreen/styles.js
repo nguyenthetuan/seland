@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   address: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 8,
     marginHorizontal: 8,
   },
   addressItem: {
@@ -78,6 +78,9 @@ const styles = StyleSheet.create({
   sex: {
     marginBottom: 8,
     marginHorizontal: 8,
+  },
+  taxCode: {
+    marginTop: 16,
   },
   text: {
     color: COLOR_ORANGE_1,
