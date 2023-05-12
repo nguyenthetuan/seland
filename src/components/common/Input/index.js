@@ -20,6 +20,7 @@ const Input = ({
   name,
   onFocus,
   placeholder,
+  required,
   showPasswordPolicy,
   ...props
 }) => {
@@ -64,6 +65,7 @@ const Input = ({
         label={
           <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
             {label}
+            {required && ' *'}
           </Text>
         }
         onBlur={handleBlur}
@@ -100,6 +102,7 @@ Input.defaultProps = {
   labelStyle: {},
   onFocus: () => {},
   placeholder: '',
+  required: false,
   showPasswordPolicy: false,
 };
 
@@ -114,6 +117,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
+  required: PropTypes.bool,
   showPasswordPolicy: PropTypes.bool,
 };
 

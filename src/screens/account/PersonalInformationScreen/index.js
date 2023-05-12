@@ -333,9 +333,10 @@ const PersonalInformationScreen = () => {
           disabled={loading}
           errorMessage={errors.name?.message}
           label={t('input.name')}
+          labelStyle={styles.inputLabel}
           name="name"
           onFocus={() => clearErrors('name')}
-          labelStyle={styles.inputLabel}
+          required
         />
         <View style={styles.sex}>
           <Select
@@ -348,8 +349,8 @@ const PersonalInformationScreen = () => {
             defaultButtonText="Please Select"
             disabled={loading}
             label={t('select.sex')}
-            name="sex"
             labelStyle={styles.inputLabel}
+            name="sex"
           />
         </View>
         <DateTimePicker
@@ -370,6 +371,7 @@ const PersonalInformationScreen = () => {
           labelStyle={styles.inputLabel}
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}
+          required
         />
         <Input
           autoComplete="email"
