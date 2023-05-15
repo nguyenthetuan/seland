@@ -197,7 +197,9 @@ const PersonalInformationScreen = () => {
   }, []);
 
   useEffect(() => {
-    Object.entries(user).forEach(([key, value]) => setValue(key, value));
+    Object.entries(user).forEach(
+      ([key, value]) => value && setValue(key, value)
+    );
   }, [user, setValue]);
 
   const handleSelectProvince = selectedItem => {
@@ -512,7 +514,7 @@ const PersonalInformationScreen = () => {
         <Button
           buttonStyle={styles.button}
           loading={loading}
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit(onSubmit, error => console.log(error))}
           title={t('button.save')}
         />
       </Screen>
