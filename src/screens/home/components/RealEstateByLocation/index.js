@@ -87,12 +87,6 @@ const RealEstateByLocation = () => {
           </View>
         );
       })}
-      <Button
-        buttonStyle={styles.btnSeeAll}
-        titleStyle={styles.txtSeeAll}
-        title={t('button.seeAll')}
-        type="outline"
-      />
     </View>
   );
 };
