@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_BLUE_2 } from '../../../../constants';
+import {
+  COLOR_BLACK_2,
+  COLOR_BLUE_1,
+  COLOR_BLUE_2,
+  COLOR_GRAY_5,
+  COLOR_GRAY_6,
+} from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxItemSuggest: {
@@ -24,6 +30,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     marginBottom: 20,
+  },
+  line: {
+    backgroundColor: COLOR_GRAY_6,
+    height: 1.5,
+    marginVertical: 5,
+    width: '100%',
   },
   listSuggest: {
     alignItems: 'flex-start',

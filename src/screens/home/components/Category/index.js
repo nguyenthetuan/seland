@@ -21,7 +21,7 @@ const Category = ({ children, label, isSeeAll, onSeeAll }) => {
               style={styles.seeAll}
               onPress={onSeeAll}
             >
-              {t('button.seeMore')}
+              {t('button.seeAll')}
             </Text>
             <Icon
               name="navigate-next"

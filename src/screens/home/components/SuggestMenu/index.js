@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
@@ -20,76 +21,85 @@ import {
 import { Text } from '../../../../components';
 import styles from './styles';
 
-const ItemCategory = ({ icon, content }) => (
-  <View style={styles.boxItemSuggest}>
+const ItemCategory = ({ icon, content, onPress }) => (
+  <TouchableOpacity
+    style={styles.boxItemSuggest}
+    onPress={onPress}
+  >
     {icon && typeof icon === 'string' ? <Text>{icon}</Text> : icon}
     <Text style={styles.content}>{content}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
 ItemCategory.defaultProps = {
   content: '',
+  onPress: () => {},
 };
 
 ItemCategory.propTypes = {
   content: PropTypes.string,
   icon: PropTypes.node.isRequired,
+  onPress: PropTypes.func,
 };
-
-const listCategory = [
-  {
-    name: 'Mua sắm',
-    icon: <BuySellHome />,
-  },
-  {
-    name: 'Cho thuê',
-    icon: <LeaseHome />,
-  },
-  {
-    name: 'Dự án',
-    icon: <ProjectHome />,
-  },
-  {
-    name: 'Đất CN',
-    icon: <IndustrialLandHome />,
-  },
-  {
-    name: 'Khu vực\nsốt đất',
-    icon: <LandFeverAreaHome />,
-  },
-  {
-    name: 'Tính dòng\ntiền',
-    icon: <CalculateCashFlowHome />,
-  },
-  {
-    name: 'BDS\nquanh bạn',
-    icon: <BDSHome />,
-  },
-  {
-    name: 'Kho hàng',
-    icon: <LogoZoning />,
-  },
-  {
-    name: 'Đào tạo',
-    icon: <TrainHome />,
-  },
-  {
-    name: 'Tin tức',
-    icon: <NewsHome />,
-  },
-  {
-    name: 'Trở thành\nđại lý',
-    icon: <BecomeAnAgentHome />,
-  },
-  {
-    name: 'Xem\nquy hoạch',
-    icon: <LogoZoning />,
-  },
-];
 
 const SuggestMenu = () => {
   const [show, setShow] = useState(false);
+  const { navigate } = useNavigation();
   const { t } = useTranslation();
+
+  const navigateToListPosts = () => navigate('ListPosts');
+
+  const listCategory = [
+    {
+      name: 'Mua bán',
+      icon: <BuySellHome />,
+      onPress: navigateToListPosts,
+    },
+    {
+      name: 'Cho thuê',
+      icon: <LeaseHome />,
+    },
+    {
+      name: 'Dự án',
+      icon: <ProjectHome />,
+    },
+    {
+      name: 'Đất CN',
+      icon: <IndustrialLandHome />,
+    },
+    {
+      name: 'Khu vực\nsốt đất',
+      icon: <LandFeverAreaHome />,
+    },
+    {
+      name: 'Tính dòng\ntiền',
+      icon: <CalculateCashFlowHome />,
+    },
+    {
+      name: 'BDS\nquanh bạn',
+      icon: <BDSHome />,
+    },
+    {
+      name: 'Kho hàng',
+      icon: <LogoZoning />,
+    },
+    {
+      name: 'Đào tạo',
+      icon: <TrainHome />,
+    },
+    {
+      name: 'Tin tức',
+      icon: <NewsHome />,
+    },
+    {
+      name: 'Trở thành\nđại lý',
+      icon: <BecomeAnAgentHome />,
+    },
+    {
+      name: 'Xem\nquy hoạch',
+      icon: <LogoZoning />,
+    },
+  ];
 
   const listSuggest = useMemo(() => {
     let array = [];
@@ -109,15 +119,17 @@ const SuggestMenu = () => {
             key={`category${index}`}
             icon={item?.icon}
             content={item?.name}
+            onPress={item?.onPress}
           />
         ))}
       </View>
+      <View style={styles.line} />
       <TouchableOpacity
         style={styles.expand}
         onPress={() => setShow(!show)}
       >
         <Text style={styles.txtExpand}>
-          {t(show ? 'button.collapse' : 'button.seeMore')}
+          {t(show ? 'button.collapse' : 'button.extend')}
         </Text>
         <Icon
           name={show ? 'expand-less' : 'keyboard-arrow-down'}

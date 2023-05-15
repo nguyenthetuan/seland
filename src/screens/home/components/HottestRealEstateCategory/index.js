@@ -88,7 +88,7 @@ const HottestRealEstateCategory = () => {
           buttonStyle={styles.btnSelect}
           titleStyle={styles.txtSelect}
           onPress={() => handleSelectOptions(true)}
-          title={t('button.buy')}
+          title={t('button.buySell')}
           type={isBuy ? 'solid' : 'outline'}
         />
         <Button
