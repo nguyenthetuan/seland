@@ -1,11 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
+import { useDispatch } from 'react-redux';
 
 import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
+import { getListRealEstateByLocation } from '../../../features';
+import { dispatchThunk } from '../../../utils';
 import Category from '../components/Category';
 import HeaderHome from '../components/HeaderHome';
 import HottestRealEstateCategory from '../components/HottestRealEstateCategory';
@@ -19,6 +22,11 @@ import styles from './styles';
 const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatchThunk(dispatch, getListRealEstateByLocation());
+  }, [dispatch]);
 
   const navigateToListPosts = () => navigate('ListPosts');
 

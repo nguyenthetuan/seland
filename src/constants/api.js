@@ -12,3 +12,4 @@ export const UPDATE_PROFILE_ROUTE = 'auth/updateUserDetail';
 export const GET_PROVINCES_ROUTE = '/getProvinces';
 export const GET_DISTRICTS_ROUTE = '/getDistricts';
 export const GET_WARDS_ROUTE = '/getWards';
+export const GET_LIST_REAL_ESTATE_BY_LOCATION = '/getListRealEstateByLocation';
