@@ -45,6 +45,7 @@
     "collapse": "Thu gọn",
     "buy": "Bán",
     "buySell": "Mua bán",
+    "personalPage": "Trang cá nhân",
     "lease": "Cho thuê",
     "all": "Tất cả",
     "monopoly": "Độc quyền"
@@ -106,7 +107,19 @@
     "vipDiamond": "VIP Kim cương",
     "realEstateForYou": "Bất động sản dành cho bạn",
     "map": "Bản đồ",
+    "balance": "Số dư",
+    "promotion": "Khuến mãi",
+    "topup": "Nạp tiền",
+    "activityHistory": "Lịch sử hoạt động",
+    "postManagement": "Quản lý tin đăng",
+    "realEstateManagement": "Quản lý bất động sản",
+    "appointmentManagement": "Quản lý lịch hẹn",
+    "transactionManagement": "Quản lý giao dịch",
+    "adsManagement": "Quản lý quảng cáo",
+    "accountManagement": "Quản lý tài khoản",
+    "scale": "Quy mô",
     "onSale": "Đang mở bán",
+    "apartment": "căn hộ",
     "noResults": "Không tìm thấy kết quả."
   },
   "error": {

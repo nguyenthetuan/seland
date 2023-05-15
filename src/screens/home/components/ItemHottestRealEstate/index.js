@@ -87,25 +87,30 @@ const ItemHottestRealEstate = ({ item, type }) => {
         {type === REAL_ESTATE.PROJECT ? (
           <>
             <View style={styles.boxTitle}>
-              <Text>Urban Hill</Text>
+              <Text
+                numberOfLines={1}
+                style={styles.projectName}
+              >
+                {item?.project_name}
+              </Text>
               <View style={styles.boxTypeHouse}>
                 <Text style={styles.typeHouse}>
                   {item?.real_estate_type_name}
                 </Text>
               </View>
             </View>
-            <Text style={styles.price}>
-              {`${item?.price} ${item?.price_unit_name}`}
-            </Text>
-            <Text style={styles.acreage}>
-              {`39.13 - 44.44 ${t('common.millionPerM2')}`}
-            </Text>
+            <Text style={styles.price}>{`${item?.price_range}`}</Text>
+            <Text style={styles.acreage}>{item?.price_range_per_m}</Text>
             <View style={styles.boxScale}>
               <Icon
                 name="domain"
                 size={14}
               />
-              <Text style={styles.scale}>Quy mô: 2 block, 164 căn hộ</Text>
+              <Text style={styles.scale}>
+                {` ${t('common.scale')}: ${item?.blocks} block, ${
+                  item?.apartment
+                } ${t('common.apartment')}`}
+              </Text>
             </View>
           </>
         ) : (

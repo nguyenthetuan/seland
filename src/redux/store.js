@@ -4,16 +4,17 @@ import {
   FLUSH,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
   REHYDRATE,
-  persistReducer,
-  persistStore,
 } from 'redux-persist';
 
 import {
   authReducer,
   commonReducer,
+  homeReducer,
   realEstatesReducer,
   userReducer,
 } from '../features';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   common: commonReducer,
   realEstates: realEstatesReducer,
+  home: homeReducer,
   user: userReducer,
 });
 

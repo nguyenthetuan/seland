@@ -192,23 +192,23 @@ const AccountScreen = () => {
             style={styles.myPage}
             onPress={navigateToPersonalInformation}
           >
-            Trang cá nhân
+            {t('button.personalPage')}
           </Text>
         </View>
         <View style={styles.boxRankAccount}>
           <View>
-            <Text style={styles.label}>Tôi là</Text>
+            <Text style={styles.label}>{t('common.iam')}</Text>
             <DashedButton title={user?.user_type_name} />
           </View>
           <View>
-            <Text style={styles.label}>Hạng tài khoản</Text>
+            <Text style={styles.label}>{t('common.accountRank')}</Text>
             <DashedButton title="Tài khoản chuyên nghiệp" />
           </View>
         </View>
         <View style={styles.boxItem}>
           <View style={styles.item}>
             <View style={styles.boxLabelItem}>
-              <Text>Số dư</Text>
+              <Text>{t('common.balance')}</Text>
               <Icon
                 color={COLOR_ORANGE_2}
                 name="monetization-on"
@@ -220,7 +220,7 @@ const AccountScreen = () => {
           <View style={styles.line} />
           <View style={styles.item}>
             <View style={styles.boxLabelItem}>
-              <Text>Khuyến mãi</Text>
+              <Text>{t('common.promotion')}</Text>
               <Icon
                 color={COLOR_GREEN_1}
                 name="redeem"
@@ -235,35 +235,35 @@ const AccountScreen = () => {
               name="account-balance-wallet"
               size={20}
             />
-            <Text style={styles.txtPayment}>Nạp tiền</Text>
+            <Text style={styles.txtPayment}>{t('common.topup')}</Text>
           </TouchableOpacity>
         </View>
         <AccountMenu
-          label="Lịch sử hoạt động"
+          label={t('common.activityHistory')}
           options={activityHistory}
         />
         <AccountMenu
-          label="Quản lý tin đăng"
+          label={t('common.postManagement')}
           options={postManagement}
         />
         <AccountMenu
-          label="Quản lý kho bất động sản"
+          label={t('common.realEstateManagement')}
           options={realEstateManagement}
         />
         <AccountMenu
-          label="Quản lý lịch hẹn"
+          label={t('common.appointmentManagement')}
           options={appointmentManagement}
         />
         <AccountMenu
-          label="Quản lý giao dịch"
+          label={t('common.transactionManagement')}
           options={transactionManagement}
         />
         <AccountMenu
-          label="Quản lý quảng cáo"
+          label={t('common.adsManagement')}
           options={advertisingManagement}
         />
         <AccountMenu
-          label="Quản lý tài khoản"
+          label={t('common.accountManagement')}
           options={accountManagement}
         />
         <Button
