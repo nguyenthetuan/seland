@@ -19,12 +19,16 @@ import {
   Text,
 } from '../../../components';
 import {
+  clearCompanyDistricts,
+  // clearCompanyWards,
+  clearDistricts,
+  // clearWards,
   getCompanyDistricts,
   getCompanyProvinces,
-  getCompanyWards,
+  // getCompanyWards,
   getDistricts,
   getProvinces,
-  getWards,
+  // getWards,
   selectCommon,
   selectUser,
   updateProfile,
@@ -93,11 +97,31 @@ const PersonalInformationScreen = () => {
     },
   ];
 
+  const emptyProvinceOption = {
+    label: t('select.province'),
+    value: null,
+  };
+  const emptyDistrictOption = {
+    label: t('select.district'),
+    value: null,
+  };
+  //  const emptyWardOption = {
+  //   label: t('select.ward'),
+  //   value: null
+  // }
+
+  const provinceOptions = [emptyProvinceOption, ...provinces];
+  const districtOptions = [emptyDistrictOption, ...districts];
+  // const wardOptions = [emptyWardOption, ...wards];
+  const companyProvinceOptions = [emptyProvinceOption, ...companyProvinces];
+  const companyDistrictOptions = [emptyDistrictOption, ...companyDistricts];
+  // const wardOptions = [emptyWardOption, ...companyWards];
+
   const {
     clearErrors,
     control,
     formState: { errors },
-    getValues,
+    // getValues,
     handleSubmit,
     setValue,
   } = useForm({
@@ -127,79 +151,116 @@ const PersonalInformationScreen = () => {
   const fetchDistricts = (params, callback) =>
     dispatchThunk(dispatch, getDistricts(params), callback);
 
-  const fetchWards = params => dispatchThunk(dispatch, getWards(params));
+  // const fetchWards = params => dispatchThunk(dispatch, getWards(params));
 
   const fetchCompanyDistricts = (params, callback) =>
     dispatchThunk(dispatch, getCompanyDistricts(params), callback);
 
-  const fetchCompanyWards = params =>
-    dispatchThunk(dispatch, getCompanyWards(params));
+  // const fetchCompanyWards = params =>
+  //   dispatchThunk(dispatch, getCompanyWards(params));
 
   const refresh = async () => {
-    await dispatchThunk(dispatch, getProvinces(), async () => {
-      const { district_id, province_id } = user;
-      if (province_id) {
-        await fetchDistricts(
-          {
-            province_code: province_id,
-          },
-          async () => {
-            if (district_id) {
-              await fetchWards({
-                province_code: province_id,
-                district_code: district_id,
-              });
-            }
-          }
-        );
-      }
-    });
-    await dispatchThunk(dispatch, getCompanyProvinces(), async () => {
-      const { company_district_id, company_province_id } = user;
-      if (company_province_id) {
-        await fetchCompanyDistricts(
-          {
-            province_code: company_province_id,
-          },
-          async () => {
-            if (company_district_id) {
-              await fetchCompanyWards({
-                province_code: company_province_id,
-                district_code: company_district_id,
-              });
-            }
-          }
-        );
-      }
-    });
-    Object.entries(user).forEach(([key, value]) => setValue(key, value));
+    const {
+      province_id,
+      // district_id,
+      company_province_id,
+      // company_district_id,
+    } = user;
+    await Promise.all([
+      dispatchThunk(dispatch, getProvinces()),
+      province_id &&
+        fetchDistricts({
+          province_code: province_id,
+        }),
+      // province_id &&
+      //   district_id &&
+      //   fetchWards({
+      //     province_code: province_id,
+      //     district_code: district_id,
+      //   }),
+      dispatchThunk(dispatch, getCompanyProvinces()),
+      company_province_id &&
+        fetchCompanyDistricts({
+          province_code: company_province_id,
+        }),
+      // company_province_id &&
+      //   company_district_id &&
+      //   fetchCompanyWards({
+      //     province_code: company_province_id,
+      //     district_code: company_district_id,
+      //   }),
+    ]);
   };
 
   useEffect(() => {
     refresh();
   }, []);
 
-  const handleSelectProvince = selectedItem =>
-    fetchDistricts({
-      province_code: selectedItem.value,
-    });
+  useEffect(() => {
+    Object.entries(user).forEach(([key, value]) => setValue(key, value));
+  }, [user, setValue]);
 
-  const handleSelectDistrict = selectedItem =>
-    fetchWards({
-      province_code: getValues().province_id,
-      district_code: selectedItem.value,
-    });
+  const handleSelectProvince = selectedItem => {
+    setValue('district_id', null);
+    // setValue('ward_id', null);
 
-  const handleSelectCompanyProvince = selectedItem =>
-    fetchCompanyDistricts({
-      province_code: selectedItem.value,
-    });
+    const { value } = selectedItem;
 
-  const handleSelectCompanyDistrict = selectedItem =>
-    fetchCompanyWards({
-      province_code: getValues().company_province_id,
-      district_code: selectedItem.value,
-    });
+    if (value) {
+      fetchDistricts({
+        province_code: selectedItem.value,
+      });
+    } else {
+      dispatch(clearDistricts());
+      // dispatch(clearWards());
+    }
+  };
+
+  // const handleSelectDistrict = selectedItem => {
+  //   setValue('ward_id', null);
+
+  //   const { value } = selectedItem;
+
+  //   if (value) {
+  //     fetchWards({
+  //       province_code: getValues().province_id,
+  //       district_code: selectedItem.value,
+  //     });
+  //   } else {
+  //     dispatch(clearWards());
+  //   }
+  // };
+
+  const handleSelectCompanyProvince = selectedItem => {
+    setValue('company_district_id', null);
+    // setValue('company_ward_id', null);
+
+    const { value } = selectedItem;
+
+    if (value) {
+      fetchCompanyDistricts({
+        province_code: selectedItem.value,
+      });
+    } else {
+      dispatch(clearCompanyDistricts());
+      // dispatch(clearCompanyWards());
+    }
+  };
+
+  // const handleSelectCompanyDistrict = selectedItem => {
+  //   setValue('company_ward_id', null);
+
+  //   const { value } = selectedItem;
+
+  //   if (value) {
+  //     fetchCompanyWards({
+  //       province_code: getValues().company_province_id,
+  //       district_code: selectedItem.value,
+  //     });
+  //   } else {
+  //     dispatch(clearCompanyWards());
+  //   }
+  // };
 
   const onSubmit = data => {
     dispatchThunk(
@@ -272,9 +333,10 @@ const PersonalInformationScreen = () => {
           disabled={loading}
           errorMessage={errors.name?.message}
           label={t('input.name')}
+          labelStyle={styles.inputLabel}
           name="name"
           onFocus={() => clearErrors('name')}
-          labelStyle={styles.inputLabel}
+          required
         />
         <View style={styles.sex}>
           <Select
@@ -287,8 +349,8 @@ const PersonalInformationScreen = () => {
             defaultButtonText="Please Select"
             disabled={loading}
             label={t('select.sex')}
-            name="sex"
             labelStyle={styles.inputLabel}
+            name="sex"
           />
         </View>
         <DateTimePicker
@@ -309,6 +371,7 @@ const PersonalInformationScreen = () => {
           labelStyle={styles.inputLabel}
           name="phone_number"
           onFocus={() => clearErrors('phone_number')}
+          required
         />
         <Input
           autoComplete="email"
@@ -336,7 +399,7 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={provinces}
+              data={provinceOptions}
               defaultButtonText={t('select.province')}
               disabled={loading}
               labelStyle={styles.inputLabel}
@@ -349,19 +412,19 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={districts}
+              data={districtOptions}
               defaultButtonText={t('select.district')}
               disabled={loading}
               labelStyle={styles.inputLabel}
               name="district_id"
-              onSelect={handleSelectDistrict}
+              // onSelect={handleSelectDistrict}
             />
           </View>
           {/* </View> */}
           {/* <Select
             buttonStyle={styles.select}
             control={control}
-            data={wards}
+            data={wardOptions}
             defaultButtonText={t('select.ward')}
             disabled={loading}
             labelStyle={styles.inputLabel}
@@ -392,7 +455,7 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={companyProvinces}
+              data={companyProvinceOptions}
               defaultButtonText={t('select.province')}
               disabled={loading}
               labelStyle={styles.inputLabel}
@@ -405,35 +468,37 @@ const PersonalInformationScreen = () => {
             <Select
               buttonStyle={styles.select}
               control={control}
-              data={companyDistricts}
+              data={companyDistrictOptions}
               defaultButtonText={t('select.district')}
               disabled={loading}
               labelStyle={styles.inputLabel}
               name="company_district_id"
-              onSelect={handleSelectCompanyDistrict}
+              // onSelect={handleSelectCompanyDistrict}
             />
           </View>
           {/* </View> */}
           {/* <Select
             buttonStyle={styles.select}
             control={control}
-            data={companyWards}
+            data={companyWardOptions}
             defaultButtonText={t('select.ward')}
             disabled={loading}
             labelStyle={styles.inputLabel}
             name="company_ward_id"
           /> */}
         </View>
-        <Input
-          control={control}
-          disabled={loading}
-          errorMessage={errors.tax_code?.message}
-          inputMode="numeric"
-          label={t('input.taxCode')}
-          labelStyle={styles.inputLabel}
-          name="tax_code"
-          onFocus={() => clearErrors('tax_code')}
-        />
+        <View style={styles.taxCode}>
+          <Input
+            control={control}
+            disabled={loading}
+            errorMessage={errors.tax_code?.message}
+            inputMode="numeric"
+            label={t('input.taxCode')}
+            labelStyle={styles.inputLabel}
+            name="tax_code"
+            onFocus={() => clearErrors('tax_code')}
+          />
+        </View>
         <Input
           control={control}
           disabled={loading}
