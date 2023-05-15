@@ -514,7 +514,7 @@ const PersonalInformationScreen = () => {
         <Button
           buttonStyle={styles.button}
           loading={loading}
-          onPress={handleSubmit(onSubmit, error => console.log(error))}
+          onPress={handleSubmit(onSubmit)}
           title={t('button.save')}
         />
       </Screen>

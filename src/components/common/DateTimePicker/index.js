@@ -1,6 +1,5 @@
 import { Icon } from '@rneui/themed';
 import dayjs from 'dayjs';
-import isToday from 'dayjs/plugin/isToday';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
@@ -11,8 +10,6 @@ import DatePicker from 'react-native-date-picker';
 import { COLOR_BLACK_3 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
-
-dayjs.extend(isToday);
 
 const DateTimePicker = ({ control, name, label, labelStyle }) => {
   const {
@@ -26,9 +23,7 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
   const handleCancel = () => setOpen(false);
 
   const handleConfirm = date => {
-    if (!dayjs(date).isToday()) {
-      onChange(dayjs(date).format('YYYY-MM-DD'));
-    }
+    onChange(dayjs(date).format('YYYY-MM-DD'));
     handleCancel();
   };
 
@@ -41,7 +36,6 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
       )}
       <Pressable
         style={styles.input}
-        activePress
         flexDirection="row"
         onPress={handleShow}
       >
@@ -57,7 +51,7 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
         confirmText={t('button.confirm')}
         date={value ? new Date(value) : new Date()}
         locale="vi"
-        maximumDate={new Date()}
+        // maximumDate={new Date()}
         minimumDate={new Date('1900-01-01')}
         modal
         mode="date"
