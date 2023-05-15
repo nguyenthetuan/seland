@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginLeft: 10,
     marginVertical: 10,
-    width: 192,
+    width: 196,
   },
   content: {
     fontSize: 12,
@@ -166,6 +166,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 24,
+  },
+  projectName: {
+    width: '50%',
   },
   rank: color => ({
     backgroundColor: color,

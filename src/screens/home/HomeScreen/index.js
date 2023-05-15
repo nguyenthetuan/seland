@@ -7,7 +7,10 @@ import { SliderBox } from 'react-native-image-slider-box';
 import { useDispatch } from 'react-redux';
 
 import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
-import { getListRealEstateByLocation } from '../../../features';
+import {
+  getListProjects,
+  getListRealEstateByLocation,
+} from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import Category from '../components/Category';
 import HeaderHome from '../components/HeaderHome';
@@ -26,6 +29,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstateByLocation());
+    dispatchThunk(dispatch, getListProjects());
   }, [dispatch]);
 
   const navigateToListPosts = () => navigate('ListPosts');
