@@ -1,10 +1,15 @@
-import { Button } from '@rneui/base';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ImageBackground, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  ImageBackground,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Text } from '../../../../components';
+import { COLOR_BLUE_1 } from '../../../../constants';
 import { selectHome } from '../../../../features';
 import styles from './styles';
 
@@ -13,7 +18,14 @@ const RealEstateByLocation = () => {
   const { listRealEstateByLocation } = useSelector(selectHome);
 
   if (listRealEstateByLocation.loading) {
-    return <View />;
+    return (
+      <View>
+        <ActivityIndicator
+          size="small"
+          color={COLOR_BLUE_1}
+        />
+      </View>
+    );
   }
   return (
     <View style={styles.realEstateByLocation}>

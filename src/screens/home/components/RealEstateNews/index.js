@@ -5,6 +5,7 @@ import { ActivityIndicator, Image, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Text } from '../../../../components';
+import { COLOR_BLUE_1 } from '../../../../constants';
 import { selectHome } from '../../../../features';
 import styles from './styles';
 
@@ -15,7 +16,10 @@ const RealEstateNews = () => {
   if (listNews?.loading) {
     return (
       <View>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator
+          size="small"
+          color={COLOR_BLUE_1}
+        />
       </View>
     );
   }

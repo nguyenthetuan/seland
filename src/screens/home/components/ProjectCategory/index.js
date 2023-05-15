@@ -1,9 +1,10 @@
 import { Button } from '@rneui/base';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import { COLOR_BLUE_1 } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
 import ItemHottestRealEstate from '../ItemHottestRealEstate';
@@ -30,7 +31,14 @@ const ProjectCategory = () => {
   }, [isBuy, listProject.data]);
 
   if (listProject.loading) {
-    return <View />;
+    return (
+      <View>
+        <ActivityIndicator
+          size="small"
+          color={COLOR_BLUE_1}
+        />
+      </View>
+    );
   }
 
   return (
