@@ -104,9 +104,9 @@ const SuggestMenu = () => {
   return (
     <View>
       <View style={styles.listSuggest}>
-        {listSuggest?.map(item => (
+        {listSuggest?.map((item, index) => (
           <ItemCategory
-            key={`category${item?.icon}`}
+            key={`category${index}`}
             icon={item?.icon}
             content={item?.name}
           />
