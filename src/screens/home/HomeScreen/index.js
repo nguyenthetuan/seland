@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_2, SCREENS } from '../../../constants';
 import Category from '../components/Category';
 import HeaderHome from '../components/HeaderHome';
 import HottestRealEstateCategory from '../components/HottestRealEstateCategory';
@@ -20,7 +20,7 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
-  const navigateToListPosts = () => navigate('ListPosts');
+  const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
 
   return (
     <View style={styles.containerScreen}>

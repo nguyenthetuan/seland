@@ -1,28 +1,32 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
 
 import { Text } from '../../../../components';
-import { COLOR_WHITE } from '../../../../constants';
+import { COLOR_WHITE, SCREENS } from '../../../../constants';
 import styles from './styles';
 
 const DrawerMenuHome = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
+  const { navigate } = useNavigation();
 
   const openDrawerMenu = () => setVisible(true);
 
   const closeDrawerMenu = () => setVisible(false);
 
-  const onHandleMenu = () => {
+  const navigateToListPost = () => {
+    navigate(SCREENS.LIST_POST);
     closeDrawerMenu();
   };
 
   useImperativeHandle(ref, () => ({ openDrawerMenu }));
+
   const menuList = [
     {
       name: 'Mua bán nhà đất',
       key: 1,
-      onPress: onHandleMenu,
+      onPress: navigateToListPost,
     },
     {
       name: 'Cho thuê nhà đất',

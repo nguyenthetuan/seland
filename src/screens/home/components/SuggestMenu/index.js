@@ -19,6 +19,7 @@ import {
   TrainHome,
 } from '../../../../assets';
 import { Text } from '../../../../components';
+import { SCREENS } from '../../../../constants';
 import styles from './styles';
 
 const ItemCategory = ({ icon, content, onPress }) => (
@@ -47,7 +48,7 @@ const SuggestMenu = () => {
   const { navigate } = useNavigation();
   const { t } = useTranslation();
 
-  const navigateToListPosts = () => navigate('ListPosts');
+  const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
 
   const listCategory = [
     {
