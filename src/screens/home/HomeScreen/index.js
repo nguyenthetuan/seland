@@ -6,7 +6,7 @@ import { ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import { useDispatch } from 'react-redux';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_2, SCREENS } from '../../../constants';
 import {
   getListNews,
   getListProjects,

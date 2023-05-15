@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     height: 26,
     marginLeft: 10,
     padding: 0,
-    width: 80,
+    width: 85,
   },
   btnSelectMonopoly: {
     borderRadius: 5,

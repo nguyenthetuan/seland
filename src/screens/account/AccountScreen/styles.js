@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   containerScroll: {
     paddingBottom: 50,
     paddingHorizontal: 10,
+    paddingTop: 20,
   },
   header: {
     flexDirection: 'row',
