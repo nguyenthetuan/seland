@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Avatar, Button, Icon } from '@rneui/base';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, DashedButton, Screen, Text } from '../../../components';
@@ -156,8 +156,11 @@ const AccountScreen = () => {
   ];
 
   return (
-    <Screen>
-      <Container>
+    <SafeAreaView style={styles.safe}>
+      <ScrollView
+        contentContainerStyle={styles.containerScroll}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <View style={styles.boxHeaderLeft}>
             <Avatar
@@ -270,8 +273,8 @@ const AccountScreen = () => {
           type="outline"
           radius={5}
         />
-      </Container>
-    </Screen>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

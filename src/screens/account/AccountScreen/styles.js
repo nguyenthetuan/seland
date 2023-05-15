@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  containerScroll: {
+    paddingBottom: 50,
+    paddingHorizontal: 10,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -107,6 +111,9 @@ const styles = StyleSheet.create({
   phone: {
     color: COLOR_GRAY_3,
     fontSize: 14,
+  },
+  safe: {
+    backgroundColor: COLOR_WHITE,
   },
   text: {
     color: COLOR_ORANGE_1,
