@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   boxHeaderLeft: {
     flexDirection: 'row',
+    width: '70%',
   },
   boxInfo: {
     marginLeft: 15,
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 28,
     marginRight: 7,
+    width: '70%',
   },
   payment: {
     alignItems: 'center',
