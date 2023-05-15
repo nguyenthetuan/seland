@@ -198,7 +198,7 @@ const AccountScreen = () => {
         <View style={styles.boxRankAccount}>
           <View>
             <Text style={styles.label}>Tôi là</Text>
-            <DashedButton title="Khách hàng" />
+            <DashedButton title={user?.user_type_name} />
           </View>
           <View>
             <Text style={styles.label}>Hạng tài khoản</Text>
