@@ -20,7 +20,7 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
-  const goToAllListPost = () => navigate('');
+  const goToAllListPost = () => navigate('ListPostsScreen');
 
   return (
     <View style={styles.containerScreen}>
