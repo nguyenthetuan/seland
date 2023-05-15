@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import { COLOR_BLUE_1, COLOR_GRAY_2 } from '../../../constants';
 import {
+  getListNews,
   getListProjects,
   getListRealEstateByLocation,
 } from '../../../features';
@@ -30,6 +31,7 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstateByLocation());
     dispatchThunk(dispatch, getListProjects());
+    dispatchThunk(dispatch, getListNews());
   }, [dispatch]);
 
   const navigateToListPosts = () => navigate('ListPosts');

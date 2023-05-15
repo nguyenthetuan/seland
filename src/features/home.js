@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
+  requestGetListNews,
   requestGetListProjects,
   requestGetListRealEstateByLocation,
 } from '../api';
@@ -18,11 +19,24 @@ export const getListRealEstateByLocation = createAsyncThunk(
     }
   }
 );
+
 export const getListProjects = createAsyncThunk(
   'getListProjects',
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestGetListProjects();
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue('Lỗi hệ thống.');
+    }
+  }
+);
+
+export const getListNews = createAsyncThunk(
+  'getListNews',
+  async (_, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestGetListNews();
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
@@ -42,6 +56,14 @@ const slice = createSlice({
       error: '',
     },
     listProject: {
+      loading: false,
+      data: [],
+      page: 1,
+      limit: 10,
+      page_size: 10,
+      error: '',
+    },
+    listNews: {
       loading: false,
       data: [],
       page: 1,
@@ -78,6 +100,20 @@ const slice = createSlice({
       state.listProject.loading = false;
       state.listProject.data = [];
       state.listProject.error = action.payload;
+    });
+    // list news
+    builder.addCase(getListNews.pending, state => {
+      state.listNews.loading = true;
+    });
+    builder.addCase(getListNews.fulfilled, (state, action) => {
+      state.listNews.loading = false;
+      state.listNews.data = action.payload;
+      state.listNews.error = '';
+    });
+    builder.addCase(getListNews.rejected, (state, action) => {
+      state.listNews.loading = false;
+      state.listNews.data = [];
+      state.listNews.error = action.payload;
     });
   },
 });
