@@ -4,6 +4,7 @@ import {
   requestGetListNews,
   requestGetListProjects,
   requestGetListRealEstateByLocation,
+  requestGetListRealEstates,
   requestGetListRealEstatesHots,
 } from '../api';
 
@@ -44,6 +45,7 @@ export const getListNews = createAsyncThunk(
     }
   }
 );
+
 export const getListRealEstatesHots = createAsyncThunk(
   'getListRealEstatesHots',
   async (_, { fulfillWithValue, rejectWithValue }) => {
@@ -52,6 +54,21 @@ export const getListRealEstatesHots = createAsyncThunk(
         is_hot: 1,
       };
       const { data } = await requestGetListRealEstatesHots(params);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue('Lỗi hệ thống.');
+    }
+  }
+);
+
+export const getListRealEstatesForYou = createAsyncThunk(
+  'getListRealEstatesForYou',
+  async (_, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const params = {
+        is_hot: 1,
+      };
+      const { data } = await requestGetListRealEstates(params);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
@@ -87,6 +104,14 @@ const slice = createSlice({
       error: '',
     },
     listRealEstatesHots: {
+      loading: false,
+      data: [],
+      page: 1,
+      limit: 10,
+      page_size: 10,
+      error: '',
+    },
+    listRealEstatesForYou: {
       loading: false,
       data: [],
       page: 1,
@@ -151,6 +176,20 @@ const slice = createSlice({
       state.listRealEstatesHots.loading = false;
       state.listRealEstatesHots.data = [];
       state.listRealEstatesHots.error = action.payload;
+    });
+    // list real estate for you
+    builder.addCase(getListRealEstatesForYou.pending, state => {
+      state.listRealEstatesForYou.loading = true;
+    });
+    builder.addCase(getListRealEstatesForYou.fulfilled, (state, action) => {
+      state.listRealEstatesForYou.loading = false;
+      state.listRealEstatesForYou.data = action.payload;
+      state.listRealEstatesForYou.error = '';
+    });
+    builder.addCase(getListRealEstatesForYou.rejected, (state, action) => {
+      state.listRealEstatesForYou.loading = false;
+      state.listRealEstatesForYou.data = [];
+      state.listRealEstatesForYou.error = action.payload;
     });
   },
 });

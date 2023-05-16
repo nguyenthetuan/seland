@@ -6,15 +6,14 @@ import { useSelector } from 'react-redux';
 
 import { COLOR_BLUE_1 } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
-import { selectRealEstates } from '../../../../features';
+import { selectHome } from '../../../../features';
 import ItemHottestRealEstate from '../ItemHottestRealEstate';
 import styles from './styles';
 
 const RealEstateForYouCategory = () => {
   const { t } = useTranslation();
   const [isBuy, setIsBuy] = useState(true);
-  const { data: listPosts, loading: loadingListPost } =
-    useSelector(selectRealEstates);
+  const { listRealEstatesForYou } = useSelector(selectHome);
 
   const handleSelectOptions = value => {
     setIsBuy(value);
@@ -24,14 +23,14 @@ const RealEstateForYouCategory = () => {
     let results = [];
 
     if (isBuy) {
-      results = listPosts;
+      results = listRealEstatesForYou?.data;
     } else {
-      results = listPosts.slice(0, 3);
+      results = listRealEstatesForYou?.data?.slice(0, 3);
     }
     return results;
-  }, [isBuy, listPosts]);
+  }, [isBuy, listRealEstatesForYou?.data]);
 
-  if (loadingListPost) {
+  if (listRealEstatesForYou?.loading) {
     return (
       <View>
         <ActivityIndicator
