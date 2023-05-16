@@ -4,6 +4,7 @@ import {
   requestGetListNews,
   requestGetListProjects,
   requestGetListRealEstateByLocation,
+  requestGetListRealEstatesHots,
 } from '../api';
 
 export const selectHome = state => state.home;
@@ -43,6 +44,20 @@ export const getListNews = createAsyncThunk(
     }
   }
 );
+export const getListRealEstatesHots = createAsyncThunk(
+  'getListRealEstatesHots',
+  async (_, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const params = {
+        is_hot: 1,
+      };
+      const { data } = await requestGetListRealEstatesHots(params);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue('Lỗi hệ thống.');
+    }
+  }
+);
 
 const slice = createSlice({
   name: 'home',
@@ -64,6 +79,14 @@ const slice = createSlice({
       error: '',
     },
     listNews: {
+      loading: false,
+      data: [],
+      page: 1,
+      limit: 10,
+      page_size: 10,
+      error: '',
+    },
+    listRealEstatesHots: {
       loading: false,
       data: [],
       page: 1,
@@ -114,6 +137,20 @@ const slice = createSlice({
       state.listNews.loading = false;
       state.listNews.data = [];
       state.listNews.error = action.payload;
+    });
+    // list real estate hots
+    builder.addCase(getListRealEstatesHots.pending, state => {
+      state.listRealEstatesHots.loading = true;
+    });
+    builder.addCase(getListRealEstatesHots.fulfilled, (state, action) => {
+      state.listRealEstatesHots.loading = false;
+      state.listRealEstatesHots.data = action.payload;
+      state.listRealEstatesHots.error = '';
+    });
+    builder.addCase(getListRealEstatesHots.rejected, (state, action) => {
+      state.listRealEstatesHots.loading = false;
+      state.listRealEstatesHots.data = [];
+      state.listRealEstatesHots.error = action.payload;
     });
   },
 });
