@@ -2,7 +2,14 @@ import { Icon } from '@rneui/base';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Image, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  Linking,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import {
   AcreageSmall,
@@ -36,7 +43,22 @@ ItemInfo.propTypes = {
 const ItemHottestRealEstate = ({ item, type }) => {
   const { t } = useTranslation();
 
-  const onPressCall = () => {};
+  const onPressCall = () => {
+    let phoneNumber = item?.phone_number;
+    if (Platform.OS !== 'android') {
+      phoneNumber = `telprompt:${item?.phone_number}`;
+    } else {
+      phoneNumber = `tel:${item?.phone_number}`;
+    }
+
+    Linking.canOpenURL(phoneNumber).then(supported => {
+      if (!supported) {
+        Alert.alert(t('common.numberPhoneNotSupport'));
+      } else {
+        Linking.openURL(phoneNumber);
+      }
+    });
+  };
 
   const onToLocation = () => {};
 
