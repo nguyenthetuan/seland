@@ -2,6 +2,7 @@ import {
   AccountScreen,
   ChangePasswordScreen,
   PersonalInformationScreen,
+  UserPostsScreen,
 } from '../../../screens';
 
 const routes = [
@@ -16,6 +17,10 @@ const routes = [
   {
     component: PersonalInformationScreen,
     name: 'PersonalInformation',
+  },
+  {
+    component: UserPostsScreen,
+    name: 'UserPosts',
   },
 ];
 

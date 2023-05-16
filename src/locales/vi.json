@@ -48,7 +48,9 @@
     "personalPage": "Trang cá nhân",
     "lease": "Cho thuê",
     "all": "Tất cả",
-    "monopoly": "Độc quyền"
+    "monopoly": "Độc quyền",
+    "createNewPost": "Đăng tin mới",
+    "userPosts": "Danh sách tin"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -111,7 +113,7 @@
     "promotion": "Khuến mãi",
     "topup": "Nạp tiền",
     "activityHistory": "Lịch sử hoạt động",
-    "postManagement": "Quản lý tin đăng",
+    "postManagement": "Quản lý tin",
     "realEstateManagement": "Quản lý bất động sản",
     "appointmentManagement": "Quản lý lịch hẹn",
     "transactionManagement": "Quản lý giao dịch",

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, DashedButton, Screen, Text } from '../../../components';
+import { DashedButton, Text } from '../../../components';
 import {
   COLOR_GREEN_1,
   COLOR_ORANGE_2,
@@ -18,12 +18,16 @@ import AccountMenu from './components/AccountMenu';
 import styles from './styles';
 
 const AccountScreen = () => {
+  const dispatch = useDispatch();
   const { data: user } = useSelector(selectUser);
   const { navigate } = useNavigation();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const handleLogout = () => dispatchThunk(dispatch, logout());
+
+  const navigateToCreatePost = () => navigate('CreatePostNavigator');
+
+  const navigateToUserPosts = () => navigate('UserPosts');
 
   const navigateToPersonalInformation = () =>
     navigate(SCREENS.PERSONAL_INFORMATION);
@@ -51,27 +55,15 @@ const AccountScreen = () => {
 
   const postManagement = [
     {
-      name: 'shownPosts',
-      onPress: () => {},
+      name: 'createNewPost',
+      onPress: navigateToCreatePost,
     },
     {
-      name: 'privatePosts',
-      onPress: () => {},
+      name: 'userPosts',
+      onPress: navigateToUserPosts,
     },
     {
       name: 'draftPosts',
-      onPress: () => {},
-    },
-    {
-      name: 'reviewPending',
-      onPress: () => {},
-    },
-    {
-      name: 'rejected',
-      onPress: () => {},
-    },
-    {
-      name: 'expired',
       onPress: () => {},
     },
   ];
@@ -105,7 +97,7 @@ const AccountScreen = () => {
     },
   ];
 
-  const advertisingManagement = [
+  const adsManagement = [
     {
       name: 'createRealEstatePost',
       onPress: () => {},
@@ -202,13 +194,13 @@ const AccountScreen = () => {
           </View>
           <View>
             <Text style={styles.label}>{t('common.accountRank')}</Text>
-            <DashedButton title="Tài khoản chuyên nghiệp" />
+            <DashedButton title={t('common.professionalAccount')} />
           </View>
         </View>
         <View style={styles.boxItem}>
           <View style={styles.item}>
             <View style={styles.boxLabelItem}>
-              <Text>{t('common.balance')}</Text>
+              <Text>{t('common.balance')} </Text>
               <Icon
                 color={COLOR_ORANGE_2}
                 name="monetization-on"
@@ -220,7 +212,7 @@ const AccountScreen = () => {
           <View style={styles.line} />
           <View style={styles.item}>
             <View style={styles.boxLabelItem}>
-              <Text>{t('common.promotion')}</Text>
+              <Text>{t('common.promotion')} </Text>
               <Icon
                 color={COLOR_GREEN_1}
                 name="redeem"
@@ -260,7 +252,7 @@ const AccountScreen = () => {
         />
         <AccountMenu
           label={t('common.adsManagement')}
-          options={advertisingManagement}
+          options={adsManagement}
         />
         <AccountMenu
           label={t('common.accountManagement')}
