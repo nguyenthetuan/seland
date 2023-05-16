@@ -11,6 +11,8 @@ import {
   getListNews,
   getListProjects,
   getListRealEstateByLocation,
+  getListRealEstates,
+  getListRealEstatesHots,
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import Category from '../components/Category';
@@ -29,6 +31,8 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatchThunk(dispatch, getListRealEstatesHots());
+    dispatchThunk(dispatch, getListRealEstates());
     dispatchThunk(dispatch, getListRealEstateByLocation());
     dispatchThunk(dispatch, getListProjects());
     dispatchThunk(dispatch, getListNews());
