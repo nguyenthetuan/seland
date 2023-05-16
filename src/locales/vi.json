@@ -50,7 +50,8 @@
     "all": "Tất cả",
     "monopoly": "Độc quyền",
     "createNewPost": "Đăng tin mới",
-    "userPosts": "Danh sách tin"
+    "userPosts": "Danh sách tin",
+    "filter": "Lọc"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"
@@ -78,8 +79,6 @@
     "buy": "Bán",
     "monopoly": "Độc quyền",
     "numberPhoneNotSupport": "Số điện thoại không hỗ trợ.",
-    "new": "Mới nhất",
-    "old": "Cũ",
     "priceRange": "Khoảng giá",
     "acreage": "Diện tích",
     "compass": "Hướng",
@@ -110,7 +109,7 @@
     "realEstateForYou": "Bất động sản dành cho bạn",
     "map": "Bản đồ",
     "balance": "Số dư",
-    "promotion": "Khuến mãi",
+    "promotion": "Khuyến mãi",
     "topup": "Nạp tiền",
     "activityHistory": "Lịch sử hoạt động",
     "postManagement": "Quản lý tin",
@@ -161,7 +160,8 @@
     }
   },
   "header": {
-    "personalInformation": "Thông tin cá nhân"
+    "personalInformation": "Thông tin cá nhân",
+    "userPosts": "Danh sách tin"
   },
   "heading": {
     "hello": "Xin chào bạn",
@@ -188,7 +188,8 @@
     "companyName": "Tên công ty",
     "taxCode": "Mã số thuế",
     "website": "Website",
-    "projectSunriseCity": "Dự án Sunrise City"
+    "projectSunriseCity": "Dự án Sunrise City",
+    "searchByCodeTitle": "Tìm theo mã tin, tiêu đề"
   },
   "tabBar": {
     "home": "Trang chủ",
@@ -207,14 +208,16 @@
     "typeHousing": "Loại nhà đất",
     "area": "Khu vực",
     "type": "Loại hình",
-    "sortWith": "Sắp xếp theo: nameType",
-    "news": "Mới nhất",
-    "priceAsc": "Giá giảm dần",
-    "priceDesc": "Giá tăng dần",
+    "sortBy": "Sắp xếp theo: {{sortBy}}",
+    "newest": "Mới nhất",
+    "priceAsc": "Giá tăng dần",
+    "priceDesc": "Giá giảm dần",
     "areaAsc": "Diện tích tăng dần",
     "areaDesc": "Diện tích giảm dần",
-    "postVideo": "Tin có video",
-    "pricePerAsc": "Giá /m2 thấp",
-    "pricePerDesc": "Giá /m2 cao"
+    "hasVideos": "Tin có video",
+    "pricePerM2Asc": "Giá /m2 thấp",
+    "pricePerM2Desc": "Giá /m2 cao",
+    "lastWeek": "1 tuần qua",
+    "last30Days": "30 ngày qua"
   }
 }

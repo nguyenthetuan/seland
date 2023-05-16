@@ -23,14 +23,14 @@ const type = [
   { label: 'Bán', value: '2' },
 ];
 const sortBy = [
-  { label: 'news', value: 'createAt' },
+  { label: 'newest', value: 'createdAt_desc' },
   { label: 'priceAsc', value: 'price_asc' },
   { label: 'priceDesc', value: 'price_desc' },
   { label: 'areaAsc', value: 'area_asc' },
   { label: 'areaDesc', value: 'area_desc' },
-  { label: 'postVideo', value: 'videos' },
-  { label: 'pricePerAsc', value: 'price_per_m_asc' },
-  { label: 'pricePerDesc', value: 'price_per_m_desc' },
+  { label: 'hasVideos', value: 'videos' },
+  { label: 'pricePerM2Asc', value: 'price_per_m_asc' },
+  { label: 'pricePerM2Desc', value: 'price_per_m_desc' },
 ];
 
 const ListPostsScreen = () => {
@@ -141,10 +141,9 @@ const ListPostsScreen = () => {
                   ...item,
                   label: t(`select.${item?.label}`),
                 }))}
-                defaultButtonText={t('select.sortWith').replace(
-                  'nameType',
-                  t('common.new')
-                )}
+                defaultButtonText={t('select.sortBy', {
+                  sortBy: t('select.newest'),
+                })}
                 name="sort_by"
                 onSelect={handleSubmit(onSelect)}
               />
