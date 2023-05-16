@@ -1,11 +1,26 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR_WHITE,
     flex: 1,
+  },
+  filterButton: {
+    marginLeft: 8,
+  },
+  loadingText: {
+    color: COLOR_BLUE_1,
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  search: {
+    flex: 2,
+  },
+  searchFilter: {
+    flexDirection: 'row',
+    marginRight: 8,
   },
   searchInput: {
     borderColor: COLOR_GRAY_2,
@@ -19,6 +34,10 @@ const styles = StyleSheet.create({
     borderColor: COLOR_GRAY_2,
     borderRadius: 4,
     height: 40,
+  },
+  sort: {
+    marginLeft: 8,
+    width: '50%',
   },
 });
 
