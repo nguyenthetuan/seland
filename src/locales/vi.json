@@ -48,6 +48,8 @@
     "personalPage": "Trang cá nhân",
     "lease": "Cho thuê",
     "all": "Tất cả",
+    "savePrivate": "Lưu riêng tư",
+    "postPublic": "Đăng công khai",
     "monopoly": "Độc quyền"
   },
   "checkbox": {
@@ -120,6 +122,11 @@
     "scale": "Quy mô",
     "onSale": "Đang mở bán",
     "apartment": "căn hộ",
+    "createPostNews": "Đăng tin mới",
+    "youWant": "Bạn muốn",
+    "realEstateType": "Loại bất động sản",
+    "currentStatusHouse": "Hiện trạng nhà",
+    "usageStatus": "Trạng thái sử dụng",
     "noResults": "Không tìm thấy kết quả."
   },
   "error": {
@@ -186,6 +193,9 @@
     "companyName": "Tên công ty",
     "taxCode": "Mã số thuế",
     "website": "Website",
+    "quickAddressEntry": "Nhập địa chỉ nhanh",
+    "specificAddress": "Địa chỉ cụ thể",
+    "locationOnMap": "Vị trí trên bản đồ (toạ độ)",
     "projectSunriseCity": "Dự án Sunrise City"
   },
   "tabBar": {
@@ -212,7 +222,10 @@
     "areaAsc": "Diện tích tăng dần",
     "areaDesc": "Diện tích giảm dần",
     "postVideo": "Tin có video",
+    "street": "Đường/Phố",
     "pricePerAsc": "Giá /m2 thấp",
+    "realEstateType": "Loại bất động sản",
+    "nameProject": "Tên dự án",
     "pricePerDesc": "Giá /m2 cao"
   }
 }
