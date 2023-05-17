@@ -53,7 +53,7 @@ const ItemHottestRealEstate = ({ item, type }) => {
 
     Linking.canOpenURL(phoneNumber).then(supported => {
       if (!supported) {
-        Alert.alert(t('common.numberPhoneNotSupport'));
+        Alert.alert(t('common.unsupportedPhoneNumber'));
       } else {
         Linking.openURL(phoneNumber);
       }

@@ -1,55 +1,83 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Icon, Image } from '@rneui/base';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
 
-import {
-  Acreage,
-  Bathroom,
-  Bedroom,
-  Compass,
-  LocationMaps,
-  Love,
-} from '../../../../assets';
-import { Text } from '../../../../components';
+import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
+import { Button, DateTimePicker, Input, Text } from '../../../../components';
 import {
   COLOR_BLACK_1,
   COLOR_GRAY_7,
+  COLOR_GREEN_1,
   COLOR_GREEN_3,
   COLOR_ORANGE_5,
   COLOR_RED_1,
+  COLOR_RED_2,
   COLOR_WHITE,
 } from '../../../../constants';
+import { yup } from '../../../../utils';
 import styles from './styles';
 
-const ItemInfo = ({ value, icon }) => (
-  <View style={styles.itemInfo}>
+const Info = ({ value, icon }) => (
+  <View style={styles.info}>
     {icon}
-    <Text style={styles.valueInfo}>{value}</Text>
+    <Text style={styles.value}>{value}</Text>
   </View>
 );
 
-ItemInfo.defaultProps = {
+Info.defaultProps = {
   value: '',
 };
 
-ItemInfo.propTypes = {
+Info.propTypes = {
   value: PropTypes.string,
   icon: PropTypes.node.isRequired,
 };
 
-const ItemPosts = ({ item }) => {
-  const { t } = useTranslation();
+const schema = yup.object({
+  code: yup.string(),
+  validity: yup.string(),
+  start_date: yup.string(),
+  end_date: yup.string(),
+});
 
-  const onPressCall = () => {
-    let phoneNumber = item?.phone_number;
+const UserPost = ({ item }) => {
+  const { t } = useTranslation();
+  const {
+    clearErrors,
+    control,
+    getValues,
+    formState: { errors },
+    handleSubmit,
+    setValue,
+  } = useForm({
+    defaultValues: {
+      code: '',
+      validity: '',
+      start_date: '',
+      end_date: '',
+    },
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
+    resolver: yupResolver(schema),
+  });
+
+  useEffect(() => {
+    Object.keys(getValues()).forEach(
+      key => item[key] && setValue(key, item[key])
+    );
+  });
+
+  const handleCall = () => {
+    let phoneNumber;
     if (Platform.OS !== 'android') {
       phoneNumber = `telprompt:${item?.phone_number}`;
     } else {
       phoneNumber = `tel:${item?.phone_number}`;
     }
-
     Linking.canOpenURL(phoneNumber).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
@@ -59,9 +87,7 @@ const ItemPosts = ({ item }) => {
     });
   };
 
-  const onToLocation = () => {};
-
-  const backgroundRank = () => {
+  const rankBackground = () => {
     switch (item?.rank_id) {
       case 1:
         return COLOR_BLACK_1;
@@ -99,7 +125,7 @@ const ItemPosts = ({ item }) => {
         <View style={styles.boxRank}>
           <View>
             {[2, 3, 4].includes(item?.rank_id) && (
-              <View style={styles.rank(backgroundRank())}>
+              <View style={styles.rank(rankBackground())}>
                 <Text style={styles.rankName}>{t(rankName())}</Text>
               </View>
             )}
@@ -107,7 +133,7 @@ const ItemPosts = ({ item }) => {
           <TouchableOpacity
             style={styles.call}
             activeOpacity={0.8}
-            onPress={onPressCall}
+            onPress={handleCall}
           >
             <Icon
               name="phone"
@@ -124,38 +150,29 @@ const ItemPosts = ({ item }) => {
             {`${item?.price_per_m} ${t('common.millionPerM2')}`}
           </Text>
         </Text>
-        {/* TODO: tạm thời comment để check type sau */}
-        {/* <View style={styles.boxMonopoly}>
-          <Text
-            style={styles.monopoly}
-            onPress={() => Alert.alert('ok')}
-          >
-            {t('common.monopoly')}
-          </Text>
-        </View> */}
       </View>
       <View style={styles.boxTypeHouse}>
         <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
       </View>
       <View style={styles.row}>
-        <ItemInfo
+        <Info
           value={`${item?.area}${t('m2')}`}
           icon={<Acreage />}
         />
-        <ItemInfo
+        <Info
           value={`${item?.bedroom}`}
           icon={<Bedroom />}
         />
-        <ItemInfo
+        <Info
           value={`${item?.bathroom}`}
           icon={<Bathroom />}
         />
-        <ItemInfo
+        <Info
           value={`${item?.main_direction_name}`}
           icon={<Compass />}
         />
       </View>
-      <Text style={styles.title(backgroundRank())}>
+      <Text style={styles.title(rankBackground())}>
         {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
       </Text>
       {[2, 3, 4].includes(item?.rank_id) && (
@@ -166,7 +183,6 @@ const ItemPosts = ({ item }) => {
           {item?.description}
         </Text>
       )}
-
       <View style={styles.boxLocation}>
         <Icon
           name="location-on"
@@ -174,34 +190,81 @@ const ItemPosts = ({ item }) => {
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>
-      <View style={styles.footer}>
-        <View style={styles.row}>
-          <View style={styles.boxType}>
-            <Text style={styles.type}>
-              {t(item?.demand_id === 1 ? 'common.buy' : 'common.lease')}
-            </Text>
-          </View>
-          <Text style={styles.time}>2 phút trước</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginBottom: -40,
+          marginTop: 16,
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <Input
+            control={control}
+            label={t('input.code')}
+            name="code"
+          />
         </View>
-        <View style={styles.row}>
-          <TouchableOpacity onPress={onToLocation}>
-            <LocationMaps />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.love}>
-            <Love />
-          </TouchableOpacity>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Input
+            control={control}
+            label={t('input.validity')}
+            name="validity"
+          />
+        </View>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginBottom: 16,
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <DateTimePicker
+            control={control}
+            label={t('input.start_date')}
+            name="start_date"
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <DateTimePicker
+            control={control}
+            label={t('input.end_date')}
+            name="end_date"
+          />
+        </View>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginBottom: 16,
+        }}
+      >
+        <View style={{ flex: 1, marginLeft: 8, marginRight: 4 }}>
+          <Button
+            color={COLOR_GREEN_1}
+            title="Sửa tin"
+          />
+        </View>
+        <View style={{ flex: 1, marginHorizontal: 4 }}>
+          <Button
+            color={COLOR_RED_2}
+            title="Hạ tin"
+          />
+        </View>
+        <View style={{ flex: 1, marginLeft: 4, marginRight: 8 }}>
+          <Button title="Thao tác" />
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-ItemPosts.defaultProps = {
+UserPost.defaultProps = {
   item: {},
 };
 
-ItemPosts.propTypes = {
+UserPost.propTypes = {
   item: PropTypes.object,
 };
 
-export default ItemPosts;
+export default UserPost;

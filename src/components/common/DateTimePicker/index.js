@@ -23,7 +23,7 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
   const handleCancel = () => setOpen(false);
 
   const handleConfirm = date => {
-    onChange(dayjs(date).format('YYYY-MM-DD'));
+    onChange(dayjs(date).format('DD/MM/YYYY'));
     handleCancel();
   };
 

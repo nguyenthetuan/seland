@@ -10,6 +10,10 @@ const styles = StyleSheet.create({
   filterButton: {
     marginLeft: 8,
   },
+  list: {
+    marginHorizontal: 8,
+    marginVertical: 16,
+  },
   loadingText: {
     color: COLOR_BLUE_1,
     fontSize: 16,

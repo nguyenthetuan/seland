@@ -2,26 +2,24 @@ import { Icon, Input } from '@rneui/themed';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Header, Screen, Select } from '../../../components';
+import { Button, Header, NoResults, Screen, Select } from '../../../components';
 import { COLOR_BLUE_1 } from '../../../constants';
-import {
-  getListRealEstatesUser,
-  selectUserRealEstates,
-} from '../../../features';
+import { getListRealEstates, selectRealEstates } from '../../../features';
 import { dispatchThunk } from '../../../utils';
+import { UserPost } from '../components';
 import styles from './styles';
 
 const UserPostsScreen = () => {
   const dispatch = useDispatch();
-  const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
+  const { data: realEstates, loading } = useSelector(selectRealEstates);
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListRealEstatesUser());
+    dispatchThunk(dispatch, getListRealEstates());
   }, [dispatch]);
 
   const calendar = [
@@ -129,6 +127,13 @@ const UserPostsScreen = () => {
               rowStyle={styles.selectButton}
             />
           </View>
+          <FlatList
+            style={styles.list}
+            data={realEstates}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <UserPost item={item} />}
+            ListEmptyComponent={!loading && <NoResults />}
+          />
         </Screen>
       </View>
     </>

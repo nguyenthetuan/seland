@@ -78,7 +78,7 @@
     "lease": "Cho thuê",
     "buy": "Bán",
     "monopoly": "Độc quyền",
-    "numberPhoneNotSupport": "Số điện thoại không hỗ trợ.",
+    "unsupportedPhoneNumber": "Số điện thoại không hỗ trợ.",
     "priceRange": "Khoảng giá",
     "acreage": "Diện tích",
     "compass": "Hướng",
@@ -189,7 +189,11 @@
     "taxCode": "Mã số thuế",
     "website": "Website",
     "projectSunriseCity": "Dự án Sunrise City",
-    "searchByCodeTitle": "Tìm theo mã tin, tiêu đề"
+    "searchByCodeTitle": "Tìm theo mã tin, tiêu đề",
+    "code": "Mã tin",
+    "validity": "Thời hạn",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc"
   },
   "tabBar": {
     "home": "Trang chủ",

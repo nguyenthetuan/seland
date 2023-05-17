@@ -5,12 +5,12 @@ import {
   COLOR_BLACK_2,
   COLOR_BLUE_4,
   COLOR_GRAY_5,
-  COLOR_RED,
+  COLOR_RED_1,
 } from '../../../constants/colors';
 
 const styles = StyleSheet.create({
   error: {
-    color: COLOR_RED,
+    color: COLOR_RED_1,
     fontSize: 16,
     lineHeight: 24,
     marginHorizontal: 0,
