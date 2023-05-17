@@ -22,6 +22,7 @@ const Input = ({
   placeholder,
   required,
   showPasswordPolicy,
+  inputContainerStyle,
   ...props
 }) => {
   const {
@@ -61,7 +62,10 @@ const Input = ({
       <RNEInput
         style={styles.text}
         errorStyle={styles.error}
-        inputContainerStyle={styles.input(isFocused)}
+        inputContainerStyle={StyleSheet.flatten([
+          styles.input(isFocused),
+          inputContainerStyle,
+        ])}
         label={
           <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
             {label}
@@ -100,6 +104,7 @@ Input.defaultProps = {
   isWebsite: false,
   label: '',
   labelStyle: {},
+  inputContainerStyle: {},
   onFocus: () => {},
   placeholder: '',
   required: false,
@@ -114,6 +119,7 @@ Input.propTypes = {
   isWebsite: PropTypes.bool,
   label: PropTypes.string,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  inputContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,

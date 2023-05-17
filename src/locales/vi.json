@@ -196,6 +196,13 @@
     "quickAddressEntry": "Nhập địa chỉ nhanh",
     "specificAddress": "Địa chỉ cụ thể",
     "locationOnMap": "Vị trí trên bản đồ (toạ độ)",
+    "width": "Chiều rộng",
+    "length": "Chiều dài",
+    "laneWidth": "Đường rộng",
+    "numberBedrooms": "Số phòng ngủ",
+    "numberBathrooms": "Số phòng tắm",
+    "price": "Giá bán",
+    "acreage": "Diện tích",
     "projectSunriseCity": "Dự án Sunrise City"
   },
   "tabBar": {
@@ -223,6 +230,9 @@
     "areaDesc": "Diện tích giảm dần",
     "postVideo": "Tin có video",
     "street": "Đường/Phố",
+    "compass": "Hướng",
+    "unit": "Đơn vị",
+    "structure": "Kết cấu",
     "pricePerAsc": "Giá /m2 thấp",
     "realEstateType": "Loại bất động sản",
     "nameProject": "Tên dự án",
