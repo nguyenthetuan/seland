@@ -2,7 +2,7 @@ import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { useController } from 'react-hook-form';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
 import { COLOR_BLACK_1 } from '../../../constants';
@@ -42,7 +42,7 @@ const Select = ({
   );
 
   return (
-    <>
+    <View>
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
@@ -61,7 +61,7 @@ const Select = ({
         rowTextStyle={StyleSheet.flatten(styles.text, rowTextStyle)}
         {...props}
       />
-    </>
+    </View>
   );
 };
 
