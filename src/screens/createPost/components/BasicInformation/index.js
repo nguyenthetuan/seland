@@ -93,12 +93,10 @@ const BasicInformation = () => {
         />
       </View>
       <Input
-        autoComplete="tel"
         control={control}
-        inputMode="numeric"
-        isNumeric
         label={t('input.quickAddressEntry')}
         labelStyle={styles.inputLabel}
+        rightIcon={<Icon name="search" />}
         name="address_detail"
       />
       <View style={[styles.boxSelectAddress, { marginTop: -30 }]}>
@@ -152,6 +150,7 @@ const BasicInformation = () => {
         label={t('input.locationOnMap')}
         labelStyle={styles.inputLabel}
         name="lat_long"
+        rightLabel={<Text style={styles.reset}>Đặt lại</Text>}
       />
       <View style={styles.containerMaps}>
         <MapView

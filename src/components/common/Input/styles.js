@@ -9,6 +9,12 @@ import {
 } from '../../../constants/colors';
 
 const styles = StyleSheet.create({
+  boxLabel: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
   error: {
     color: COLOR_RED,
     fontSize: 16,
@@ -28,7 +34,6 @@ const styles = StyleSheet.create({
     color: COLOR_BLACK_1,
     fontSize: 16,
     lineHeight: 24,
-    marginBottom: 8,
   },
   passwordPolicy: {
     color: COLOR_BLACK_2,

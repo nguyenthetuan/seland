@@ -117,6 +117,13 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  reset: {
+    color: COLOR_BLUE_2,
+    fontSize: 14,
+    lineHeight: 22,
+    marginTop: 18,
+    textDecorationLine: 'underline',
+  },
   scroll: {
     paddingBottom: 50,
   },

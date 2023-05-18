@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { COLOR_GRAY_5 } from '../../../constants';
 import Text from '../Text';
@@ -22,6 +22,7 @@ const Input = ({
   placeholder,
   required,
   showPasswordPolicy,
+  rightLabel,
   inputContainerStyle,
   ...props
 }) => {
@@ -67,10 +68,13 @@ const Input = ({
           inputContainerStyle,
         ])}
         label={
-          <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
-            {label}
-            {required && ' *'}
-          </Text>
+          <View style={styles.boxLabel}>
+            <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
+              {label}
+              {required && ' *'}
+            </Text>
+            {rightLabel}
+          </View>
         }
         onBlur={handleBlur}
         onChangeText={handleChange}
@@ -106,6 +110,7 @@ Input.defaultProps = {
   labelStyle: {},
   inputContainerStyle: {},
   onFocus: () => {},
+  rightLabel: () => {},
   placeholder: '',
   required: false,
   showPasswordPolicy: false,
@@ -124,6 +129,7 @@ Input.propTypes = {
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
+  rightLabel: PropTypes.node,
   showPasswordPolicy: PropTypes.bool,
 };
 
