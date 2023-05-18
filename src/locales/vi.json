@@ -50,10 +50,13 @@
     "all": "Tất cả",
     "savePrivate": "Lưu riêng tư",
     "postPublic": "Đăng công khai",
+    "saveDrafts": "Lưu nháp",
     "monopoly": "Độc quyền"
   },
   "checkbox": {
-    "rememberLogin": "Nhớ tài khoản"
+    "rememberLogin": "Nhớ tài khoản",
+    "broker": "Môi giới",
+    "landlord": "Chủ đất"
   },
   "common": {
     "forgotPassword": "Quên mật khẩu?",
@@ -203,6 +206,8 @@
     "numberBathrooms": "Số phòng tắm",
     "price": "Giá bán",
     "acreage": "Diện tích",
+    "title": "Tiêu đề",
+    "content": "Nội dung",
     "projectSunriseCity": "Dự án Sunrise City"
   },
   "tabBar": {

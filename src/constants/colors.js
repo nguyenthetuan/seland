@@ -15,6 +15,7 @@ export const COLOR_GRAY_6 = '#f5f5f5';
 export const COLOR_GRAY_7 = '#595959';
 export const COLOR_GRAY_8 = '#333333';
 export const COLOR_GRAY_9 = '#6d6e76';
+export const COLOR_GRAY_10 = '#fafafa';
 export const COLOR_GREEN_1 = '#389e0d';
 export const COLOR_GREEN_2 = '#ebf6e7';
 export const COLOR_GREEN_3 = '#52C41A';

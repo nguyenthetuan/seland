@@ -8,6 +8,7 @@ export { default as IconBell } from './bell.svg';
 export { default as BuySellHome } from './buy-sell-home.svg';
 export { default as CalculateCashFlowHome } from './calculate-cash-flow-home.svg';
 export { default as Compass } from './compass.svg';
+export { default as ImageUpload } from './image-upload.svg';
 export { default as IndustrialLandHome } from './industrial-land-home.svg';
 export { default as LandFeverAreaHome } from './land-fever-area-home.svg';
 export { default as LeaseHome } from './lease-home.svg';
