@@ -4,7 +4,7 @@ import {
   COLOR_GRAY_1,
   COLOR_GRAY_4,
   COLOR_GRAY_6,
-} from '../../../../../constants';
+} from '../../../../constants';
 
 const styles = StyleSheet.create({
   btnMenu: {

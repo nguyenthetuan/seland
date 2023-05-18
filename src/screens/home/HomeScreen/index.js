@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Icon, Image, Input, Text } from '@rneui/base';
+import { Icon, Image, Input, Text } from '@rneui/themed';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';

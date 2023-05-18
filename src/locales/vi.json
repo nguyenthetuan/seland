@@ -11,10 +11,10 @@
     "favoritePosts": "Tin yêu thích",
     "contactedPosts": "Tin đã liên hệ",
     "message": "Tin nhắn",
-    "shownPosts": "Tin đang hiển thị",
+    "beingShown": "Đang hiển thị",
     "privatePosts": "Tin riêng tư",
     "draftPosts": "Tin nháp",
-    "reviewPending": "Chờ duyệt",
+    "pendingReview": "Chờ duyệt",
     "rejected": "Không duyệt",
     "expired": "Hết hạn",
     "logout": "Đăng xuất",
@@ -52,7 +52,13 @@
     "savePrivate": "Lưu riêng tư",
     "postPublic": "Đăng công khai",
     "saveDrafts": "Lưu nháp",
-    "monopoly": "Độc quyền"
+    "monopoly": "Độc quyền",
+    "createNewPost": "Đăng tin mới",
+    "userPosts": "Danh sách tin",
+    "filter": "Lọc",
+    "editPost": "Sửa tin",
+    "hidePost": "Hạ tin",
+    "actions": "Thao tác"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản",
@@ -81,9 +87,7 @@
     "lease": "Cho thuê",
     "buy": "Bán",
     "monopoly": "Độc quyền",
-    "numberPhoneNotSupport": "Số điện thoại không hỗ trợ.",
-    "new": "Mới nhất",
-    "old": "Cũ",
+    "unsupportedPhoneNumber": "Số điện thoại không hỗ trợ.",
     "priceRange": "Khoảng giá",
     "acreage": "Diện tích",
     "compass": "Hướng",
@@ -114,10 +118,10 @@
     "realEstateForYou": "Bất động sản dành cho bạn",
     "map": "Bản đồ",
     "balance": "Số dư",
-    "promotion": "Khuến mãi",
+    "promotion": "Khuyến mãi",
     "topup": "Nạp tiền",
     "activityHistory": "Lịch sử hoạt động",
-    "postManagement": "Quản lý tin đăng",
+    "postManagement": "Quản lý tin",
     "realEstateManagement": "Quản lý bất động sản",
     "appointmentManagement": "Quản lý lịch hẹn",
     "transactionManagement": "Quản lý giao dịch",
@@ -170,7 +174,8 @@
     }
   },
   "header": {
-    "personalInformation": "Thông tin cá nhân"
+    "personalInformation": "Thông tin cá nhân",
+    "userPosts": "Danh sách tin"
   },
   "heading": {
     "hello": "Xin chào bạn",
@@ -209,7 +214,12 @@
     "acreage": "Diện tích",
     "title": "Tiêu đề",
     "content": "Nội dung",
-    "projectSunriseCity": "Dự án Sunrise City"
+    "projectSunriseCity": "Dự án Sunrise City",
+    "searchByCodeTitle": "Tìm theo mã tin, tiêu đề",
+    "code": "Mã tin",
+    "validity": "Thời hạn",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc"
   },
   "tabBar": {
     "home": "Trang chủ",
@@ -228,20 +238,22 @@
     "typeHousing": "Loại nhà đất",
     "area": "Khu vực",
     "type": "Loại hình",
-    "sortWith": "Sắp xếp theo: nameType",
-    "news": "Mới nhất",
-    "priceAsc": "Giá giảm dần",
-    "priceDesc": "Giá tăng dần",
+    "sortBy": "Sắp xếp theo: {{sortBy}}",
+    "newest": "Mới nhất",
+    "priceAsc": "Giá tăng dần",
+    "priceDesc": "Giá giảm dần",
     "areaAsc": "Diện tích tăng dần",
     "areaDesc": "Diện tích giảm dần",
-    "postVideo": "Tin có video",
     "street": "Đường/Phố",
     "compass": "Hướng",
     "unit": "Đơn vị",
     "structure": "Kết cấu",
-    "pricePerAsc": "Giá /m2 thấp",
     "realEstateType": "Loại bất động sản",
     "nameProject": "Tên dự án",
-    "pricePerDesc": "Giá /m2 cao"
+    "hasVideos": "Tin có video",
+    "pricePerM2Asc": "Giá /m2 thấp",
+    "pricePerM2Desc": "Giá /m2 cao",
+    "lastWeek": "1 tuần qua",
+    "last30Days": "30 ngày qua"
   }
 }

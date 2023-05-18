@@ -1,4 +1,4 @@
-import { Icon, Image } from '@rneui/base';
+import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ import {
   COLOR_GRAY_7,
   COLOR_GREEN_3,
   COLOR_ORANGE_5,
-  COLOR_RED,
+  COLOR_RED_1,
   COLOR_WHITE,
 } from '../../../../constants';
 import styles from './styles';
@@ -52,7 +52,7 @@ const ItemPosts = ({ item }) => {
 
     Linking.canOpenURL(phoneNumber).then(supported => {
       if (!supported) {
-        Alert.alert(t('common.numberPhoneNotSupport'));
+        Alert.alert(t('common.unsupportedPhoneNumber'));
       } else {
         Linking.openURL(phoneNumber);
       }
@@ -70,7 +70,7 @@ const ItemPosts = ({ item }) => {
       case 3:
         return COLOR_ORANGE_5;
       default:
-        return COLOR_RED;
+        return COLOR_RED_1;
     }
   };
 

@@ -1,4 +1,4 @@
-import { Button } from '@rneui/base';
+import { Button } from '@rneui/themed';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
