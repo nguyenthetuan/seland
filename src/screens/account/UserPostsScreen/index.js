@@ -1,5 +1,5 @@
 import { Icon, Input } from '@rneui/themed';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
@@ -17,10 +17,38 @@ const UserPostsScreen = () => {
   const dispatch = useDispatch();
   const { data: realEstates, loading } = useSelector(selectRealEstates);
   const { t } = useTranslation();
+  const [filter, setFilter] = useState(1);
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstates());
   }, [dispatch]);
+
+  const filters = [
+    {
+      label: 'shownPosts',
+      value: 1,
+    },
+    {
+      label: 'privatePosts',
+      value: 2,
+    },
+    {
+      label: 'draftPosts',
+      value: 4,
+    },
+    {
+      label: 'pendingReview',
+      value: 3,
+    },
+    {
+      label: 'rejected',
+      value: 5,
+    },
+    {
+      label: 'expired',
+      value: 6,
+    },
+  ];
 
   const calendar = [
     {
@@ -88,6 +116,20 @@ const UserPostsScreen = () => {
       />
       <View style={styles.container}>
         <Header title={t('header.userPosts')} />
+        <FlatList
+          style={{ flexGrow: 0 }}
+          data={filters}
+          horizontal
+          renderItem={({ item: { label, value } }) => (
+            <Button
+              buttonStyle={{ marginHorizontal: 8 }}
+              onPress={() => setFilter(value)}
+              outline={value !== filter}
+              title={t(`button.${label}`)}
+            />
+          )}
+          showsHorizontalScrollIndicator={false}
+        />
         <Screen>
           <View style={styles.searchFilter}>
             <View style={styles.search}>
