@@ -11,7 +11,7 @@
     "favoritePosts": "Tin yêu thích",
     "contactedPosts": "Tin đã liên hệ",
     "message": "Tin nhắn",
-    "shownPosts": "Tin đang hiển thị",
+    "beingShown": "Đang hiển thị",
     "privatePosts": "Tin riêng tư",
     "draftPosts": "Tin nháp",
     "pendingReview": "Chờ duyệt",
@@ -51,7 +51,10 @@
     "monopoly": "Độc quyền",
     "createNewPost": "Đăng tin mới",
     "userPosts": "Danh sách tin",
-    "filter": "Lọc"
+    "filter": "Lọc",
+    "editPost": "Sửa tin",
+    "hidePost": "Hạ tin",
+    "actions": "Thao tác"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản"

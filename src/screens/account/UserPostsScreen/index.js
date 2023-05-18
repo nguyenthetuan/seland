@@ -25,7 +25,7 @@ const UserPostsScreen = () => {
 
   const filters = [
     {
-      label: 'shownPosts',
+      label: 'beingShown',
       value: 1,
     },
     {
@@ -33,12 +33,12 @@ const UserPostsScreen = () => {
       value: 2,
     },
     {
-      label: 'draftPosts',
-      value: 4,
-    },
-    {
       label: 'pendingReview',
       value: 3,
+    },
+    {
+      label: 'draftPosts',
+      value: 4,
     },
     {
       label: 'rejected',
@@ -117,12 +117,12 @@ const UserPostsScreen = () => {
       <View style={styles.container}>
         <Header title={t('header.userPosts')} />
         <FlatList
-          style={{ flexGrow: 0 }}
+          style={styles.postButtons}
           data={filters}
           horizontal
           renderItem={({ item: { label, value } }) => (
             <Button
-              buttonStyle={{ marginHorizontal: 8 }}
+              buttonStyle={styles.marginHorizontal}
               onPress={() => setFilter(value)}
               outline={value !== filter}
               title={t(`button.${label}`)}
@@ -130,7 +130,7 @@ const UserPostsScreen = () => {
           )}
           showsHorizontalScrollIndicator={false}
         />
-        <Screen>
+        <Screen noSafeArea>
           <View style={styles.searchFilter}>
             <View style={styles.search}>
               <Input
@@ -170,7 +170,7 @@ const UserPostsScreen = () => {
             />
           </View>
           <FlatList
-            style={styles.list}
+            style={[styles.list, styles.marginHorizontal]}
             data={realEstates}
             keyExtractor={item => item.id}
             renderItem={({ item }) => <UserPost item={item} />}

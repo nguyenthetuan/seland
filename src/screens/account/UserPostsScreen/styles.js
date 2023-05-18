@@ -11,13 +11,19 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   list: {
-    marginHorizontal: 8,
     marginVertical: 16,
   },
   loadingText: {
     color: COLOR_BLUE_1,
     fontSize: 16,
     lineHeight: 24,
+  },
+  marginHorizontal: {
+    marginHorizontal: 8,
+  },
+  postButtons: {
+    flexGrow: 0,
+    marginBottom: 16,
   },
   search: {
     flex: 2,

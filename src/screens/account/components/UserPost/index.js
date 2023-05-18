@@ -22,7 +22,7 @@ import { yup } from '../../../../utils';
 import styles from './styles';
 
 const Info = ({ value, icon }) => (
-  <View style={styles.info}>
+  <View style={[styles.info, styles.row]}>
     {icon}
     <Text style={styles.value}>{value}</Text>
   </View>
@@ -33,8 +33,8 @@ Info.defaultProps = {
 };
 
 Info.propTypes = {
-  value: PropTypes.string,
   icon: PropTypes.node.isRequired,
+  value: PropTypes.string,
 };
 
 const schema = yup.object({
@@ -72,17 +72,14 @@ const UserPost = ({ item }) => {
   });
 
   const handleCall = () => {
-    let phoneNumber;
-    if (Platform.OS !== 'android') {
-      phoneNumber = `telprompt:${item?.phone_number}`;
-    } else {
-      phoneNumber = `tel:${item?.phone_number}`;
-    }
-    Linking.canOpenURL(phoneNumber).then(supported => {
+    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${
+      item?.phone_number
+    }`;
+    Linking.canOpenURL(callUrl).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
       } else {
-        Linking.openURL(phoneNumber);
+        Linking.openURL(callUrl);
       }
     });
   };
@@ -112,38 +109,36 @@ const UserPost = ({ item }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.boxItem}>
-      <View style={styles.boxImage}>
-        <Image
-          style={styles.image}
-          source={{
-            uri:
-              item?.images?.thumbnail?.path_url ||
-              'https://media.istockphoto.com/id/1188452511/vi/anh/ph%C3%B2ng-kh%C3%A1ch-scandinavian-%C4%91%E1%BA%A7y-phong-c%C3%A1ch-v%E1%BB%9Bi-thi%E1%BA%BFt-k%E1%BA%BF-gh%E1%BA%BF-sofa-b%E1%BA%A1c-h%C3%A0-%C4%91%E1%BB%93-n%E1%BB%99i-th%E1%BA%A5t-b%E1%BA%A3n-%C4%91%E1%BB%93-%C3%A1p.jpg?s=612x612&w=0&k=20&c=bq42yoAt_R3UG1xNJrNs0EO0Rbxd71TMf_ueRgK-2-g=',
-          }}
-        />
-        <View style={styles.boxRank}>
-          <View>
-            {[2, 3, 4].includes(item?.rank_id) && (
-              <View style={styles.rank(rankBackground())}>
-                <Text style={styles.rankName}>{t(rankName())}</Text>
-              </View>
-            )}
-          </View>
-          <TouchableOpacity
-            style={styles.call}
-            activeOpacity={0.8}
-            onPress={handleCall}
-          >
-            <Icon
-              name="phone"
-              size={23}
-              color={COLOR_WHITE}
-            />
-          </TouchableOpacity>
+    <TouchableOpacity style={styles.item}>
+      <Image
+        style={styles.image}
+        source={{
+          uri:
+            item?.images?.thumbnail?.path_url ||
+            'https://media.istockphoto.com/id/1188452511/vi/anh/ph%C3%B2ng-kh%C3%A1ch-scandinavian-%C4%91%E1%BA%A7y-phong-c%C3%A1ch-v%E1%BB%9Bi-thi%E1%BA%BFt-k%E1%BA%BF-gh%E1%BA%BF-sofa-b%E1%BA%A1c-h%C3%A0-%C4%91%E1%BB%93-n%E1%BB%99i-th%E1%BA%A5t-b%E1%BA%A3n-%C4%91%E1%BB%93-%C3%A1p.jpg?s=612x612&w=0&k=20&c=bq42yoAt_R3UG1xNJrNs0EO0Rbxd71TMf_ueRgK-2-g=',
+        }}
+      />
+      <View style={[styles.rankContainer, styles.row]}>
+        <View>
+          {[2, 3, 4].includes(item?.rank_id) && (
+            <View style={styles.rank(rankBackground())}>
+              <Text style={styles.rankName}>{t(rankName())}</Text>
+            </View>
+          )}
         </View>
+        <TouchableOpacity
+          style={styles.call}
+          activeOpacity={0.8}
+          onPress={handleCall}
+        >
+          <Icon
+            name="phone"
+            size={23}
+            color={COLOR_WHITE}
+          />
+        </TouchableOpacity>
       </View>
-      <View style={styles.boxPrice}>
+      <View style={[styles.priceContainer, styles.row]}>
         <Text style={styles.price}>
           {`${item?.price} ${item?.price_unit_name}`}{' '}
           <Text style={styles.acreage}>
@@ -151,8 +146,8 @@ const UserPost = ({ item }) => {
           </Text>
         </Text>
       </View>
-      <View style={styles.boxTypeHouse}>
-        <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
+      <View style={styles.typeContainer}>
+        <Text style={styles.type}>{item?.real_estate_type_name}</Text>
       </View>
       <View style={styles.row}>
         <Info
@@ -183,28 +178,22 @@ const UserPost = ({ item }) => {
           {item?.description}
         </Text>
       )}
-      <View style={styles.boxLocation}>
+      <View style={[styles.locationContainer, styles.row]}>
         <Icon
           name="location-on"
           color={COLOR_GRAY_7}
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginBottom: -40,
-          marginTop: 16,
-        }}
-      >
-        <View style={{ flex: 1 }}>
+      <View style={[styles.inputs, styles.row]}>
+        <View style={styles.flex}>
           <Input
             control={control}
             label={t('input.code')}
             name="code"
           />
         </View>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={styles.flex}>
           <Input
             control={control}
             label={t('input.validity')}
@@ -212,20 +201,15 @@ const UserPost = ({ item }) => {
           />
         </View>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginBottom: 16,
-        }}
-      >
-        <View style={{ flex: 1 }}>
+      <View style={styles.row}>
+        <View style={styles.flex}>
           <DateTimePicker
             control={control}
             label={t('input.start_date')}
             name="start_date"
           />
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={styles.flex}>
           <DateTimePicker
             control={control}
             label={t('input.end_date')}
@@ -233,26 +217,21 @@ const UserPost = ({ item }) => {
           />
         </View>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginBottom: 16,
-        }}
-      >
-        <View style={{ flex: 1, marginLeft: 8, marginRight: 4 }}>
+      <View style={[styles.buttons, styles.row]}>
+        <View style={[styles.buttonLeft, styles.flex]}>
           <Button
             color={COLOR_GREEN_1}
-            title="Sửa tin"
+            title={t('button.editPost')}
           />
         </View>
-        <View style={{ flex: 1, marginHorizontal: 4 }}>
+        <View style={[styles.flex, styles.buttonMiddle]}>
           <Button
             color={COLOR_RED_2}
-            title="Hạ tin"
+            title={t('button.hidePost')}
           />
         </View>
-        <View style={{ flex: 1, marginLeft: 4, marginRight: 8 }}>
-          <Button title="Thao tác" />
+        <View style={[styles.flex, styles.buttonRight]}>
+          <Button title={t('button.actions')} />
         </View>
       </View>
     </TouchableOpacity>
