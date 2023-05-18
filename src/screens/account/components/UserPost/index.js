@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Icon, Image } from '@rneui/base';
+import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';

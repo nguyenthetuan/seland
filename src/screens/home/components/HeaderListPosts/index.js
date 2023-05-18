@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from '@rneui/base';
-import { Input } from '@rneui/themed';
+import { Icon, Input } from '@rneui/themed';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, View } from 'react-native';

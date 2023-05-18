@@ -1,4 +1,4 @@
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

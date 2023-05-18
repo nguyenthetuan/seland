@@ -1,4 +1,4 @@
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
