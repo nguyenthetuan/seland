@@ -3,14 +3,26 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { ImageUpload } from '../../../../assets';
 import { DateTimePicker, Input, Text } from '../../../../components';
 import { COLOR_BLACK_2 } from '../../../../constants';
+import { selectUser } from '../../../../features';
 import Category from '../Category';
 import styles from './styles';
 
 const IAm = [
+  {
+    value: 'landlord',
+    key: 1,
+  },
+  {
+    value: 'broker',
+    key: 2,
+  },
+];
+const IAm1 = [
   {
     value: 'landlord',
     key: 1,
@@ -46,8 +58,10 @@ const StoreBDS = [
 
 const ArticleDetails = () => {
   const { t } = useTranslation();
+  const { data: user } = useSelector(selectUser);
   const [typeUpload, setTypeUpload] = useState(true);
-  const [iam, setIam] = React.useState(0);
+  const [iam, setIam] = React.useState(1);
+  const [iam1, setIam1] = React.useState(1);
   const [listStoreBDS, setListStoreBDS] = useState(StoreBDS);
   const [listShareBroker, setListShareBroker] = useState(StoreBDS);
 
@@ -71,6 +85,10 @@ const ArticleDetails = () => {
 
   const toggleCheck = value => {
     setIam(value);
+  };
+
+  const toggleIam = value => {
+    setIam1(value);
   };
 
   const toggleStoreBDS = value => {
@@ -141,7 +159,11 @@ const ArticleDetails = () => {
         name="bedroom"
       />
       <Category label="Thông tin liên hệ">
-        <Text style={styles.iam}>{t('common.iam')}</Text>
+        <Text style={styles.iam}>{t('Hiển thị công khai')}</Text>
+        <Text
+          style={styles.nameAndPhone}
+        >{`${user?.phone_number} - ${user?.name}`}</Text>
+        <Text style={styles.iam}>{t('Người đăng là')}</Text>
         <View style={styles.boxCheck}>
           {IAm.map(item => (
             <CheckBox
@@ -154,24 +176,53 @@ const ArticleDetails = () => {
             />
           ))}
         </View>
-        <Input
-          autoComplete="tel"
-          control={control}
-          inputMode="numeric"
-          isNumeric
-          label={t('input.name')}
-          labelStyle={styles.inputLabel}
-          name="bedroom"
-        />
-        <Input
-          autoComplete="tel"
-          control={control}
-          inputMode="numeric"
-          isNumeric
-          label={t('input.phoneNumber')}
-          labelStyle={styles.inputLabel}
-          name="bedroom"
-        />
+        {iam === 2 ? (
+          <View>
+            <View style={styles.line} />
+            <Text style={styles.iam}>{t('Hiển thị riêng tư')}</Text>
+            <Text style={styles.content}>
+              Đây là thông tin bảo mật của bạn, thông tin này sẽ hiển thị với
+              riêng tư bạn, không hiển thị với người xem bài đăng.
+            </Text>
+            <Text style={styles.content}>
+              Bạn vui lòng điền các thông tin sau để giúp bạn quản lý nguồn hàng
+              hiệu quả.
+            </Text>
+            <Text style={styles.txtInformationContact}>
+              Thông tin liên hệ người đã gửi BĐS này cho bạn.
+            </Text>
+            <View style={styles.boxCheck}>
+              {IAm1.map(item => (
+                <CheckBox
+                  key={`checkIam${item?.key}`}
+                  title={t(`checkbox.${item?.value}`)}
+                  checked={iam1 === item?.key}
+                  onPress={() => toggleIam(item?.key)}
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                />
+              ))}
+            </View>
+            <Input
+              autoComplete="tel"
+              control={control}
+              inputMode="numeric"
+              isNumeric
+              label={t('input.name')}
+              labelStyle={styles.inputLabel}
+              name="bedroom"
+            />
+            <Input
+              autoComplete="tel"
+              control={control}
+              inputMode="numeric"
+              isNumeric
+              label={t('input.phoneNumber')}
+              labelStyle={styles.inputLabel}
+              name="bedroom"
+            />
+          </View>
+        ) : null}
       </Category>
       <Category label="Chính sách bán hàng">
         <Text style={styles.label}>{t('THỜI HẠN CHÍNH SÁCH')}</Text>

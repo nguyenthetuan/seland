@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import {
   COLOR_BLUE_1,
+  COLOR_GRAY_1,
   COLOR_GRAY_2,
   COLOR_GRAY_5,
   COLOR_GRAY_7,
@@ -37,6 +38,11 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderBottomWidth: value,
   }),
+  content: {
+    color: COLOR_GRAY_1,
+    fontSize: 12,
+    marginLeft: 10,
+  },
   iam: {
     marginLeft: 10,
   },
@@ -62,9 +68,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
   },
+  line: {
+    alignSelf: 'center',
+    backgroundColor: COLOR_GRAY_5,
+    height: 1,
+    marginBottom: 16,
+    width: '90%',
+  },
+  nameAndPhone: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+    marginVertical: 10,
+  },
   txtImageContract: {
     marginBottom: 8,
     marginLeft: 10,
+  },
+  txtInformationContact: {
+    marginLeft: 10,
+    marginTop: 10,
   },
   txtInput: {
     fontSize: 14,
