@@ -141,22 +141,18 @@ const ArticleDetails = () => {
         </Text>
       </TouchableOpacity>
       <Input
-        autoComplete="tel"
         control={control}
-        inputMode="numeric"
-        isNumeric
         label={t('input.title')}
         labelStyle={styles.inputLabel}
-        name="bedroom"
+        name="title"
       />
       <Input
-        autoComplete="tel"
         control={control}
-        inputMode="numeric"
-        isNumeric
         label={t('input.content')}
         labelStyle={styles.inputLabel}
-        name="bedroom"
+        name="content"
+        multiline
+        inputContainerStyle={styles.inputContainerContent}
       />
       <Category label="Thông tin liên hệ">
         <Text style={styles.iam}>{t('Hiển thị công khai')}</Text>
@@ -204,13 +200,10 @@ const ArticleDetails = () => {
               ))}
             </View>
             <Input
-              autoComplete="tel"
               control={control}
-              inputMode="numeric"
-              isNumeric
               label={t('input.name')}
               labelStyle={styles.inputLabel}
-              name="bedroom"
+              name="name"
             />
             <Input
               autoComplete="tel"
@@ -219,7 +212,7 @@ const ArticleDetails = () => {
               isNumeric
               label={t('input.phoneNumber')}
               labelStyle={styles.inputLabel}
-              name="bedroom"
+              name="phone_number"
             />
           </View>
         ) : null}
@@ -254,79 +247,55 @@ const ArticleDetails = () => {
         </TouchableOpacity>
         <Text style={styles.label}>{t('HOA HỒNG VỀ SÀN')}</Text>
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Hoa hồng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="rose"
         />
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Thưởng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="bonus"
         />
         <Text style={styles.label}>{t('HOA HỒNG VỀ ĐẠI LÝ F2')}</Text>
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Hoa hồng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="rose_agent"
         />
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Thưởng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="bonus_agent"
         />
         <Text style={styles.label}>{t('HOA HỒNG VỀ SALE')}</Text>
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Hoa hồng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="rose_sale"
         />
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Thưởng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="bonus_sale"
         />
         <Text style={styles.label}>{t('HOA HỒNG VỀ CỘNG TÁC VIÊN')}</Text>
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Hoa hồng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="rose_collaborator"
         />
         <Input
-          autoComplete="tel"
           control={control}
-          inputMode="numeric"
-          isNumeric
           label={t('Thưởng')}
           labelStyle={styles.inputLabel}
-          name="bedroom"
+          name="bonus_collaborator"
         />
       </Category>
       <Category label="Chia sẻ với các môi giới">

@@ -142,26 +142,19 @@ const BasicInformation = () => {
         />
       </View>
       <Input
-        autoComplete="tel"
         control={control}
-        inputMode="numeric"
-        isNumeric
         label={t('input.specificAddress')}
         labelStyle={styles.inputLabel}
-        name="phone_number"
+        name="specific_address"
       />
       <Input
-        autoComplete="tel"
         control={control}
-        inputMode="numeric"
-        isNumeric
         label={t('input.locationOnMap')}
         labelStyle={styles.inputLabel}
         name="lat_long"
       />
       <View style={styles.containerMaps}>
         <MapView
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           style={styles.map}
           region={{
             latitude: 21.0227523,

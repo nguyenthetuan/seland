@@ -55,6 +55,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
+  inputContainerContent: {
+    height: 64,
+  },
   inputLabel: {
     color: COLOR_GRAY_7,
   },

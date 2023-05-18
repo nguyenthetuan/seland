@@ -91,7 +91,6 @@ const RealEstateInformation = () => {
       <View style={styles.boxSelectAddress}>
         <View>
           <Input
-            autoComplete="tel"
             control={control}
             inputMode="numeric"
             isNumeric
@@ -99,11 +98,11 @@ const RealEstateInformation = () => {
             label={t('input.acreage')}
             labelStyle={styles.inputLabel}
             name="acreage"
+            rightIcon={<Text>m²</Text>}
           />
         </View>
         <View>
           <Input
-            autoComplete="tel"
             control={control}
             inputMode="numeric"
             isNumeric
@@ -128,7 +127,6 @@ const RealEstateInformation = () => {
         </View>
         <View>
           <Input
-            autoComplete="tel"
             control={control}
             inputMode="numeric"
             isNumeric
@@ -142,7 +140,6 @@ const RealEstateInformation = () => {
       <View style={styles.boxSelectAddress}>
         <View>
           <Input
-            autoComplete="tel"
             control={control}
             inputMode="numeric"
             isNumeric
@@ -178,7 +175,6 @@ const RealEstateInformation = () => {
         </View>
         <View>
           <Input
-            autoComplete="tel"
             control={control}
             inputMode="numeric"
             isNumeric
@@ -186,13 +182,13 @@ const RealEstateInformation = () => {
             label={t('input.width')}
             labelStyle={styles.inputLabel}
             name="width"
+            rightIcon={<Text>m</Text>}
           />
         </View>
       </View>
       <View style={styles.boxSelectAddress}>
         <View>
           <Input
-            autoComplete="tel"
             control={control}
             inputMode="numeric"
             isNumeric
@@ -200,11 +196,11 @@ const RealEstateInformation = () => {
             label={t('input.length')}
             labelStyle={styles.inputLabel}
             name="length"
+            rightIcon={<Text>m</Text>}
           />
         </View>
         <View>
           <Input
-            autoComplete="tel"
             control={control}
             inputMode="numeric"
             isNumeric
@@ -212,6 +208,7 @@ const RealEstateInformation = () => {
             label={t('input.laneWidth')}
             labelStyle={styles.inputLabel}
             name="lane_width"
+            rightIcon={<Text>m</Text>}
           />
         </View>
       </View>
