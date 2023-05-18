@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginVertical: 16,
   },
+  labelStyleDate: {
+    color: COLOR_GRAY_7,
+    fontWeight: 'bold',
+    marginVertical: 16,
+  },
   mainLabel: {
     fontWeight: 'bold',
     marginVertical: 16,

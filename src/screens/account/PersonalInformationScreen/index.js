@@ -356,7 +356,7 @@ const PersonalInformationScreen = () => {
           />
         </View>
         <DateTimePicker
-          labelStyle={styles.inputLabel}
+          labelStyle={styles.labelStyleDate}
           label="Ngày sinh"
           control={control}
           name="birthday"

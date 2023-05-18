@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 8,
-    marginVertical: 16,
   },
 });
 
