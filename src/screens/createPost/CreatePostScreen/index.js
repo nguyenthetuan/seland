@@ -6,17 +6,37 @@ import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Save } from '../../../assets';
 import { Text } from '../../../components';
 import { COLOR_BLUE_1 } from '../../../constants';
+import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import RealEstateInformation from '../components/RealEstateInformation';
 import styles from './styles';
 
+const YouWant = [
+  {
+    name: 'saveDrafts',
+    key: 1,
+  },
+  {
+    name: 'savePrivate',
+    key: 2,
+  },
+  {
+    name: 'postPublic',
+    key: 3,
+  },
+];
 const CreatePostScreen = () => {
   const { t } = useTranslation();
 
   const [tab, setTab] = useState(0);
+  const [youWant, setYouWant] = useState(1);
 
   const handleTab = value => {
     setTab(value);
+  };
+
+  const handleSelect = value => {
+    setYouWant(value);
   };
 
   const renderTab = () => {
@@ -25,6 +45,10 @@ const CreatePostScreen = () => {
         return <BasicInformation />;
       case 1:
         return <RealEstateInformation />;
+      case 2:
+        return <ArticleDetails />;
+      default:
+        return <BasicInformation />;
     }
   };
 
@@ -38,31 +62,33 @@ const CreatePostScreen = () => {
           <Save />
         </View>
         <Text style={styles.youWant}>{t('common.youWant')}</Text>
-        <View style={styles.boxCheck}>
-          <Button
-            buttonStyle={styles.btnYouWant}
-            icon="save"
-            type="outline"
-          >
-            <Icon
-              color={COLOR_BLUE_1}
-              name="radio-button-unchecked"
-              size={20}
-            />
-            <Text style={styles.txtCheck}>{t('button.savePrivate')}</Text>
-          </Button>
-          <Button
-            buttonStyle={styles.btnYouWant}
-            type="outline"
-          >
-            <Icon
-              color={COLOR_BLUE_1}
-              name="radio-button-checked"
-              size={20}
-            />
-            <Text style={styles.txtCheck}>{t('button.postPublic')}</Text>
-          </Button>
-        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.boxCheck}
+        >
+          {YouWant.map(item => (
+            <Button
+              key={`youWant${item?.key}`}
+              buttonStyle={styles.btnYouWant}
+              icon="save"
+              type="outline"
+              onPress={() => handleSelect(item.key)}
+            >
+              <Icon
+                color={COLOR_BLUE_1}
+                name={
+                  youWant === item?.key
+                    ? 'radio-button-checked'
+                    : 'radio-button-unchecked'
+                }
+                size={20}
+              />
+              <Text style={styles.txtCheck}>{t(`button.${item?.name}`)}</Text>
+            </Button>
+          ))}
+        </ScrollView>
+
         <View style={styles.line} />
         <View style={styles.boxDotLine}>
           <View style={styles.dot([0, 1, 2].includes(tab))} />

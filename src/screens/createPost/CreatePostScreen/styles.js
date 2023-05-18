@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
     borderColor: COLOR_BLUE_1,
     borderRadius: 5,
     height: 40,
-    width: width * 0.45,
+    marginRight: 10,
+    width: width * 0.4,
   },
   buySell: {
     flex: 0.49,
