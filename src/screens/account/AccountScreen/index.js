@@ -14,7 +14,7 @@ import {
 } from '../../../constants';
 import { logout, selectUser } from '../../../features';
 import { dispatchThunk } from '../../../utils';
-import AccountMenu from './components/AccountMenu';
+import { AccountMenu } from '../components';
 import styles from './styles';
 
 const AccountScreen = () => {
