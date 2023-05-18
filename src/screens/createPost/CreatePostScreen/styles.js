@@ -13,6 +13,11 @@ import {
 const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+  boxButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 24,
+  },
   boxCheck: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -44,6 +49,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 16,
     paddingHorizontal: 10,
+  },
+  btnBack: {
+    backgroundColor: COLOR_ORANGE_6,
+    width: width * 0.45,
+  },
+  btnContinue: {
+    backgroundColor: COLOR_BLUE_1,
+    marginHorizontal: 10,
+    marginVertical: 24,
+  },
+  btnContinue1: {
+    backgroundColor: COLOR_BLUE_1,
+    width: width * 0.45,
   },
   btnYouWant: {
     borderColor: COLOR_BLUE_1,
@@ -114,12 +132,10 @@ const styles = StyleSheet.create({
   },
   select: {
     height: 40,
-    // padding: 10,
   },
   select1: {
     height: 40,
     width: width * 0.45,
-    // padding: 10,
   },
   txtCheck: {
     color: COLOR_BLUE_1,

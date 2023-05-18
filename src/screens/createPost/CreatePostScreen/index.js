@@ -1,5 +1,5 @@
 import { Button, Icon } from '@rneui/base';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 
@@ -27,7 +27,7 @@ const YouWant = [
 ];
 const CreatePostScreen = () => {
   const { t } = useTranslation();
-
+  const scrollViewRef = useRef();
   const [tab, setTab] = useState(0);
   const [youWant, setYouWant] = useState(1);
 
@@ -37,6 +37,16 @@ const CreatePostScreen = () => {
 
   const handleSelect = value => {
     setYouWant(value);
+  };
+
+  const handleContinue = () => {
+    scrollViewRef.current?.scrollTo();
+    setTab(tab + 1);
+  };
+
+  const handleBack = () => {
+    scrollViewRef.current?.scrollTo();
+    setTab(tab - 1);
   };
 
   const renderTab = () => {
@@ -54,7 +64,10 @@ const CreatePostScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <ScrollView
+        ref={scrollViewRef}
+        contentContainerStyle={styles.scroll}
+      >
         <View style={styles.header}>
           <Text style={styles.createPostNews}>
             {t('common.createPostNews')}
@@ -118,6 +131,26 @@ const CreatePostScreen = () => {
           </Text>
         </View>
         {renderTab()}
+        {tab === 0 ? (
+          <Button
+            title={t('button.continue')}
+            buttonStyle={styles.btnContinue}
+            onPress={handleContinue}
+          />
+        ) : (
+          <View style={styles.boxButton}>
+            <Button
+              title={t('button.back')}
+              buttonStyle={styles.btnBack}
+              onPress={handleBack}
+            />
+            <Button
+              title={t('button.continue')}
+              buttonStyle={styles.btnContinue1}
+              onPress={handleContinue}
+            />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
