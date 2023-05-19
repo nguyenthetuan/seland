@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Button, Icon } from '@rneui/base';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -5,7 +6,7 @@ import { SafeAreaView, ScrollView, View } from 'react-native';
 
 import { Save } from '../../../assets';
 import { Text } from '../../../components';
-import { COLOR_BLUE_1 } from '../../../constants';
+import { COLOR_BLUE_1, SCREENS } from '../../../constants';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import RealEstateInformation from '../components/RealEstateInformation';
@@ -26,6 +27,7 @@ const YouWant = [
   },
 ];
 const CreatePostScreen = () => {
+  const { navigate } = useNavigation();
   const { t } = useTranslation();
   const scrollViewRef = useRef();
   const [tab, setTab] = useState(0);
@@ -40,8 +42,12 @@ const CreatePostScreen = () => {
   };
 
   const handleContinue = () => {
-    scrollViewRef.current?.scrollTo();
-    setTab(tab + 1);
+    if (tab < 2) {
+      scrollViewRef.current?.scrollTo();
+      setTab(tab + 1);
+    } else {
+      navigate(SCREENS.CONFIRM_POST_SCREEN);
+    }
   };
 
   const handleBack = () => {

@@ -1,9 +1,14 @@
-import { CreatePostScreen } from '../../../screens';
+import { SCREENS } from '../../../constants';
+import { ConfirmPostScreen, CreatePostScreen } from '../../../screens';
 
 const routes = [
   {
     component: CreatePostScreen,
-    name: 'CreatePost',
+    name: SCREENS.CREATE_POST,
+  },
+  {
+    component: ConfirmPostScreen,
+    name: SCREENS.CONFIRM_POST_SCREEN,
   },
 ];
 
