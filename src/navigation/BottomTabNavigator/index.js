@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { Text } from '../../components';
 import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../constants';
 import { getProfile } from '../../features';
-import { getScreens } from '../../utils';
+import { dispatchThunk, getScreens } from '../../utils';
 import routes from './routes';
 import styles from './styles';
 
@@ -19,7 +19,7 @@ const BottomTabNavigator = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(getProfile());
+    dispatchThunk(dispatch, getProfile());
   }, [dispatch]);
 
   const getCreatePostTabBarIcon = useCallback(

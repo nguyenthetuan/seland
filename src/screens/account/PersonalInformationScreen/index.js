@@ -27,6 +27,7 @@ import {
   getCompanyProvinces,
   // getCompanyWards,
   getDistricts,
+  getProfile,
   getProvinces,
   // getWards,
   selectCommon,
@@ -167,6 +168,7 @@ const PersonalInformationScreen = () => {
       // company_district_id,
     } = user;
     await Promise.all([
+      dispatchThunk(dispatch, getProfile()),
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
         fetchDistricts({
@@ -198,7 +200,14 @@ const PersonalInformationScreen = () => {
 
   useEffect(() => {
     Object.entries(user).forEach(
-      ([key, value]) => value && setValue(key, value)
+      ([key, value]) =>
+        value &&
+        setValue(
+          key,
+          key === 'birthday'
+            ? value.slice(3, 6) + value.slice(0, 3) + value.slice(-4)
+            : value
+        )
     );
   }, [user, setValue]);
 
