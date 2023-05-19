@@ -23,7 +23,7 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
   const handleCancel = () => setOpen(false);
 
   const handleConfirm = date => {
-    onChange(dayjs(date).format('DD/MM/YYYY'));
+    onChange(dayjs(date).format('YYYY-MM-DD'));
     handleCancel();
   };
 
@@ -51,7 +51,7 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
         confirmText={t('button.confirm')}
         date={value ? new Date(value) : new Date()}
         locale="vi"
-        // maximumDate={new Date()}
+        maximumDate={new Date()}
         minimumDate={new Date('1900-01-01')}
         modal
         mode="date"
