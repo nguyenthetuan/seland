@@ -51,14 +51,17 @@ const Select = ({
       <SelectDropdown
         buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
         buttonTextAfterSelection={selectedItem => selectedItem.label}
-        buttonTextStyle={StyleSheet.flatten([styles.text, buttonTextStyle])}
+        buttonTextStyle={StyleSheet.flatten([
+          styles.text(data.findIndex(item => item.value === value)),
+          buttonTextStyle,
+        ])}
         data={data}
         defaultValueByIndex={data.findIndex(item => item.value === value)}
         onSelect={handleChange}
         renderDropdownIcon={renderDropdownIcon}
         rowStyle={StyleSheet.flatten([rowStyle])}
         rowTextForSelection={item => item.label}
-        rowTextStyle={StyleSheet.flatten(styles.text, rowTextStyle)}
+        rowTextStyle={StyleSheet.flatten(styles.rowTextStyle, rowTextStyle)}
         {...props}
       />
     </View>

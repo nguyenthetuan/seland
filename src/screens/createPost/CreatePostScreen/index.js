@@ -14,15 +14,15 @@ import styles from './styles';
 
 const YouWant = [
   {
-    name: 'saveDrafts',
+    name: 'savePrivate',
     key: 1,
   },
   {
-    name: 'savePrivate',
+    name: 'postPublic',
     key: 2,
   },
   {
-    name: 'postPublic',
+    name: 'saveDrafts',
     key: 3,
   },
 ];
