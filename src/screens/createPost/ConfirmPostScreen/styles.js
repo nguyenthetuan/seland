@@ -12,11 +12,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 16,
   },
-  boxItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
+
   boxNumberPost: {
     flexDirection: 'row',
   },
@@ -46,9 +42,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
   },
-  labelItem: {
-    fontWeight: '500',
-  },
+
   labelStyle: {
     marginVertical: 0,
   },
@@ -66,10 +60,6 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     marginLeft: 10,
     marginVertical: 16,
-  },
-  valueItem: {
-    fontSize: 14,
-    lineHeight: 22,
   },
 });
 

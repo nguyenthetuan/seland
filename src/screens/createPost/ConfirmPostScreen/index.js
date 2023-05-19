@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Icon } from '@rneui/base';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, View } from 'react-native';
@@ -9,27 +8,14 @@ import { SliderBox } from 'react-native-image-slider-box';
 
 import { DateTimePicker, Input, Text } from '../../../components';
 import { COLOR_GRAY_2, COLOR_ORANGE_6 } from '../../../constants';
+import ItemConfirm from '../components/ItemConfirm';
+import PopupConfirmPost from '../components/PopupConfirm';
 import styles from './styles';
 
-const Item = ({ value, label }) => (
-  <View style={styles.boxItem}>
-    <Text style={styles.labelItem}>{label}</Text>
-    <Text style={styles.valueItem}>{value}</Text>
-  </View>
-);
-
-Item.defaultProps = {
-  label: '',
-  value: '',
-};
-
-Item.propTypes = {
-  value: PropTypes.string,
-  label: PropTypes.string,
-};
 const ConfirmPostScreen = () => {
   const { goBack } = useNavigation();
   const { t } = useTranslation();
+  const confirmPostRef = useRef();
   const {
     control,
     formState: { errors },
@@ -41,7 +27,9 @@ const ConfirmPostScreen = () => {
     },
   });
 
-  const handleContinue = () => {};
+  const handleContinue = () => {
+    confirmPostRef.current.openPopup();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -95,23 +83,23 @@ const ConfirmPostScreen = () => {
           Tin đăng sẽ kết thúc vào ngày: 15-03-2023
         </Text>
         <View style={styles.boxInformation}>
-          <Item
+          <ItemConfirm
             label="Thanh toán"
             value="Vip Bạc"
           />
-          <Item
+          <ItemConfirm
             label="Đơn giá/ ngày"
             value="50,000 VNĐ"
           />
-          <Item
+          <ItemConfirm
             label="Thời gian đăng tin"
             value="10 ngày"
           />
-          <Item
+          <ItemConfirm
             label="Khuyến mãi"
             value="0"
           />
-          <Item
+          <ItemConfirm
             label="Tổng tiền"
             value="500,000 VNĐ"
           />
@@ -122,6 +110,7 @@ const ConfirmPostScreen = () => {
           onPress={handleContinue}
         />
       </ScrollView>
+      <PopupConfirmPost ref={confirmPostRef} />
     </SafeAreaView>
   );
 };
