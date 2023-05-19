@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
     height: 40,
   },
   sort: {
+    marginBottom: -16,
     marginLeft: 8,
+    marginTop: -8,
     width: '53%',
   },
   whiteBackground: {

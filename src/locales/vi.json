@@ -219,6 +219,7 @@
     "searchByCodeTitle": "Tìm theo mã tin, tiêu đề",
     "code": "Mã tin",
     "validity": "Thời hạn",
+    "days": "ngày",
     "start_date": "Ngày bắt đầu",
     "end_date": "Ngày kết thúc"
   },

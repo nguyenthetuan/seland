@@ -192,6 +192,7 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.code')}
             name="code"
+            renderErrorMessage={false}
           />
         </View>
         <View style={styles.flex}>
@@ -200,6 +201,8 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.validity')}
             name="validity"
+            renderErrorMessage={false}
+            rightIcon={<Text>{t('input.days')}</Text>}
           />
         </View>
       </View>
@@ -210,6 +213,7 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.start_date')}
             name="start_date"
+            renderErrorMessage={false}
           />
         </View>
         <View style={styles.flex}>
@@ -218,6 +222,7 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.end_date')}
             name="end_date"
+            renderErrorMessage={false}
           />
         </View>
       </View>
