@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   isBuy: selected => ({
     borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
     borderWidth: 2,
-    borderRadius: 5,
+    // borderRadius: 5,
     padding: 0,
     height: 40,
   }),
