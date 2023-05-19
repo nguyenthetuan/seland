@@ -59,7 +59,7 @@ const Input = ({
   const togglePasswordVisible = () => setPasswordVisible(pv => !pv);
 
   return (
-    <>
+    <View>
       <RNEInput
         style={styles.text}
         errorStyle={styles.error}
@@ -97,7 +97,7 @@ const Input = ({
       {passwordPolicyVisible && (
         <Text style={styles.passwordPolicy}>{t('common.passwordPolicy')}</Text>
       )}
-    </>
+    </View>
   );
 };
 
