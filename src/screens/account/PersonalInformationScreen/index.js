@@ -310,7 +310,7 @@ const PersonalInformationScreen = () => {
                   onPress={() => setIam(item.key)}
                   title={t(`button.${item.name}`)}
                   titleStyle={styles.iamButtonTitle}
-                  type="outline"
+                  outline
                 />
                 {item?.key === Iam && (
                   <View style={styles.checked}>

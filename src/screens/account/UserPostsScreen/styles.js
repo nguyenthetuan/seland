@@ -3,12 +3,11 @@ import { StyleSheet } from 'react-native';
 import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: COLOR_WHITE,
-    flex: 1,
-  },
   filterButton: {
     marginLeft: 8,
+  },
+  flex: {
+    flex: 1,
   },
   list: {
     marginVertical: 16,
@@ -47,7 +46,10 @@ const styles = StyleSheet.create({
   },
   sort: {
     marginLeft: 8,
-    width: '50%',
+    width: '53%',
+  },
+  whiteBackground: {
+    backgroundColor: COLOR_WHITE,
   },
 });
 
