@@ -17,7 +17,7 @@ const Button = ({
   ...props
 }) => (
   <RNEButton
-    buttonStyle={StyleSheet.flatten([buttonStyle, styles.outline(color)])}
+    buttonStyle={StyleSheet.flatten([styles.outline(color), buttonStyle])}
     color={outline ? COLOR_WHITE : color}
     disabled={loading}
     disabledStyle={styles.disabled}

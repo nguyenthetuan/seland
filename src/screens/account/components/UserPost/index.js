@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
-import { Button, DateTimePicker, Input, Text } from '../../../../components';
+import { Button, Input, Text } from '../../../../components';
 import {
   COLOR_BLACK_1,
   COLOR_GRAY_7,
@@ -189,6 +189,7 @@ const UserPost = ({ item }) => {
         <View style={styles.flex}>
           <Input
             control={control}
+            disabled
             label={t('input.code')}
             name="code"
           />
@@ -196,6 +197,7 @@ const UserPost = ({ item }) => {
         <View style={styles.flex}>
           <Input
             control={control}
+            disabled
             label={t('input.validity')}
             name="validity"
           />
@@ -203,15 +205,17 @@ const UserPost = ({ item }) => {
       </View>
       <View style={styles.row}>
         <View style={styles.flex}>
-          <DateTimePicker
+          <Input
             control={control}
+            disabled
             label={t('input.start_date')}
             name="start_date"
           />
         </View>
         <View style={styles.flex}>
-          <DateTimePicker
+          <Input
             control={control}
+            disabled
             label={t('input.end_date')}
             name="end_date"
           />

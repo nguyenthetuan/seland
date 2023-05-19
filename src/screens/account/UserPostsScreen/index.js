@@ -114,7 +114,7 @@ const UserPostsScreen = () => {
         textStyle={styles.loadingText}
         visible={loading}
       />
-      <View style={styles.container}>
+      <View style={[styles.flex, styles.whiteBackground]}>
         <Header title={t('header.userPosts')} />
         <FlatList
           style={styles.postButtons}
@@ -139,17 +139,19 @@ const UserPostsScreen = () => {
                 rightIcon={<Icon name="search" />}
               />
             </View>
-            <Select
-              buttonStyle={styles.selectButton}
-              control={control}
-              data={calendar.map(item => ({
-                ...item,
-                label: t(`select.${item?.label}`),
-              }))}
-              name="calendar"
-              onSelect={handleSubmit(onSubmit)}
-              rowStyle={styles.selectButton}
-            />
+            <View style={styles.flex}>
+              <Select
+                buttonStyle={styles.selectButton}
+                control={control}
+                data={calendar.map(item => ({
+                  ...item,
+                  label: t(`select.${item?.label}`),
+                }))}
+                name="calendar"
+                onSelect={handleSubmit(onSubmit)}
+                rowStyle={styles.selectButton}
+              />
+            </View>
             <Button
               buttonStyle={styles.filterButton}
               title={t('button.filter')}

@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   inputs: {
-    marginBottom: -40,
     marginTop: 16,
   },
   item: {
