@@ -1,10 +1,10 @@
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 
-import { Text } from '../../../../../components';
+import { Text } from '../../../../components';
 import styles from './styles';
 
 const AccountMenu = ({ label, options }) => {

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
 

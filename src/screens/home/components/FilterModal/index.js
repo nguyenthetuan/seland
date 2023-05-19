@@ -1,4 +1,4 @@
-import { Button, Icon } from '@rneui/base';
+import { Button, Icon } from '@rneui/themed';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {

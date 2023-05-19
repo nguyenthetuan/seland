@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';

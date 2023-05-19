@@ -1,4 +1,4 @@
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -53,7 +53,7 @@ const ItemHottestRealEstate = ({ item, type }) => {
 
     Linking.canOpenURL(phoneNumber).then(supported => {
       if (!supported) {
-        Alert.alert(t('common.numberPhoneNotSupport'));
+        Alert.alert(t('common.unsupportedPhoneNumber'));
       } else {
         Linking.openURL(phoneNumber);
       }

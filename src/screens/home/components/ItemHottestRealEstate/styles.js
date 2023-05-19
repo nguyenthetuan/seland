@@ -12,7 +12,7 @@ import {
   COLOR_ORANGE_5,
   COLOR_PURPLE_1,
   COLOR_PURPLE_2,
-  COLOR_RED,
+  COLOR_RED_1,
   COLOR_WHITE,
 } from '../../../../constants';
 
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     lineHeight: 12,
   },
   price: {
-    color: COLOR_RED,
+    color: COLOR_RED_1,
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 24,

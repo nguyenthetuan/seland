@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetListRealEstates } from '../api';
+import { requestGetListRealEstatesUser } from '../api';
 
-export const selectRealEstates = state => state.realEstates;
+export const selectUserRealEstates = state => state.userRealEstates;
 
-export const getListRealEstates = createAsyncThunk(
-  'getListRealEstates',
+export const getListRealEstatesUser = createAsyncThunk(
+  'getListRealEstatesUser',
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGetListRealEstates();
+      const { data } = await requestGetListRealEstatesUser();
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
@@ -17,7 +17,7 @@ export const getListRealEstates = createAsyncThunk(
 );
 
 const slice = createSlice({
-  name: 'realEstates',
+  name: 'userRealEstates',
   initialState: {
     loading: false,
     data: [],
@@ -27,15 +27,15 @@ const slice = createSlice({
     error: '',
   },
   extraReducers: builder => {
-    builder.addCase(getListRealEstates.pending, state => {
+    builder.addCase(getListRealEstatesUser.pending, state => {
       state.loading = true;
     });
-    builder.addCase(getListRealEstates.fulfilled, (state, action) => {
+    builder.addCase(getListRealEstatesUser.fulfilled, (state, action) => {
       state.loading = false;
       state.data = action.payload;
       state.error = '';
     });
-    builder.addCase(getListRealEstates.rejected, (state, action) => {
+    builder.addCase(getListRealEstatesUser.rejected, (state, action) => {
       state.loading = false;
       state.data = [];
       state.error = action.payload;
@@ -43,4 +43,4 @@ const slice = createSlice({
   },
 });
 
-export const realEstatesReducer = slice.reducer;
+export const userRealEstatesReducer = slice.reducer;
