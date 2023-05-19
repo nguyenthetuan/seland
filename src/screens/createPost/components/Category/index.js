@@ -1,4 +1,4 @@
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';

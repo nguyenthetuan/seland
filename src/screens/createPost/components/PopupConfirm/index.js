@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button } from '@rneui/base';
+import { Button } from '@rneui/themed';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal, View } from 'react-native';
 
