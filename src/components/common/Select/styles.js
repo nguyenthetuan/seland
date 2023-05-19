@@ -19,12 +19,18 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 8,
   },
-  text: {
+  rowTextStyle: {
     color: COLOR_BLACK_1,
     fontSize: 16,
     lineHeight: 24,
     textAlign: 'left',
   },
+  text: value => ({
+    color: value ? COLOR_GRAY_5 : COLOR_BLACK_1,
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: 'left',
+  }),
 });
 
 export default styles;
