@@ -226,7 +226,7 @@ const RealEstateInformation = () => {
               onPress={() => setTypeRealEstate(item.key)}
               title={t(`${item.name}`)}
               titleStyle={styles.txtType(item.key === typeRealEstate)}
-              type="outline"
+              outline
             />
             {item?.key === typeRealEstate && (
               <View style={styles.checked}>
@@ -248,7 +248,7 @@ const RealEstateInformation = () => {
               onPress={() => setCurrentStatusHouse(item.key)}
               title={t(`${item.name}`)}
               titleStyle={styles.txtType(item.key === currentStatusHouse)}
-              type="outline"
+              outline
             />
             {item?.key === currentStatusHouse && (
               <View style={styles.checked}>
@@ -270,7 +270,7 @@ const RealEstateInformation = () => {
               onPress={() => setUsageStatus(item.key)}
               title={t(`${item.name}`)}
               titleStyle={styles.txtType(item.key === usageStatus)}
-              type="outline"
+              outline
             />
             {item?.key === usageStatus && (
               <View style={styles.checked}>
@@ -292,7 +292,7 @@ const RealEstateInformation = () => {
               onPress={() => setLocation(item.key)}
               title={t(`${item.name}`)}
               titleStyle={styles.txtType(item.key === location)}
-              type="outline"
+              outline
             />
             {item?.key === location && (
               <View style={styles.checked}>

@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   },
   btnYouWant: {
     borderColor: COLOR_BLUE_1,
-    borderRadius: 5,
     height: 40,
     marginRight: 10,
     width: width * 0.4,

@@ -1,10 +1,9 @@
 import { Icon } from '@rneui/themed';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
-import MapView, { MarkerAnimated, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
@@ -62,7 +61,7 @@ const BasicInformation = () => {
               onPress={() => setIsBuy(item.key)}
               title={t(`button.${item.name}`)}
               titleStyle={styles.txtType(item.key === isBuy)}
-              type="outline"
+              outline
             />
             {item?.key === isBuy && (
               <View style={styles.checked}>

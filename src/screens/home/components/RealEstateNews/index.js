@@ -1,10 +1,9 @@
-import { Button } from '@rneui/themed';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Image, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { Text } from '../../../../components';
+import { Button, Text } from '../../../../components';
 import { COLOR_BLUE_1 } from '../../../../constants';
 import { selectHome } from '../../../../features';
 import styles from './styles';
@@ -88,7 +87,7 @@ const RealEstateNews = () => {
         buttonStyle={styles.btnSeeAll}
         titleStyle={styles.txtSeeAll}
         title={t('button.seeAll')}
-        type="outline"
+        outline
       />
     </View>
   );

@@ -1,9 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button } from '@rneui/themed';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal, View } from 'react-native';
 
-import { Text } from '../../../../components';
+import { Button, Text } from '../../../../components';
 import {
   COLOR_BLUE_1,
   COLOR_GRAY_4,
@@ -52,7 +51,7 @@ const PopupConfirmPost = forwardRef((props, ref) => {
               buttonStyle={[styles.btnPopup, { borderColor: COLOR_GRAY_4 }]}
               titleStyle={{ color: COLOR_GRAY_7 }}
               title="Quản lý đăng tin"
-              type="outline"
+              outline
               onPress={closePopup}
             />
             <Button

@@ -1,9 +1,9 @@
-import { Button } from '@rneui/themed';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import { Button } from '../../../../components';
 import { COLOR_BLUE_1 } from '../../../../constants';
 import { selectHome } from '../../../../features';
 import ItemHottestRealEstate from '../ItemHottestRealEstate';
@@ -48,14 +48,14 @@ const HottestRealEstateCategory = () => {
           titleStyle={styles.txtSelect}
           onPress={() => handleSelectOptions(true)}
           title={t('button.buySell')}
-          type={isBuy ? 'solid' : 'outline'}
+          outline={!isBuy}
         />
         <Button
           buttonStyle={styles.btnSelect}
           titleStyle={styles.txtSelect}
           onPress={() => handleSelectOptions(false)}
           title={t('button.lease')}
-          type={isBuy ? 'outline' : 'solid'}
+          outline={isBuy}
         />
       </View>
       <ScrollView

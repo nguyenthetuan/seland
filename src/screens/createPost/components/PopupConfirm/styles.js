@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     width: width * 0.96,
   },
   btnPopup: {
-    borderRadius: 5,
     width: width * 0.4,
   },
   code: {

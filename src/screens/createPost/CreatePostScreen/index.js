@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, Icon } from '@rneui/themed';
+import { Icon } from '@rneui/themed';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 
 import { Save } from '../../../assets';
-import { Text } from '../../../components';
+import { Button, Text } from '../../../components';
 import { COLOR_BLUE_1, SCREENS } from '../../../constants';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
@@ -91,7 +91,7 @@ const CreatePostScreen = () => {
               key={`youWant${item?.key}`}
               buttonStyle={styles.btnYouWant}
               icon="save"
-              type="outline"
+              outline
               onPress={() => handleSelect(item.key)}
             >
               <Icon

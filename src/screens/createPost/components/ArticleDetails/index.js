@@ -1,4 +1,4 @@
-import { Button, CheckBox, Icon, Input as InputBase } from '@rneui/themed';
+import { CheckBox, Icon, Input as InputBase } from '@rneui/themed';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { ImageUpload } from '../../../../assets';
-import { DateTimePicker, Input, Text } from '../../../../components';
+import { Button, DateTimePicker, Input, Text } from '../../../../components';
 import { COLOR_BLACK_2 } from '../../../../constants';
 import { selectUser } from '../../../../features';
 import Category from '../Category';
@@ -122,13 +122,13 @@ const ArticleDetails = () => {
       <View style={styles.boxSelectTypeUpload}>
         <Button
           buttonStyle={styles.btnSelectTypeUpload(typeUpload ? 2 : 0)}
-          type="outline"
+          outline
           title="Hình ảnh BĐS"
           onPress={() => setTypeUpload(true)}
         />
         <Button
           buttonStyle={styles.btnSelectTypeUpload(typeUpload ? 0 : 2)}
-          type="outline"
+          outline
           title="Video BĐS"
           onPress={() => setTypeUpload(false)}
         />

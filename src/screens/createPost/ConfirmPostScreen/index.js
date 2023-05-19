@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, Icon } from '@rneui/themed';
+import { Icon } from '@rneui/themed';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 
-import { DateTimePicker, Input, Text } from '../../../components';
+import { Button, DateTimePicker, Input, Text } from '../../../components';
 import { COLOR_GRAY_2, COLOR_ORANGE_6 } from '../../../constants';
 import ItemConfirm from '../components/ItemConfirm';
 import PopupConfirmPost from '../components/PopupConfirm';

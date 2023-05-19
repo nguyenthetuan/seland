@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { Avatar, Button, Icon } from '@rneui/themed';
+import { Avatar, Icon } from '@rneui/themed';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DashedButton, Text } from '../../../components';
+import { Button, DashedButton, Text } from '../../../components';
 import {
   COLOR_GREEN_1,
   COLOR_ORANGE_2,
@@ -262,7 +262,7 @@ const AccountScreen = () => {
           style={styles.buttonLogout}
           onPress={handleLogout}
           title={t('button.logout')}
-          type="outline"
+          outline
           radius={5}
         />
       </ScrollView>

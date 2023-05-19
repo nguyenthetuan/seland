@@ -1,4 +1,4 @@
-import { Button, Icon } from '@rneui/themed';
+import { Icon } from '@rneui/themed';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 
-import { Text } from '../../../../components';
+import { Button, Text } from '../../../../components';
 import {
   COLOR_BLACK_1,
   COLOR_BLUE_1,
@@ -86,7 +86,7 @@ const Filter = forwardRef((props, ref) => {
             <Button
               key={item?.value}
               title={item?.label}
-              type="outline"
+              outline
             />
           ))}
           <Text>{t('select.area')}</Text>
@@ -112,7 +112,7 @@ const Filter = forwardRef((props, ref) => {
               }}
               radius={5}
               title={t('button.reset')}
-              type="outline"
+              outline
             />
             <Button
               buttonStyle={{

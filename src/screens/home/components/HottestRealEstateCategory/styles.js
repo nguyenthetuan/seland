@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   btnSelect: {
-    borderRadius: 5,
+    // borderRadius: 5,
     height: 26,
     marginLeft: 10,
     padding: 0,
