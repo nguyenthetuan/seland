@@ -3,10 +3,12 @@ import { Icon } from '@rneui/themed';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
 import { COLOR_BLUE_1, SCREENS, YOUR_WANT } from '../../../constants';
+import { clearCreatePosts } from '../../../features';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import RealEstateInformation from '../components/RealEstateInformation';
@@ -34,11 +36,19 @@ const TAB = {
 };
 
 const CreatePostScreen = () => {
-  const { navigate } = useNavigation();
+  const { navigate, goBack } = useNavigation();
   const { t } = useTranslation();
   const scrollViewRef = useRef();
+  const basicInfoRef = useRef();
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
+  const dispatch = useDispatch();
+
+  const handleClosePost = () => {
+    dispatch(clearCreatePosts());
+    basicInfoRef.current.clearForm();
+    goBack();
+  };
 
   const handleTab = value => {
     setTab(value);
@@ -49,12 +59,28 @@ const CreatePostScreen = () => {
   };
 
   const handleContinue = () => {
-    if (tab < TAB.ARTICLE_DETAILS) {
-      scrollViewRef.current?.scrollTo();
-      setTab(tab + 1);
-    } else {
-      navigate(SCREENS.CONFIRM_POST_SCREEN);
+    switch (tab) {
+      case TAB.BASIC_INFORMATION:
+        basicInfoRef.current.handleNext();
+        scrollViewRef.current?.scrollTo();
+        setTab(tab + 1);
+        break;
+      case TAB.REAL_ESTATE_INFORMATION:
+        scrollViewRef.current?.scrollTo();
+        setTab(tab + 1);
+        break;
+      case TAB.ARTICLE_DETAILS:
+        navigate(SCREENS.CONFIRM_POST_SCREEN);
+        break;
+      default:
+        navigate(SCREENS.CONFIRM_POST_SCREEN);
     }
+    // if (tab < TAB.ARTICLE_DETAILS) {
+    //   scrollViewRef.current?.scrollTo();
+    //   setTab(tab + 1);
+    // } else {
+    //   navigate(SCREENS.CONFIRM_POST_SCREEN);
+    // }
   };
 
   const handleBack = () => {
@@ -65,7 +91,7 @@ const CreatePostScreen = () => {
   const renderTab = () => {
     switch (tab) {
       case TAB.BASIC_INFORMATION:
-        return <BasicInformation />;
+        return <BasicInformation ref={basicInfoRef} />;
       case TAB.REAL_ESTATE_INFORMATION:
         return <RealEstateInformation />;
       case TAB.ARTICLE_DETAILS:
@@ -77,22 +103,28 @@ const CreatePostScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={{ flexDirection: 'row' }}>
+          <Icon
+            name="close"
+            onPress={handleClosePost}
+          />
+          <Text style={styles.createPostNews}>
+            {t('common.createPostNews')}
+          </Text>
+        </View>
+        <Save />
+      </View>
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={styles.scroll}
       >
-        <View style={styles.header}>
-          <Text style={styles.createPostNews}>
-            {t('common.createPostNews')}
-          </Text>
-          <Save />
-        </View>
-        <Text style={styles.youWant}>{t('common.youWant')}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.boxCheck}
         >
+          <Text style={styles.youWant}>{t('common.youWant')}</Text>
           {SaveType.map(item => (
             <Button
               key={`saveType${item?.key}`}

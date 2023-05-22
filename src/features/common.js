@@ -69,6 +69,7 @@ const slice = createSlice({
     provinces: [],
     districts: [],
     wards: [],
+    street: [],
     companyProvinces: [],
     companyDistricts: [],
     companyWards: [],

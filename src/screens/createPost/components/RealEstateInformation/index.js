@@ -114,7 +114,7 @@ const RealEstateInformation = () => {
             name="price"
             renderErrorMessage={false}
           />
-          <Text style={styles.m2}>~ 70,000,000/m2</Text>
+          <Text style={styles.m2}>1,000,000/m2</Text>
         </View>
       </View>
       <View style={styles.boxSelectAddress}>
