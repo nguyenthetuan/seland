@@ -69,22 +69,25 @@ const RealEstateInformation = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      acreage: '',
+      area: '',
       price: '',
+      price_unit: 1,
       width: '',
       length: '',
       lane_width: '',
       unit: null,
       bathroom: null,
       bedroom: null,
-      compass: null,
-      structure: null,
+      main_door_direction_id: null,
+      structure_id: null,
     },
   });
-  const [typeRealEstate, setTypeRealEstate] = useState(1);
-  const [currentStatusHouse, setCurrentStatusHouse] = useState(1);
-  const [usageStatus, setUsageStatus] = useState(1);
-  const [location, setLocation] = useState(1);
+  const [state, setState] = useState({
+    legalDocumentsId: 1,
+    houseStatusId: 1,
+    usageConditionId: 1,
+    location: 1,
+  });
 
   return (
     <View style={styles.container}>
@@ -96,7 +99,7 @@ const RealEstateInformation = () => {
           inputContainerStyle={styles.inputContainerStyle}
           label={t('input.acreage')}
           labelStyle={styles.inputLabel}
-          name="acreage"
+          name="area"
           rightIcon={<Text>m²</Text>}
           renderErrorMessage={false}
         />
@@ -123,7 +126,7 @@ const RealEstateInformation = () => {
             defaultButtonText="Please Select"
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
-            name="unit"
+            name="price_unit"
           />
         </View>
         <Input
@@ -156,7 +159,7 @@ const RealEstateInformation = () => {
             defaultButtonText="Please Select"
             label={t('select.compass')}
             labelStyle={styles.inputLabel}
-            name="compass"
+            name="main_door_direction_id"
           />
         </View>
       </View>
@@ -169,7 +172,7 @@ const RealEstateInformation = () => {
             defaultButtonText="Please Select"
             label={t('select.structure')}
             labelStyle={styles.inputLabel}
-            name="structure"
+            name="structure_id"
           />
         </View>
         <Input
@@ -208,7 +211,7 @@ const RealEstateInformation = () => {
           rightIcon={<Text>m</Text>}
         />
       </View>
-      <Text style={styles.realEstateType}>{t('common.realEstateType')}</Text>
+      <Text style={styles.realEstateType}>{t('common.legalDocuments')}</Text>
       <View style={styles.boxTypeRealEstate}>
         {TypeRealEstate.map(item => (
           <View
@@ -217,14 +220,14 @@ const RealEstateInformation = () => {
           >
             <Button
               buttonStyle={styles.btnTypeRealEstate(
-                item.key === typeRealEstate
+                item.key === state.legalDocumentsId
               )}
-              onPress={() => setTypeRealEstate(item.key)}
+              onPress={() => setState({ ...state, legalDocumentsId: item.key })}
               title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === typeRealEstate)}
+              titleStyle={styles.txtType(item.key === state.legalDocumentsId)}
               outline
             />
-            {item?.key === typeRealEstate && (
+            {item?.key === state.legalDocumentsId && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -240,13 +243,13 @@ const RealEstateInformation = () => {
             style={styles.buySell}
           >
             <Button
-              buttonStyle={styles.isBuy(item.key === currentStatusHouse)}
-              onPress={() => setCurrentStatusHouse(item.key)}
+              buttonStyle={styles.isBuy(item.key === state.houseStatusId)}
+              onPress={() => setState({ ...state, houseStatusId: item.key })}
               title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === currentStatusHouse)}
+              titleStyle={styles.txtType(item.key === state.houseStatusId)}
               outline
             />
-            {item?.key === currentStatusHouse && (
+            {item?.key === state.houseStatusId && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -262,13 +265,13 @@ const RealEstateInformation = () => {
             style={styles.buySell}
           >
             <Button
-              buttonStyle={styles.isBuy(item.key === usageStatus)}
-              onPress={() => setUsageStatus(item.key)}
+              buttonStyle={styles.isBuy(item.key === state.usageConditionId)}
+              onPress={() => setState({ ...state, usageConditionId: item.key })}
               title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === usageStatus)}
+              titleStyle={styles.txtType(item.key === state.usageConditionId)}
               outline
             />
-            {item?.key === usageStatus && (
+            {item?.key === state.usageConditionId && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -284,13 +287,13 @@ const RealEstateInformation = () => {
             style={styles.buySell}
           >
             <Button
-              buttonStyle={styles.isBuy(item.key === location)}
-              onPress={() => setLocation(item.key)}
+              buttonStyle={styles.isBuy(item.key === state.location)}
+              onPress={() => setState({ ...state, location: item.key })}
               title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === location)}
+              titleStyle={styles.txtType(item.key === state.location)}
               outline
             />
-            {item?.key === location && (
+            {item?.key === state.location && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
