@@ -200,14 +200,7 @@ const PersonalInformationScreen = () => {
 
   useEffect(() => {
     Object.entries(user).forEach(
-      ([key, value]) =>
-        value &&
-        setValue(
-          key,
-          key === 'birthday'
-            ? value.slice(3, 6) + value.slice(0, 3) + value.slice(-4)
-            : value
-        )
+      ([key, value]) => value && setValue(key, value)
     );
   }, [user, setValue]);
 

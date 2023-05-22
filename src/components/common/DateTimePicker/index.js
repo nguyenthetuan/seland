@@ -39,7 +39,7 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
         flexDirection="row"
         onPress={handleShow}
       >
-        <Text>{value || 'Select date'}</Text>
+        <Text>{value ? dayjs(value).format('DD/MM/YYYY') : 'Select date'}</Text>
         <Icon
           color={COLOR_BLACK_3}
           name="calendar-today"
