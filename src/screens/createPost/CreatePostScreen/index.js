@@ -2,47 +2,54 @@ import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
-import { COLOR_BLUE_1, SCREENS } from '../../../constants';
+import { COLOR_BLUE_1, SCREENS, YOUR_WANT } from '../../../constants';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import RealEstateInformation from '../components/RealEstateInformation';
 import styles from './styles';
 
-const YouWant = [
+const SaveType = [
   {
     name: 'savePrivate',
-    key: 1,
+    key: YOUR_WANT.SAVE_PRIVATE,
   },
   {
     name: 'postPublic',
-    key: 2,
+    key: YOUR_WANT.POST_PUBLIC,
   },
   {
     name: 'saveDrafts',
-    key: 3,
+    key: YOUR_WANT.SAVE_DRAFTS,
   },
 ];
+
+const TAB = {
+  BASIC_INFORMATION: 0,
+  REAL_ESTATE_INFORMATION: 1,
+  ARTICLE_DETAILS: 2,
+};
+
 const CreatePostScreen = () => {
   const { navigate } = useNavigation();
   const { t } = useTranslation();
   const scrollViewRef = useRef();
-  const [tab, setTab] = useState(0);
-  const [youWant, setYouWant] = useState(1);
+  const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
+  const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
 
   const handleTab = value => {
     setTab(value);
   };
 
   const handleSelect = value => {
-    setYouWant(value);
+    setSaveType(value);
   };
 
   const handleContinue = () => {
-    if (tab < 2) {
+    if (tab < TAB.ARTICLE_DETAILS) {
       scrollViewRef.current?.scrollTo();
       setTab(tab + 1);
     } else {
@@ -57,11 +64,11 @@ const CreatePostScreen = () => {
 
   const renderTab = () => {
     switch (tab) {
-      case 0:
+      case TAB.BASIC_INFORMATION:
         return <BasicInformation />;
-      case 1:
+      case TAB.REAL_ESTATE_INFORMATION:
         return <RealEstateInformation />;
-      case 2:
+      case TAB.ARTICLE_DETAILS:
         return <ArticleDetails />;
       default:
         return <BasicInformation />;
@@ -86,9 +93,9 @@ const CreatePostScreen = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.boxCheck}
         >
-          {YouWant.map(item => (
+          {SaveType.map(item => (
             <Button
-              key={`youWant${item?.key}`}
+              key={`saveType${item?.key}`}
               buttonStyle={styles.btnYouWant}
               icon="save"
               outline
@@ -97,7 +104,7 @@ const CreatePostScreen = () => {
               <Icon
                 color={COLOR_BLUE_1}
                 name={
-                  youWant === item?.key
+                  saveType === item?.key
                     ? 'radio-button-checked'
                     : 'radio-button-unchecked'
                 }
@@ -110,34 +117,56 @@ const CreatePostScreen = () => {
 
         <View style={styles.line} />
         <View style={styles.boxDotLine}>
-          <View style={styles.dot([0, 1, 2].includes(tab))} />
-          <View style={styles.line1([1, 2].includes(tab))} />
-          <View style={styles.dot([1, 2].includes(tab))} />
-          <View style={styles.line1(tab === 2)} />
-          <View style={styles.dot(tab === 2)} />
+          <Pressable onPress={() => handleTab(TAB.BASIC_INFORMATION)}>
+            <View
+              style={styles.dot(
+                [
+                  TAB.BASIC_INFORMATION,
+                  TAB.REAL_ESTATE_INFORMATION,
+                  TAB.ARTICLE_DETAILS,
+                ].includes(tab)
+              )}
+            />
+          </Pressable>
+          <View
+            style={styles.line1(
+              [TAB.REAL_ESTATE_INFORMATION, TAB.ARTICLE_DETAILS].includes(tab)
+            )}
+          />
+          <Pressable onPress={() => handleTab(TAB.REAL_ESTATE_INFORMATION)}>
+            <View
+              style={styles.dot(
+                [TAB.REAL_ESTATE_INFORMATION, TAB.ARTICLE_DETAILS].includes(tab)
+              )}
+            />
+          </Pressable>
+          <View style={styles.line1(tab === TAB.ARTICLE_DETAILS)} />
+          <Pressable onPress={() => handleTab(TAB.ARTICLE_DETAILS)}>
+            <View style={styles.dot(tab === TAB.ARTICLE_DETAILS)} />
+          </Pressable>
         </View>
         <View style={styles.boxTab}>
           <Text
-            style={styles.labelTab(tab === 0)}
-            onPress={() => handleTab(0)}
+            style={styles.labelTab(tab === TAB.BASIC_INFORMATION)}
+            onPress={() => handleTab(TAB.BASIC_INFORMATION)}
           >
             Thông tin cơ bản
           </Text>
           <Text
-            style={styles.labelTab(tab === 1)}
-            onPress={() => handleTab(1)}
+            style={styles.labelTab(tab === TAB.REAL_ESTATE_INFORMATION)}
+            onPress={() => handleTab(TAB.REAL_ESTATE_INFORMATION)}
           >
             Thông tin nhà đất
           </Text>
           <Text
-            style={styles.labelTab(tab === 2)}
-            onPress={() => handleTab(2)}
+            style={styles.labelTab(tab === TAB.ARTICLE_DETAILS)}
+            onPress={() => handleTab(TAB.ARTICLE_DETAILS)}
           >
             Chi tiết bài đăng
           </Text>
         </View>
         {renderTab()}
-        {tab === 0 ? (
+        {tab === TAB.BASIC_INFORMATION ? (
           <Button
             title={t('button.continue')}
             buttonStyle={styles.btnContinue}

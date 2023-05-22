@@ -135,9 +135,18 @@ const ArticleDetails = () => {
       </View>
       <TouchableOpacity style={styles.boxUpload}>
         <ImageUpload />
-        <Text style={{ marginTop: 20 }}>Chọn ảnh để tải lên</Text>
+        <Text style={{ marginTop: 20 }}>
+          {t('common.selectFileToUpload').replace(
+            'file',
+            t(typeUpload ? 'common.image' : 'common.video')
+          )}
+        </Text>
         <Text style={{ color: COLOR_BLACK_2 }}>
-          Hỗ trợ tải lên một lần hoặc hàng loạt.
+          {t(
+            typeUpload
+              ? 'common.supportSingleOrBulkUpload'
+              : 'common.supportUploadAVideo'
+          )}
         </Text>
       </TouchableOpacity>
       <Input
