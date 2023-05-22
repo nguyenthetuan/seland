@@ -10,16 +10,16 @@ import Text from '../Text';
 import styles from './styles';
 
 const Select = ({
+  buttonStyle,
+  buttonTextStyle,
   control,
   data,
   label,
+  labelStyle,
   name,
+  onSelect,
   rowStyle,
   rowTextStyle,
-  buttonTextStyle,
-  buttonStyle,
-  labelStyle,
-  onSelect,
   ...props
 }) => {
   const {
@@ -69,27 +69,27 @@ const Select = ({
 };
 
 Select.defaultProps = {
+  buttonStyle: {},
+  buttonTextStyle: {},
   data: [],
   label: '',
-  rowTextStyle: {},
-  rowStyle: {},
-  buttonTextStyle: {},
-  buttonStyle: {},
   labelStyle: {},
   onSelect: () => {},
+  rowStyle: {},
+  rowTextStyle: {},
 };
 
 Select.propTypes = {
+  buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  buttonTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   control: PropTypes.any.isRequired,
   data: PropTypes.array,
-  rowTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  buttonTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   label: PropTypes.string,
-  name: PropTypes.string.isRequired,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  name: PropTypes.string.isRequired,
   onSelect: PropTypes.func,
+  rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  rowTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default Select;
