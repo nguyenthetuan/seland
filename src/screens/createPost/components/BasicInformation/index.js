@@ -30,7 +30,7 @@ const BasicInformation = () => {
   } = useForm({
     defaultValues: {
       real_estate_type_id: '',
-      name: '',
+      project_id: '',
       address_detail: '',
       province_id: null,
       district_id: null,
@@ -88,7 +88,7 @@ const BasicInformation = () => {
           defaultButtonText="Please Select"
           label={t('select.nameProject')}
           labelStyle={styles.inputLabel}
-          name="name"
+          name="project_id"
         />
       </View>
       <Input
@@ -96,7 +96,7 @@ const BasicInformation = () => {
         label={t('input.quickAddressEntry')}
         labelStyle={styles.inputLabel}
         rightIcon={<Icon name="search" />}
-        name="address_detail"
+        name="search_address"
       />
       <View style={[styles.boxSelectAddress, { marginTop: -30 }]}>
         <Select
@@ -142,7 +142,7 @@ const BasicInformation = () => {
         control={control}
         label={t('input.specificAddress')}
         labelStyle={styles.inputLabel}
-        name="specific_address"
+        name="address_detail"
         renderErrorMessage={false}
       />
       <Input
