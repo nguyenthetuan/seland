@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
   marginHorizontal: {
     marginHorizontal: 8,
   },
+  postButton: {
+    width: 125,
+  },
   postButtons: {
     flexGrow: 0,
     marginBottom: 16,

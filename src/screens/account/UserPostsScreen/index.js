@@ -7,7 +7,7 @@ import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Header, NoResults, Screen, Select } from '../../../components';
-import { COLOR_BLUE_1 } from '../../../constants';
+import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
 import { getListRealEstates, selectRealEstates } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
@@ -122,7 +122,7 @@ const UserPostsScreen = () => {
           horizontal
           renderItem={({ item: { label, value } }) => (
             <Button
-              buttonStyle={styles.marginHorizontal}
+              buttonStyle={[styles.marginHorizontal, styles.postButton]}
               onPress={() => setFilter(value)}
               outline={value !== filter}
               title={t(`button.${label}`)}
@@ -154,6 +154,13 @@ const UserPostsScreen = () => {
             </View>
             <Button
               buttonStyle={styles.filterButton}
+              icon={
+                <Icon
+                  color={COLOR_WHITE}
+                  name="filter-alt"
+                  size={16}
+                />
+              }
               title={t('button.filter')}
             />
           </View>
