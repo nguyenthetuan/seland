@@ -145,6 +145,7 @@ const ArticleDetails = () => {
         label={t('input.title')}
         labelStyle={styles.inputLabel}
         name="title"
+        renderErrorMessage={false}
       />
       <Input
         control={control}
@@ -153,6 +154,7 @@ const ArticleDetails = () => {
         name="content"
         multiline
         inputContainerStyle={styles.inputContainerContent}
+        renderErrorMessage={false}
       />
       <Category label="Thông tin liên hệ">
         <Text style={styles.iam}>{t('Hiển thị công khai')}</Text>

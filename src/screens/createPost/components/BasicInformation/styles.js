@@ -67,8 +67,9 @@ const styles = StyleSheet.create({
   containerMaps: {
     alignSelf: 'center',
     borderRadius: 5,
-    height: 200,
-    width: width * 0.9,
+    height: 158,
+    marginTop: -20,
+    width: width - 20,
   },
   createPostNews: {
     fontWeight: 500,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     color: COLOR_BLUE_2,
     fontSize: 14,
     lineHeight: 22,
-    marginTop: 18,
+    // marginTop: 18,
     textDecorationLine: 'underline',
   },
   scroll: {

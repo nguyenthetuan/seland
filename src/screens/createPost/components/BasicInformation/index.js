@@ -143,11 +143,12 @@ const BasicInformation = () => {
         label={t('input.specificAddress')}
         labelStyle={styles.inputLabel}
         name="specific_address"
+        renderErrorMessage={false}
       />
       <Input
         control={control}
         label={t('input.locationOnMap')}
-        labelStyle={styles.inputLabel}
+        // labelStyle={styles.inputLabel}
         name="lat_long"
         rightLabel={<Text style={styles.reset}>Đặt lại</Text>}
       />

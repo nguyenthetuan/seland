@@ -89,18 +89,17 @@ const RealEstateInformation = () => {
   return (
     <View style={styles.container}>
       <View style={styles.boxSelectAddress}>
-        <View>
-          <Input
-            control={control}
-            inputMode="numeric"
-            isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
-            label={t('input.acreage')}
-            labelStyle={styles.inputLabel}
-            name="acreage"
-            rightIcon={<Text>m²</Text>}
-          />
-        </View>
+        <Input
+          control={control}
+          inputMode="numeric"
+          isNumeric
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.acreage')}
+          labelStyle={styles.inputLabel}
+          name="acreage"
+          rightIcon={<Text>m²</Text>}
+          renderErrorMessage={false}
+        />
         <View>
           <Input
             control={control}
@@ -110,7 +109,9 @@ const RealEstateInformation = () => {
             label={t('input.price')}
             labelStyle={styles.inputLabel}
             name="price"
+            renderErrorMessage={false}
           />
+          <Text style={styles.m2}>~ 70,000,000/m2</Text>
         </View>
       </View>
       <View style={styles.boxSelectAddress}>
@@ -125,30 +126,28 @@ const RealEstateInformation = () => {
             name="unit"
           />
         </View>
-        <View>
-          <Input
-            control={control}
-            inputMode="numeric"
-            isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
-            label={t('input.numberBathrooms')}
-            labelStyle={styles.inputLabel}
-            name="bathroom"
-          />
-        </View>
+        <Input
+          control={control}
+          inputMode="numeric"
+          isNumeric
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.numberBathrooms')}
+          labelStyle={styles.inputLabel}
+          name="bathroom"
+          renderErrorMessage={false}
+        />
       </View>
       <View style={styles.boxSelectAddress}>
-        <View>
-          <Input
-            control={control}
-            inputMode="numeric"
-            isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
-            label={t('input.numberBedrooms')}
-            labelStyle={styles.inputLabel}
-            name="bedroom"
-          />
-        </View>
+        <Input
+          control={control}
+          inputMode="numeric"
+          isNumeric
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.numberBedrooms')}
+          labelStyle={styles.inputLabel}
+          name="bedroom"
+          renderErrorMessage={false}
+        />
         <View style={{ marginLeft: 10, flex: 1 }}>
           <Select
             buttonStyle={styles.select1}
@@ -173,46 +172,43 @@ const RealEstateInformation = () => {
             name="structure"
           />
         </View>
-        <View>
-          <Input
-            control={control}
-            inputMode="numeric"
-            isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
-            label={t('input.width')}
-            labelStyle={styles.inputLabel}
-            name="width"
-            rightIcon={<Text>m</Text>}
-          />
-        </View>
+        <Input
+          control={control}
+          inputMode="numeric"
+          isNumeric
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.width')}
+          labelStyle={styles.inputLabel}
+          name="width"
+          renderErrorMessage={false}
+          rightIcon={<Text>m</Text>}
+        />
       </View>
       <View style={styles.boxSelectAddress}>
-        <View>
-          <Input
-            control={control}
-            inputMode="numeric"
-            isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
-            label={t('input.length')}
-            labelStyle={styles.inputLabel}
-            name="length"
-            rightIcon={<Text>m</Text>}
-          />
-        </View>
-        <View>
-          <Input
-            control={control}
-            inputMode="numeric"
-            isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
-            label={t('input.laneWidth')}
-            labelStyle={styles.inputLabel}
-            name="lane_width"
-            rightIcon={<Text>m</Text>}
-          />
-        </View>
+        <Input
+          control={control}
+          inputMode="numeric"
+          isNumeric
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.length')}
+          labelStyle={styles.inputLabel}
+          name="length"
+          renderErrorMessage={false}
+          rightIcon={<Text>m</Text>}
+        />
+        <Input
+          control={control}
+          inputMode="numeric"
+          isNumeric
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.laneWidth')}
+          labelStyle={styles.inputLabel}
+          name="lane_width"
+          renderErrorMessage={false}
+          rightIcon={<Text>m</Text>}
+        />
       </View>
-      <Text style={styles.youWant}>{t('common.realEstateType')}</Text>
+      <Text style={styles.realEstateType}>{t('common.realEstateType')}</Text>
       <View style={styles.boxTypeRealEstate}>
         {TypeRealEstate.map(item => (
           <View

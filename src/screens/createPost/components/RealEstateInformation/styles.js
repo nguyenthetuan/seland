@@ -7,32 +7,20 @@ import {
   COLOR_GRAY_5,
   COLOR_GRAY_7,
   COLOR_ORANGE_6,
-  COLOR_WHITE,
 } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
-  boxCheck: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-    paddingHorizontal: 10,
-  },
   boxDotLine: {
     alignItems: 'center',
     alignSelf: 'center',
     flexDirection: 'row',
     marginTop: 7,
   },
-  boxItem: {
-    // backgroundColor: 'red',
-    // width: width * 0.45,
-  },
   boxSelectAddress: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // paddingHorizontal: 10,
   },
   boxTab: {
     alignItems: 'center',
@@ -101,12 +89,10 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     color: COLOR_GRAY_7,
-    // marginTop: 16,
   },
   isBuy: selected => ({
     borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
     borderWidth: 2,
-    // borderRadius: 5,
     padding: 0,
     height: 40,
   }),
@@ -132,17 +118,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     width: '30%',
   }),
+  m2: {
+    color: COLOR_ORANGE_6,
+    fontSize: 12,
+    marginBottom: 10,
+    marginLeft: 12,
+    marginTop: -12,
+  },
+  realEstateType: {
+    fontWeight: 500,
+    paddingHorizontal: 10,
+  },
   scroll: {
     paddingBottom: 50,
   },
   select: {
     height: 40,
-    // padding: 10,
   },
   select1: {
     height: 40,
     width: width * 0.45,
-    // padding: 10,
   },
   txtCheck: {
     color: COLOR_BLUE_1,
