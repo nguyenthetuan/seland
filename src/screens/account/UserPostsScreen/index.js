@@ -25,20 +25,20 @@ const UserPostsScreen = () => {
 
   const filters = [
     {
-      label: 'beingShown',
-      value: 1,
-    },
-    {
-      label: 'privatePosts',
-      value: 2,
+      label: 'all',
+      value: -1,
     },
     {
       label: 'pendingReview',
       value: 3,
     },
     {
-      label: 'draftPosts',
-      value: 4,
+      label: 'publicPosts',
+      value: 1,
+    },
+    {
+      label: 'hidden',
+      value: 6,
     },
     {
       label: 'rejected',
@@ -46,7 +46,11 @@ const UserPostsScreen = () => {
     },
     {
       label: 'expired',
-      value: 6,
+      value: 0,
+    },
+    {
+      label: 'privatePosts',
+      value: 2,
     },
   ];
 

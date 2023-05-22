@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   postButton: {
-    width: 125,
+    width: 150,
   },
   postButtons: {
     flexGrow: 0,
