@@ -23,11 +23,7 @@ const buySell = [
 const BasicInformation = () => {
   const { t } = useTranslation();
   const [isBuy, setIsBuy] = useState(1);
-  const {
-    control,
-    formState: { errors },
-    setValue,
-  } = useForm({
+  const { control, setValue } = useForm({
     defaultValues: {
       real_estate_type_id: '',
       project_id: '',
@@ -47,6 +43,7 @@ const BasicInformation = () => {
       value
     );
   };
+
   return (
     <View>
       <Text style={styles.youWantCenter}>{t('common.youWant')}</Text>

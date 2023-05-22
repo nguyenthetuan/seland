@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 import {
   COLOR_BLUE_1,
@@ -8,6 +8,8 @@ import {
   COLOR_GRAY_7,
   COLOR_GRAY_10,
 } from '../../../../constants';
+
+const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   boxCheck: {
@@ -34,6 +36,25 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 16,
   },
+  btnAddImage: {
+    alignItems: 'center',
+    borderColor: COLOR_GRAY_5,
+    borderRadius: 5,
+    borderStyle: 'dashed',
+    borderWidth: 1.5,
+    height: width * 0.2,
+    justifyContent: 'center',
+    marginHorizontal: 5,
+    margin: 5,
+    width: width * 0.2,
+  },
+  btnDeleteImage: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    position: 'absolute',
+    right: 10,
+    top: 5,
+  },
   btnSelectTypeUpload: value => ({
     borderWidth: 0,
     borderBottomWidth: value,
@@ -45,6 +66,11 @@ const styles = StyleSheet.create({
   },
   iam: {
     marginLeft: 10,
+  },
+  image: {
+    borderRadius: 5,
+    height: width * 0.2,
+    width: width * 0.2,
   },
   inputContainer: {
     borderColor: COLOR_GRAY_2,
