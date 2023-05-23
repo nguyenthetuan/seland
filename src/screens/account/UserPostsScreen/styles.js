@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     marginBottom: -16,
     marginLeft: 8,
     marginTop: -8,
-    width: '53%',
+    width: '50%',
   },
   whiteBackground: {
     backgroundColor: COLOR_WHITE,

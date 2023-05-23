@@ -1,4 +1,4 @@
-import { Icon, Input } from '@rneui/themed';
+import { Icon } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,14 @@ import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Header, NoResults, Screen, Select } from '../../../components';
+import {
+  Button,
+  Header,
+  Input,
+  NoResults,
+  Screen,
+  Select,
+} from '../../../components';
 import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
 import { getListRealEstates, selectRealEstates } from '../../../features';
 import { dispatchThunk } from '../../../utils';
@@ -138,7 +145,9 @@ const UserPostsScreen = () => {
           <View style={styles.searchFilter}>
             <View style={styles.search}>
               <Input
+                control={control}
                 inputContainerStyle={styles.searchInput}
+                name="search"
                 placeholder={t('input.searchByCodeTitle')}
                 rightIcon={<Icon name="search" />}
               />
