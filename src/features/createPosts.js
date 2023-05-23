@@ -81,6 +81,13 @@ const initialRealEstateInformation = {
 const initialArticleDetails = {
   title: '',
   content: '',
+  name: '',
+  phone_number: '',
+  type: null,
+  urlVideo: '',
+  isPhoto: true,
+  photo: [],
+  video: [],
 };
 
 const slice = createSlice({

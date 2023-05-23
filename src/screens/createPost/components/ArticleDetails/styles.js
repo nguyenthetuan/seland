@@ -20,6 +20,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 10,
   },
+  boxFile: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: 5,
+  },
   boxSelectTypeUpload: {
     alignSelf: 'center',
     flexDirection: 'row',

@@ -11,12 +11,16 @@ import { useTranslation } from 'react-i18next';
 import { Image, Pressable, TouchableOpacity, View } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLOR_BLACK_2 } from '../../../../constants';
-import { createBasicInformation, selectUser } from '../../../../features';
+import {
+  createArticleDetails,
+  selectPosts,
+  selectUser,
+} from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import Category from '../Category';
 import styles from './styles';
@@ -67,14 +71,16 @@ const IAm1 = [
 
 const ArticleDetails = forwardRef((props, ref) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { articleDetails } = useSelector(selectPosts);
   const { data: user } = useSelector(selectUser);
   const [typeUpload, setTypeUpload] = useState({
-    photo: [],
-    video: [],
-    isPhoto: true,
+    photo: articleDetails?.photo || [],
+    video: articleDetails?.video || [],
+    isPhoto: articleDetails?.isPhoto || true,
   });
   const [iam, setIam] = React.useState(1);
-  const [iam1, setIam1] = React.useState(1);
+  const [typeBroker, setTypeBroker] = React.useState(articleDetails?.type || 1);
   // const [listStoreBDS, setListStoreBDS] = useState(StoreBDS);
   // const [listShareBroker, setListShareBroker] = useState(StoreBDS);
 
@@ -82,30 +88,24 @@ const ArticleDetails = forwardRef((props, ref) => {
     defaultValues: {
       title: '',
       content: '',
-      owner: {
-        name: '',
-        phone_number: '',
-      },
-      broker: {
-        name: '',
-        phone_number: '',
-      },
+      name: '',
+      urlVideo: '',
+      phone_number: '',
     },
   });
 
   useEffect(() => {
-    if (user) {
-      setValue('owner.phone_number', user?.name);
-      setValue('owner.name', user?.name);
-    }
-  }, [setValue, user]);
+    Object.entries(articleDetails).forEach(
+      ([key, value]) => value && setValue(key, value)
+    );
+  }, [articleDetails, setValue]);
 
   const toggleCheck = value => {
     setIam(value);
   };
 
   const toggleIam = value => {
-    setIam1(value);
+    setTypeBroker(value);
   };
 
   // const toggleStoreBDS = value => {
@@ -141,10 +141,6 @@ const ArticleDetails = forwardRef((props, ref) => {
         selectionLimit: typeUpload.isPhoto ? 12 : 1,
       })
         .then(result => {
-          console.log(
-            '🚀 ~ file: index.js:133 ~ handleSelectFile ~ result:',
-            result
-          );
           if (result?.assets) {
             setTypeUpload({
               ...typeUpload,
@@ -184,7 +180,16 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
-    // dispatchThunk(dispatch, createBasicInformation(value));
+    dispatchThunk(
+      dispatch,
+      createArticleDetails({
+        ...value,
+        type: typeBroker,
+        isPhoto: typeUpload?.isPhoto,
+        photo: typeUpload.photo,
+        video: typeUpload.video,
+      })
+    );
   };
 
   const clearForm = () => {
@@ -209,42 +214,40 @@ const ArticleDetails = forwardRef((props, ref) => {
           onPress={() => setTypeUpload({ ...typeUpload, isPhoto: false })}
         />
       </View>
-      {file.length ? (
-        <View
-          style={{
-            alignItems: 'flex-start',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            marginLeft: 5,
-          }}
-        >
-          {file?.map(item => {
-            console.log(
-              '🚀 ~ file: index.js:404 ~ ArticleDetails ~ item:',
-              item
-            );
-            return (
-              <View
-                key={`imageUpload${item?.file}`}
-                style={{ margin: 5 }}
-              >
-                <Image
-                  source={{ uri: item?.uri }}
-                  style={styles.image}
-                />
+      {typeUpload.isPhoto ? null : (
+        <Input
+          control={control}
+          label="Dán link video của bạn tại đây."
+          placeholder="VD: https://www.youtube.com/watch?v=bymBAF8d_sc"
+          labelStyle={styles.inputLabel}
+          name="urlVideo"
+          renderErrorMessage={false}
+        />
+      )}
 
-                <Pressable
-                  style={styles.btnDeleteImage}
-                  onPress={() => handleDeleteFile(item?.fileName)}
-                >
-                  <Icon
-                    name="close"
-                    size={20}
-                  />
-                </Pressable>
-              </View>
-            );
-          })}
+      {file.length ? (
+        <View style={styles.boxFile}>
+          {file?.map(item => (
+            <View
+              key={`imageUpload${item?.file}`}
+              style={{ margin: 5 }}
+            >
+              <Image
+                source={{ uri: item?.uri }}
+                style={styles.image}
+              />
+
+              <Pressable
+                style={styles.btnDeleteImage}
+                onPress={() => handleDeleteFile(item?.fileName)}
+              >
+                <Icon
+                  name="close"
+                  size={20}
+                />
+              </Pressable>
+            </View>
+          ))}
           {file.length < 11 ? (
             <Pressable
               style={styles.btnAddImage}
@@ -330,7 +333,7 @@ const ArticleDetails = forwardRef((props, ref) => {
                 <CheckBox
                   key={`checkIam${item?.key}`}
                   title={t(`checkbox.${item?.value}`)}
-                  checked={iam1 === item?.key}
+                  checked={typeBroker === item?.key}
                   onPress={() => toggleIam(item?.key)}
                   checkedIcon="dot-circle-o"
                   uncheckedIcon="circle-o"
@@ -341,7 +344,7 @@ const ArticleDetails = forwardRef((props, ref) => {
               control={control}
               label={t('input.name')}
               labelStyle={styles.inputLabel}
-              name="broker.name"
+              name="name"
             />
             <Input
               autoComplete="tel"
@@ -350,7 +353,7 @@ const ArticleDetails = forwardRef((props, ref) => {
               isNumeric
               label={t('input.phoneNumber')}
               labelStyle={styles.inputLabel}
-              name="broker.phone_number"
+              name="phone_number"
             />
           </View>
         ) : null}
