@@ -35,11 +35,24 @@ const TAB = {
   ARTICLE_DETAILS: 2,
 };
 
+export const formatDataValueId = data =>
+  data?.map(item => ({
+    label: item.value,
+    value: item.id,
+  }));
+
+export const formatDataNameId = data =>
+  data?.map(item => ({
+    label: item.name,
+    value: item.id,
+  }));
+
 const CreatePostScreen = () => {
   const { navigate, goBack } = useNavigation();
   const { t } = useTranslation();
   const scrollViewRef = useRef();
   const basicInfoRef = useRef();
+  const realEstateRef = useRef();
   const articleDetailRef = useRef();
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
@@ -67,6 +80,7 @@ const CreatePostScreen = () => {
         setTab(tab + 1);
         break;
       case TAB.REAL_ESTATE_INFORMATION:
+        realEstateRef.current.handleNext();
         scrollViewRef.current?.scrollTo();
         setTab(tab + 1);
         break;
@@ -76,13 +90,8 @@ const CreatePostScreen = () => {
         break;
       default:
         navigate(SCREENS.CONFIRM_POST_SCREEN);
+        break;
     }
-    // if (tab < TAB.ARTICLE_DETAILS) {
-    //   scrollViewRef.current?.scrollTo();
-    //   setTab(tab + 1);
-    // } else {
-    //   navigate(SCREENS.CONFIRM_POST_SCREEN);
-    // }
   };
 
   const handleBack = () => {
@@ -95,7 +104,7 @@ const CreatePostScreen = () => {
       case TAB.BASIC_INFORMATION:
         return <BasicInformation ref={basicInfoRef} />;
       case TAB.REAL_ESTATE_INFORMATION:
-        return <RealEstateInformation />;
+        return <RealEstateInformation ref={realEstateRef} />;
       case TAB.ARTICLE_DETAILS:
         return <ArticleDetails ref={articleDetailRef} />;
       default:

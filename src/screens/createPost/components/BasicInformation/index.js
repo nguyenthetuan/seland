@@ -25,6 +25,7 @@ import {
   selectPosts,
 } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
+import { formatDataNameId, formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
 
 const initInfo = {
@@ -37,18 +38,6 @@ const initInfo = {
   street_id: null,
   lat_long: `${21.0227523}, ${105.9530334}`,
 };
-
-const formatDataRealEstate = data =>
-  data?.map(item => ({
-    label: item.value,
-    value: item.id,
-  }));
-
-const formatDataProjects = data =>
-  data?.map(item => ({
-    label: item.name,
-    value: item.id,
-  }));
 
 const BasicInformation = forwardRef((props, ref) => {
   const { t } = useTranslation();
@@ -83,10 +72,10 @@ const BasicInformation = forwardRef((props, ref) => {
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
   const arrayRealEstateType = realEstateType.length
-    ? formatDataRealEstate(realEstateType)
+    ? formatDataValueId(realEstateType)
     : [];
   const realEstateTypeOptions = [emptyRealEstateType, ...arrayRealEstateType];
-  const arrayProject = projects.length ? formatDataProjects(projects) : [];
+  const arrayProject = projects.length ? formatDataNameId(projects) : [];
   const projectOptions = [emptyProject, ...arrayProject];
 
   const { control, setValue, getValues, reset } = useForm({

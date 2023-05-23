@@ -1,71 +1,36 @@
-import React, { useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
+import {
+  createRealEstateInformation,
+  selectCommon,
+  selectPosts,
+} from '../../../../features';
+import { dispatchThunk } from '../../../../utils';
+import { formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
 
-const Location = [
-  {
-    key: 1,
-    name: 'Mặt đường',
-  },
-  {
-    key: 2,
-    name: 'Nhà hẻm',
-  },
-];
-const UsageStatus = [
-  {
-    key: 1,
-    name: 'Đã sử dụng',
-  },
-  {
-    key: 2,
-    name: 'Đang sử dụng',
-  },
-];
-
-const CurrentStatusHouse = [
-  {
-    key: 1,
-    name: 'Đang ở',
-  },
-  {
-    key: 2,
-    name: 'Nhà trống',
-  },
-  {
-    key: 3,
-    name: 'Đủ nội thất',
-  },
-];
-
-const TypeRealEstate = [
-  {
-    key: 1,
-    name: 'Sổ đỏ',
-  },
-  {
-    key: 2,
-    name: 'Sổ hồng',
-  },
-  {
-    key: 3,
-    name: 'Đang chờ sổ',
-  },
-  {
-    key: 4,
-    name: 'Hợp đồng mua bán',
-  },
-];
-
-const RealEstateInformation = () => {
+const RealEstateInformation = forwardRef((props, ref) => {
   const { t } = useTranslation();
+  const { realEstateInformation } = useSelector(selectPosts);
+  const { information, unitPrices } = useSelector(selectCommon);
+  const dispatch = useDispatch();
+
   const {
     control,
+    getValues,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -75,19 +40,74 @@ const RealEstateInformation = () => {
       width: '',
       length: '',
       lane_width: '',
-      unit: null,
       bathroom: null,
       bedroom: null,
       main_door_direction_id: null,
       structure_id: null,
     },
   });
+
   const [state, setState] = useState({
-    legalDocumentsId: 1,
-    houseStatusId: 1,
-    usageConditionId: 1,
-    location: 1,
+    legalDocumentsId:
+      realEstateInformation?.legal_documents_id ||
+      information[2]?.children[0].id,
+    houseStatusId:
+      realEstateInformation?.house_status_id || information[3]?.children[0].id,
+    usageConditionId:
+      realEstateInformation?.usage_condition_id ||
+      information[4]?.children[0].id,
+    location:
+      realEstateInformation?.location_type_id || information[5]?.children[0].id,
   });
+
+  const emptyUnitPrices = {
+    label: t('select.structure'),
+    value: null,
+  };
+  const emptyStructure = {
+    label: t('select.structure'),
+    value: null,
+  };
+  const emptyCompass = {
+    label: t('select.compass'),
+    value: null,
+  };
+
+  const unitPricesOptions = [emptyUnitPrices, ...formatDataValueId(unitPrices)];
+  const compassOptions = [
+    emptyCompass,
+    ...formatDataValueId(information[0]?.children),
+  ];
+  const structureOptions = [
+    emptyStructure,
+    ...formatDataValueId(information[1]?.children),
+  ];
+
+  useEffect(() => {
+    Object.entries(realEstateInformation).forEach(
+      ([key, value]) => value && setValue(key, value)
+    );
+  }, [realEstateInformation, setValue]);
+
+  const handleNext = () => {
+    const value = getValues();
+    dispatchThunk(
+      dispatch,
+      createRealEstateInformation({
+        ...value,
+        legal_documents_id: state.legalDocumentsId,
+        house_status_id: state.houseStatusId,
+        usage_condition_id: state.usageConditionId,
+        location_type_id: state.location,
+      })
+    );
+  };
+
+  const clearForm = () => {
+    reset();
+  };
+
+  useImperativeHandle(ref, () => ({ handleNext, clearForm }));
 
   return (
     <View style={styles.container}>
@@ -122,7 +142,7 @@ const RealEstateInformation = () => {
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={[{ value: 'sex', label: 'sex' }]}
+            data={unitPricesOptions}
             defaultButtonText="Please Select"
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
@@ -155,7 +175,7 @@ const RealEstateInformation = () => {
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={[{ value: 'sex', label: 'sex' }]}
+            data={compassOptions}
             defaultButtonText="Please Select"
             label={t('select.compass')}
             labelStyle={styles.inputLabel}
@@ -168,7 +188,7 @@ const RealEstateInformation = () => {
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={[{ value: 'sex', label: 'sex' }]}
+            data={structureOptions}
             defaultButtonText="Please Select"
             label={t('select.structure')}
             labelStyle={styles.inputLabel}
@@ -213,21 +233,21 @@ const RealEstateInformation = () => {
       </View>
       <Text style={styles.realEstateType}>{t('common.legalDocuments')}</Text>
       <View style={styles.boxTypeRealEstate}>
-        {TypeRealEstate.map(item => (
+        {information[2]?.children.map(item => (
           <View
-            key={`buySell${item.key}`}
+            key={`buySell${item.id}`}
             style={styles.itemRealEstate}
           >
             <Button
               buttonStyle={styles.btnTypeRealEstate(
-                item.key === state.legalDocumentsId
+                item.id === state.legalDocumentsId
               )}
-              onPress={() => setState({ ...state, legalDocumentsId: item.key })}
-              title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === state.legalDocumentsId)}
+              onPress={() => setState({ ...state, legalDocumentsId: item.id })}
+              title={item.value}
+              titleStyle={styles.txtType(item.id === state.legalDocumentsId)}
               outline
             />
-            {item?.key === state.legalDocumentsId && (
+            {item?.id === state.legalDocumentsId && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -237,19 +257,19 @@ const RealEstateInformation = () => {
       </View>
       <Text style={styles.youWant}>{t('common.currentStatusHouse')}</Text>
       <View style={styles.boxType}>
-        {CurrentStatusHouse.map(item => (
+        {information[3]?.children.map(item => (
           <View
-            key={`buySell${item.key}`}
+            key={`buySell${item.id}`}
             style={styles.buySell}
           >
             <Button
-              buttonStyle={styles.isBuy(item.key === state.houseStatusId)}
-              onPress={() => setState({ ...state, houseStatusId: item.key })}
-              title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === state.houseStatusId)}
+              buttonStyle={styles.isBuy(item.id === state.houseStatusId)}
+              onPress={() => setState({ ...state, houseStatusId: item.id })}
+              title={item.value}
+              titleStyle={styles.txtType(item.id === state.houseStatusId)}
               outline
             />
-            {item?.key === state.houseStatusId && (
+            {item?.id === state.houseStatusId && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -259,19 +279,19 @@ const RealEstateInformation = () => {
       </View>
       <Text style={styles.youWant}>{t('common.usageStatus')}</Text>
       <View style={styles.boxType}>
-        {UsageStatus.map(item => (
+        {information[4]?.children.map(item => (
           <View
-            key={`buySell${item.key}`}
+            key={`buySell${item.id}`}
             style={styles.buySell}
           >
             <Button
-              buttonStyle={styles.isBuy(item.key === state.usageConditionId)}
-              onPress={() => setState({ ...state, usageConditionId: item.key })}
-              title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === state.usageConditionId)}
+              buttonStyle={styles.isBuy(item.id === state.usageConditionId)}
+              onPress={() => setState({ ...state, usageConditionId: item.id })}
+              title={item.value}
+              titleStyle={styles.txtType(item.id === state.usageConditionId)}
               outline
             />
-            {item?.key === state.usageConditionId && (
+            {item?.id === state.usageConditionId && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -281,19 +301,19 @@ const RealEstateInformation = () => {
       </View>
       <Text style={styles.youWant}>{t('common.location')}</Text>
       <View style={styles.boxType}>
-        {Location.map(item => (
+        {information[5]?.children.map(item => (
           <View
-            key={`buySell${item.key}`}
+            key={`buySell${item.id}`}
             style={styles.buySell}
           >
             <Button
-              buttonStyle={styles.isBuy(item.key === state.location)}
-              onPress={() => setState({ ...state, location: item.key })}
-              title={t(`${item.name}`)}
-              titleStyle={styles.txtType(item.key === state.location)}
+              buttonStyle={styles.isBuy(item.id === state.location)}
+              onPress={() => setState({ ...state, location: item.id })}
+              title={item.value}
+              titleStyle={styles.txtType(item.id === state.location)}
               outline
             />
-            {item?.key === state.location && (
+            {item?.id === state.location && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -303,6 +323,8 @@ const RealEstateInformation = () => {
       </View>
     </View>
   );
-};
+});
+
+RealEstateInformation.displayName = 'RealEstateInformation';
 
 export default RealEstateInformation;

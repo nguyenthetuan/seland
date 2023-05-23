@@ -64,15 +64,18 @@ const initialBasicInformation = {
 const initialRealEstateInformation = {
   area: '',
   price: '',
-  price_unit: 1,
+  price_unit: null,
   width: '',
   length: '',
   lane_width: '',
-  unit: null,
   bathroom: null,
   bedroom: null,
   main_door_direction_id: null,
   structure_id: null,
+  legal_documents_id: null,
+  house_status_id: null,
+  usage_condition_id: null,
+  location_type_id: null,
 };
 
 const initialArticleDetails = {

@@ -85,6 +85,7 @@ const slice = createSlice({
     information: [],
     projects: [],
     demands: [],
+    unitPrices: [],
     error: '',
   },
   reducers: {
@@ -158,6 +159,8 @@ const slice = createSlice({
       state.realEstateType = action.payload[0].real_estate_type;
       state.projects = action.payload[0].projects;
       state.demands = action.payload[0].demands;
+      state.information = action.payload[0].information;
+      state.unitPrices = action.payload[0].unitPrices;
       state.error = '';
     });
   },
