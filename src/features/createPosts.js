@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestCreateRealEstates } from '../api';
+import { requestCreateRealEstates, requestGetAllInformation } from '../api';
 
 export const selectPosts = state => state.post;
 
@@ -32,6 +32,14 @@ export const createArticleDetails = createAsyncThunk(
     } catch (error) {
       return rejectWithValue('');
     }
+  }
+);
+
+export const getAllInformation = createAsyncThunk(
+  'getAllInformation',
+  async (_, { fulfillWithValue }) => {
+    const data = await requestGetAllInformation();
+    return fulfillWithValue(data);
   }
 );
 
@@ -93,9 +101,16 @@ const initialArticleDetails = {
 const slice = createSlice({
   name: 'post',
   initialState: {
+    loading: false,
+    error: '',
     basicInformation: initialBasicInformation,
     realEstateInformation: initialRealEstateInformation,
     articleDetails: initialArticleDetails,
+    realEstateType: [],
+    information: [],
+    projects: [],
+    demands: [],
+    unitPrices: [],
     createRealEstate: {
       loading: false,
       data: {},
@@ -134,6 +149,19 @@ const slice = createSlice({
     builder.addCase(createRealEstates.rejected, (state, action) => {
       state.createRealEstate.loading = false;
       state.createRealEstate.error = action.payload;
+    });
+    // get all info
+    builder.addCase(getAllInformation.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(getAllInformation.fulfilled, (state, action) => {
+      state.loading = false;
+      state.realEstateType = action.payload[0].real_estate_type;
+      state.projects = action.payload[0].projects;
+      state.demands = action.payload[0].demands;
+      state.information = action.payload[0].information;
+      state.unitPrices = action.payload[0].unitPrices;
+      state.error = '';
     });
   },
 });

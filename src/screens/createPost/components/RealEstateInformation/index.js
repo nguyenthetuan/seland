@@ -11,19 +11,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
-import {
-  createRealEstateInformation,
-  selectCommon,
-  selectPosts,
-} from '../../../../features';
+import { createRealEstateInformation, selectPosts } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import { formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
 
 const RealEstateInformation = forwardRef((props, ref) => {
   const { t } = useTranslation();
-  const { realEstateInformation } = useSelector(selectPosts);
-  const { information, unitPrices } = useSelector(selectCommon);
+  const { realEstateInformation, information, unitPrices } =
+    useSelector(selectPosts);
   const dispatch = useDispatch();
 
   const {

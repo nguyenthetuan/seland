@@ -41,11 +41,11 @@ const initInfo = {
 
 const BasicInformation = forwardRef((props, ref) => {
   const { t } = useTranslation();
-  const { basicInformation } = useSelector(selectPosts);
+  const { basicInformation, realEstateType, projects, demands } =
+    useSelector(selectPosts);
   const [isBuy, setIsBuy] = useState(basicInformation?.demand_id || 1);
   const dispatch = useDispatch();
-  const { provinces, districts, wards, realEstateType, projects, demands } =
-    useSelector(selectCommon);
+  const { provinces, districts, wards } = useSelector(selectCommon);
 
   const emptyProvinceOption = {
     label: t('select.province'),
@@ -71,12 +71,11 @@ const BasicInformation = forwardRef((props, ref) => {
   const provinceOptions = [emptyProvinceOption, ...provinces];
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
-  const arrayRealEstateType = realEstateType.length
-    ? formatDataValueId(realEstateType)
-    : [];
-  const realEstateTypeOptions = [emptyRealEstateType, ...arrayRealEstateType];
-  const arrayProject = projects.length ? formatDataNameId(projects) : [];
-  const projectOptions = [emptyProject, ...arrayProject];
+  const realEstateTypeOptions = [
+    emptyRealEstateType,
+    ...formatDataValueId(realEstateType),
+  ];
+  const projectOptions = [emptyProject, ...formatDataNameId(projects)];
 
   const { control, setValue, getValues, reset } = useForm({
     defaultValues: initInfo,
