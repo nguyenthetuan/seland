@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
+  requestGetAllInformation,
   requestGetDistricts,
   requestGetProvinces,
   requestGetWards,
@@ -61,6 +62,13 @@ export const getCompanyWards = createAsyncThunk(
     return fulfillWithValue(formatLocations(data));
   }
 );
+export const getAllInformation = createAsyncThunk(
+  'getAllInformation',
+  async (_, { fulfillWithValue }) => {
+    const data = await requestGetAllInformation();
+    return fulfillWithValue(data);
+  }
+);
 
 const slice = createSlice({
   name: 'common',
@@ -73,6 +81,10 @@ const slice = createSlice({
     companyProvinces: [],
     companyDistricts: [],
     companyWards: [],
+    realEstateType: [],
+    information: [],
+    projects: [],
+    demands: [],
     error: '',
   },
   reducers: {
@@ -136,6 +148,16 @@ const slice = createSlice({
     builder.addCase(getCompanyWards.fulfilled, (state, action) => {
       state.loading = false;
       state.companyWards = action.payload;
+      state.error = '';
+    });
+    builder.addCase(getAllInformation.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(getAllInformation.fulfilled, (state, action) => {
+      state.loading = false;
+      state.realEstateType = action.payload[0].real_estate_type;
+      state.projects = action.payload[0].projects;
+      state.demands = action.payload[0].demands;
       state.error = '';
     });
   },

@@ -17,6 +17,7 @@ import {
   clearDistricts,
   clearWards,
   createBasicInformation,
+  getAllInformation,
   getDistricts,
   getProvinces,
   getWards,
@@ -26,35 +27,36 @@ import {
 import { dispatchThunk } from '../../../../utils';
 import styles from './styles';
 
-const buySell = [
-  {
-    key: 1,
-    name: 'buy',
-  },
-  {
-    key: 2,
-    name: 'lease',
-  },
-];
-
 const initInfo = {
-  real_estate_type_id: '',
-  project_id: '',
+  real_estate_type_id: 0,
+  project_id: 0,
   address_detail: '',
   province_id: null,
   district_id: null,
   ward_id: null,
   street_id: null,
-  longitude: 0,
-  latitude: 0,
+  lat_long: `${21.0227523}, ${105.9530334}`,
 };
+
+const formatDataRealEstate = data =>
+  data?.map(item => ({
+    label: item.value,
+    value: item.id,
+  }));
+
+const formatDataProjects = data =>
+  data?.map(item => ({
+    label: item.name,
+    value: item.id,
+  }));
 
 const BasicInformation = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const { basicInformation } = useSelector(selectPosts);
-  const [isBuy, setIsBuy] = useState(1);
+  const [isBuy, setIsBuy] = useState(basicInformation?.demand_id || 1);
   const dispatch = useDispatch();
-  const { provinces, districts, wards, street } = useSelector(selectCommon);
+  const { provinces, districts, wards, realEstateType, projects, demands } =
+    useSelector(selectCommon);
 
   const emptyProvinceOption = {
     label: t('select.province'),
@@ -68,15 +70,24 @@ const BasicInformation = forwardRef((props, ref) => {
     label: t('select.ward'),
     value: null,
   };
-  const emptyStreetNames = {
-    label: t('select.ward'),
+  const emptyRealEstateType = {
+    label: t('select.realEstateType'),
+    value: null,
+  };
+  const emptyProject = {
+    label: t('select.nameProject'),
     value: null,
   };
 
   const provinceOptions = [emptyProvinceOption, ...provinces];
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
-  const streetNamesOptions = [emptyStreetNames, ...street];
+  const arrayRealEstateType = realEstateType.length
+    ? formatDataRealEstate(realEstateType)
+    : [];
+  const realEstateTypeOptions = [emptyRealEstateType, ...arrayRealEstateType];
+  const arrayProject = projects.length ? formatDataProjects(projects) : [];
+  const projectOptions = [emptyProject, ...arrayProject];
 
   const { control, setValue, getValues, reset } = useForm({
     defaultValues: initInfo,
@@ -88,7 +99,8 @@ const BasicInformation = forwardRef((props, ref) => {
   const fetchWards = params => dispatchThunk(dispatch, getWards(params));
 
   const refresh = async () => {
-    const { province_id, district_id } = basicInformation?.data;
+    const { province_id, district_id } = basicInformation;
+    dispatchThunk(dispatch, getAllInformation());
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
@@ -110,10 +122,10 @@ const BasicInformation = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
-    Object.entries(basicInformation?.data).forEach(
+    Object.entries(basicInformation).forEach(
       ([key, value]) => value && setValue(key, value)
     );
-  }, [basicInformation?.data, setValue]);
+  }, [basicInformation, setValue]);
 
   const handleSelectProvince = selectedItem => {
     setValue('district_id', null);
@@ -147,15 +159,22 @@ const BasicInformation = forwardRef((props, ref) => {
   };
 
   const onRegionChangeComplete = value => {
-    console.log(
-      '🚀 ~ file: index.js:42 ~ onRegionChangeComplete ~ value:',
-      value
-    );
+    setValue('lat_long', `${value?.latitude}, ${value?.longitude}`);
+  };
+
+  const handleReset = () => {
+    setValue('lat_long', `${21.0227523}, ${105.9530334}`);
   };
 
   const handleNext = () => {
     const value = getValues();
-    dispatchThunk(dispatch, createBasicInformation(value));
+    dispatchThunk(
+      dispatch,
+      createBasicInformation({
+        ...value,
+        demand_id: isBuy,
+      })
+    );
   };
 
   const clearForm = () => {
@@ -168,19 +187,19 @@ const BasicInformation = forwardRef((props, ref) => {
     <View>
       <Text style={styles.youWantCenter}>{t('common.youWant')}</Text>
       <View style={styles.boxType}>
-        {buySell.map(item => (
+        {demands.map(item => (
           <View
-            key={`buySell${item.key}`}
+            key={`buySell${item.id}`}
             style={styles.buySell}
           >
             <Button
-              buttonStyle={styles.isBuy(item.key === isBuy)}
-              onPress={() => setIsBuy(item.key)}
-              title={t(`button.${item.name}`)}
-              titleStyle={styles.txtType(item.key === isBuy)}
+              buttonStyle={styles.isBuy(item.id === isBuy)}
+              onPress={() => setIsBuy(item.id)}
+              title={item.value}
+              titleStyle={styles.txtType(item.id === isBuy)}
               outline
             />
-            {item?.key === isBuy && (
+            {item?.id === isBuy && (
               <View style={styles.checked}>
                 <TickButton />
               </View>
@@ -192,7 +211,7 @@ const BasicInformation = forwardRef((props, ref) => {
         <Select
           buttonStyle={styles.select}
           control={control}
-          data={[{ value: 'sex', label: 'sex' }]}
+          data={realEstateTypeOptions}
           defaultButtonText="Please Select"
           label={t('select.realEstateType')}
           labelStyle={styles.inputLabel}
@@ -201,7 +220,7 @@ const BasicInformation = forwardRef((props, ref) => {
         <Select
           buttonStyle={styles.select}
           control={control}
-          data={[{ value: 'sex', label: 'sex' }]}
+          data={projectOptions}
           defaultButtonText="Please Select"
           label={t('select.nameProject')}
           labelStyle={styles.inputLabel}
@@ -247,15 +266,6 @@ const BasicInformation = forwardRef((props, ref) => {
           labelStyle={styles.inputLabel}
           name="ward_id"
         />
-        <Select
-          buttonStyle={styles.select1}
-          control={control}
-          data={streetNamesOptions}
-          defaultButtonText="Please Select"
-          label={t('select.street')}
-          labelStyle={styles.inputLabel}
-          name="street_id"
-        />
       </View>
       <Input
         control={control}
@@ -268,7 +278,14 @@ const BasicInformation = forwardRef((props, ref) => {
         control={control}
         label={t('input.locationOnMap')}
         name="lat_long"
-        rightLabel={<Text style={styles.reset}>Đặt lại</Text>}
+        rightLabel={
+          <Text
+            style={styles.reset}
+            onPress={handleReset}
+          >
+            Đặt lại
+          </Text>
+        }
       />
       <View style={styles.containerMaps}>
         <MapView

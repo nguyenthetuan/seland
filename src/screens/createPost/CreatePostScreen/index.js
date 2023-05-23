@@ -40,6 +40,7 @@ const CreatePostScreen = () => {
   const { t } = useTranslation();
   const scrollViewRef = useRef();
   const basicInfoRef = useRef();
+  const articleDetailRef = useRef();
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ const CreatePostScreen = () => {
         setTab(tab + 1);
         break;
       case TAB.ARTICLE_DETAILS:
+        articleDetailRef.current.handleNext();
         navigate(SCREENS.CONFIRM_POST_SCREEN);
         break;
       default:
@@ -95,7 +97,7 @@ const CreatePostScreen = () => {
       case TAB.REAL_ESTATE_INFORMATION:
         return <RealEstateInformation />;
       case TAB.ARTICLE_DETAILS:
-        return <ArticleDetails />;
+        return <ArticleDetails ref={articleDetailRef} />;
       default:
         return <BasicInformation />;
     }

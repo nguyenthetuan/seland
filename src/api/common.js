@@ -1,4 +1,5 @@
 import {
+  GET_ALL_INFORMATION,
   GET_DISTRICTS_ROUTE,
   GET_PROVINCES_ROUTE,
   GET_WARDS_ROUTE,
@@ -10,3 +11,5 @@ export const requestGetProvinces = () => get(GET_PROVINCES_ROUTE);
 export const requestGetDistricts = params => get(GET_DISTRICTS_ROUTE, params);
 
 export const requestGetWards = params => get(GET_WARDS_ROUTE, params);
+
+export const requestGetAllInformation = () => get(GET_ALL_INFORMATION);

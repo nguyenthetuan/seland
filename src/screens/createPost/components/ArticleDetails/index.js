@@ -1,5 +1,11 @@
 import { CheckBox, Icon } from '@rneui/themed';
-import React, { useMemo, useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Image, Pressable, TouchableOpacity, View } from 'react-native';
@@ -10,7 +16,8 @@ import { useSelector } from 'react-redux';
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLOR_BLACK_2 } from '../../../../constants';
-import { selectUser } from '../../../../features';
+import { createBasicInformation, selectUser } from '../../../../features';
+import { dispatchThunk } from '../../../../utils';
 import Category from '../Category';
 import styles from './styles';
 
@@ -58,7 +65,7 @@ const IAm1 = [
 //   },
 // ];
 
-const ArticleDetails = () => {
+const ArticleDetails = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const { data: user } = useSelector(selectUser);
   const [typeUpload, setTypeUpload] = useState({
@@ -71,12 +78,27 @@ const ArticleDetails = () => {
   // const [listStoreBDS, setListStoreBDS] = useState(StoreBDS);
   // const [listShareBroker, setListShareBroker] = useState(StoreBDS);
 
-  const { control } = useForm({
+  const { control, setValue, getValues, reset } = useForm({
     defaultValues: {
       title: '',
       content: '',
+      owner: {
+        name: '',
+        phone_number: '',
+      },
+      broker: {
+        name: '',
+        phone_number: '',
+      },
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      setValue('owner.phone_number', user?.name);
+      setValue('owner.name', user?.name);
+    }
+  }, [setValue, user]);
 
   const toggleCheck = value => {
     setIam(value);
@@ -160,7 +182,16 @@ const ArticleDetails = () => {
     return array;
   }, [typeUpload]);
 
-  console.log('typeUpload', typeUpload);
+  const handleNext = () => {
+    const value = getValues();
+    // dispatchThunk(dispatch, createBasicInformation(value));
+  };
+
+  const clearForm = () => {
+    reset();
+  };
+
+  useImperativeHandle(ref, () => ({ handleNext, clearForm }));
 
   return (
     <View>
@@ -310,7 +341,7 @@ const ArticleDetails = () => {
               control={control}
               label={t('input.name')}
               labelStyle={styles.inputLabel}
-              name="name"
+              name="broker.name"
             />
             <Input
               autoComplete="tel"
@@ -319,7 +350,7 @@ const ArticleDetails = () => {
               isNumeric
               label={t('input.phoneNumber')}
               labelStyle={styles.inputLabel}
-              name="phone_number"
+              name="broker.phone_number"
             />
           </View>
         ) : null}
@@ -445,6 +476,8 @@ const ArticleDetails = () => {
       </Category> */}
     </View>
   );
-};
+});
+
+ArticleDetails.displayName = 'ArticleDetails';
 
 export default ArticleDetails;

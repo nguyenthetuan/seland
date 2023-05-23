@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetProfile } from '../api';
+import { requestCreateRealEstates } from '../api';
 
 export const selectPosts = state => state.post;
 
@@ -10,43 +10,55 @@ export const createBasicInformation = createAsyncThunk(
     try {
       return fulfillWithValue(params);
     } catch (error) {
-      return rejectWithValue(error?.data?.phone_number?.[0]);
+      return rejectWithValue('');
     }
   }
 );
 export const createRealEstateInformation = createAsyncThunk(
   'createRealEstateInformation',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+  async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGetProfile();
-      return fulfillWithValue(data);
+      return fulfillWithValue(params);
     } catch (error) {
-      return rejectWithValue(error?.data?.phone_number?.[0]);
+      return rejectWithValue('');
     }
   }
 );
 export const createArticleDetails = createAsyncThunk(
   'createArticleDetails',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+  async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGetProfile();
+      return fulfillWithValue(params);
+    } catch (error) {
+      return rejectWithValue('');
+    }
+  }
+);
+
+export const createRealEstates = createAsyncThunk(
+  'createRealEstates',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestCreateRealEstates(params);
+      console.log('🚀 ~ file: createPosts.js:43 ~ data:', data);
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue(error?.data?.phone_number?.[0]);
+      console.log('🚀 ~ file: createPosts.js:45 ~ error:', error);
+      return rejectWithValue('');
     }
   }
 );
 
 const initialBasicInformation = {
-  real_estate_type_id: '',
-  project_id: '',
+  demand_id: 0,
+  real_estate_type_id: null,
+  project_id: null,
   address_detail: '',
   province_id: null,
   district_id: null,
   ward_id: null,
   street_id: null,
-  longitude: 0,
-  latitude: 0,
+  lat_long: 0,
 };
 
 const initialRealEstateInformation = {
@@ -71,70 +83,47 @@ const initialArticleDetails = {
 const slice = createSlice({
   name: 'post',
   initialState: {
-    basicInformation: {
+    basicInformation: initialBasicInformation,
+    realEstateInformation: initialRealEstateInformation,
+    articleDetails: initialArticleDetails,
+    createRealEstate: {
       loading: false,
-      data: initialBasicInformation,
-      error: '',
-    },
-    realEstateInformation: {
-      loading: false,
-      data: initialRealEstateInformation,
-      error: '',
-    },
-    articleDetails: {
-      loading: false,
-      data: initialArticleDetails,
+      data: {},
       error: '',
     },
   },
   reducers: {
     clearCreatePosts: state => {
-      console.log('🚀 ~ file: createPosts.js:97 ~ state:', state);
-
-      state.basicInformation.data = initialBasicInformation;
-      state.realEstateInformation.data = initialRealEstateInformation;
-      state.articleDetails.data = initialArticleDetails;
+      state.basicInformation = initialBasicInformation;
+      state.realEstateInformation = initialRealEstateInformation;
+      state.articleDetails = initialArticleDetails;
     },
   },
   extraReducers: builder => {
     // create form basic info
-    builder.addCase(createBasicInformation.pending, state => {
-      state.basicInformation.loading = true;
-    });
     builder.addCase(createBasicInformation.fulfilled, (state, action) => {
-      state.basicInformation.loading = false;
-      state.basicInformation.data = action.payload;
-      state.basicInformation.error = '';
-    });
-    builder.addCase(createBasicInformation.rejected, (state, action) => {
-      state.basicInformation.loading = false;
-      state.basicInformation.error = action.payload;
+      state.basicInformation = action.payload;
     });
     // create form real estate info
-    builder.addCase(createRealEstateInformation.pending, state => {
-      state.realEstateInformation.loading = true;
-    });
     builder.addCase(createRealEstateInformation.fulfilled, (state, action) => {
-      state.realEstateInformation.loading = false;
-      state.realEstateInformation.data = action.payload;
-      state.realEstateInformation.error = '';
-    });
-    builder.addCase(createRealEstateInformation.rejected, (state, action) => {
-      state.realEstateInformation.loading = false;
-      state.realEstateInformation.error = action.payload;
+      state.realEstateInformation = action.payload;
     });
     // create form Article Details
-    builder.addCase(createArticleDetails.pending, state => {
-      state.articleDetails.loading = true;
-    });
     builder.addCase(createArticleDetails.fulfilled, (state, action) => {
-      state.articleDetails.loading = false;
-      state.articleDetails.data = action.payload;
-      state.articleDetails.error = '';
+      state.articleDetails = action.payload;
     });
-    builder.addCase(createArticleDetails.rejected, (state, action) => {
-      state.articleDetails.loading = false;
-      state.articleDetails.error = action.payload;
+    // create form Article Details
+    builder.addCase(createRealEstates.pending, state => {
+      state.createRealEstate.loading = true;
+    });
+    builder.addCase(createRealEstates.fulfilled, (state, action) => {
+      state.createRealEstate.loading = false;
+      state.createRealEstate.data = action.payload;
+      state.createRealEstate.error = '';
+    });
+    builder.addCase(createRealEstates.rejected, (state, action) => {
+      state.createRealEstate.loading = false;
+      state.createRealEstate.error = action.payload;
     });
   },
 });
