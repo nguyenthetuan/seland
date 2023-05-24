@@ -60,7 +60,7 @@ const CreatePostScreen = () => {
 
   const handleClosePost = () => {
     dispatch(clearCreatePosts());
-    basicInfoRef.current.clearForm();
+    basicInfoRef.current && basicInfoRef.current.clearForm();
     goBack();
   };
 

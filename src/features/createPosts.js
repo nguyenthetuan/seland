@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestCreateRealEstates, requestGetAllInformation } from '../api';
+import {
+  requestCreateRealEstates,
+  requestGetAllInformation,
+  requestGetListRank,
+} from '../api';
 
 export const selectPosts = state => state.post;
 
@@ -39,6 +43,14 @@ export const getAllInformation = createAsyncThunk(
   'getAllInformation',
   async (_, { fulfillWithValue }) => {
     const data = await requestGetAllInformation();
+    return fulfillWithValue(data);
+  }
+);
+
+export const getListRank = createAsyncThunk(
+  'getListRank',
+  async (_, { fulfillWithValue }) => {
+    const data = await requestGetListRank();
     return fulfillWithValue(data);
   }
 );
@@ -111,6 +123,7 @@ const slice = createSlice({
     projects: [],
     demands: [],
     unitPrices: [],
+    rank: [],
     createRealEstate: {
       loading: false,
       data: {},
@@ -161,7 +174,14 @@ const slice = createSlice({
       state.demands = action.payload[0].demands;
       state.information = action.payload[0].information;
       state.unitPrices = action.payload[0].unitPrices;
-      state.error = '';
+    });
+    // get list rank
+    builder.addCase(getListRank.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(getListRank.fulfilled, (state, action) => {
+      state.loading = false;
+      state.rank = action.payload;
     });
   },
 });

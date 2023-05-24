@@ -1,13 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, View } from 'react-native';
-import { SliderBox } from 'react-native-image-slider-box';
+import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DateTimePicker, Input, Text } from '../../../components';
-import { COLOR_GRAY_2, COLOR_ORANGE_6 } from '../../../constants';
+import { COLOR_BLUE_1, COLOR_GRAY_6 } from '../../../constants';
+import { createRealEstates, getListRank, selectPosts } from '../../../features';
+import { dispatchThunk } from '../../../utils';
 import ItemConfirm from '../components/ItemConfirm';
 import PopupConfirmPost from '../components/PopupConfirm';
 import styles from './styles';
@@ -15,7 +17,12 @@ import styles from './styles';
 const ConfirmPostScreen = () => {
   const { goBack } = useNavigation();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { rank, basicInformation, realEstateInformation, articleDetails } =
+    useSelector(selectPosts);
+
   const confirmPostRef = useRef();
+
   const {
     control,
     formState: { errors },
@@ -27,8 +34,28 @@ const ConfirmPostScreen = () => {
     },
   });
 
+  const refresh = async () => {
+    dispatchThunk(dispatch, getListRank());
+  };
+
+  useEffect(() => {
+    refresh();
+  }, []);
+
   const handleContinue = () => {
-    confirmPostRef.current.openPopup();
+    // confirmPostRef.current.openPopup();
+    const params = {
+      ...basicInformation,
+      ...realEstateInformation,
+      ...articleDetails,
+    };
+    const formData = new FormData();
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (key === 'isPhoto' || key === 'lat_long') return;
+      return value && formData.append(key, value);
+    });
+    dispatchThunk(dispatch, createRealEstates(formData));
   };
 
   return (
@@ -41,21 +68,47 @@ const ConfirmPostScreen = () => {
         <Text style={styles.createPostNews}>{t('common.createPostNews')}</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <SliderBox
-          autoplay
-          circleLoop
-          dotColor={COLOR_ORANGE_6}
-          dotStyle={styles.dot}
-          images={[
-            'https://source.unsplash.com/1024x768/?nature',
-            'https://source.unsplash.com/1024x768/?water',
-            'https://source.unsplash.com/1024x768/?girl',
-            'https://source.unsplash.com/1024x768/?tree',
-          ]}
-          resizeMethod="resize"
-          resizeMode="cover"
-          inactiveDotColor={COLOR_GRAY_2}
-        />
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContainerStyle}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+        >
+          {rank &&
+            rank?.map(item => (
+              <Pressable
+                key={`rank${item?.id}`}
+                style={styles.boxRank}
+              >
+                <Text style={styles.txtValueRank}>{item?.value}</Text>
+                <View style={styles.boxTitleRank}>
+                  <View style={[styles.line1, { height: 50 }]} />
+                  <View style={styles.line1} />
+                  <View style={styles.line1} />
+                  <View style={styles.line1} />
+                  <Text style={styles.txtTitle}>{item?.title}</Text>
+                </View>
+                <Text style={styles.txtTimeLimitPost}>Hiển thị dưới cùng</Text>
+                <View style={styles.boxShowDown}>
+                  <Icon
+                    name="arrow-forward"
+                    size={20}
+                  />
+                  <View>
+                    <View style={styles.line2} />
+                    <View style={styles.line2} />
+                    <View
+                      style={[styles.line2, { backgroundColor: COLOR_BLUE_1 }]}
+                    />
+                  </View>
+                </View>
+                <Text style={styles.txtTimeLimitPost}>
+                  Đăng tối thiểu 7 ngày
+                </Text>
+                <Button title="Từ X,000đ/ngày" />
+              </Pressable>
+            ))}
+        </ScrollView>
         <Text style={styles.selectTimePost}>
           {t('Chọn thời gian đăng tin')}
         </Text>

@@ -1,6 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_ORANGE_6, COLOR_WHITE } from '../../../constants';
+import {
+  COLOR_BLUE_1,
+  COLOR_GRAY_5,
+  COLOR_ORANGE_6,
+  COLOR_WHITE,
+} from '../../../constants';
+
+const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   boxInformation: {
@@ -12,9 +19,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 16,
   },
-
   boxNumberPost: {
     flexDirection: 'row',
+  },
+  boxRank: {
+    borderColor: COLOR_BLUE_1,
+    borderRadius: 5,
+    borderWidth: 2,
+    flex: 1,
+    marginHorizontal: 10,
+    padding: 10,
+    width: width * 0.91,
+  },
+  boxShowDown: {
+    alignItems: 'flex-end',
+    alignSelf: 'center',
+    flexDirection: 'row',
+  },
+  boxTitleRank: {
+    borderColor: COLOR_GRAY_5,
+    borderRadius: 5,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    padding: 8,
   },
   btnContinue: {
     backgroundColor: COLOR_BLUE_1,
@@ -42,9 +69,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
   },
-
   labelStyle: {
     marginVertical: 0,
+  },
+  line1: {
+    backgroundColor: '#F0F0F0',
+    height: 3,
+    marginBottom: 8,
+    width: '100%',
+  },
+  line2: {
+    backgroundColor: '#F0F0F0',
+    height: 3,
+    marginBottom: 8,
+    width: 40,
   },
   postTheEnd: {
     fontSize: 14,
@@ -55,11 +93,33 @@ const styles = StyleSheet.create({
   scroll: {
     paddingBottom: 50,
   },
+
+  scrollViewContainerStyle: {
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   selectTimePost: {
     color: COLOR_BLUE_1,
     fontWeight: 500,
     marginLeft: 10,
     marginVertical: 16,
+  },
+  txtTimeLimitPost: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    lineHeight: 20,
+    marginVertical: 8,
+  },
+  txtTitle: {
+    fontSize: 12,
+    lineHeight: 20,
+  },
+  txtValueRank: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    lineHeight: 22,
+    textAlign: 'center',
   },
 });
 
