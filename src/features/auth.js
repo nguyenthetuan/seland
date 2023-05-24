@@ -19,7 +19,7 @@ export const signup = createAsyncThunk(
   'signup',
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestSignup(input);
+      const data = await requestSignup(input);
       return fulfillWithValue(data?.user?.phone_number);
     } catch (error) {
       return rejectWithValue(error.data?.phone_number?.[0]);
@@ -32,13 +32,11 @@ export const login = createAsyncThunk(
   async (input, { dispatch, fulfillWithValue, getState, rejectWithValue }) => {
     try {
       const { deviceId } = selectAuth(getState());
-
       let deviceUuid = '';
       if (!deviceId) {
         deviceUuid = uuid.v4();
         dispatch(setDeviceId(deviceUuid));
       }
-
       const params = {
         ...input,
         device_id: deviceId || deviceUuid,
@@ -67,7 +65,7 @@ export const generateOtp = createAsyncThunk(
   'generateOtp',
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGenerateOtp(input);
+      const data = await requestGenerateOtp(input);
       return fulfillWithValue(data?.message);
     } catch (error) {
       return rejectWithValue(error?.data?.error);
@@ -79,7 +77,7 @@ export const verifyOtp = createAsyncThunk(
   'verifyOtp',
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestVerifyOtp(input);
+      const data = await requestVerifyOtp(input);
       return fulfillWithValue(data?.data?.is_phone_verified);
     } catch (error) {
       return rejectWithValue(error?.data?.otp?.[0] || error?.data?.error);
@@ -91,7 +89,7 @@ export const forgotPassword = createAsyncThunk(
   'forgotPassword',
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestForgotPassword(input);
+      const data = await requestForgotPassword(input);
       return fulfillWithValue(data?.message);
     } catch (error) {
       return rejectWithValue(error?.data?.error);
@@ -103,8 +101,8 @@ export const changePassword = createAsyncThunk(
   'changePassword',
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await requestChangePassword(input);
-      return fulfillWithValue(response?.message);
+      const data = await requestChangePassword(input);
+      return fulfillWithValue(data?.message);
     } catch (error) {
       return rejectWithValue(error?.data?.error);
     }
