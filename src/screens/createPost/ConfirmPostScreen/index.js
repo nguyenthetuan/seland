@@ -50,29 +50,24 @@ const ConfirmPostScreen = () => {
       ...articleDetails,
     };
     const formData = new FormData();
-    console.log('🚀 ~ file: index.js:48 ~ handleContinue ~ params:', params);
 
-    formData.append('myObject', JSON.stringify(params));
-    // Object.keys(params).forEach((key, value) => {
-    //   if (
-    //     key === 'isPhoto' ||
-    //     key === 'lat_long' ||
-    //     key === 'photo' ||
-    //     key === 'video'
-    //   )
-    //     return;
-    //   if (key === 'photo') {
-    //     // console.log('value', value);
-    //     value.forEach(
-    //       (item, index) => value && formData.append(`images[${index}]`, item)
-    //     );
-    //   }
-    //   return formData.append(key, params[key]);
-    // });
-    // Display the values
-    for (const value of formData.values()) {
-      console.log(value);
-    }
+    Object.keys(params).forEach((key, value) => {
+      if (key === 'isPhoto' || key === 'lat_long') return;
+      // if (key === 'photo' && value?.length) {
+      //   // console.log('value', value);
+      //   return value.forEach(item => formData.append('file[]', item));
+      // }
+
+      if (params[key]) {
+        if (key === 'photo' && value?.length) {
+          value.forEach(
+            (item, index) => value && formData.append(`images[${index}]`, item)
+          );
+        }
+
+        formData.append(key, params[key]);
+      }
+    });
 
     dispatchThunk(dispatch, createRealEstates(formData));
   };

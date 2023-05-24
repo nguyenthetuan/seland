@@ -14,5 +14,5 @@ export const requestGetListRank = () => get(GET_LIST_RANK);
 
 export const requestCreateRealEstates = params =>
   post(CREATE_REAL_ESTATE, params, {
-    'content-type': 'multipart/form-data',
+    'Content-type': 'multipart/form-data',
   });
