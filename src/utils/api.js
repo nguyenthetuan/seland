@@ -74,6 +74,7 @@ const get = async (url, params, customHeaders, responseType) => {
 
 const post = async (url, data, customHeaders) => {
   const headers = getHeaders(customHeaders);
+  console.log('🚀 ~ file: api.js:77 ~ post ~ headers:', headers);
   return api.post(url, { ...data }, { headers });
 };
 

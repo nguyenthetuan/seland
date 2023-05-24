@@ -58,13 +58,14 @@ export const getListRank = createAsyncThunk(
 export const createRealEstates = createAsyncThunk(
   'createRealEstates',
   async (params, { fulfillWithValue, rejectWithValue }) => {
+    console.log('🚀 ~ file: createPosts.js:61 ~ params:', params);
     try {
       const { data } = await requestCreateRealEstates(params);
       console.log('🚀 ~ file: createPosts.js:43 ~ data:', data);
       return fulfillWithValue(data);
     } catch (error) {
       console.log('🚀 ~ file: createPosts.js:45 ~ error:', error);
-      return rejectWithValue('');
+      return rejectWithValue('Loi tao bai dang');
     }
   }
 );
