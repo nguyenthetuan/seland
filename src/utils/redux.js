@@ -1,10 +1,16 @@
 import { Alert } from 'react-native';
 
-export const dispatchThunk = async (dispatch, thunk, callback) => {
+export const dispatchThunk = async (
+  dispatch,
+  thunk,
+  successCallback,
+  errorCallback
+) => {
   try {
     const response = await dispatch(thunk).unwrap();
-    if (callback) callback(response);
+    if (response && successCallback) successCallback(response);
   } catch (error) {
-    Alert.alert(error);
+    if (errorCallback) errorCallback(error);
+    else Alert.alert(error);
   }
 };
