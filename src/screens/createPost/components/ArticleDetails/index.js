@@ -284,6 +284,7 @@ const ArticleDetails = forwardRef((props, ref) => {
         label={t('input.title')}
         labelStyle={styles.inputLabel}
         name="title"
+        required
         renderErrorMessage={false}
       />
       <Input
@@ -292,6 +293,7 @@ const ArticleDetails = forwardRef((props, ref) => {
         labelStyle={styles.inputLabel}
         name="content"
         multiline
+        required
         inputContainerStyle={styles.inputContainerContent}
         renderErrorMessage={false}
       />

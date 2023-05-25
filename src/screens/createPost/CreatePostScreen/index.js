@@ -135,12 +135,12 @@ const CreatePostScreen = () => {
         ref={scrollViewRef}
         contentContainerStyle={styles.scroll}
       >
+        <Text style={styles.youWant}>{t('common.youWant')}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.boxCheck}
         >
-          <Text style={styles.youWant}>{t('common.youWant')}</Text>
           {SaveType.map(item => (
             <Button
               key={`saveType${item?.key}`}

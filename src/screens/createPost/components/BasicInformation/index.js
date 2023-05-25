@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
+import { COLOR_RED_1 } from '../../../../constants';
 import {
   clearDistricts,
   clearWards,
@@ -223,7 +224,10 @@ const BasicInformation = forwardRef((props, ref) => {
 
   return (
     <View>
-      <Text style={styles.youWantCenter}>{t('common.youWant')}</Text>
+      <Text style={styles.youWantCenter}>
+        {t('common.youWant')}
+        <Text style={{ color: COLOR_RED_1 }}> *</Text>
+      </Text>
       <View style={styles.boxType}>
         {demands.map(item => (
           <View
@@ -255,6 +259,7 @@ const BasicInformation = forwardRef((props, ref) => {
           label={t('select.realEstateType')}
           labelStyle={styles.inputLabel}
           name="real_estate_type_id"
+          required
           onSelect={handleSelectRealEstateType}
         />
       </View>
@@ -275,6 +280,7 @@ const BasicInformation = forwardRef((props, ref) => {
           errors={errors?.province}
           labelStyle={styles.inputLabel}
           name="province_id"
+          required
           onSelect={handleSelectProvince}
         />
         <Select
@@ -286,6 +292,7 @@ const BasicInformation = forwardRef((props, ref) => {
           errors={errors?.district}
           labelStyle={styles.inputLabel}
           name="district_id"
+          required
           onSelect={handleSelectDistrict}
         />
       </View>
@@ -299,6 +306,7 @@ const BasicInformation = forwardRef((props, ref) => {
           label={t('select.ward')}
           labelStyle={styles.inputLabel}
           name="ward_id"
+          required
           onSelect={handleSelectWard}
         />
       </View>
@@ -312,6 +320,7 @@ const BasicInformation = forwardRef((props, ref) => {
           label={t('select.nameProject')}
           labelStyle={styles.inputLabel}
           name="project_id"
+          required
           onSelect={handleSelectProject}
         />
       </View>
@@ -320,6 +329,7 @@ const BasicInformation = forwardRef((props, ref) => {
         label={t('input.specificAddress')}
         labelStyle={styles.inputLabel}
         name="address_detail"
+        required
         renderErrorMessage={false}
       />
       <Input
