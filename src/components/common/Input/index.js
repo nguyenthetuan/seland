@@ -5,7 +5,7 @@ import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
-import { COLOR_GRAY_5 } from '../../../constants';
+import { COLOR_GRAY_5, COLOR_RED_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -71,7 +71,7 @@ const Input = ({
           <View style={styles.boxLabel}>
             <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
               {label}
-              {required && ' *'}
+              {required && <Text style={{ color: COLOR_RED_1 }}> *</Text>}
             </Text>
             {rightLabel}
           </View>

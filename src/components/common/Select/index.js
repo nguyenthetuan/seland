@@ -5,7 +5,7 @@ import { useController } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
-import { COLOR_BLACK_1 } from '../../../constants';
+import { COLOR_BLACK_1, COLOR_RED_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -20,6 +20,7 @@ const Select = ({
   buttonStyle,
   labelStyle,
   onSelect,
+  required,
   errors,
   ...props
 }) => {
@@ -47,6 +48,7 @@ const Select = ({
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
+          {required && <Text style={{ color: COLOR_RED_1 }}> *</Text>}
         </Text>
       )}
       <SelectDropdown
@@ -78,6 +80,7 @@ Select.defaultProps = {
   rowStyle: {},
   buttonTextStyle: {},
   buttonStyle: {},
+  required: false,
   labelStyle: {},
   onSelect: () => {},
 };
@@ -91,6 +94,7 @@ Select.propTypes = {
   rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   label: PropTypes.string,
   errors: PropTypes.string,
+  required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onSelect: PropTypes.func,
