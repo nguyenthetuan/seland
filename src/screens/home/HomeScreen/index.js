@@ -38,7 +38,7 @@ const HomeScreen = () => {
     dispatchThunk(dispatch, getListNews());
   }, [dispatch]);
 
-  const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
+  const navigateToListPosts = () => navigate(SCREENS.MAPS);
 
   return (
     <View style={styles.containerScreen}>

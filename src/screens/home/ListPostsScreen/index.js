@@ -15,7 +15,7 @@ import {
 import { dispatchThunk } from '../../../utils';
 import Filter from '../components/FilterModal';
 import HeaderListPosts from '../components/HeaderListPosts';
-import ItemPosts from '../components/ItemPosts';
+import ItemPosts from '../components/ItemRealEstates';
 import styles from './styles';
 
 const type = [

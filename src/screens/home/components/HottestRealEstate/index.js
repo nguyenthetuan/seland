@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
-import ItemHottestRealEstate from '../ItemHottestRealEstate';
+import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
 const mockData = [...Array(4)].map(() => ({
