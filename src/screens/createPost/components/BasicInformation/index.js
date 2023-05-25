@@ -257,17 +257,6 @@ const BasicInformation = forwardRef((props, ref) => {
           name="real_estate_type_id"
           onSelect={handleSelectRealEstateType}
         />
-        <Select
-          buttonStyle={styles.select}
-          control={control}
-          errors={errors?.project}
-          data={projectOptions}
-          defaultButtonText="Please Select"
-          label={t('select.nameProject')}
-          labelStyle={styles.inputLabel}
-          name="project_id"
-          onSelect={handleSelectProject}
-        />
       </View>
       <Input
         control={control}
@@ -311,6 +300,19 @@ const BasicInformation = forwardRef((props, ref) => {
           labelStyle={styles.inputLabel}
           name="ward_id"
           onSelect={handleSelectWard}
+        />
+      </View>
+      <View style={{ paddingHorizontal: 10 }}>
+        <Select
+          buttonStyle={styles.select}
+          control={control}
+          errors={errors?.project}
+          data={projectOptions}
+          defaultButtonText="Please Select"
+          label={t('select.nameProject')}
+          labelStyle={styles.inputLabel}
+          name="project_id"
+          onSelect={handleSelectProject}
         />
       </View>
       <Input

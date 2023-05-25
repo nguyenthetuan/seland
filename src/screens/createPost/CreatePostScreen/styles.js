@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginVertical: 24,
   },
   boxCheck: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
     paddingHorizontal: 10,
