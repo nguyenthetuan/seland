@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,6 +22,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
   const { realEstateInformation, information, unitPrices } =
     useSelector(selectPosts);
   const dispatch = useDispatch();
+  const [average, setAverage] = useState(0);
 
   const {
     control,
@@ -103,6 +105,13 @@ const RealEstateInformation = forwardRef((props, ref) => {
     reset();
   };
 
+  const onBlurPrice = () => {
+    const value = getValues();
+    if (value?.area && value?.price) {
+      setAverage(Number(value?.price) / Number(value?.area));
+    }
+  };
+
   useImperativeHandle(ref, () => ({ handleNext, clearForm }));
 
   return (
@@ -116,6 +125,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           label={t('input.acreage')}
           labelStyle={styles.inputLabel}
           name="area"
+          required
           rightIcon={<Text>m²</Text>}
           renderErrorMessage={false}
         />
@@ -128,9 +138,13 @@ const RealEstateInformation = forwardRef((props, ref) => {
             label={t('input.price')}
             labelStyle={styles.inputLabel}
             name="price"
+            required
+            onBlur={onBlurPrice}
             renderErrorMessage={false}
           />
-          <Text style={styles.m2}>1,000,000/m2</Text>
+          {average > 0 && (
+            <Text style={styles.m2}>{`~ ${average} triệu/m2`}</Text>
+          )}
         </View>
       </View>
       <View style={styles.boxSelectAddress}>
@@ -142,6 +156,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
             defaultButtonText="Please Select"
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
+            required
             name="price_unit"
           />
         </View>
@@ -196,9 +211,9 @@ const RealEstateInformation = forwardRef((props, ref) => {
           inputMode="numeric"
           isNumeric
           inputContainerStyle={styles.inputContainerStyle}
-          label={t('input.width')}
+          label={t('input.length')}
           labelStyle={styles.inputLabel}
-          name="width"
+          name="length"
           renderErrorMessage={false}
           rightIcon={<Text>m</Text>}
         />
@@ -209,12 +224,13 @@ const RealEstateInformation = forwardRef((props, ref) => {
           inputMode="numeric"
           isNumeric
           inputContainerStyle={styles.inputContainerStyle}
-          label={t('input.length')}
+          label={t('input.width')}
           labelStyle={styles.inputLabel}
-          name="length"
+          name="width"
           renderErrorMessage={false}
           rightIcon={<Text>m</Text>}
         />
+
         <Input
           control={control}
           inputMode="numeric"
