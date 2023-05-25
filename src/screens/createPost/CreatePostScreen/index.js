@@ -61,6 +61,7 @@ const CreatePostScreen = () => {
   const handleClosePost = () => {
     dispatch(clearCreatePosts());
     basicInfoRef.current && basicInfoRef.current.clearForm();
+    setTab(0);
     goBack();
   };
 
@@ -75,10 +76,14 @@ const CreatePostScreen = () => {
   const handleContinue = () => {
     switch (tab) {
       case TAB.BASIC_INFORMATION:
-        basicInfoRef.current.handleNext();
         scrollViewRef.current?.scrollTo();
-        setTab(tab + 1);
-        break;
+        const errors = basicInfoRef.current.handleNext();
+        if (errors) {
+          break;
+        } else {
+          setTab(tab + 1);
+          break;
+        }
       case TAB.REAL_ESTATE_INFORMATION:
         realEstateRef.current.handleNext();
         scrollViewRef.current?.scrollTo();

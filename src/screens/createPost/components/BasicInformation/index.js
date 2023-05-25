@@ -44,6 +44,7 @@ const BasicInformation = forwardRef((props, ref) => {
   const { basicInformation, realEstateType, projects, demands } =
     useSelector(selectPosts);
   const [isBuy, setIsBuy] = useState(basicInformation?.demand_id || 1);
+  const [errors, setErrors] = useState();
   const dispatch = useDispatch();
   const { provinces, districts, wards } = useSelector(selectCommon);
 
@@ -115,6 +116,26 @@ const BasicInformation = forwardRef((props, ref) => {
     );
   }, [basicInformation, setValue]);
 
+  const handleSelectRealEstateType = () => {
+    if (errors?.realEstateType) delete errors.realEstateType;
+    setErrors({
+      ...errors,
+    });
+  };
+
+  const handleSelectProject = () => {
+    if (errors?.project) delete errors.project;
+    setErrors({
+      ...errors,
+    });
+  };
+  const handleSelectWard = () => {
+    if (errors?.ward) delete errors.ward;
+    setErrors({
+      ...errors,
+    });
+  };
+
   const handleSelectProvince = selectedItem => {
     setValue('district_id', null);
     setValue('ward_id', null);
@@ -122,6 +143,10 @@ const BasicInformation = forwardRef((props, ref) => {
     const { value } = selectedItem;
 
     if (value) {
+      if (errors?.province) delete errors.province;
+      setErrors({
+        ...errors,
+      });
       fetchDistricts({
         province_code: selectedItem.value,
       });
@@ -137,6 +162,10 @@ const BasicInformation = forwardRef((props, ref) => {
     const { value } = selectedItem;
 
     if (value) {
+      if (errors?.district) delete errors.district;
+      setErrors({
+        ...errors,
+      });
       fetchWards({
         province_code: getValues().province_id,
         district_code: selectedItem.value,
@@ -156,6 +185,25 @@ const BasicInformation = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
+    if (
+      !value.real_estate_type_id ||
+      !value.project_id ||
+      !value.province_id ||
+      !value.district_id ||
+      !value.ward_id
+    ) {
+      setErrors({
+        realEstateType: !value.real_estate_type_id
+          ? 'Vui lòng chọn loại BĐS'
+          : null,
+        project: !value.project_id ? 'Vui lòng chọn dự án' : null,
+        province: !value.province_id ? 'Vui lòng chọn Thành phố' : null,
+        district: !value.district_id ? 'Vui lòng chọn Quận/huyện' : null,
+        ward: !value.ward_id ? 'Vui lòng chọn Phường/xã' : null,
+      });
+      return true;
+    }
+    setErrors();
     dispatchThunk(
       dispatch,
       createBasicInformation({
@@ -163,10 +211,12 @@ const BasicInformation = forwardRef((props, ref) => {
         demand_id: isBuy,
       })
     );
+    return false;
   };
 
   const clearForm = () => {
     reset();
+    setErrors();
   };
 
   useImperativeHandle(ref, () => ({ handleNext, clearForm }));
@@ -199,20 +249,24 @@ const BasicInformation = forwardRef((props, ref) => {
         <Select
           buttonStyle={styles.select}
           control={control}
+          errors={errors?.realEstateType}
           data={realEstateTypeOptions}
           defaultButtonText="Please Select"
           label={t('select.realEstateType')}
           labelStyle={styles.inputLabel}
           name="real_estate_type_id"
+          onSelect={handleSelectRealEstateType}
         />
         <Select
           buttonStyle={styles.select}
           control={control}
+          errors={errors?.project}
           data={projectOptions}
           defaultButtonText="Please Select"
           label={t('select.nameProject')}
           labelStyle={styles.inputLabel}
           name="project_id"
+          onSelect={handleSelectProject}
         />
       </View>
       <Input
@@ -229,6 +283,7 @@ const BasicInformation = forwardRef((props, ref) => {
           data={provinceOptions}
           defaultButtonText="Please Select"
           label={t('select.province')}
+          errors={errors?.province}
           labelStyle={styles.inputLabel}
           name="province_id"
           onSelect={handleSelectProvince}
@@ -239,6 +294,7 @@ const BasicInformation = forwardRef((props, ref) => {
           data={districtOptions}
           defaultButtonText="Please Select"
           label={t('select.district')}
+          errors={errors?.district}
           labelStyle={styles.inputLabel}
           name="district_id"
           onSelect={handleSelectDistrict}
@@ -249,10 +305,12 @@ const BasicInformation = forwardRef((props, ref) => {
           buttonStyle={styles.select1}
           control={control}
           data={wardOptions}
+          errors={errors?.ward}
           defaultButtonText="Please Select"
           label={t('select.ward')}
           labelStyle={styles.inputLabel}
           name="ward_id"
+          onSelect={handleSelectWard}
         />
       </View>
       <Input
