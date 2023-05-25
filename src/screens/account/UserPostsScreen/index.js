@@ -75,7 +75,7 @@ const UserPostsScreen = () => {
   const sortBy = [
     {
       label: 'newest',
-      value: 'createdAt_desc',
+      value: 'createdAt',
     },
     {
       label: 'priceAsc',
@@ -111,11 +111,17 @@ const UserPostsScreen = () => {
     defaultValues: {
       search: '',
       calendar: 'last_week',
-      sort_by: 'createdAt_desc',
+      sort_by: 'createdAt',
     },
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data =>
+    dispatchThunk(
+      dispatch,
+      getListRealEstates({
+        sort_by: data.sort_by,
+      })
+    );
 
   return (
     <>
