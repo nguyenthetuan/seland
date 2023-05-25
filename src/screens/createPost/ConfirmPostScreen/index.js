@@ -7,7 +7,7 @@ import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DateTimePicker, Input, Text } from '../../../components';
-import { COLOR_BLUE_1, COLOR_GRAY_6 } from '../../../constants';
+import { COLOR_BLUE_1 } from '../../../constants';
 import { createRealEstates, getListRank, selectPosts } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ItemConfirm from '../components/ItemConfirm';
@@ -42,7 +42,7 @@ const ConfirmPostScreen = () => {
     refresh();
   }, []);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     // confirmPostRef.current.openPopup();
     const params = {
       ...basicInformation,
@@ -52,22 +52,29 @@ const ConfirmPostScreen = () => {
     const formData = new FormData();
 
     Object.keys(params).forEach((key, value) => {
-      if (key === 'isPhoto' || key === 'lat_long') return;
-      // if (key === 'photo' && value?.length) {
-      //   // console.log('value', value);
-      //   return value.forEach(item => formData.append('file[]', item));
-      // }
+      if (
+        key === 'isPhoto' ||
+        key === 'lat_long' ||
+        key === 'photo' ||
+        key === 'video'
+      )
+        return;
 
       if (params[key]) {
-        if (key === 'photo' && value?.length) {
-          value.forEach(
-            (item, index) => value && formData.append(`images[${index}]`, item)
-          );
-        }
-
         formData.append(key, params[key]);
       }
     });
+
+    // append image to form
+    if (params?.photo?.length) {
+      params?.photo.forEach((item, index) => {
+        formData.append(`images[${index}]`, {
+          uri: item.uri,
+          name: item.fileName,
+          type: item.type,
+        });
+      });
+    }
 
     dispatchThunk(dispatch, createRealEstates(formData));
   };
