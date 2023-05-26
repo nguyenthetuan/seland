@@ -1,69 +1,24 @@
 import { Icon } from '@rneui/themed';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import MapView from 'react-native-maps';
+import { View } from 'react-native';
+import MapView, { MarkerAnimated } from 'react-native-maps';
 
-import { Button, Input, Text } from '../../../components';
-import { COLOR_GRAY_2, COLOR_ORANGE_6, COLOR_WHITE } from '../../../constants';
-
-const { width } = Dimensions.get('screen');
-
-const styles = StyleSheet.create({
-  btnSelectQH: {
-    backgroundColor: COLOR_ORANGE_6,
-    borderWidth: 0,
-    height: 40,
-    width: width * 0.27,
-  },
-  btnSelectType: {
-    backgroundColor: COLOR_ORANGE_6,
-    borderWidth: 0,
-    height: 40,
-  },
-  btnViewNews: {
-    backgroundColor: COLOR_ORANGE_6,
-    borderWidth: 0,
-    height: 40,
-  },
-  inputContainer: {
-    height: 40,
-    width: width * 0.6,
-  },
-  inputSearch: {
-    backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_GRAY_2,
-    borderRadius: 8,
-    borderWidth: 1,
-    fontSize: 16,
-    height: 40,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  map: {
-    borderRadius: 10,
-    height: '100%',
-    width: '100%',
-  },
-});
+import { Button, Input } from '../../../components';
+import { COLOR_BLACK_1, COLOR_ORANGE_6, COLOR_WHITE } from '../../../constants';
+import LandBoundaryAngle from '../components/LandBoundaryAngle';
+import PlotLand from '../components/PlotLand';
+import styles from './styles';
 
 const listButtonMock = [
   {
-    name: 'Khu vực',
+    name: 'Góc ranh',
     key: 1,
   },
   {
-    name: 'Địa điểm',
-    key: 2,
-  },
-  {
-    name: 'Góc ranh',
-    key: 3,
-  },
-  {
     name: 'Tờ thửa',
-    key: 4,
+    key: 2,
   },
 ];
 
@@ -82,13 +37,59 @@ const listQHMock = [
   },
 ];
 
+const listRealEstate = [
+  {
+    lat: 21.0727523,
+    long: 105.9530334,
+    label: '10tr/m2',
+  },
+  {
+    lat: 21.0227523,
+    long: 105.9630334,
+    label: '50tr/m2',
+  },
+  {
+    lat: 21.0327523,
+    long: 105.9930334,
+    label: '20tr/m2',
+  },
+  {
+    lat: 21.0027523,
+    long: 105.9130334,
+    label: '30tr/m2',
+  },
+];
+
 const MapScreen = () => {
   const { t } = useTranslation();
+  const plotLandRef = useRef();
+  const landBoundaryAngleRef = useRef();
+  const [buttonSelect, setButtonSelect] = useState(null);
+  const [buttonSelectQH, setButtonSelectQH] = useState(null);
+
   const { control } = useForm({
     defaultValues: {
       search: '',
     },
   });
+
+  const handlePress = value => {
+    setButtonSelect(value);
+    switch (value) {
+      case 1:
+        landBoundaryAngleRef.current.openLandBoundaryAngle();
+        break;
+      case 2:
+        plotLandRef?.current?.openPlotLand();
+        break;
+      case 0:
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSelectRealEstate = () => {};
 
   return (
     <View>
@@ -101,14 +102,22 @@ const MapScreen = () => {
           longitudeDelta: 0.21,
         }}
         // onRegionChangeComplete={onRegionChangeComplete}
-      />
-      <View style={{ position: 'absolute', top: 40, width: '100%' }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'center',
-          }}
-        >
+      >
+        {listRealEstate.map(item => (
+          <MarkerAnimated
+            key={item?.lat}
+            coordinate={{ latitude: item?.lat, longitude: item?.long }}
+            tracksViewChanges={false}
+            zIndex={0}
+            onPress={handleSelectRealEstate}
+          >
+            {/* <Text>{item?.label}</Text> */}
+            <View style={styles.dotMarker} />
+          </MarkerAnimated>
+        ))}
+      </MapView>
+      <View style={styles.header}>
+        <View style={styles.boxHeaderTop}>
           <Input
             control={control}
             name="search"
@@ -119,48 +128,58 @@ const MapScreen = () => {
           />
           <Button
             title={t('button.viewNewsBDS')}
-            buttonStyle={styles.btnViewNews}
+            buttonStyle={[
+              styles.btnViewNews,
+              buttonSelect === 0 ? { backgroundColor: COLOR_ORANGE_6 } : {},
+            ]}
+            titleStyle={{
+              color: buttonSelect === 0 ? COLOR_WHITE : COLOR_BLACK_1,
+            }}
+            onPress={() => handlePress(0)}
           />
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'center',
-            marginTop: 8,
-            justifyContent: 'space-between',
-            width: '100%',
-            paddingHorizontal: 20,
-          }}
-        >
+        <View style={styles.boxButtonHeader}>
           {listButtonMock.map(item => (
             <Button
               key={item?.key}
               title={item?.name}
-              buttonStyle={styles.btnSelectType}
+              titleStyle={{
+                color: buttonSelect === item?.key ? COLOR_WHITE : COLOR_BLACK_1,
+              }}
+              buttonStyle={[
+                styles.btnSelectType,
+                buttonSelect === item?.key
+                  ? { backgroundColor: COLOR_ORANGE_6 }
+                  : {},
+              ]}
+              onPress={() => handlePress(item?.key)}
             />
           ))}
         </View>
       </View>
-      <View style={{ position: 'absolute', bottom: 30, width: '100%' }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'center',
-            marginTop: 8,
-            justifyContent: 'space-between',
-            width: '100%',
-            paddingHorizontal: 20,
-          }}
-        >
+      <View style={styles.footer}>
+        <View style={styles.boxButtonFooter}>
           {listQHMock.map(item => (
             <Button
               key={`qh${item?.key}`}
               title={item?.name}
-              buttonStyle={styles.btnSelectQH}
+              titleStyle={{
+                color:
+                  buttonSelectQH === item?.key ? COLOR_WHITE : COLOR_BLACK_1,
+              }}
+              buttonStyle={[
+                styles.btnSelectQH,
+                buttonSelectQH === item?.key
+                  ? { backgroundColor: COLOR_ORANGE_6 }
+                  : {},
+              ]}
+              onPress={() => setButtonSelectQH(item?.key)}
             />
           ))}
         </View>
       </View>
+      <PlotLand ref={plotLandRef} />
+      <LandBoundaryAngle ref={landBoundaryAngleRef} />
     </View>
   );
 };
