@@ -141,9 +141,7 @@ const UserPost = ({ item }) => {
       <View style={[styles.priceContainer, styles.row]}>
         <Text style={styles.price}>
           {`${item?.price} ${item?.price_unit_name}`}{' '}
-          <Text style={styles.acreage}>
-            {`${item?.price_per_m} ${t('common.millionPerM2')}`}
-          </Text>
+          <Text style={styles.acreage}>{item?.price_per_m}</Text>
         </Text>
       </View>
       <View style={styles.typeContainer}>
