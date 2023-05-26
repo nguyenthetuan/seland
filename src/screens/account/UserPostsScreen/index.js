@@ -4,7 +4,9 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
+import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import DateRangePicker from 'rn-select-date-range';
 
 import {
   Button,
@@ -25,6 +27,11 @@ const UserPostsScreen = () => {
   const { data: realEstates, loading } = useSelector(selectRealEstates);
   const { t } = useTranslation();
   const [filter, setFilter] = useState(1);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [dateRange, setDateRange] = useState({
+    start_date: '',
+    end_date: '',
+  });
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstates());
@@ -69,6 +76,10 @@ const UserPostsScreen = () => {
     {
       label: 'last30Days',
       value: 'last_30_days',
+    },
+    {
+      label: 'dateRange',
+      value: 'date_range',
     },
   ];
 
@@ -123,6 +134,25 @@ const UserPostsScreen = () => {
       })
     );
 
+  const handleSelectCalendar = selectedItem => {
+    if (selectedItem.value === 'date_range') setModalVisible(true);
+    else handleSubmit(onSubmit);
+  };
+
+  const hideDateRangePicker = () => setModalVisible(false);
+
+  const handleConfirmDateRange = () => {
+    dispatchThunk(dispatch, getListRealEstates(dateRange));
+    hideDateRangePicker();
+  };
+
+  const handleSelectDateRange = selectedDateRange => {
+    setDateRange({
+      start_date: selectedDateRange.firstDate,
+      end_date: selectedDateRange.secondDate,
+    });
+  };
+
   return (
     <>
       <Loading
@@ -131,6 +161,24 @@ const UserPostsScreen = () => {
         textStyle={styles.loadingText}
         visible={loading}
       />
+      <Modal
+        isVisible={modalVisible}
+        onBackButtonPress={hideDateRangePicker}
+        onBackdropPress={hideDateRangePicker}
+      >
+        <View style={styles.dateRangePicker}>
+          <DateRangePicker
+            blockSingleDateSelection
+            clearBtnTitle={t('button.cancel')}
+            confirmBtnTitle={t('button.confirm')}
+            ld="vi"
+            onClear={hideDateRangePicker}
+            onConfirm={handleConfirmDateRange}
+            onSelectDateRange={handleSelectDateRange}
+            responseFormat="YYYY-MM-DD"
+          />
+        </View>
+      </Modal>
       <View style={[styles.flex, styles.whiteBackground]}>
         <Header title={t('header.userPosts')} />
         <FlatList
@@ -167,7 +215,7 @@ const UserPostsScreen = () => {
                   label: t(`select.${item?.label}`),
                 }))}
                 name="calendar"
-                onSelect={handleSubmit(onSubmit)}
+                onSelect={handleSelectCalendar}
                 rowStyle={styles.selectButton}
               />
             </View>

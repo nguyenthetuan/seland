@@ -258,6 +258,7 @@
     "pricePerM2Asc": "Giá /m2 thấp",
     "pricePerM2Desc": "Giá /m2 cao",
     "lastWeek": "1 tuần qua",
-    "last30Days": "30 ngày qua"
+    "last30Days": "30 ngày qua",
+    "dateRange": "Tuỳ chọn"
   }
 }

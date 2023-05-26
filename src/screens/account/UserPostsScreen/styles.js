@@ -3,6 +3,11 @@ import { StyleSheet } from 'react-native';
 import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
 
 const styles = StyleSheet.create({
+  dateRangePicker: {
+    backgroundColor: COLOR_WHITE,
+    borderRadius: 8,
+    padding: 16,
+  },
   filterButton: {
     marginLeft: 8,
   },
