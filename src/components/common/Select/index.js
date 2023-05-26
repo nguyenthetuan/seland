@@ -19,6 +19,7 @@ const Select = ({
   name,
   onSelect,
   rowStyle,
+  containerSelect,
   rowTextStyle,
   ...props
 }) => {
@@ -42,7 +43,7 @@ const Select = ({
   );
 
   return (
-    <View>
+    <View style={containerSelect}>
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
@@ -74,6 +75,7 @@ Select.defaultProps = {
   data: [],
   label: '',
   labelStyle: {},
+  containerSelect: {},
   onSelect: () => {},
   rowStyle: {},
   rowTextStyle: {},
@@ -86,6 +88,7 @@ Select.propTypes = {
   data: PropTypes.array,
   label: PropTypes.string,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  containerSelect: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
   onSelect: PropTypes.func,
   rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
