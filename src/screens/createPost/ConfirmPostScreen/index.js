@@ -52,15 +52,17 @@ const ConfirmPostScreen = () => {
     const formData = new FormData();
 
     Object.keys(params).forEach((key, value) => {
-      if (
-        key === 'isPhoto' ||
-        key === 'lat_long' ||
-        key === 'photo' ||
-        key === 'video'
-      )
-        return;
+      if (key === 'isPhoto' || key === 'photo' || key === 'video') return;
 
       if (params[key]) {
+        if (key === 'lat_long' && params[key]) {
+          const result = params[key].split(',');
+          console.log('🚀 ~ file: index.js:60 ~ Object.keys ~ result:', result);
+          formData.append('latitude', result[0]);
+          formData.append('longitude', result[1]);
+          return;
+        }
+
         formData.append(key, params[key]);
       }
     });
