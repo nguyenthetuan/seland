@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   }),
   labelTab: select => ({
     color: COLOR_BLACK_1,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: select ? 'bold' : 400,
   }),
   line: {

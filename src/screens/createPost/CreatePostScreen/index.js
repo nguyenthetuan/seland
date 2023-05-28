@@ -204,7 +204,7 @@ const CreatePostScreen = () => {
             style={styles.labelTab(tab === TAB.REAL_ESTATE_INFORMATION)}
             onPress={() => handleTab(TAB.REAL_ESTATE_INFORMATION)}
           >
-            Thông tin nhà đất
+            Thông tin bổ sung
           </Text>
           <Text
             style={styles.labelTab(tab === TAB.ARTICLE_DETAILS)}
