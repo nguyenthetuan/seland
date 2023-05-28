@@ -83,6 +83,7 @@ const ArticleDetails = forwardRef((props, ref) => {
   const [typeBroker, setTypeBroker] = React.useState(articleDetails?.type || 1);
   // const [listStoreBDS, setListStoreBDS] = useState(StoreBDS);
   // const [listShareBroker, setListShareBroker] = useState(StoreBDS);
+  const [errors, setErrors] = useState();
 
   const { control, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -136,6 +137,10 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleSelectFile = () => {
     try {
+      if (errors?.photo) delete errors.photo;
+      setErrors({
+        ...errors,
+      });
       launchImageLibrary({
         mediaType: typeUpload.isPhoto ? 'photo' : 'video',
         selectionLimit: typeUpload.isPhoto ? 12 : 1,
@@ -180,6 +185,15 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
+    if (!value.area || !value.price || !value.price_unit) {
+      setErrors({
+        title: !value.title ? 'Vui lòng nhập tiêu đề bài viết' : null,
+        content: !value.content ? 'Vui lòng nhập nội dung' : null,
+        photo: typeUpload?.photo?.length === 0 ? 'Vui lòng chọn ảnh' : null,
+      });
+      return true;
+    }
+    setErrors();
     dispatchThunk(
       dispatch,
       createArticleDetails({
@@ -190,6 +204,20 @@ const ArticleDetails = forwardRef((props, ref) => {
         video: typeUpload.video,
       })
     );
+  };
+
+  const onFocusTitle = () => {
+    if (errors?.title) delete errors.title;
+    setErrors({
+      ...errors,
+    });
+  };
+
+  const onFocusContent = () => {
+    if (errors?.content) delete errors.content;
+    setErrors({
+      ...errors,
+    });
   };
 
   const clearForm = () => {
@@ -278,13 +306,25 @@ const ArticleDetails = forwardRef((props, ref) => {
           </Text>
         </TouchableOpacity>
       )}
-
+      <Text
+        style={{
+          fontSize: 12,
+          color: 'red',
+          marginLeft: 16,
+          marginBottom: 20,
+          marginTop: -16,
+        }}
+      >
+        {errors?.photo}
+      </Text>
       <Input
         control={control}
         label={t('input.title')}
         labelStyle={styles.inputLabel}
         name="title"
         required
+        onFocus={onFocusTitle}
+        errorMessage={errors?.title}
         renderErrorMessage={false}
       />
       <Input
@@ -294,6 +334,8 @@ const ArticleDetails = forwardRef((props, ref) => {
         name="content"
         multiline
         required
+        onFocus={onFocusContent}
+        errorMessage={errors?.content}
         inputContainerStyle={styles.inputContainerContent}
         renderErrorMessage={false}
       />

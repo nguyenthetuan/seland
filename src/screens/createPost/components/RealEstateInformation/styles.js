@@ -7,6 +7,7 @@ import {
   COLOR_GRAY_5,
   COLOR_GRAY_7,
   COLOR_ORANGE_6,
+  COLOR_ORANGE_7,
 } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
@@ -30,6 +31,11 @@ const styles = StyleSheet.create({
     marginTop: 7,
     paddingHorizontal: 10,
     width: '100%',
+  },
+  boxTitle: {
+    backgroundColor: COLOR_ORANGE_7,
+    marginVertical: 10,
+    padding: 10,
   },
   boxType: {
     flexDirection: 'row',
@@ -138,6 +144,10 @@ const styles = StyleSheet.create({
   select1: {
     height: 40,
     width: width * 0.45,
+  },
+  title: {
+    color: COLOR_ORANGE_6,
+    fontWeight: 'bold',
   },
   txtCheck: {
     color: COLOR_BLUE_1,

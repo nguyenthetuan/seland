@@ -27,6 +27,7 @@ export const COLOR_ORANGE_3 = '#d28012';
 export const COLOR_ORANGE_4 = '#ffd8bf';
 export const COLOR_ORANGE_5 = '#fa8c16';
 export const COLOR_ORANGE_6 = '#eda749';
+export const COLOR_ORANGE_7 = '#FFF7E6';
 export const COLOR_RED_1 = '#f5222d';
 export const COLOR_RED_2 = '#cf1322';
 export const COLOR_WHITE = '#fff';

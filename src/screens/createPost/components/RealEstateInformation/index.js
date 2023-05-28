@@ -2,7 +2,6 @@ import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
@@ -23,14 +22,9 @@ const RealEstateInformation = forwardRef((props, ref) => {
     useSelector(selectPosts);
   const dispatch = useDispatch();
   const [average, setAverage] = useState(0);
+  const [errors, setErrors] = useState();
 
-  const {
-    control,
-    getValues,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm({
+  const { control, getValues, reset, setValue } = useForm({
     defaultValues: {
       area: '',
       price: '',
@@ -89,6 +83,15 @@ const RealEstateInformation = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
+    if (!value.area || !value.price || !value.price_unit) {
+      setErrors({
+        area: !value.area ? 'Vui lòng nhập Diện tích' : null,
+        price: !value.price ? 'Vui lòng nhập giá' : null,
+        priceUnit: !value.price_unit ? 'Vui lòng chọn Đơn vị' : null,
+      });
+      return true;
+    }
+    setErrors();
     dispatchThunk(
       dispatch,
       createRealEstateInformation({
@@ -105,7 +108,25 @@ const RealEstateInformation = forwardRef((props, ref) => {
     reset();
   };
 
+  const onFocusAcreage = () => {
+    if (errors?.area) delete errors.area;
+    setErrors({
+      ...errors,
+    });
+  };
+
+  const onFocusPrice = () => {
+    if (errors?.area) delete errors.area;
+    setErrors({
+      ...errors,
+    });
+  };
+
   const onBlurPrice = () => {
+    if (errors?.price) delete errors.price;
+    setErrors({
+      ...errors,
+    });
     const value = getValues();
     if (value?.area && value?.price) {
       setAverage(Number(value?.price) / Number(value?.area));
@@ -116,15 +137,20 @@ const RealEstateInformation = forwardRef((props, ref) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.boxTitle}>
+        <Text style={styles.title}>{t('common.realEstateInformation')}</Text>
+      </View>
       <View style={styles.boxSelectAddress}>
         <Input
           control={control}
           inputMode="numeric"
           isNumeric
+          errorMessage={errors?.area}
           inputContainerStyle={styles.inputContainerStyle}
           label={t('input.acreage')}
           labelStyle={styles.inputLabel}
           name="area"
+          onFocus={onFocusAcreage}
           required
           rightIcon={<Text>m²</Text>}
           renderErrorMessage={false}
@@ -134,11 +160,13 @@ const RealEstateInformation = forwardRef((props, ref) => {
             control={control}
             inputMode="numeric"
             isNumeric
+            errorMessage={errors?.price}
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.price')}
             labelStyle={styles.inputLabel}
             name="price"
             required
+            onFocus={onFocusPrice}
             onBlur={onBlurPrice}
             renderErrorMessage={false}
           />
@@ -153,6 +181,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
             buttonStyle={styles.select1}
             control={control}
             data={unitPricesOptions}
+            errors={errors?.priceUnit}
             defaultButtonText="Please Select"
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
@@ -333,6 +362,12 @@ const RealEstateInformation = forwardRef((props, ref) => {
           </View>
         ))}
       </View>
+      <View style={styles.boxTitle}>
+        <Text style={styles.title}>{t('common.realEstateInformation')}</Text>
+      </View>
+      <Text style={styles.youWant}>{t('Tiện ích lân cận')}</Text>
+      <Text style={styles.youWant}>{t('Nội thất tiện nghi')}</Text>
+      <Text style={styles.youWant}>{t('An ninh')}</Text>
     </View>
   );
 });

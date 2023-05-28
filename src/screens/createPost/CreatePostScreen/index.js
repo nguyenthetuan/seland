@@ -85,14 +85,27 @@ const CreatePostScreen = () => {
           break;
         }
       case TAB.REAL_ESTATE_INFORMATION:
-        realEstateRef.current.handleNext();
+        const errorsRealEstates = realEstateRef.current.handleNext();
+        console.log(
+          '🚀 ~ file: index.js:89 ~ handleContinue ~ errorsRealEstates:',
+          errorsRealEstates
+        );
         scrollViewRef.current?.scrollTo();
-        setTab(tab + 1);
-        break;
+        if (errorsRealEstates) {
+          break;
+        } else {
+          setTab(tab + 1);
+          break;
+        }
       case TAB.ARTICLE_DETAILS:
-        articleDetailRef.current.handleNext();
-        navigate(SCREENS.CONFIRM_POST_SCREEN);
-        break;
+        const errorsArticle = articleDetailRef.current.handleNext();
+        if (errorsArticle) {
+          break;
+        } else {
+          navigate(SCREENS.CONFIRM_POST_SCREEN);
+          setTab(tab + 1);
+          break;
+        }
       default:
         navigate(SCREENS.CONFIRM_POST_SCREEN);
         break;
