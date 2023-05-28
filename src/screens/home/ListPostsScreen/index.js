@@ -15,7 +15,7 @@ import {
 import { dispatchThunk } from '../../../utils';
 import Filter from '../components/FilterModal';
 import HeaderListPosts from '../components/HeaderListPosts';
-import ItemPosts from '../components/ItemRealEstates';
+import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
 const type = [
@@ -77,7 +77,7 @@ const ListPostsScreen = () => {
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           data={listPosts}
-          renderItem={({ item }) => <ItemPosts item={item} />}
+          renderItem={({ item }) => <ItemRealEstates item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}
           ListEmptyComponent={loadingListPost ? null : <NoResults />}
           ListHeaderComponent={

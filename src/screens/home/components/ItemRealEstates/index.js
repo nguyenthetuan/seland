@@ -39,7 +39,7 @@ ItemInfo.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-const ItemPosts = ({ item }) => {
+const ItemRealEstates = ({ item }) => {
   const { t } = useTranslation();
 
   const onPressCall = () => {
@@ -196,12 +196,12 @@ const ItemPosts = ({ item }) => {
   );
 };
 
-ItemPosts.defaultProps = {
+ItemRealEstates.defaultProps = {
   item: {},
 };
 
-ItemPosts.propTypes = {
+ItemRealEstates.propTypes = {
   item: PropTypes.object,
 };
 
-export default ItemPosts;
+export default ItemRealEstates;
