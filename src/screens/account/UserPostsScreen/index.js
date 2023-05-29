@@ -26,7 +26,7 @@ const UserPostsScreen = () => {
   const dispatch = useDispatch();
   const { data: realEstates, loading } = useSelector(selectRealEstates);
   const { t } = useTranslation();
-  const [filter, setFilter] = useState(1);
+  const [status, setStatus] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
   const [dateRange, setDateRange] = useState({
     start_date: '',
@@ -37,7 +37,7 @@ const UserPostsScreen = () => {
     dispatchThunk(dispatch, getListRealEstates());
   }, [dispatch]);
 
-  const filters = [
+  const statuses = [
     {
       label: 'all',
       value: -1,
@@ -183,13 +183,23 @@ const UserPostsScreen = () => {
         <Header title={t('header.userPosts')} />
         <FlatList
           style={styles.postButtons}
-          data={filters}
+          data={statuses}
           horizontal
           renderItem={({ item: { label, value } }) => (
             <Button
               buttonStyle={[styles.marginHorizontal, styles.postButton]}
-              onPress={() => setFilter(value)}
-              outline={value !== filter}
+              onPress={() => {
+                dispatchThunk(
+                  dispatch,
+                  value >= 0
+                    ? getListRealEstates({
+                        status: value,
+                      })
+                    : getListRealEstates()
+                );
+                setStatus(value);
+              }}
+              outline={value !== status}
               title={t(`button.${label}`)}
             />
           )}
