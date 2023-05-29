@@ -17,14 +17,17 @@ import {
   Select,
 } from '../../../components';
 import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
-import { getListRealEstates, selectRealEstates } from '../../../features';
+import {
+  getListRealEstatesUser,
+  selectUserRealEstates,
+} from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
 import styles from './styles';
 
 const UserPostsScreen = () => {
   const dispatch = useDispatch();
-  const { data: realEstates, loading } = useSelector(selectRealEstates);
+  const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +37,7 @@ const UserPostsScreen = () => {
   });
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListRealEstates());
+    dispatchThunk(dispatch, getListRealEstatesUser());
   }, [dispatch]);
 
   const statuses = [
@@ -129,7 +132,7 @@ const UserPostsScreen = () => {
   const onSubmit = data =>
     dispatchThunk(
       dispatch,
-      getListRealEstates({
+      getListRealEstatesUser({
         sort_by: data.sort_by,
       })
     );
@@ -142,7 +145,7 @@ const UserPostsScreen = () => {
   const hideDateRangePicker = () => setModalVisible(false);
 
   const handleConfirmDateRange = () => {
-    dispatchThunk(dispatch, getListRealEstates(dateRange));
+    dispatchThunk(dispatch, getListRealEstatesUser(dateRange));
     hideDateRangePicker();
   };
 
@@ -192,10 +195,10 @@ const UserPostsScreen = () => {
                 dispatchThunk(
                   dispatch,
                   value >= 0
-                    ? getListRealEstates({
+                    ? getListRealEstatesUser({
                         status: value,
                       })
-                    : getListRealEstates()
+                    : getListRealEstatesUser()
                 );
                 setStatus(value);
               }}
@@ -257,7 +260,7 @@ const UserPostsScreen = () => {
           </View>
           <FlatList
             style={[styles.list, styles.marginHorizontal]}
-            data={realEstates}
+            data={userRealEstates}
             keyExtractor={item => item.id}
             renderItem={({ item }) => <UserPost item={item} />}
             ListEmptyComponent={!loading && <NoResults />}

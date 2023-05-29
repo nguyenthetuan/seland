@@ -6,9 +6,9 @@ export const selectUserRealEstates = state => state.userRealEstates;
 
 export const getListRealEstatesUser = createAsyncThunk(
   'getListRealEstatesUser',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+  async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGetListRealEstatesUser();
+      const { data } = await requestGetListRealEstatesUser(params);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
