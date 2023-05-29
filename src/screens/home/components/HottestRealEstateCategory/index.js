@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '../../../../components';
 import { COLOR_BLUE_1 } from '../../../../constants';
 import { selectHome } from '../../../../features';
-import ItemHottestRealEstate from '../ItemHottestRealEstate';
+import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
 const HottestRealEstateCategory = () => {

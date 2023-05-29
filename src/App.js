@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import RootNavigator from './navigation';
 import { persistor, store } from './redux';
-import { Toast, i18n } from './utils';
+import { i18n, Toast } from './utils';
 
 const App = () => (
   <I18nextProvider i18n={i18n}>
