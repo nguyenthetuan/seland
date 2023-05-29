@@ -86,10 +86,6 @@ const CreatePostScreen = () => {
         }
       case TAB.REAL_ESTATE_INFORMATION:
         const errorsRealEstates = realEstateRef.current.handleNext();
-        console.log(
-          '🚀 ~ file: index.js:89 ~ handleContinue ~ errorsRealEstates:',
-          errorsRealEstates
-        );
         scrollViewRef.current?.scrollTo();
         if (errorsRealEstates) {
           break;

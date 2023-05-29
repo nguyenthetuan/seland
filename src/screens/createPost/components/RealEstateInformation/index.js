@@ -363,7 +363,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
         ))}
       </View>
       <View style={styles.boxTitle}>
-        <Text style={styles.title}>{t('common.realEstateInformation')}</Text>
+        <Text style={styles.title}>{t('common.utilsInformation')}</Text>
       </View>
       <Text style={styles.youWant}>{utilities[0]?.value}</Text>
       <View style={{ flexDirection: 'row' }}>

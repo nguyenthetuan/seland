@@ -272,7 +272,10 @@ const BasicInformation = forwardRef((props, ref) => {
       </View>
       {showInfoApartmentBuilding && (
         <View>
-          <View style={styles.boxSelectAddress}>
+          <Text style={styles.label}>{t('common.legalDocuments')}</Text>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
             <Input
               control={control}
               label={t('input.quickAddressEntry')}

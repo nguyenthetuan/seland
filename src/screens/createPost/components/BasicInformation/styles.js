@@ -97,6 +97,10 @@ const styles = StyleSheet.create({
     padding: 0,
     height: 40,
   }),
+  label: {
+    fontWeight: 500,
+    paddingHorizontal: 10,
+  },
   labelTab: select => ({
     color: COLOR_BLACK_1,
     fontWeight: select ? 'bold' : 400,

@@ -197,7 +197,8 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
-    if (!value.area || !value.price || !value.price_unit) {
+    console.log('🚀 ~ file: index.js:200 ~ handleNext ~ value:', value);
+    if (typeUpload?.photo?.length === 0 || !value.title || !value.content) {
       setErrors({
         title: !value.title ? 'Vui lòng nhập tiêu đề bài viết' : null,
         content: !value.content ? 'Vui lòng nhập nội dung' : null,
@@ -273,7 +274,9 @@ const ArticleDetails = forwardRef((props, ref) => {
         <View style={styles.boxFile}>
           {file?.map(item => (
             <View
-              key={`imageUpload${item?.file}`}
+              key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
+                item?.fileName
+              }`}
               style={styles.boxImage}
             >
               {typeUpload.isPhoto ? (
