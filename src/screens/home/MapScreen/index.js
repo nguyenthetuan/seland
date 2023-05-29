@@ -2,10 +2,11 @@ import { Icon } from '@rneui/themed';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import MapView, { MarkerAnimated } from 'react-native-maps';
 
-import { Button, Input } from '../../../components';
+import { IconBoxUp, IconI, IconMaps } from '../../../assets';
+import { Button, Input, Text } from '../../../components';
 import { COLOR_BLACK_1, COLOR_ORANGE_6, COLOR_WHITE } from '../../../constants';
 import LandBoundaryAngle from '../components/LandBoundaryAngle';
 import PlotLand from '../components/PlotLand';
@@ -160,6 +161,29 @@ const MapScreen = () => {
             />
           ))}
         </View>
+      </View>
+      <View style={styles.menuRight}>
+        <Pressable style={[styles.boxBtnMenuRight, styles.btnHot]}>
+          <Text style={styles.txtHot}>HOT</Text>
+        </Pressable>
+        <Pressable style={[styles.boxBtnMenuRight, styles.btnLocation]}>
+          <Icon
+            name="my-location"
+            color={COLOR_WHITE}
+          />
+        </Pressable>
+        <Pressable style={styles.boxBtnMenuRight}>
+          <IconBoxUp />
+        </Pressable>
+        <Pressable style={[styles.boxBtnMenuRight, { paddingBottom: 10 }]}>
+          <IconMaps />
+          <Text style={{ fontSize: 8, position: 'absolute', bottom: -4 }}>
+            100%
+          </Text>
+        </Pressable>
+        <Pressable style={styles.boxBtnMenuRight}>
+          <IconI />
+        </Pressable>
       </View>
       <View style={styles.footer}>
         <View style={styles.boxButtonFooter}>

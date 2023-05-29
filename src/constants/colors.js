@@ -6,6 +6,7 @@ export const COLOR_BLUE_2 = '#096dd9';
 export const COLOR_BLUE_3 = '#40a9ff';
 export const COLOR_BLUE_4 = '#264275';
 export const COLOR_BLUE_5 = '#232536';
+export const COLOR_BLUE_6 = '#1890FF';
 export const COLOR_GRAY_1 = '#666';
 export const COLOR_GRAY_2 = '#d9d9d9';
 export const COLOR_GRAY_3 = '#8c8c8c';
