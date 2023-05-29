@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   buttons: {
-    marginVertical: 16,
+    marginBottom: 16,
   },
   call: {
     backgroundColor: COLOR_GREEN_5,
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   inputs: {
+    marginBottom: -8,
     marginTop: 16,
   },
   item: {

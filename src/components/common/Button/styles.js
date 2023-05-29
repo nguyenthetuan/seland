@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   outline: borderColor => ({
     borderColor,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 1,
   }),
   title: (color, outline) => ({
     color: outline ? color : COLOR_WHITE,

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/themed';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import { useDispatch } from 'react-redux';
 
@@ -40,6 +40,8 @@ const HomeScreen = () => {
 
   const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
 
+  const navigateToMaps = () => navigate(SCREENS.MAPS);
+
   return (
     <View style={styles.containerScreen}>
       <HeaderHome />
@@ -69,9 +71,12 @@ const HomeScreen = () => {
             rightIcon={<Icon name="search" />}
             placeholder={t('input.projectSunriseCity')}
           />
-          <View style={styles.boxLocation}>
+          <Pressable
+            style={styles.boxLocation}
+            onPress={navigateToMaps}
+          >
             <Icon name="my-location" />
-          </View>
+          </Pressable>
         </View>
         <SuggestMenu />
         <Category

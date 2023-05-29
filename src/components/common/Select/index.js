@@ -10,18 +10,19 @@ import Text from '../Text';
 import styles from './styles';
 
 const Select = ({
+  buttonStyle,
+  buttonTextStyle,
   control,
   data,
   label,
-  name,
-  rowStyle,
-  rowTextStyle,
-  buttonTextStyle,
-  buttonStyle,
   labelStyle,
+  name,
   onSelect,
   required,
   errors,
+  rowStyle,
+  containerSelect,
+  rowTextStyle,
   ...props
 }) => {
   const {
@@ -44,7 +45,7 @@ const Select = ({
   );
 
   return (
-    <View>
+    <View style={containerSelect}>
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
@@ -73,6 +74,8 @@ const Select = ({
 };
 
 Select.defaultProps = {
+  buttonStyle: {},
+  buttonTextStyle: {},
   data: [],
   label: '',
   errors: '',
@@ -82,22 +85,26 @@ Select.defaultProps = {
   buttonStyle: {},
   required: false,
   labelStyle: {},
+  containerSelect: {},
   onSelect: () => {},
+  rowStyle: {},
+  rowTextStyle: {},
 };
 
 Select.propTypes = {
+  buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  buttonTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   control: PropTypes.any.isRequired,
   data: PropTypes.array,
-  rowTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  buttonTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   label: PropTypes.string,
   errors: PropTypes.string,
   required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  containerSelect: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onSelect: PropTypes.func,
+  rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  rowTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default Select;

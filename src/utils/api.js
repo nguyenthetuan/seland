@@ -1,62 +1,52 @@
 import axios from 'axios';
+import Toast from 'react-native-simple-toast';
 
 import { BASE_URL } from '../constants';
 import { store } from '../redux';
+import i18n from './i18n';
+
+const { t } = i18n;
 
 export const api = axios.create({
   baseURL: BASE_URL,
+  timeout: 30000,
 });
 
 export const getHeaders = customHeaders => {
   const headers = { ...customHeaders };
+
   const { token } = store.getState().auth;
+
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
+
   return { ...headers };
-};
-
-let isRefreshing = false;
-const refreshSubscribers = [];
-function subscribeTokenRefresh(cb) {
-  refreshSubscribers.push(cb);
-}
-
-const onRefresh = token => {
-  refreshSubscribers.map(cb => cb(token));
 };
 
 const successHandler = response => {
   if (__DEV__) {
     console.log(`Response success API: ${response.config.url}`, response.data);
   }
+
   const { data, status } = response;
+
   if (!data || status !== 200) {
     return {};
   }
+
   return data;
 };
 
 const errorHandler = error => {
+  if (['ERR_NETWORK', 'ECONNABORTED'].includes(error.code)) {
+    return Toast.show(t('error.network'));
+  }
+
   const resData = error.response?.data;
+
   if (__DEV__) {
     console.log(`Response error API:`, resData);
-  }
-  const originalRequest = error.config;
-
-  // check code = UNAUTHORIZED or token expired
-  if (error.response?.status === 201) {
-    if (!isRefreshing) {
-      isRefreshing = true;
-      // xử lý refresh token
-    }
-    const retryOrigReq = new Promise((resolve, reject) => {
-      subscribeTokenRefresh(async token => {
-        originalRequest.headers.Authorization = `Bearer ${token}`;
-        resolve(api.request(originalRequest));
-      });
-    });
-    return retryOrigReq;
   }
 
   throw resData;
@@ -69,6 +59,7 @@ api.interceptors.response.use(
 
 const get = async (url, params, customHeaders, responseType) => {
   const headers = getHeaders(customHeaders);
+
   return api.get(url, { params, headers, responseType });
 };
 

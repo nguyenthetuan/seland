@@ -15,22 +15,52 @@ import {
 import { dispatchThunk } from '../../../utils';
 import Filter from '../components/FilterModal';
 import HeaderListPosts from '../components/HeaderListPosts';
-import ItemPosts from '../components/ItemPosts';
+import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
 const type = [
-  { label: 'Mua', value: '1' },
-  { label: 'Bán', value: '2' },
+  {
+    label: 'Mua',
+    value: '1',
+  },
+  {
+    label: 'Bán',
+    value: '2',
+  },
 ];
 const sortBy = [
-  { label: 'newest', value: 'createdAt_desc' },
-  { label: 'priceAsc', value: 'price_asc' },
-  { label: 'priceDesc', value: 'price_desc' },
-  { label: 'areaAsc', value: 'area_asc' },
-  { label: 'areaDesc', value: 'area_desc' },
-  { label: 'hasVideos', value: 'videos' },
-  { label: 'pricePerM2Asc', value: 'price_per_m_asc' },
-  { label: 'pricePerM2Desc', value: 'price_per_m_desc' },
+  {
+    label: 'newest',
+    value: 'createdAt',
+  },
+  {
+    label: 'priceAsc',
+    value: 'price_asc',
+  },
+  {
+    label: 'priceDesc',
+    value: 'price_desc',
+  },
+  {
+    label: 'areaAsc',
+    value: 'area_asc',
+  },
+  {
+    label: 'areaDesc',
+    value: 'area_desc',
+  },
+  {
+    label: 'hasVideos',
+    value: 'videos',
+  },
+  {
+    label: 'pricePerM2Asc',
+    value: 'price_per_m_asc',
+  },
+  {
+    label: 'pricePerM2Desc',
+    value: 'price_per_m_desc',
+  },
 ];
 
 const ListPostsScreen = () => {
@@ -41,7 +71,6 @@ const ListPostsScreen = () => {
       status: '',
       sort_by: '',
     },
-    // mode: 'onSelect',
   });
   const filterRef = useRef();
   const { t } = useTranslation();
@@ -77,7 +106,7 @@ const ListPostsScreen = () => {
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           data={listPosts}
-          renderItem={({ item }) => <ItemPosts item={item} />}
+          renderItem={({ item }) => <ItemRealEstates item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}
           ListEmptyComponent={loadingListPost ? null : <NoResults />}
           ListHeaderComponent={
@@ -116,7 +145,6 @@ const ListPostsScreen = () => {
                     onSelect={handleSubmit(onSelect)}
                   />
                 </View>
-
                 <View style={styles.boxStatus}>
                   <Select
                     buttonStyle={styles.buttonSelect}

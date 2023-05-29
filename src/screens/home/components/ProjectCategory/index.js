@@ -7,7 +7,7 @@ import { Button } from '../../../../components';
 import { COLOR_BLUE_1 } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
-import ItemHottestRealEstate from '../ItemHottestRealEstate';
+import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
 const ProjectCategory = () => {

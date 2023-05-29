@@ -11,12 +11,13 @@
     "favoritePosts": "Tin yêu thích",
     "contactedPosts": "Tin đã liên hệ",
     "message": "Tin nhắn",
-    "beingShown": "Đang hiển thị",
-    "privatePosts": "Tin riêng tư",
-    "draftPosts": "Tin nháp",
     "pendingReview": "Chờ duyệt",
+    "publicPosts": "Tin công khai",
+    "hidden": "Đã hạ",
     "rejected": "Không duyệt",
     "expired": "Hết hạn",
+    "privatePosts": "Tin riêng tư",
+    "draftPosts": "Tin nháp",
     "logout": "Đăng xuất",
     "myRealEstates": "Kho bất động sản của tôi",
     "customerAppointments": "Lịch hẹn của khách hàng",
@@ -56,6 +57,7 @@
     "createNewPost": "Đăng tin mới",
     "userPosts": "Danh sách tin",
     "filter": "Lọc",
+    "viewNewsBDS": "Xem tin BDS",
     "editPost": "Sửa tin",
     "hidePost": "Hạ tin",
     "actions": "Thao tác"
@@ -144,6 +146,7 @@
     "noResults": "Không tìm thấy kết quả."
   },
   "error": {
+    "network": "Không thể kết nối với máy chủ",
     "phoneNumber": {
       "required": "Vui lòng nhập số điện thoại",
       "format": "Số điện thoại không đúng định dạng",
@@ -225,6 +228,7 @@
     "searchByCodeTitle": "Tìm theo mã tin, tiêu đề",
     "code": "Mã tin",
     "validity": "Thời hạn",
+    "days": "ngày",
     "start_date": "Ngày bắt đầu",
     "end_date": "Ngày kết thúc"
   },
@@ -261,6 +265,7 @@
     "pricePerM2Asc": "Giá /m2 thấp",
     "pricePerM2Desc": "Giá /m2 cao",
     "lastWeek": "1 tuần qua",
-    "last30Days": "30 ngày qua"
+    "last30Days": "30 ngày qua",
+    "dateRange": "Tuỳ chọn"
   }
 }

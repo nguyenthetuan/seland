@@ -15,7 +15,7 @@ import {
   Text,
 } from '../../../components';
 import { generateOtp, selectAuth } from '../../../features';
-import { yup } from '../../../utils';
+import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
 
 const schema = yup.object({
@@ -48,14 +48,15 @@ const ForgotPasswordScreen1 = () => {
     setErrorVisible(false);
   };
 
-  const onSubmit = async data => {
-    try {
-      await dispatch(generateOtp(data)).unwrap();
-      navigate('ForgotPassword2', data);
-    } catch (error) {
-      setErrorVisible(true);
-    }
-  };
+  const showError = () => setErrorVisible(true);
+
+  const onSubmit = data =>
+    dispatchThunk(
+      dispatch,
+      generateOtp(data),
+      () => navigate('ForgotPassword2', data),
+      showError
+    );
 
   const navigateToSignup = () => navigate('Signup', getValues());
 

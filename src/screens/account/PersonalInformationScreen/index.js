@@ -27,6 +27,7 @@ import {
   getCompanyProvinces,
   // getCompanyWards,
   getDistricts,
+  getProfile,
   getProvinces,
   // getWards,
   selectCommon,
@@ -167,6 +168,7 @@ const PersonalInformationScreen = () => {
       // company_district_id,
     } = user;
     await Promise.all([
+      dispatchThunk(dispatch, getProfile()),
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
         fetchDistricts({

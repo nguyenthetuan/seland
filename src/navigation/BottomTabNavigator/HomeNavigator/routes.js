@@ -1,4 +1,5 @@
-import { HomeScreen, ListPostsScreen } from '../../../screens';
+import { SCREENS } from '../../../constants';
+import { HomeScreen, ListPostsScreen, MapScreen } from '../../../screens';
 
 const routes = [
   {
@@ -8,6 +9,10 @@ const routes = [
   {
     component: ListPostsScreen,
     name: 'ListPosts',
+  },
+  {
+    component: MapScreen,
+    name: SCREENS.MAPS,
   },
 ];
 

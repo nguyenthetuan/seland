@@ -141,9 +141,7 @@ const UserPost = ({ item }) => {
       <View style={[styles.priceContainer, styles.row]}>
         <Text style={styles.price}>
           {`${item?.price} ${item?.price_unit_name}`}{' '}
-          <Text style={styles.acreage}>
-            {`${item?.price_per_m} ${t('common.millionPerM2')}`}
-          </Text>
+          <Text style={styles.acreage}>{item?.price_per_m}</Text>
         </Text>
       </View>
       <View style={styles.typeContainer}>
@@ -192,6 +190,7 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.code')}
             name="code"
+            renderErrorMessage={false}
           />
         </View>
         <View style={styles.flex}>
@@ -200,6 +199,8 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.validity')}
             name="validity"
+            renderErrorMessage={false}
+            rightIcon={<Text>{t('input.days')}</Text>}
           />
         </View>
       </View>
@@ -210,6 +211,7 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.start_date')}
             name="start_date"
+            renderErrorMessage={false}
           />
         </View>
         <View style={styles.flex}>
@@ -218,6 +220,7 @@ const UserPost = ({ item }) => {
             disabled
             label={t('input.end_date')}
             name="end_date"
+            renderErrorMessage={false}
           />
         </View>
       </View>

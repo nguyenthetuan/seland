@@ -11,6 +11,7 @@ import styles from './styles';
 
 const Input = ({
   control,
+  inputContainerStyle,
   isEmail,
   isNumeric,
   isPassword,
@@ -21,9 +22,8 @@ const Input = ({
   onFocus,
   placeholder,
   required,
-  showPasswordPolicy,
   rightLabel,
-  inputContainerStyle,
+  showPasswordPolicy,
   ...props
 }) => {
   const {
@@ -59,7 +59,7 @@ const Input = ({
   const togglePasswordVisible = () => setPasswordVisible(pv => !pv);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <RNEInput
         style={styles.text}
         errorStyle={styles.error}
@@ -68,13 +68,15 @@ const Input = ({
           inputContainerStyle,
         ])}
         label={
-          <View style={styles.boxLabel}>
-            <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
-              {label}
-              {required && <Text style={{ color: COLOR_RED_1 }}> *</Text>}
-            </Text>
-            {rightLabel}
-          </View>
+          label && (
+            <View style={styles.boxLabel}>
+              <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
+                {label}
+                {required && ' *'}
+              </Text>
+              {rightLabel}
+            </View>
+          )
         }
         onBlur={handleBlur}
         onChangeText={handleChange}
@@ -102,29 +104,29 @@ const Input = ({
 };
 
 Input.defaultProps = {
+  inputContainerStyle: {},
   isEmail: false,
   isNumeric: false,
   isPassword: false,
   isWebsite: false,
   label: '',
   labelStyle: {},
-  inputContainerStyle: {},
   onFocus: () => {},
-  rightLabel: () => {},
   placeholder: '',
   required: false,
+  rightLabel: '',
   showPasswordPolicy: false,
 };
 
 Input.propTypes = {
   control: PropTypes.any.isRequired,
+  inputContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   isEmail: PropTypes.bool,
   isNumeric: PropTypes.bool,
   isPassword: PropTypes.bool,
   isWebsite: PropTypes.bool,
   label: PropTypes.string,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  inputContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,

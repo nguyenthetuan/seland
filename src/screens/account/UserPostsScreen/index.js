@@ -1,44 +1,61 @@
-import { Icon, Input } from '@rneui/themed';
+import { Icon } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
+import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import DateRangePicker from 'rn-select-date-range';
 
-import { Button, Header, NoResults, Screen, Select } from '../../../components';
-import { COLOR_BLUE_1 } from '../../../constants';
-import { getListRealEstates, selectRealEstates } from '../../../features';
+import {
+  Button,
+  Header,
+  Input,
+  NoResults,
+  Screen,
+  Select,
+} from '../../../components';
+import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
+import {
+  getListRealEstatesUser,
+  selectUserRealEstates,
+} from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
 import styles from './styles';
 
 const UserPostsScreen = () => {
   const dispatch = useDispatch();
-  const { data: realEstates, loading } = useSelector(selectRealEstates);
+  const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
-  const [filter, setFilter] = useState(1);
+  const [status, setStatus] = useState(-1);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [dateRange, setDateRange] = useState({
+    start_date: '',
+    end_date: '',
+  });
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListRealEstates());
+    dispatchThunk(dispatch, getListRealEstatesUser());
   }, [dispatch]);
 
-  const filters = [
+  const statuses = [
     {
-      label: 'beingShown',
-      value: 1,
-    },
-    {
-      label: 'privatePosts',
-      value: 2,
+      label: 'all',
+      value: -1,
     },
     {
       label: 'pendingReview',
       value: 3,
     },
     {
-      label: 'draftPosts',
-      value: 4,
+      label: 'publicPosts',
+      value: 1,
+    },
+    {
+      label: 'hidden',
+      value: 6,
     },
     {
       label: 'rejected',
@@ -46,7 +63,11 @@ const UserPostsScreen = () => {
     },
     {
       label: 'expired',
-      value: 6,
+      value: 0,
+    },
+    {
+      label: 'privatePosts',
+      value: 2,
     },
   ];
 
@@ -59,12 +80,16 @@ const UserPostsScreen = () => {
       label: 'last30Days',
       value: 'last_30_days',
     },
+    {
+      label: 'dateRange',
+      value: 'date_range',
+    },
   ];
 
   const sortBy = [
     {
       label: 'newest',
-      value: 'createdAt_desc',
+      value: 'createdAt',
     },
     {
       label: 'priceAsc',
@@ -100,11 +125,36 @@ const UserPostsScreen = () => {
     defaultValues: {
       search: '',
       calendar: 'last_week',
-      sort_by: 'createdAt_desc',
+      sort_by: 'createdAt',
     },
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data =>
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        sort_by: data.sort_by,
+      })
+    );
+
+  const handleSelectCalendar = selectedItem => {
+    if (selectedItem.value === 'date_range') setModalVisible(true);
+    else handleSubmit(onSubmit);
+  };
+
+  const hideDateRangePicker = () => setModalVisible(false);
+
+  const handleConfirmDateRange = () => {
+    dispatchThunk(dispatch, getListRealEstatesUser(dateRange));
+    hideDateRangePicker();
+  };
+
+  const handleSelectDateRange = selectedDateRange => {
+    setDateRange({
+      start_date: selectedDateRange.firstDate,
+      end_date: selectedDateRange.secondDate,
+    });
+  };
 
   return (
     <>
@@ -114,17 +164,45 @@ const UserPostsScreen = () => {
         textStyle={styles.loadingText}
         visible={loading}
       />
+      <Modal
+        isVisible={modalVisible}
+        onBackButtonPress={hideDateRangePicker}
+        onBackdropPress={hideDateRangePicker}
+      >
+        <View style={styles.dateRangePicker}>
+          <DateRangePicker
+            blockSingleDateSelection
+            clearBtnTitle={t('button.cancel')}
+            confirmBtnTitle={t('button.confirm')}
+            ld="vi"
+            onClear={hideDateRangePicker}
+            onConfirm={handleConfirmDateRange}
+            onSelectDateRange={handleSelectDateRange}
+            responseFormat="YYYY-MM-DD"
+          />
+        </View>
+      </Modal>
       <View style={[styles.flex, styles.whiteBackground]}>
         <Header title={t('header.userPosts')} />
         <FlatList
           style={styles.postButtons}
-          data={filters}
+          data={statuses}
           horizontal
           renderItem={({ item: { label, value } }) => (
             <Button
-              buttonStyle={styles.marginHorizontal}
-              onPress={() => setFilter(value)}
-              outline={value !== filter}
+              buttonStyle={[styles.marginHorizontal, styles.postButton]}
+              onPress={() => {
+                dispatchThunk(
+                  dispatch,
+                  value >= 0
+                    ? getListRealEstatesUser({
+                        status: value,
+                      })
+                    : getListRealEstatesUser()
+                );
+                setStatus(value);
+              }}
+              outline={value !== status}
               title={t(`button.${label}`)}
             />
           )}
@@ -134,7 +212,9 @@ const UserPostsScreen = () => {
           <View style={styles.searchFilter}>
             <View style={styles.search}>
               <Input
+                control={control}
                 inputContainerStyle={styles.searchInput}
+                name="search"
                 placeholder={t('input.searchByCodeTitle')}
                 rightIcon={<Icon name="search" />}
               />
@@ -148,12 +228,19 @@ const UserPostsScreen = () => {
                   label: t(`select.${item?.label}`),
                 }))}
                 name="calendar"
-                onSelect={handleSubmit(onSubmit)}
+                onSelect={handleSelectCalendar}
                 rowStyle={styles.selectButton}
               />
             </View>
             <Button
               buttonStyle={styles.filterButton}
+              icon={
+                <Icon
+                  color={COLOR_WHITE}
+                  name="filter-alt"
+                  size={16}
+                />
+              }
               title={t('button.filter')}
             />
           </View>
@@ -173,7 +260,7 @@ const UserPostsScreen = () => {
           </View>
           <FlatList
             style={[styles.list, styles.marginHorizontal]}
-            data={realEstates}
+            data={userRealEstates}
             keyExtractor={item => item.id}
             renderItem={({ item }) => <UserPost item={item} />}
             ListEmptyComponent={!loading && <NoResults />}

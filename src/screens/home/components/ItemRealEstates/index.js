@@ -39,7 +39,7 @@ ItemInfo.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-const ItemPosts = ({ item }) => {
+const ItemRealEstates = ({ item }) => {
   const { t } = useTranslation();
 
   const onPressCall = () => {
@@ -119,20 +119,9 @@ const ItemPosts = ({ item }) => {
       </View>
       <View style={styles.boxPrice}>
         <Text style={styles.price}>
-          {`${item?.price} ${item?.price_unit_name}`}{' '}
-          <Text style={styles.acreage}>
-            {`${item?.price_per_m} ${t('common.millionPerM2')}`}
-          </Text>
+          {`${item?.price} ${item?.price_unit_name}`} \{' '}
+          <Text style={styles.acreage}>{item?.price_per_m}</Text>
         </Text>
-        {/* TODO: tạm thời comment để check type sau */}
-        {/* <View style={styles.boxMonopoly}>
-          <Text
-            style={styles.monopoly}
-            onPress={() => Alert.alert('ok')}
-          >
-            {t('common.monopoly')}
-          </Text>
-        </View> */}
       </View>
       <View style={styles.boxTypeHouse}>
         <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
@@ -196,12 +185,12 @@ const ItemPosts = ({ item }) => {
   );
 };
 
-ItemPosts.defaultProps = {
+ItemRealEstates.defaultProps = {
   item: {},
 };
 
-ItemPosts.propTypes = {
+ItemRealEstates.propTypes = {
   item: PropTypes.object,
 };
 
-export default ItemPosts;
+export default ItemRealEstates;
