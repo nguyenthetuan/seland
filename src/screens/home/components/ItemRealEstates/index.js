@@ -119,20 +119,9 @@ const ItemRealEstates = ({ item }) => {
       </View>
       <View style={styles.boxPrice}>
         <Text style={styles.price}>
-          {`${item?.price} ${item?.price_unit_name}`}{' '}
-          <Text style={styles.acreage}>
-            {`${item?.price_per_m} ${t('common.millionPerM2')}`}
-          </Text>
+          {`${item?.price} ${item?.price_unit_name}`} \{' '}
+          <Text style={styles.acreage}>{item?.price_per_m}</Text>
         </Text>
-        {/* TODO: tạm thời comment để check type sau */}
-        {/* <View style={styles.boxMonopoly}>
-          <Text
-            style={styles.monopoly}
-            onPress={() => Alert.alert('ok')}
-          >
-            {t('common.monopoly')}
-          </Text>
-        </View> */}
       </View>
       <View style={styles.boxTypeHouse}>
         <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>

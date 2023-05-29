@@ -6,9 +6,9 @@ export const selectRealEstates = state => state.realEstates;
 
 export const getListRealEstates = createAsyncThunk(
   'getListRealEstates',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+  async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestGetListRealEstates();
+      const { data } = await requestGetListRealEstates(params);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
