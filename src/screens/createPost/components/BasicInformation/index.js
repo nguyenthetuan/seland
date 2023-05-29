@@ -46,6 +46,8 @@ const BasicInformation = forwardRef((props, ref) => {
     useSelector(selectPosts);
   const [isBuy, setIsBuy] = useState(basicInformation?.demand_id || 1);
   const [errors, setErrors] = useState();
+  const [showInfoApartmentBuilding, setShowInfoApartmentBuilding] =
+    useState(false);
   const dispatch = useDispatch();
   const { provinces, districts, wards } = useSelector(selectCommon);
 
@@ -117,7 +119,12 @@ const BasicInformation = forwardRef((props, ref) => {
     );
   }, [basicInformation, setValue]);
 
-  const handleSelectRealEstateType = () => {
+  const handleSelectRealEstateType = value => {
+    if (value?.value === 3) {
+      setShowInfoApartmentBuilding(true);
+    } else {
+      setShowInfoApartmentBuilding(false);
+    }
     if (errors?.realEstateType) delete errors.realEstateType;
     setErrors({
       ...errors,
@@ -263,6 +270,35 @@ const BasicInformation = forwardRef((props, ref) => {
           onSelect={handleSelectRealEstateType}
         />
       </View>
+      {showInfoApartmentBuilding && (
+        <View>
+          <View style={styles.boxSelectAddress}>
+            <Input
+              control={control}
+              label={t('input.quickAddressEntry')}
+              labelStyle={styles.inputLabel}
+              inputContainerStyle={styles.info}
+              renderErrorMessage={false}
+              name="1"
+            />
+            <Input
+              control={control}
+              label={t('input.quickAddressEntry')}
+              labelStyle={styles.inputLabel}
+              renderErrorMessage={false}
+              name="2"
+            />
+          </View>
+          <Input
+            control={control}
+            label={t('input.quickAddressEntry')}
+            labelStyle={styles.inputLabel}
+            renderErrorMessage={false}
+            name="3"
+          />
+        </View>
+      )}
+
       <Input
         control={control}
         label={t('input.quickAddressEntry')}
