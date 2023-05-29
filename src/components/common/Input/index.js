@@ -72,7 +72,7 @@ const Input = ({
             <View style={styles.boxLabel}>
               <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
                 {label}
-                {required && ' *'}
+                {required && <Text style={{ color: COLOR_RED_1 }}> *</Text>}
               </Text>
               {rightLabel}
             </View>
