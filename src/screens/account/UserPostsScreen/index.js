@@ -32,8 +32,8 @@ const UserPostsScreen = () => {
   const [status, setStatus] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
   const [dateRange, setDateRange] = useState({
-    start_date: '',
-    end_date: '',
+    dateStart: '',
+    dateEnd: '',
   });
 
   useEffect(() => {
@@ -74,11 +74,11 @@ const UserPostsScreen = () => {
   const calendar = [
     {
       label: 'lastWeek',
-      value: 'last_week',
+      value: 'week',
     },
     {
       label: 'last30Days',
-      value: 'last_30_days',
+      value: 'month',
     },
     {
       label: 'dateRange',
@@ -121,38 +121,42 @@ const UserPostsScreen = () => {
     },
   ];
 
-  const { control, handleSubmit } = useForm({
+  const { control, getValues, handleSubmit } = useForm({
     defaultValues: {
-      search: '',
-      calendar: 'last_week',
+      title: '',
+      date: 'week',
       sort_by: 'createdAt',
     },
   });
 
   const onSubmit = data =>
-    dispatchThunk(
-      dispatch,
-      getListRealEstatesUser({
-        sort_by: data.sort_by,
-      })
-    );
+    dispatchThunk(dispatch, getListRealEstatesUser(data));
 
-  const handleSelectCalendar = selectedItem => {
+  const submit = handleSubmit(onSubmit);
+
+  const handleSelectDate = selectedItem => {
     if (selectedItem.value === 'date_range') setModalVisible(true);
-    else handleSubmit(onSubmit);
+    else submit();
   };
 
   const hideDateRangePicker = () => setModalVisible(false);
 
   const handleConfirmDateRange = () => {
-    dispatchThunk(dispatch, getListRealEstatesUser(dateRange));
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        title: getValues().title,
+        sort_by: getValues().sort_by,
+        dateRange,
+      })
+    );
     hideDateRangePicker();
   };
 
   const handleSelectDateRange = selectedDateRange => {
     setDateRange({
-      start_date: selectedDateRange.firstDate,
-      end_date: selectedDateRange.secondDate,
+      dateStart: selectedDateRange.firstDate,
+      dateEnd: selectedDateRange.secondDate,
     });
   };
 
@@ -196,7 +200,7 @@ const UserPostsScreen = () => {
                   dispatch,
                   value >= 0
                     ? getListRealEstatesUser({
-                        status: value,
+                        'real_estate_type[]': value,
                       })
                     : getListRealEstatesUser()
                 );
@@ -214,7 +218,8 @@ const UserPostsScreen = () => {
               <Input
                 control={control}
                 inputContainerStyle={styles.searchInput}
-                name="search"
+                name="title"
+                onChangeText={submit}
                 placeholder={t('input.searchByCodeTitle')}
                 rightIcon={<Icon name="search" />}
               />
@@ -227,8 +232,8 @@ const UserPostsScreen = () => {
                   ...item,
                   label: t(`select.${item?.label}`),
                 }))}
-                name="calendar"
-                onSelect={handleSelectCalendar}
+                name="date"
+                onSelect={handleSelectDate}
                 rowStyle={styles.selectButton}
               />
             </View>

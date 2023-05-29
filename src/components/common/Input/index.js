@@ -19,6 +19,7 @@ const Input = ({
   label,
   labelStyle,
   name,
+  onChangeText,
   onFocus,
   placeholder,
   required,
@@ -41,6 +42,7 @@ const Input = ({
   };
 
   const handleChange = text => {
+    if (onChangeText) onChangeText(text);
     onChange(
       isNumeric
         ? text.replace(/[^\d]/g, '')
@@ -111,6 +113,7 @@ Input.defaultProps = {
   isWebsite: false,
   label: '',
   labelStyle: {},
+  onChangeText: () => {},
   onFocus: () => {},
   placeholder: '',
   required: false,
@@ -128,6 +131,7 @@ Input.propTypes = {
   label: PropTypes.string,
   labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string.isRequired,
+  onChangeText: PropTypes.func,
   onFocus: PropTypes.func,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
