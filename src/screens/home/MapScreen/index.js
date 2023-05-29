@@ -9,6 +9,7 @@ import { Button, Input } from '../../../components';
 import { COLOR_BLACK_1, COLOR_ORANGE_6, COLOR_WHITE } from '../../../constants';
 import LandBoundaryAngle from '../components/LandBoundaryAngle';
 import PlotLand from '../components/PlotLand';
+import ViewRealEstateMap from '../components/ViewRealEstateMap';
 import styles from './styles';
 
 const listButtonMock = [
@@ -64,6 +65,7 @@ const MapScreen = () => {
   const { t } = useTranslation();
   const plotLandRef = useRef();
   const landBoundaryAngleRef = useRef();
+  const viewRealEstateRef = useRef();
   const [buttonSelect, setButtonSelect] = useState(null);
   const [buttonSelectQH, setButtonSelectQH] = useState(null);
 
@@ -89,7 +91,9 @@ const MapScreen = () => {
     }
   };
 
-  const handleSelectRealEstate = () => {};
+  const handleSelectRealEstate = () => {
+    viewRealEstateRef?.current?.openViewRealEstateMap();
+  };
 
   return (
     <View>
@@ -180,6 +184,7 @@ const MapScreen = () => {
       </View>
       <PlotLand ref={plotLandRef} />
       <LandBoundaryAngle ref={landBoundaryAngleRef} />
+      <ViewRealEstateMap ref={viewRealEstateRef} />
     </View>
   );
 };
