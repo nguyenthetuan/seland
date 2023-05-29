@@ -125,6 +125,7 @@ const slice = createSlice({
     demands: [],
     unitPrices: [],
     rank: [],
+    utilities: {},
     createRealEstate: {
       loading: false,
       data: {},
@@ -175,6 +176,7 @@ const slice = createSlice({
       state.demands = action.payload[0].demands;
       state.information = action.payload[0].information;
       state.unitPrices = action.payload[0].unitPrices;
+      state.utilities = action.payload[0].utilities;
     });
     // get list rank
     builder.addCase(getListRank.pending, state => {

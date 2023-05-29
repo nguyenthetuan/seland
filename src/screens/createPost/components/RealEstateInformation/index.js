@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
@@ -18,7 +18,7 @@ import styles from './styles';
 
 const RealEstateInformation = forwardRef((props, ref) => {
   const { t } = useTranslation();
-  const { realEstateInformation, information, unitPrices } =
+  const { realEstateInformation, information, unitPrices, utilities } =
     useSelector(selectPosts);
   const dispatch = useDispatch();
   const [average, setAverage] = useState(0);
@@ -365,9 +365,39 @@ const RealEstateInformation = forwardRef((props, ref) => {
       <View style={styles.boxTitle}>
         <Text style={styles.title}>{t('common.realEstateInformation')}</Text>
       </View>
-      <Text style={styles.youWant}>{t('Tiện ích lân cận')}</Text>
-      <Text style={styles.youWant}>{t('Nội thất tiện nghi')}</Text>
-      <Text style={styles.youWant}>{t('An ninh')}</Text>
+      <Text style={styles.youWant}>{utilities[0]?.value}</Text>
+      <View style={{ flexDirection: 'row' }}>
+        {utilities[0]?.children?.map(item => (
+          <Pressable
+            key={`itemNearbyAmenities${item?.id}`}
+            style={styles.btnSelectUtils}
+          >
+            <Text>{item?.value}</Text>
+          </Pressable>
+        ))}
+      </View>
+      <Text style={styles.youWant}>{utilities[1]?.value}</Text>
+      <View style={{ flexDirection: 'row' }}>
+        {utilities[1]?.children?.map(item => (
+          <Pressable
+            key={`itemInterior${item?.id}`}
+            style={styles.btnSelectUtils}
+          >
+            <Text>{item?.value}</Text>
+          </Pressable>
+        ))}
+      </View>
+      <Text style={styles.youWant}>{utilities[2]?.value}</Text>
+      <View style={{ flexDirection: 'row' }}>
+        {utilities[2]?.children?.map(item => (
+          <Pressable
+            key={`itemSecurity${item?.id}`}
+            style={styles.btnSelectUtils}
+          >
+            <Text>{item?.value}</Text>
+          </Pressable>
+        ))}
+      </View>
     </View>
   );
 });

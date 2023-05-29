@@ -49,6 +49,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginLeft: 5,
   },
+  btnSelectUtils: {
+    borderColor: COLOR_BLUE_1,
+    borderRadius: 16,
+    borderWidth: 1,
+    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+  },
   btnTypeRealEstate: selected => ({
     borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
     borderWidth: 2,
