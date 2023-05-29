@@ -26,6 +26,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginLeft: 5,
   },
+  boxImage: {
+    borderColor: COLOR_GRAY_5,
+    borderRadius: 5,
+    borderWidth: 1,
+    margin: 5,
+  },
   boxSelectTypeUpload: {
     alignSelf: 'center',
     flexDirection: 'row',

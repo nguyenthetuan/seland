@@ -147,6 +147,9 @@ const ArticleDetails = forwardRef((props, ref) => {
       })
         .then(result => {
           if (result?.assets) {
+            if (!typeUpload.isPhoto) {
+              setValue('urlVideo', '');
+            }
             setTypeUpload({
               ...typeUpload,
               photo: typeUpload.isPhoto
@@ -169,8 +172,17 @@ const ArticleDetails = forwardRef((props, ref) => {
   };
 
   const handleDeleteFile = value => {
-    const newPhoto = typeUpload.photo.filter(item => item?.fileName !== value);
-    setTypeUpload({ ...typeUpload, photo: newPhoto });
+    if (typeUpload.isPhoto) {
+      const newPhoto = typeUpload.photo.filter(
+        item => item?.fileName !== value
+      );
+      setTypeUpload({ ...typeUpload, photo: newPhoto });
+    } else {
+      const newVideo = typeUpload.video.filter(
+        item => item?.fileName !== value
+      );
+      setTypeUpload({ ...typeUpload, video: newVideo });
+    }
   };
 
   const file = useMemo(() => {
@@ -220,12 +232,15 @@ const ArticleDetails = forwardRef((props, ref) => {
     });
   };
 
+  const handleRemoveVideo = e => {
+    if (e.nativeEvent.text) setTypeUpload({ ...typeUpload, video: [] });
+  };
+
   const clearForm = () => {
     reset();
   };
 
   useImperativeHandle(ref, () => ({ handleNext, clearForm }));
-
   return (
     <View>
       <View style={styles.boxSelectTypeUpload}>
@@ -250,6 +265,7 @@ const ArticleDetails = forwardRef((props, ref) => {
           labelStyle={styles.inputLabel}
           name="urlVideo"
           renderErrorMessage={false}
+          onEndEditing={handleRemoveVideo}
         />
       )}
 
@@ -258,12 +274,16 @@ const ArticleDetails = forwardRef((props, ref) => {
           {file?.map(item => (
             <View
               key={`imageUpload${item?.file}`}
-              style={{ margin: 5 }}
+              style={styles.boxImage}
             >
-              <Image
-                source={{ uri: item?.uri }}
-                style={styles.image}
-              />
+              {typeUpload.isPhoto ? (
+                <Image
+                  source={{ uri: item?.uri }}
+                  style={styles.image}
+                />
+              ) : (
+                <View style={[styles.image]} />
+              )}
 
               <Pressable
                 style={styles.btnDeleteImage}
@@ -276,7 +296,7 @@ const ArticleDetails = forwardRef((props, ref) => {
               </Pressable>
             </View>
           ))}
-          {file.length < 11 ? (
+          {typeUpload?.isPhoto && file.length < 11 ? (
             <Pressable
               style={styles.btnAddImage}
               onPress={handleSelectFile}
