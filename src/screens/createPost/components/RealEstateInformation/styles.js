@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   boxSelectAddress: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginHorizontal: 10,
   },
   boxTab: {
     alignItems: 'center',
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
   },
   boxType: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginTop: 8,
     paddingHorizontal: 10,
@@ -47,7 +49,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginLeft: 5,
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
   },
   boxUtils: {
     flexDirection: 'row',
@@ -78,6 +81,7 @@ const styles = StyleSheet.create({
     flex: 0.49,
     marginBottom: 6,
     marginHorizontal: 4,
+    minWidth: width * 0.35,
   },
   checked: {
     position: 'absolute',
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   inputContainerStyle: {
-    width: width * 0.45,
+    width: width * 0.46,
   },
   inputLabel: {
     color: COLOR_GRAY_7,
@@ -118,7 +122,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,
-    width: width * 0.46,
+    width: width * 0.43,
+  },
+  label: {
+    fontWeight: 'bold',
+    marginTop: 16,
+    paddingHorizontal: 10,
   },
   labelTab: select => ({
     color: COLOR_BLACK_1,
@@ -144,7 +153,7 @@ const styles = StyleSheet.create({
     marginTop: -12,
   },
   realEstateType: {
-    fontWeight: 500,
+    fontWeight: 'bold',
     paddingHorizontal: 10,
   },
   scroll: {
@@ -152,10 +161,11 @@ const styles = StyleSheet.create({
   },
   select: {
     height: 40,
+    width: width * 0.95,
   },
   select1: {
     height: 40,
-    width: width * 0.45,
+    width: width * 0.46,
   },
   title: {
     color: COLOR_ORANGE_6,
@@ -171,11 +181,6 @@ const styles = StyleSheet.create({
     color: select ? COLOR_BLUE_1 : COLOR_GRAY_7,
     fontWeight: 'bold',
   }),
-  youWant: {
-    fontWeight: 500,
-    marginTop: 16,
-    paddingHorizontal: 10,
-  },
   youWantCenter: {
     alignItems: 'center',
     fontWeight: 500,

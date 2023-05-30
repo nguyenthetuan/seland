@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Pressable, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
@@ -36,6 +36,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
       price_unit: 1,
       width: '',
       length: '',
+      floor: '',
       lane_width: '',
       bathroom: null,
       bedroom: null,
@@ -221,19 +222,17 @@ const RealEstateInformation = forwardRef((props, ref) => {
         </View>
       </View>
       <View style={styles.boxSelectAddress}>
-        <View style={{ marginLeft: 10 }}>
-          <Select
-            buttonStyle={styles.select1}
-            control={control}
-            data={unitPricesOptions}
-            errors={errors?.priceUnit}
-            defaultButtonText="Please Select"
-            label={t('select.unit')}
-            labelStyle={styles.inputLabel}
-            required
-            name="price_unit"
-          />
-        </View>
+        <Select
+          buttonStyle={styles.select1}
+          control={control}
+          data={unitPricesOptions}
+          errors={errors?.priceUnit}
+          defaultButtonText="Please Select"
+          label={t('select.unit')}
+          labelStyle={styles.inputLabel}
+          required
+          name="price_unit"
+        />
         <Input
           control={control}
           inputMode="numeric"
@@ -256,20 +255,30 @@ const RealEstateInformation = forwardRef((props, ref) => {
           name="bedroom"
           renderErrorMessage={false}
         />
-        <View style={{ marginLeft: 10, flex: 1 }}>
-          <Select
-            buttonStyle={styles.select1}
-            control={control}
-            data={compassOptions}
-            defaultButtonText="Please Select"
-            label={t('select.compass')}
-            labelStyle={styles.inputLabel}
-            name="main_door_direction_id"
-          />
-        </View>
+        <Input
+          control={control}
+          inputMode="numeric"
+          isNumeric
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.floor')}
+          labelStyle={styles.inputLabel}
+          name="floor"
+          renderErrorMessage={false}
+        />
+      </View>
+      <View style={{ marginLeft: 10, flex: 1 }}>
+        <Select
+          buttonStyle={styles.select}
+          control={control}
+          data={compassOptions}
+          defaultButtonText="Please Select"
+          label={t('select.compass')}
+          labelStyle={styles.inputLabel}
+          name="main_door_direction_id"
+        />
       </View>
       <View style={styles.boxSelectAddress}>
-        <View style={{ marginLeft: 10 }}>
+        <View>
           <Select
             buttonStyle={styles.select1}
             control={control}
@@ -341,29 +350,34 @@ const RealEstateInformation = forwardRef((props, ref) => {
           </View>
         ))}
       </View>
-      <Text style={styles.youWant}>{t('common.currentStatusHouse')}</Text>
+      <Text style={styles.label}>{t('common.currentStatusHouse')}</Text>
       <View style={styles.boxType}>
-        {information[3]?.children.map(item => (
-          <View
-            key={`buySell${item.id}`}
-            style={styles.buySell}
-          >
-            <Button
-              buttonStyle={styles.isBuy(item.id === state.houseStatusId)}
-              onPress={() => setState({ ...state, houseStatusId: item.id })}
-              title={item.value}
-              titleStyle={styles.txtType(item.id === state.houseStatusId)}
-              outline
-            />
-            {item?.id === state.houseStatusId && (
-              <View style={styles.checked}>
-                <TickButton />
-              </View>
-            )}
-          </View>
-        ))}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          {information[3]?.children.map(item => (
+            <View
+              key={`buySell${item.id}`}
+              style={styles.buySell}
+            >
+              <Button
+                buttonStyle={styles.isBuy(item.id === state.houseStatusId)}
+                onPress={() => setState({ ...state, houseStatusId: item.id })}
+                title={item.value}
+                titleStyle={styles.txtType(item.id === state.houseStatusId)}
+                outline
+              />
+              {item?.id === state.houseStatusId && (
+                <View style={styles.checked}>
+                  <TickButton />
+                </View>
+              )}
+            </View>
+          ))}
+        </ScrollView>
       </View>
-      <Text style={styles.youWant}>{t('common.usageStatus')}</Text>
+      <Text style={styles.label}>{t('common.usageStatus')}</Text>
       <View style={styles.boxType}>
         {information[4]?.children.map(item => (
           <View
@@ -385,7 +399,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           </View>
         ))}
       </View>
-      <Text style={styles.youWant}>{t('common.location')}</Text>
+      <Text style={styles.label}>{t('common.location')}</Text>
       <View style={styles.boxType}>
         {information[5]?.children.map(item => (
           <View
@@ -410,7 +424,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
       <View style={styles.boxTitle}>
         <Text style={styles.title}>{t('common.utilsInformation')}</Text>
       </View>
-      <Text style={styles.youWant}>{utilities[0]?.value}</Text>
+      <Text style={styles.label}>{utilities[0]?.value}</Text>
       <View style={styles.boxUtils}>
         {utilities[0]?.children?.map(item => (
           <Pressable
@@ -437,7 +451,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           </Pressable>
         ))}
       </View>
-      <Text style={styles.youWant}>{utilities[1]?.value}</Text>
+      <Text style={styles.label}>{utilities[1]?.value}</Text>
       <View style={styles.boxUtils}>
         {utilities[1]?.children?.map(item => (
           <Pressable
@@ -464,7 +478,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           </Pressable>
         ))}
       </View>
-      <Text style={styles.youWant}>{utilities[2]?.value}</Text>
+      <Text style={styles.label}>{utilities[2]?.value}</Text>
       <View style={styles.boxUtils}>
         {utilities[2]?.children?.map(item => (
           <Pressable
@@ -491,7 +505,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           </Pressable>
         ))}
       </View>
-      <Text style={styles.youWant}>{utilities[3]?.value}</Text>
+      <Text style={styles.label}>{utilities[3]?.value}</Text>
       <View style={styles.boxUtils}>
         {utilities[3]?.children?.map(item => (
           <Pressable

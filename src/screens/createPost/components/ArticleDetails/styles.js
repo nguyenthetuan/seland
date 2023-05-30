@@ -71,13 +71,19 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderBottomWidth: value,
   }),
+  containerPrivate: {
+    marginHorizontal: 10,
+  },
   content: {
     color: COLOR_GRAY_1,
     fontSize: 12,
-    marginLeft: 10,
   },
-  iam: {
-    marginLeft: 10,
+  errorPhoto: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 20,
+    marginLeft: 16,
+    marginTop: -16,
   },
   image: {
     borderRadius: 5,
@@ -95,9 +101,14 @@ const styles = StyleSheet.create({
   },
   inputContainerContent: {
     height: 64,
+    marginHorizontal: 10,
+  },
+  inputContainerTitle: {
+    marginHorizontal: 10,
   },
   inputLabel: {
     color: COLOR_GRAY_7,
+    marginLeft: 10,
   },
   itemDate: {
     alignItems: 'center',
@@ -114,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_GRAY_5,
     height: 1,
     marginBottom: 16,
-    width: '90%',
+    width: '95%',
   },
   nameAndPhone: {
     fontWeight: 'bold',
@@ -126,7 +137,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   txtInformationContact: {
-    marginLeft: 10,
     marginTop: 10,
   },
   txtInput: {

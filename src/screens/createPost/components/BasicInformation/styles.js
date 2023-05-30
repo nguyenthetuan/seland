@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   boxSelectAddress: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
   },
   boxTab: {
     alignItems: 'center',
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 16,
-    paddingHorizontal: 10,
   },
   btnYouWant: {
     borderColor: COLOR_BLUE_1,
@@ -61,8 +59,7 @@ const styles = StyleSheet.create({
     top: 4,
   },
   container: {
-    backgroundColor: COLOR_WHITE,
-    flex: 1,
+    marginHorizontal: 10,
   },
   containerMaps: {
     alignSelf: 'center',
@@ -86,6 +83,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 10,
   },
+  inputContainerStyle: {
+    width: width * 0.46,
+  },
   inputLabel: {
     color: COLOR_GRAY_7,
     marginTop: 16,
@@ -97,9 +97,6 @@ const styles = StyleSheet.create({
     padding: 0,
     height: 40,
   }),
-  label: {
-    paddingHorizontal: 10,
-  },
   labelTab: select => ({
     color: COLOR_BLACK_1,
     fontWeight: select ? 'bold' : 400,
@@ -137,7 +134,7 @@ const styles = StyleSheet.create({
   },
   select1: {
     height: 40,
-    width: width * 0.45,
+    width: width * 0.46,
     // padding: 10,
   },
   txtCheck: {
@@ -158,7 +155,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: 500,
     marginTop: 40,
-    paddingHorizontal: 10,
     textAlign: 'center',
   },
 });

@@ -230,7 +230,7 @@ const BasicInformation = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({ handleNext, clearForm }));
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.youWantCenter}>
         {t('common.need')}
         <Text style={{ color: COLOR_RED_1 }}> *</Text>
@@ -256,28 +256,25 @@ const BasicInformation = forwardRef((props, ref) => {
           </View>
         ))}
       </View>
-      <View style={{ paddingHorizontal: 10 }}>
-        <Select
-          buttonStyle={styles.select}
-          control={control}
-          errors={errors?.realEstateType}
-          data={realEstateTypeOptions}
-          defaultButtonText="Please Select"
-          label={t('select.realEstateType')}
-          labelStyle={styles.inputLabel}
-          name="real_estate_type_id"
-          required
-          onSelect={handleSelectRealEstateType}
-        />
-      </View>
+      <Select
+        buttonStyle={styles.select}
+        control={control}
+        errors={errors?.realEstateType}
+        data={realEstateTypeOptions}
+        defaultButtonText="Please Select"
+        label={t('select.realEstateType')}
+        labelStyle={styles.inputLabel}
+        name="real_estate_type_id"
+        required
+        onSelect={handleSelectRealEstateType}
+      />
       {showInfoApartmentBuilding && (
         <View>
-          <Text style={styles.label}>{t('common.locationRealEstate')}</Text>
+          <Text>{t('common.locationRealEstate')}</Text>
           <Input
             control={control}
             label={t('input.apartmentCode')}
             labelStyle={styles.inputLabel}
-            inputContainerStyle={styles.info}
             renderErrorMessage={false}
             name="apartment_code"
           />
@@ -289,6 +286,7 @@ const BasicInformation = forwardRef((props, ref) => {
               isNumeric
               label={t('input.yearBuilt')}
               labelStyle={styles.inputLabel}
+              inputContainerStyle={styles.inputContainerStyle}
               renderErrorMessage={false}
               name="year_built"
             />
@@ -297,6 +295,7 @@ const BasicInformation = forwardRef((props, ref) => {
               isNumeric
               label={t('input.handoverYear')}
               labelStyle={styles.inputLabel}
+              inputContainerStyle={styles.inputContainerStyle}
               renderErrorMessage={false}
               name="handover_year"
             />
@@ -337,31 +336,27 @@ const BasicInformation = forwardRef((props, ref) => {
           onSelect={handleSelectDistrict}
         />
       </View>
-      <View style={styles.boxSelectAddress}>
-        <Select
-          buttonStyle={styles.select1}
-          control={control}
-          data={wardOptions}
-          errors={errors?.ward}
-          defaultButtonText="Please Select"
-          label={t('select.ward')}
-          labelStyle={styles.inputLabel}
-          name="ward_id"
-          required
-          onSelect={handleSelectWard}
-        />
-      </View>
-      <View style={{ paddingHorizontal: 10 }}>
-        <Select
-          buttonStyle={styles.select}
-          control={control}
-          data={projectOptions}
-          defaultButtonText="Please Select"
-          label={t('select.nameProject')}
-          labelStyle={styles.inputLabel}
-          name="project_id"
-        />
-      </View>
+      <Select
+        buttonStyle={styles.select1}
+        control={control}
+        data={wardOptions}
+        errors={errors?.ward}
+        defaultButtonText="Please Select"
+        label={t('select.ward')}
+        labelStyle={styles.inputLabel}
+        name="ward_id"
+        required
+        onSelect={handleSelectWard}
+      />
+      <Select
+        buttonStyle={styles.select}
+        control={control}
+        data={projectOptions}
+        defaultButtonText="Please Select"
+        label={t('select.nameProject')}
+        labelStyle={styles.inputLabel}
+        name="project_id"
+      />
       <Input
         control={control}
         errorMessage={errors?.addressDetail}
