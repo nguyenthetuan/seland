@@ -24,10 +24,18 @@ const RealEstateInformation = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const [average, setAverage] = useState(0);
   const [errors, setErrors] = useState();
-  const [utilitiesId, setUtilitiesId] = useState([]);
-  const [furnitureId, setFurnitureId] = useState([]);
-  const [securityId, setSecurityId] = useState([]);
-  const [roadTypeId, setRoadTypeId] = useState([]);
+  const [utilitiesId, setUtilitiesId] = useState(
+    realEstateInformation?.utilities_id.split(',').map(Number) || []
+  );
+  const [furnitureId, setFurnitureId] = useState(
+    realEstateInformation?.furniture_id.split(',').map(Number) || []
+  );
+  const [securityId, setSecurityId] = useState(
+    realEstateInformation?.security_id.split(',').map(Number) || []
+  );
+  const [roadTypeId, setRoadTypeId] = useState(
+    realEstateInformation?.road_type_id.split(',').map(Number) || []
+  );
 
   const { control, getValues, reset, setValue } = useForm({
     defaultValues: {

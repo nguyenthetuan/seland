@@ -103,6 +103,10 @@ const initialRealEstateInformation = {
   house_status_id: null,
   usage_condition_id: null,
   location_type_id: null,
+  utilities_id: '',
+  furniture_id: '',
+  security_id: '',
+  road_type_id: '',
 };
 
 const initialArticleDetails = {
