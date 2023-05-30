@@ -183,46 +183,42 @@ const UserPost = ({ item }) => {
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>
-      <View style={[styles.inputs, styles.row]}>
-        <View style={styles.flex}>
-          <Input
-            control={control}
-            disabled
-            label={t('input.code')}
-            name="code"
-            renderErrorMessage={false}
-          />
-        </View>
-        <View style={styles.flex}>
-          <Input
-            control={control}
-            disabled
-            label={t('input.validity')}
-            name="validity"
-            renderErrorMessage={false}
-            rightIcon={<Text>{t('input.days')}</Text>}
-          />
-        </View>
+      <View style={styles.inputs}>
+        <Input
+          control={control}
+          disabled
+          label={t('input.code')}
+          name="code"
+          inputContainerStyle={styles.inputContainerStyle}
+          renderErrorMessage={false}
+        />
+        <Input
+          control={control}
+          disabled
+          label={t('input.validity')}
+          name="validity"
+          inputContainerStyle={styles.inputContainerStyle}
+          renderErrorMessage={false}
+          rightIcon={<Text>{t('input.days')}</Text>}
+        />
       </View>
-      <View style={styles.row}>
-        <View style={styles.flex}>
-          <Input
-            control={control}
-            disabled
-            label={t('input.start_date')}
-            name="start_date"
-            renderErrorMessage={false}
-          />
-        </View>
-        <View style={styles.flex}>
-          <Input
-            control={control}
-            disabled
-            label={t('input.end_date')}
-            name="end_date"
-            renderErrorMessage={false}
-          />
-        </View>
+      <View style={styles.inputs}>
+        <Input
+          control={control}
+          disabled
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.start_date')}
+          name="start_date"
+          renderErrorMessage={false}
+        />
+        <Input
+          control={control}
+          disabled
+          inputContainerStyle={styles.inputContainerStyle}
+          label={t('input.end_date')}
+          name="end_date"
+          renderErrorMessage={false}
+        />
       </View>
       <View style={[styles.buttons, styles.row]}>
         <View style={[styles.buttonLeft, styles.flex]}>

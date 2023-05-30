@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   search: {
     flex: 2,
+    marginHorizontal: 10,
   },
   searchFilter: {
     flexDirection: 'row',

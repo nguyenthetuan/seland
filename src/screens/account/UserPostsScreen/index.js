@@ -1,5 +1,6 @@
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
@@ -26,6 +27,9 @@ import { UserPost } from '../components';
 import styles from './styles';
 
 const UserPostsScreen = () => {
+  const route = useRoute();
+  const { goBack, reset } = useNavigation();
+
   const dispatch = useDispatch();
   const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
@@ -121,6 +125,17 @@ const UserPostsScreen = () => {
     },
   ];
 
+  const handleBack = () => {
+    if (route?.params?.type === 'createPost') {
+      reset({
+        index: 0,
+        routes: [{ name: 'AccountNavigator' }],
+      });
+    } else {
+      goBack();
+    }
+  };
+
   const { control, getValues, handleSubmit } = useForm({
     defaultValues: {
       title: '',
@@ -187,7 +202,10 @@ const UserPostsScreen = () => {
         </View>
       </Modal>
       <View style={[styles.flex, styles.whiteBackground]}>
-        <Header title={t('header.userPosts')} />
+        <Header
+          title={t('header.userPosts')}
+          onPress={handleBack}
+        />
         <FlatList
           style={styles.postButtons}
           data={statuses}

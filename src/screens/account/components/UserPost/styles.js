@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 import {
   COLOR_BLACK_1,
@@ -10,6 +10,8 @@ import {
   COLOR_RED_1,
   COLOR_WHITE,
 } from '../../../../constants';
+
+const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   acreage: {
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   buttons: {
-    marginBottom: 16,
+    marginVertical: 16,
   },
   call: {
     backgroundColor: COLOR_GREEN_5,
@@ -57,8 +59,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
   },
-  inputs: {
+  inputContainerStyle: {
     marginBottom: -8,
+    width: width * 0.44,
+  },
+  inputs: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
     marginTop: 16,
   },
   item: {

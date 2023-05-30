@@ -1,5 +1,9 @@
 import { SCREENS } from '../../../constants';
-import { ConfirmPostScreen, CreatePostScreen } from '../../../screens';
+import {
+  ConfirmPostScreen,
+  CreatePostScreen,
+  UserPostsScreen,
+} from '../../../screens';
 
 const routes = [
   {
@@ -9,6 +13,10 @@ const routes = [
   {
     component: ConfirmPostScreen,
     name: SCREENS.CONFIRM_POST_SCREEN,
+  },
+  {
+    component: UserPostsScreen,
+    name: 'UserPosts',
   },
 ];
 
