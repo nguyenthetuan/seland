@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     height: 40,
   }),
   label: {
-    fontWeight: 500,
     paddingHorizontal: 10,
   },
   labelTab: select => ({

@@ -131,8 +131,8 @@ const BasicInformation = forwardRef((props, ref) => {
     });
   };
 
-  const handleSelectProject = () => {
-    if (errors?.project) delete errors.project;
+  const handleOnblurAddress = () => {
+    if (errors?.addressDetail) delete errors.addressDetail;
     setErrors({
       ...errors,
     });
@@ -195,19 +195,19 @@ const BasicInformation = forwardRef((props, ref) => {
     const value = getValues();
     if (
       !value.real_estate_type_id ||
-      !value.project_id ||
       !value.province_id ||
       !value.district_id ||
-      !value.ward_id
+      !value.ward_id ||
+      !value.address_detail
     ) {
       setErrors({
         realEstateType: !value.real_estate_type_id
           ? 'Vui lòng chọn loại BĐS'
           : null,
-        project: !value.project_id ? 'Vui lòng chọn dự án' : null,
         province: !value.province_id ? 'Vui lòng chọn Thành phố' : null,
         district: !value.district_id ? 'Vui lòng chọn Quận/huyện' : null,
         ward: !value.ward_id ? 'Vui lòng chọn Phường/xã' : null,
+        addressDetail: !value.ward_id ? 'Vui nhập địa chỉ' : null,
       });
       return true;
     }
@@ -232,7 +232,7 @@ const BasicInformation = forwardRef((props, ref) => {
   return (
     <View>
       <Text style={styles.youWantCenter}>
-        {t('common.youWant')}
+        {t('common.need')}
         <Text style={{ color: COLOR_RED_1 }}> *</Text>
       </Text>
       <View style={styles.boxType}>
@@ -272,7 +272,7 @@ const BasicInformation = forwardRef((props, ref) => {
       </View>
       {showInfoApartmentBuilding && (
         <View>
-          <Text style={styles.label}>{t('common.legalDocuments')}</Text>
+          <Text style={styles.label}>{t('common.locationRealEstate')}</Text>
           <Input
             control={control}
             label={t('input.apartmentCode')}
@@ -355,22 +355,21 @@ const BasicInformation = forwardRef((props, ref) => {
         <Select
           buttonStyle={styles.select}
           control={control}
-          errors={errors?.project}
           data={projectOptions}
           defaultButtonText="Please Select"
           label={t('select.nameProject')}
           labelStyle={styles.inputLabel}
           name="project_id"
-          required
-          onSelect={handleSelectProject}
         />
       </View>
       <Input
         control={control}
+        errorMessage={errors?.addressDetail}
         label={t('input.specificAddress')}
         labelStyle={styles.inputLabel}
         name="address_detail"
         required
+        onBlur={handleOnblurAddress}
         renderErrorMessage={false}
       />
       <Input
