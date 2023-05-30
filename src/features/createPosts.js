@@ -4,6 +4,7 @@ import {
   requestCreateRealEstates,
   requestGetAllInformation,
   requestGetListRank,
+  requestPostPayment,
 } from '../api';
 
 export const selectPosts = state => state.post;
@@ -61,8 +62,16 @@ export const createRealEstates = createAsyncThunk(
     console.log('🚀 ~ file: createPosts.js:61 ~ params:', params);
     try {
       const { data } = await requestCreateRealEstates(params);
-      console.log('🚀 ~ file: createPosts.js:43 ~ data:', data);
-      return fulfillWithValue(data);
+      if (data) {
+        const paramsPayment = {
+          real_estate_id: data?.real_estate_id,
+          rank_type_id: 1, // tam thoi fake la 1
+        };
+        const response = await requestPostPayment(paramsPayment);
+        console.log('🚀 ~ file: createPosts.js:71 ~ response:', response);
+        return fulfillWithValue(data);
+      }
+      return rejectWithValue('Loi tao bai dang');
     } catch (error) {
       console.log('🚀 ~ file: createPosts.js:45 ~ error:', error);
       return rejectWithValue('Loi tao bai dang');

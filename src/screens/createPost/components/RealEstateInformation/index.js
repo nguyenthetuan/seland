@@ -366,7 +366,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
         <Text style={styles.title}>{t('common.utilsInformation')}</Text>
       </View>
       <Text style={styles.youWant}>{utilities[0]?.value}</Text>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {utilities[0]?.children?.map(item => (
           <Pressable
             key={`itemNearbyAmenities${item?.id}`}
@@ -377,7 +377,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
         ))}
       </View>
       <Text style={styles.youWant}>{utilities[1]?.value}</Text>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {utilities[1]?.children?.map(item => (
           <Pressable
             key={`itemInterior${item?.id}`}

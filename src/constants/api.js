@@ -19,3 +19,4 @@ export const GET_LIST_REAL_ESTATES_USER_ROUTE = '/auth/getListRealEstatesUser';
 export const CREATE_REAL_ESTATE = '/auth/createRealEstate';
 export const GET_ALL_INFORMATION = '/getAllInformation';
 export const GET_LIST_RANK = '/getListRank';
+export const POST_PAYMENT = '/auth/postPayment';
