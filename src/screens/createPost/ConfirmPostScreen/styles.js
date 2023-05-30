@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
   },
   boxNumberPost: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
   },
   boxRank: {
     borderColor: COLOR_BLUE_1,
@@ -68,6 +70,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  inputContainerStyle: {
+    width: width * 0.45,
   },
   labelStyle: {
     marginVertical: 0,

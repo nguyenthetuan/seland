@@ -167,17 +167,15 @@ const ConfirmPostScreen = () => {
             {t('Chọn thời gian đăng tin')}
           </Text>
           <View style={styles.boxNumberPost}>
-            <View style={{ flex: 1 }}>
-              <Input
-                control={control}
-                inputMode="numeric"
-                isNumeric
-                inputContainerStyle={styles.inputContainerStyle}
-                label={t('input.numberDayPost')}
-                name="bedroom"
-              />
-            </View>
-            <View style={{ flex: 1 }}>
+            <Input
+              control={control}
+              inputMode="numeric"
+              isNumeric
+              inputContainerStyle={styles.inputContainerStyle}
+              label={t('input.numberDayPost')}
+              name="bedroom"
+            />
+            <View style={{ flex: 1, marginLeft: 10 }}>
               <DateTimePicker
                 control={control}
                 label="Ngày bắt đầu"
