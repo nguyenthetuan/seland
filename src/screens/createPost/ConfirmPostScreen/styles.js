@@ -93,17 +93,22 @@ const styles = StyleSheet.create({
   scroll: {
     paddingBottom: 50,
   },
-
   scrollViewContainerStyle: {
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   selectTimePost: {
     color: COLOR_BLUE_1,
     fontWeight: 500,
     marginLeft: 10,
     marginVertical: 16,
+  },
+  spinnerTextStyle: {
+    color: COLOR_BLUE_1,
+    fontSize: 16,
+    lineHeight: 24,
   },
   txtTimeLimitPost: {
     fontSize: 12,

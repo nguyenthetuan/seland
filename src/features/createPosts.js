@@ -165,6 +165,10 @@ const slice = createSlice({
     builder.addCase(createRealEstates.fulfilled, (state, action) => {
       state.createRealEstate.loading = false;
       state.createRealEstate.data = action.payload;
+      // xoa data khi tao thanh cong
+      state.basicInformation = initialBasicInformation;
+      state.realEstateInformation = initialRealEstateInformation;
+      state.articleDetails = initialArticleDetails;
       state.createRealEstate.error = '';
     });
     builder.addCase(createRealEstates.rejected, (state, action) => {

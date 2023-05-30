@@ -25,6 +25,7 @@ const ConfirmPostScreen = () => {
     realEstateInformation,
     articleDetails,
     createRealEstate,
+    loading,
   } = useSelector(selectPosts);
 
   const confirmPostRef = useRef();
@@ -92,7 +93,7 @@ const ConfirmPostScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <Loading
-        visible={createRealEstate?.loading}
+        visible={createRealEstate?.loading || loading}
         textContent={t('common.loading')}
         color={COLOR_BLUE_1}
         textStyle={styles.spinnerTextStyle}

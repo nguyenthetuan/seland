@@ -3,12 +3,13 @@ import { Icon } from '@rneui/themed';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import Loading from 'react-native-loading-spinner-overlay';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
 import { COLOR_BLUE_1, SCREENS, YOUR_WANT } from '../../../constants';
-import { clearCreatePosts } from '../../../features';
+import { clearCreatePosts, selectPosts } from '../../../features';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import RealEstateInformation from '../components/RealEstateInformation';
@@ -57,6 +58,7 @@ const CreatePostScreen = () => {
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
   const dispatch = useDispatch();
+  const { loading } = useSelector(selectPosts);
 
   const handleClosePost = () => {
     dispatch(clearCreatePosts());
@@ -128,6 +130,12 @@ const CreatePostScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Loading
+        visible={loading}
+        textContent={t('common.loading')}
+        color={COLOR_BLUE_1}
+        textStyle={styles.spinnerTextStyle}
+      />
       <View style={styles.header}>
         <View style={{ flexDirection: 'row' }}>
           <Icon

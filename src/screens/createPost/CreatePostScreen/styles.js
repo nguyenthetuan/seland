@@ -136,6 +136,11 @@ const styles = StyleSheet.create({
     height: 40,
     width: width * 0.45,
   },
+  spinnerTextStyle: {
+    color: COLOR_BLUE_1,
+    fontSize: 16,
+    lineHeight: 24,
+  },
   txtCheck: {
     color: COLOR_BLUE_1,
     fontSize: 14,
