@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from '@rneui/themed';
-import React, { useEffect, useRef } from 'react';
+import { CheckBox, Icon } from '@rneui/themed';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
+import Toast from 'react-native-simple-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DateTimePicker, Input, Text } from '../../../components';
@@ -27,6 +28,7 @@ const ConfirmPostScreen = () => {
     createRealEstate,
     loading,
   } = useSelector(selectPosts);
+  const [agreeTerms, setAgreeTerms] = useState(false);
 
   const confirmPostRef = useRef();
 
@@ -54,6 +56,10 @@ const ConfirmPostScreen = () => {
   };
 
   const handleContinue = async () => {
+    if (!agreeTerms) {
+      Toast.show('Vui lòng chọn đồng ý với điều khoản sử dụng');
+      return;
+    }
     const params = {
       ...basicInformation,
       ...realEstateInformation,
@@ -89,6 +95,8 @@ const ConfirmPostScreen = () => {
 
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
+
+  const toggleCheck = () => setAgreeTerms(!agreeTerms);
 
   return (
     <View style={{ flex: 1 }}>
@@ -201,6 +209,20 @@ const ConfirmPostScreen = () => {
             <ItemConfirm
               label="Tổng tiền"
               value="500,000 VNĐ"
+            />
+          </View>
+          <View>
+            <CheckBox
+              title={
+                <Text>
+                  Tôi đồng ý với{' '}
+                  <Text style={{ color: COLOR_BLUE_1 }}>
+                    điều khoản sử dụng
+                  </Text>
+                </Text>
+              }
+              checked={agreeTerms}
+              onPress={toggleCheck}
             />
           </View>
           <Button
