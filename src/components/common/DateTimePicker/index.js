@@ -28,7 +28,7 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
