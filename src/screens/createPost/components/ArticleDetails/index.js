@@ -197,8 +197,9 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
-    console.log('🚀 ~ file: index.js:200 ~ handleNext ~ value:', value);
-    if (typeUpload?.photo?.length === 0 || !value.title || !value.content) {
+
+    // todo bỏ check up ảnh typeUpload?.photo?.length === 0 ||
+    if (!value.title || !value.content) {
       setErrors({
         title: !value.title ? 'Vui lòng nhập tiêu đề bài viết' : null,
         content: !value.content ? 'Vui lòng nhập nội dung' : null,
@@ -329,17 +330,7 @@ const ArticleDetails = forwardRef((props, ref) => {
           </Text>
         </TouchableOpacity>
       )}
-      <Text
-        style={{
-          fontSize: 12,
-          color: 'red',
-          marginLeft: 16,
-          marginBottom: 20,
-          marginTop: -16,
-        }}
-      >
-        {errors?.photo}
-      </Text>
+      <Text style={styles.errorPhoto}>{errors?.photo}</Text>
       <Input
         control={control}
         label={t('input.title')}
@@ -347,6 +338,7 @@ const ArticleDetails = forwardRef((props, ref) => {
         name="title"
         required
         onFocus={onFocusTitle}
+        inputContainerStyle={styles.inputContainerTitle}
         errorMessage={errors?.title}
         renderErrorMessage={false}
       />
@@ -363,11 +355,11 @@ const ArticleDetails = forwardRef((props, ref) => {
         renderErrorMessage={false}
       />
       <Category label="Thông tin liên hệ">
-        <Text style={styles.iam}>{t('Hiển thị công khai')}</Text>
+        <Text>{t('Hiển thị công khai')}</Text>
         <Text
           style={styles.nameAndPhone}
         >{`${user?.phone_number} - ${user?.name}`}</Text>
-        <Text style={styles.iam}>{t('Người đăng là')}</Text>
+        <Text>{t('Người đăng là')}</Text>
         <View style={styles.boxCheck}>
           {IAm.map(item => (
             <CheckBox
@@ -383,7 +375,7 @@ const ArticleDetails = forwardRef((props, ref) => {
         {iam === 2 ? (
           <View>
             <View style={styles.line} />
-            <Text style={styles.iam}>{t('Hiển thị riêng tư')}</Text>
+            <Text>{t('Hiển thị riêng tư')}</Text>
             <Text style={styles.content}>
               Đây là thông tin bảo mật của bạn, thông tin này sẽ hiển thị với
               riêng tư bạn, không hiển thị với người xem bài đăng.

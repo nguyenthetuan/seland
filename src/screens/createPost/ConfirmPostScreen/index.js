@@ -48,8 +48,11 @@ const ConfirmPostScreen = () => {
     refresh();
   }, []);
 
+  const createSuccess = () => {
+    confirmPostRef.current.openPopup();
+  };
+
   const handleContinue = async () => {
-    // confirmPostRef.current.openPopup();
     const params = {
       ...basicInformation,
       ...realEstateInformation,
@@ -63,7 +66,6 @@ const ConfirmPostScreen = () => {
       if (params[key]) {
         if (key === 'lat_long' && params[key]) {
           const result = params[key].split(',');
-          console.log('🚀 ~ file: index.js:60 ~ Object.keys ~ result:', result);
           formData.append('latitude', result[0]);
           formData.append('longitude', result[1]);
           return;
@@ -84,7 +86,7 @@ const ConfirmPostScreen = () => {
       });
     }
 
-    dispatchThunk(dispatch, createRealEstates(formData));
+    dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
   return (

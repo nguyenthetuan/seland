@@ -7,6 +7,7 @@ import {
   COLOR_BLUE_1,
   COLOR_GRAY_4,
   COLOR_GRAY_7,
+  SCREENS,
 } from '../../../../constants';
 import ItemConfirm from '../ItemConfirm';
 import styles from './styles';
@@ -15,9 +16,19 @@ const PopupConfirmPost = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
   const { navigate } = useNavigation();
 
-  const openPopup = () => setVisible(true);
+  const openPopup = () => {
+    setVisible(true);
+  };
 
-  const closePopup = () => setVisible(false);
+  const navigateToManagerPost = () => {
+    navigate('UserPosts', { type: 'createPost' });
+    setVisible(false);
+  };
+
+  const navigationPostOther = () => {
+    navigate(SCREENS.CREATE_POST);
+    setVisible(false);
+  };
 
   useImperativeHandle(ref, () => ({ openPopup }));
 
@@ -52,12 +63,12 @@ const PopupConfirmPost = forwardRef((props, ref) => {
               titleStyle={{ color: COLOR_GRAY_7 }}
               title="Quản lý đăng tin"
               outline
-              onPress={closePopup}
+              onPress={navigateToManagerPost}
             />
             <Button
               buttonStyle={[styles.btnPopup, { backgroundColor: COLOR_BLUE_1 }]}
               title="Đăng tin khác"
-              onPress={closePopup}
+              onPress={navigationPostOther}
             />
           </View>
         </View>

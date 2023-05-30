@@ -59,22 +59,18 @@ export const getListRank = createAsyncThunk(
 export const createRealEstates = createAsyncThunk(
   'createRealEstates',
   async (params, { fulfillWithValue, rejectWithValue }) => {
-    console.log('🚀 ~ file: createPosts.js:61 ~ params:', params);
     try {
-      const res = await requestCreateRealEstates(params);
-      console.log('🚀 ~ file: createPosts.js:65 ~ data:', res);
-      if (res) {
-        // const paramsPayment = {
-        //   real_estate_id: data?.real_estate_id,
-        //   rank_type_id: 1, // tam thoi fake la 1
-        // };
-        // const response = await requestPostPayment(paramsPayment);
-        // console.log('🚀 ~ file: createPosts.js:71 ~ response:', response);
-        return fulfillWithValue({});
+      const { data } = await requestCreateRealEstates(params);
+      if (data) {
+        const paramsPayment = {
+          real_estate_id: data?.real_estate_id,
+          rank_type_id: 1, // tam thoi fake la 1
+        };
+        const response = await requestPostPayment(paramsPayment);
+        return fulfillWithValue({ ...response });
       }
       return rejectWithValue('Loi tao bai dang');
     } catch (error) {
-      console.log('🚀 ~ file: createPosts.js:45 ~ error:', error);
       return rejectWithValue('Loi tao bai dang');
     }
   }
