@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8,
-    marginHorizontal: 8,
   },
   addressItem: {
     width: '49%',
@@ -47,6 +46,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_WHITE,
     flex: 1,
   },
+  form: {
+    marginHorizontal: 8,
+  },
   iamButton: selected => ({
     borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
     borderWidth: 2,
@@ -65,7 +67,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 'bold',
-    marginLeft: 8,
     marginVertical: 16,
   },
   labelStyleDate: {
@@ -79,10 +80,6 @@ const styles = StyleSheet.create({
   },
   select: {
     height: 40,
-  },
-  sex: {
-    marginBottom: 8,
-    marginHorizontal: 8,
   },
   taxCode: {
     marginTop: 16,

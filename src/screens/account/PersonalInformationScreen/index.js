@@ -330,19 +330,19 @@ const PersonalInformationScreen = () => {
             </Text>
           </View>
         </Container>
-        <Text style={styles.label}>{t('common.personalInformation')}</Text>
-        <Input
-          autoComplete="name"
-          control={control}
-          disabled={loading}
-          errorMessage={errors.name?.message}
-          label={t('input.name')}
-          labelStyle={styles.inputLabel}
-          name="name"
-          onFocus={() => clearErrors('name')}
-          required
-        />
-        <View style={styles.sex}>
+        <View style={styles.form}>
+          <Text style={styles.label}>{t('common.personalInformation')}</Text>
+          <Input
+            autoComplete="name"
+            control={control}
+            disabled={loading}
+            errorMessage={errors.name?.message}
+            label={t('input.name')}
+            labelStyle={styles.inputLabel}
+            name="name"
+            onFocus={() => clearErrors('name')}
+            required
+          />
           <Select
             buttonStyle={styles.select}
             control={control}
@@ -356,76 +356,75 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="sex"
           />
-        </View>
-        <DateTimePicker
-          labelStyle={styles.labelStyleDate}
-          label="Ngày sinh"
-          control={control}
-          name="birthday"
-        />
-        <Text style={styles.label}>{t('common.contactInformation')}</Text>
-        <Input
-          autoComplete="tel"
-          control={control}
-          disabled
-          errorMessage={errors.phone_number?.message}
-          inputMode="numeric"
-          isNumeric
-          label={t('input.phoneNumber')}
-          labelStyle={styles.inputLabel}
-          name="phone_number"
-          onFocus={() => clearErrors('phone_number')}
-          required
-        />
-        <Input
-          autoComplete="email"
-          control={control}
-          disabled={loading}
-          errorMessage={errors.email?.message}
-          inputMode="email"
-          isEmail
-          label={t('input.email')}
-          labelStyle={styles.inputLabel}
-          name="email"
-          onFocus={() => clearErrors('email')}
-        />
-        <Input
-          control={control}
-          disabled={loading}
-          errorMessage={errors.address?.message}
-          label={t('input.address')}
-          labelStyle={styles.inputLabel}
-          name="address"
-          onFocus={() => clearErrors('address')}
-        />
-        <View style={styles.address}>
-          <View style={styles.addressItem}>
-            <Select
-              buttonStyle={styles.select}
-              control={control}
-              data={provinceOptions}
-              defaultButtonText={t('select.province')}
-              disabled={loading}
-              labelStyle={styles.inputLabel}
-              name="province_id"
-              onSelect={handleSelectProvince}
-            />
-          </View>
-          {/* <View style={styles.addressMiddle}> */}
-          <View style={styles.addressItem}>
-            <Select
-              buttonStyle={styles.select}
-              control={control}
-              data={districtOptions}
-              defaultButtonText={t('select.district')}
-              disabled={loading}
-              labelStyle={styles.inputLabel}
-              name="district_id"
-              // onSelect={handleSelectDistrict}
-            />
-          </View>
-          {/* </View> */}
-          {/* <Select
+          <DateTimePicker
+            labelStyle={styles.labelStyleDate}
+            label="Ngày sinh"
+            control={control}
+            name="birthday"
+          />
+          <Text style={styles.label}>{t('common.contactInformation')}</Text>
+          <Input
+            autoComplete="tel"
+            control={control}
+            disabled
+            errorMessage={errors.phone_number?.message}
+            inputMode="numeric"
+            isNumeric
+            label={t('input.phoneNumber')}
+            labelStyle={styles.inputLabel}
+            name="phone_number"
+            onFocus={() => clearErrors('phone_number')}
+            required
+          />
+          <Input
+            autoComplete="email"
+            control={control}
+            disabled={loading}
+            errorMessage={errors.email?.message}
+            inputMode="email"
+            isEmail
+            label={t('input.email')}
+            labelStyle={styles.inputLabel}
+            name="email"
+            onFocus={() => clearErrors('email')}
+          />
+          <Input
+            control={control}
+            disabled={loading}
+            errorMessage={errors.address?.message}
+            label={t('input.address')}
+            labelStyle={styles.inputLabel}
+            name="address"
+            onFocus={() => clearErrors('address')}
+          />
+          <View style={styles.address}>
+            <View style={styles.addressItem}>
+              <Select
+                buttonStyle={styles.select}
+                control={control}
+                data={provinceOptions}
+                defaultButtonText={t('select.province')}
+                disabled={loading}
+                labelStyle={styles.inputLabel}
+                name="province_id"
+                onSelect={handleSelectProvince}
+              />
+            </View>
+            {/* <View style={styles.addressMiddle}> */}
+            <View style={styles.addressItem}>
+              <Select
+                buttonStyle={styles.select}
+                control={control}
+                data={districtOptions}
+                defaultButtonText={t('select.district')}
+                disabled={loading}
+                labelStyle={styles.inputLabel}
+                name="district_id"
+                // onSelect={handleSelectDistrict}
+              />
+            </View>
+            {/* </View> */}
+            {/* <Select
             buttonStyle={styles.select}
             control={control}
             data={wardOptions}
@@ -434,54 +433,54 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="ward_id"
           /> */}
-        </View>
-        <Text style={styles.label}>{t('common.invoiceInformation')}</Text>
-        <Input
-          control={control}
-          disabled={loading}
-          errorMessage={errors.name_company?.message}
-          label={t('input.companyName')}
-          labelStyle={styles.inputLabel}
-          name="name_company"
-          onFocus={() => clearErrors('name_company')}
-        />
-        <Input
-          control={control}
-          disabled={loading}
-          errorMessage={errors.company_address?.message}
-          label={t('input.address')}
-          labelStyle={styles.inputLabel}
-          name="company_address"
-          onFocus={() => clearErrors('company_address')}
-        />
-        <View style={styles.address}>
-          <View style={styles.addressItem}>
-            <Select
-              buttonStyle={styles.select}
-              control={control}
-              data={companyProvinceOptions}
-              defaultButtonText={t('select.province')}
-              disabled={loading}
-              labelStyle={styles.inputLabel}
-              name="company_province_id"
-              onSelect={handleSelectCompanyProvince}
-            />
           </View>
-          {/* <View style={styles.addressMiddle}> */}
-          <View style={styles.addressItem}>
-            <Select
-              buttonStyle={styles.select}
-              control={control}
-              data={companyDistrictOptions}
-              defaultButtonText={t('select.district')}
-              disabled={loading}
-              labelStyle={styles.inputLabel}
-              name="company_district_id"
-              // onSelect={handleSelectCompanyDistrict}
-            />
-          </View>
-          {/* </View> */}
-          {/* <Select
+          <Text style={styles.label}>{t('common.invoiceInformation')}</Text>
+          <Input
+            control={control}
+            disabled={loading}
+            errorMessage={errors.name_company?.message}
+            label={t('input.companyName')}
+            labelStyle={styles.inputLabel}
+            name="name_company"
+            onFocus={() => clearErrors('name_company')}
+          />
+          <Input
+            control={control}
+            disabled={loading}
+            errorMessage={errors.company_address?.message}
+            label={t('input.address')}
+            labelStyle={styles.inputLabel}
+            name="company_address"
+            onFocus={() => clearErrors('company_address')}
+          />
+          <View style={styles.address}>
+            <View style={styles.addressItem}>
+              <Select
+                buttonStyle={styles.select}
+                control={control}
+                data={companyProvinceOptions}
+                defaultButtonText={t('select.province')}
+                disabled={loading}
+                labelStyle={styles.inputLabel}
+                name="company_province_id"
+                onSelect={handleSelectCompanyProvince}
+              />
+            </View>
+            {/* <View style={styles.addressMiddle}> */}
+            <View style={styles.addressItem}>
+              <Select
+                buttonStyle={styles.select}
+                control={control}
+                data={companyDistrictOptions}
+                defaultButtonText={t('select.district')}
+                disabled={loading}
+                labelStyle={styles.inputLabel}
+                name="company_district_id"
+                // onSelect={handleSelectCompanyDistrict}
+              />
+            </View>
+            {/* </View> */}
+            {/* <Select
             buttonStyle={styles.select}
             control={control}
             data={companyWardOptions}
@@ -490,29 +489,30 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="company_ward_id"
           /> */}
-        </View>
-        <View style={styles.taxCode}>
+          </View>
+          <View style={styles.taxCode}>
+            <Input
+              control={control}
+              disabled={loading}
+              errorMessage={errors.tax_code?.message}
+              inputMode="numeric"
+              label={t('input.taxCode')}
+              labelStyle={styles.inputLabel}
+              name="tax_code"
+              onFocus={() => clearErrors('tax_code')}
+            />
+          </View>
           <Input
             control={control}
             disabled={loading}
-            errorMessage={errors.tax_code?.message}
-            inputMode="numeric"
-            label={t('input.taxCode')}
+            errorMessage={errors.website?.message}
+            isWebsite
+            label={t('input.website')}
             labelStyle={styles.inputLabel}
-            name="tax_code"
-            onFocus={() => clearErrors('tax_code')}
+            name="website"
+            onFocus={() => clearErrors('website')}
           />
         </View>
-        <Input
-          control={control}
-          disabled={loading}
-          errorMessage={errors.website?.message}
-          isWebsite
-          label={t('input.website')}
-          labelStyle={styles.inputLabel}
-          name="website"
-          onFocus={() => clearErrors('website')}
-        />
         <Button
           buttonStyle={styles.button}
           loading={loading}
