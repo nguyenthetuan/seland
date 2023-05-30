@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
+import { COLOR_BLUE_3, COLOR_WHITE } from '../../../../constants';
 import { createRealEstateInformation, selectPosts } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import { formatDataValueId } from '../../CreatePostScreen';
@@ -23,6 +24,10 @@ const RealEstateInformation = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const [average, setAverage] = useState(0);
   const [errors, setErrors] = useState();
+  const [utilitiesId, setUtilitiesId] = useState([]);
+  const [furnitureId, setFurnitureId] = useState([]);
+  const [securityId, setSecurityId] = useState([]);
+  const [roadTypeId, setRoadTypeId] = useState([]);
 
   const { control, getValues, reset, setValue } = useForm({
     defaultValues: {
@@ -100,6 +105,10 @@ const RealEstateInformation = forwardRef((props, ref) => {
         house_status_id: state.houseStatusId,
         usage_condition_id: state.usageConditionId,
         location_type_id: state.location,
+        utilities_id: utilitiesId.toString(),
+        furniture_id: furnitureId.toString(),
+        security_id: securityId.toString(),
+        road_type_id: roadTypeId.toString(),
       })
     );
   };
@@ -130,6 +139,42 @@ const RealEstateInformation = forwardRef((props, ref) => {
     const value = getValues();
     if (value?.area && value?.price) {
       setAverage(Number(value?.price) / Number(value?.area));
+    }
+  };
+
+  const handleSelectUtils = value => {
+    if (utilitiesId.includes(value)) {
+      const array = utilitiesId?.filter(item => item !== value);
+      setUtilitiesId(array);
+    } else {
+      setUtilitiesId([...utilitiesId, value]);
+    }
+  };
+
+  const handleFurniture = value => {
+    if (furnitureId.includes(value)) {
+      const array = furnitureId?.filter(item => item !== value);
+      setFurnitureId(array);
+    } else {
+      setFurnitureId([...furnitureId, value]);
+    }
+  };
+
+  const handleSecurity = value => {
+    if (securityId.includes(value)) {
+      const array = securityId?.filter(item => item !== value);
+      setSecurityId(array);
+    } else {
+      setSecurityId([...securityId, value]);
+    }
+  };
+
+  const handleRoadType = value => {
+    if (roadTypeId.includes(value)) {
+      const array = roadTypeId?.filter(item => item !== value);
+      setRoadTypeId(array);
+    } else {
+      setRoadTypeId([...roadTypeId, value]);
     }
   };
 
@@ -171,7 +216,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
             renderErrorMessage={false}
           />
           {average > 0 && (
-            <Text style={styles.m2}>{`~ ${average} triệu/m2`}</Text>
+            <Text style={styles.m2}>{`~ ${average.toFixed(0)} triệu/m2`}</Text>
           )}
         </View>
       </View>
@@ -366,35 +411,110 @@ const RealEstateInformation = forwardRef((props, ref) => {
         <Text style={styles.title}>{t('common.utilsInformation')}</Text>
       </View>
       <Text style={styles.youWant}>{utilities[0]?.value}</Text>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={styles.boxUtils}>
         {utilities[0]?.children?.map(item => (
           <Pressable
             key={`itemNearbyAmenities${item?.id}`}
-            style={styles.btnSelectUtils}
+            style={[
+              styles.btnSelectUtils,
+              utilitiesId.includes(item?.id)
+                ? { backgroundColor: COLOR_BLUE_3 }
+                : {},
+            ]}
+            onPress={() => handleSelectUtils(item?.id)}
           >
-            <Text>{item?.value}</Text>
+            <Text
+              style={
+                utilitiesId.includes(item?.id)
+                  ? {
+                      color: COLOR_WHITE,
+                    }
+                  : {}
+              }
+            >
+              {item?.value}
+            </Text>
           </Pressable>
         ))}
       </View>
       <Text style={styles.youWant}>{utilities[1]?.value}</Text>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={styles.boxUtils}>
         {utilities[1]?.children?.map(item => (
           <Pressable
-            key={`itemInterior${item?.id}`}
-            style={styles.btnSelectUtils}
+            key={`itemFurniture${item?.id}`}
+            style={[
+              styles.btnSelectUtils,
+              furnitureId.includes(item?.id)
+                ? { backgroundColor: COLOR_BLUE_3 }
+                : {},
+            ]}
+            onPress={() => handleFurniture(item?.id)}
           >
-            <Text>{item?.value}</Text>
+            <Text
+              style={
+                furnitureId.includes(item?.id)
+                  ? {
+                      color: COLOR_WHITE,
+                    }
+                  : {}
+              }
+            >
+              {item?.value}
+            </Text>
           </Pressable>
         ))}
       </View>
       <Text style={styles.youWant}>{utilities[2]?.value}</Text>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.boxUtils}>
         {utilities[2]?.children?.map(item => (
           <Pressable
             key={`itemSecurity${item?.id}`}
-            style={styles.btnSelectUtils}
+            style={[
+              styles.btnSelectUtils,
+              securityId.includes(item?.id)
+                ? { backgroundColor: COLOR_BLUE_3 }
+                : {},
+            ]}
+            onPress={() => handleSecurity(item?.id)}
           >
-            <Text>{item?.value}</Text>
+            <Text
+              style={
+                securityId.includes(item?.id)
+                  ? {
+                      color: COLOR_WHITE,
+                    }
+                  : {}
+              }
+            >
+              {item?.value}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+      <Text style={styles.youWant}>{utilities[2]?.value}</Text>
+      <View style={styles.boxUtils}>
+        {utilities[3]?.children?.map(item => (
+          <Pressable
+            key={`itemRoadType${item?.id}`}
+            style={[
+              styles.btnSelectUtils,
+              roadTypeId.includes(item?.id)
+                ? { backgroundColor: COLOR_BLUE_3 }
+                : {},
+            ]}
+            onPress={() => handleRoadType(item?.id)}
+          >
+            <Text
+              style={
+                roadTypeId.includes(item?.id)
+                  ? {
+                      color: COLOR_WHITE,
+                    }
+                  : {}
+              }
+            >
+              {item?.value}
+            </Text>
           </Pressable>
         ))}
       </View>

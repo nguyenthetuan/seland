@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginLeft: 5,
   },
+  boxUtils: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   btnSelectUtils: {
     borderColor: COLOR_BLUE_1,
     borderRadius: 16,

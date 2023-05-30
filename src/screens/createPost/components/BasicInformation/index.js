@@ -273,32 +273,34 @@ const BasicInformation = forwardRef((props, ref) => {
       {showInfoApartmentBuilding && (
         <View>
           <Text style={styles.label}>{t('common.legalDocuments')}</Text>
+          <Input
+            control={control}
+            label={t('input.apartmentCode')}
+            labelStyle={styles.inputLabel}
+            inputContainerStyle={styles.info}
+            renderErrorMessage={false}
+            name="apartment_code"
+          />
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
             <Input
               control={control}
-              label={t('input.quickAddressEntry')}
+              isNumeric
+              label={t('input.yearBuilt')}
               labelStyle={styles.inputLabel}
-              inputContainerStyle={styles.info}
               renderErrorMessage={false}
-              name="1"
+              name="year_built"
             />
             <Input
               control={control}
-              label={t('input.quickAddressEntry')}
+              isNumeric
+              label={t('input.handoverYear')}
               labelStyle={styles.inputLabel}
               renderErrorMessage={false}
-              name="2"
+              name="handover_year"
             />
           </View>
-          <Input
-            control={control}
-            label={t('input.quickAddressEntry')}
-            labelStyle={styles.inputLabel}
-            renderErrorMessage={false}
-            name="3"
-          />
         </View>
       )}
 
