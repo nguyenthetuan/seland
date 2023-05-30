@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 8,
   },
+  containerInput: {
+    borderBottomWidth: 0,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
   error: {
     color: COLOR_RED_1,
     fontSize: 16,

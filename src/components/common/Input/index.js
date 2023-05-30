@@ -61,10 +61,11 @@ const Input = ({
   const togglePasswordVisible = () => setPasswordVisible(pv => !pv);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <RNEInput
         style={styles.text}
         errorStyle={styles.error}
+        containerStyle={styles.containerInput}
         inputContainerStyle={StyleSheet.flatten([
           styles.input(isFocused),
           inputContainerStyle,
