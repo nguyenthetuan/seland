@@ -491,7 +491,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           </Pressable>
         ))}
       </View>
-      <Text style={styles.youWant}>{utilities[2]?.value}</Text>
+      <Text style={styles.youWant}>{utilities[3]?.value}</Text>
       <View style={styles.boxUtils}>
         {utilities[3]?.children?.map(item => (
           <Pressable
