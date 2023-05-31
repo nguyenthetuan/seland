@@ -213,8 +213,8 @@ const ConfirmPostScreen = () => {
         </ScrollView>
         <PopupConfirmPost
           ref={confirmCancelPaymentRef}
-          onPressPostOther={handleConfirm}
-          onPressManagePost={handleCancel}
+          onPressButtonRight={handleConfirm}
+          onPressButtonLeft={handleCancel}
           titleButtonLeft="Huỷ"
           titleButtonRight="Xác nhận"
           label="Huỷ thanh toán!"
@@ -222,8 +222,8 @@ const ConfirmPostScreen = () => {
         />
         <PopupConfirmPost
           ref={confirmPaymentSuccessRef}
-          onPressPostOther={handlePostOther}
-          onPressManagePost={handleManagePost}
+          onPressButtonRight={handlePostOther}
+          onPressButtonLeft={handleManagePost}
           titleButtonLeft="Quản lý đăng tin"
           titleButtonRight="Đăng tin khác"
           label="Tin đăng đã được ghi nhận!"

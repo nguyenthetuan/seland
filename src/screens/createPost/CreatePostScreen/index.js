@@ -320,8 +320,8 @@ const CreatePostScreen = () => {
       </ScrollView>
       <PopupConfirmPost
         ref={confirmPostRef}
-        onPressPostOther={handlePostOther}
-        onPressManagePost={handleManagePost}
+        onPressButtonRight={handlePostOther}
+        onPressButtonLeft={handleManagePost}
         titleButtonLeft="Quản lý đăng tin"
         titleButtonRight="Đăng tin khác"
         label={t('common.saving').replace(

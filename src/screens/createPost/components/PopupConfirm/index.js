@@ -13,8 +13,8 @@ import styles from './styles';
 const PopupConfirmPost = forwardRef(
   (
     {
-      onPressManagePost,
-      onPressPostOther,
+      onPressButtonLeft,
+      onPressButtonRight,
       label,
       description,
       content,
@@ -31,14 +31,14 @@ const PopupConfirmPost = forwardRef(
 
     useImperativeHandle(ref, () => ({ openPopup }));
 
-    const handlePostOther = () => {
+    const handleButtonLeft = () => {
       setVisible(false);
-      onPressPostOther();
+      onPressButtonRight();
     };
 
-    const handleManagePost = () => {
+    const handleButtonRight = () => {
       setVisible(false);
-      onPressManagePost();
+      onPressButtonLeft();
     };
 
     return (
@@ -58,7 +58,7 @@ const PopupConfirmPost = forwardRef(
                 titleStyle={{ color: COLOR_GRAY_7 }}
                 title={titleButtonLeft}
                 outline
-                onPress={handleManagePost}
+                onPress={handleButtonLeft}
               />
               <Button
                 buttonStyle={[
@@ -66,7 +66,7 @@ const PopupConfirmPost = forwardRef(
                   { backgroundColor: COLOR_BLUE_1 },
                 ]}
                 title={titleButtonRight}
-                onPress={handlePostOther}
+                onPress={handleButtonRight}
               />
             </View>
           </View>
@@ -77,8 +77,8 @@ const PopupConfirmPost = forwardRef(
 );
 
 PopupConfirmPost.defaultProps = {
-  onPressManagePost: () => {},
-  onPressPostOther: () => {},
+  onPressButtonLeft: () => {},
+  onPressButtonRight: () => {},
   label: '',
   description: '',
   titleButtonLeft: '',
@@ -86,8 +86,8 @@ PopupConfirmPost.defaultProps = {
 };
 
 PopupConfirmPost.propTypes = {
-  onPressPostOther: PropTypes.func,
-  onPressManagePost: PropTypes.func,
+  onPressButtonRight: PropTypes.func,
+  onPressButtonLeft: PropTypes.func,
   label: PropTypes.string,
   description: PropTypes.string,
   titleButtonLeft: PropTypes.string,
