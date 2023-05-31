@@ -10,6 +10,22 @@ import {
 const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+  boxCode: {
+    borderColor: COLOR_ORANGE_6,
+    borderRadius: 4,
+    borderStyle: 'dotted',
+    borderWidth: 1,
+    marginLeft: 30,
+    padding: 5,
+    paddingHorizontal: 16,
+  },
+  boxCodePost: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    marginBottom: 26,
+    marginTop: 20,
+  },
   boxInformation: {
     borderColor: COLOR_ORANGE_6,
     borderRadius: 5,
@@ -23,6 +39,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 10,
+  },
+  boxPopup: {
+    backgroundColor: COLOR_WHITE,
+    borderRadius: 8,
+    padding: 20,
+    width: width * 0.96,
   },
   boxRank: {
     borderColor: COLOR_BLUE_1,
@@ -49,6 +71,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_BLUE_1,
     marginHorizontal: 10,
     marginVertical: 24,
+  },
+  code: {
+    color: COLOR_ORANGE_6,
   },
   container: {
     backgroundColor: COLOR_WHITE,

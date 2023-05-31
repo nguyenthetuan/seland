@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { CheckBox, Icon } from '@rneui/themed';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,25 +9,19 @@ import Toast from 'react-native-simple-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DateTimePicker, Input, Text } from '../../../components';
-import { COLOR_BLUE_1 } from '../../../constants';
-import { createRealEstates, getListRank, selectPosts } from '../../../features';
+import { COLOR_BLUE_1, SCREENS } from '../../../constants';
+import { createPayment, getListRank, selectPosts } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ItemConfirm from '../components/ItemConfirm';
 import PopupConfirmPost from '../components/PopupConfirm';
 import styles from './styles';
 
 const ConfirmPostScreen = () => {
-  const { goBack } = useNavigation();
+  const route = useRoute();
+  const { goBack, navigate } = useNavigation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const {
-    rank,
-    basicInformation,
-    realEstateInformation,
-    articleDetails,
-    createRealEstate,
-    loading,
-  } = useSelector(selectPosts);
+  const { rank, createRealEstate, loading } = useSelector(selectPosts);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
   const confirmPostRef = useRef();
@@ -60,43 +54,22 @@ const ConfirmPostScreen = () => {
       Toast.show('Vui lòng chọn đồng ý với điều khoản sử dụng');
       return;
     }
-    const params = {
-      ...basicInformation,
-      ...realEstateInformation,
-      ...articleDetails,
+    const paramsPayment = {
+      real_estate_id: route?.params?.realEstateId,
+      rank_type_id: 1, // tam thoi fake la 1
     };
-    const formData = new FormData();
-
-    Object.keys(params).forEach((key, value) => {
-      if (key === 'isPhoto' || key === 'photo' || key === 'video') return;
-
-      if (params[key]) {
-        if (key === 'lat_long' && params[key]) {
-          const result = params[key].split(',');
-          formData.append('latitude', result[0]);
-          formData.append('longitude', result[1]);
-          return;
-        }
-
-        formData.append(key, params[key]);
-      }
-    });
-
-    // append image to form
-    if (params?.photo?.length) {
-      params?.photo.forEach((item, index) => {
-        formData.append(`images[${index}]`, {
-          uri: item.uri,
-          name: item.fileName,
-          type: item.type,
-        });
-      });
-    }
-
-    dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
+    dispatchThunk(dispatch, createPayment(paramsPayment), createSuccess);
   };
 
   const toggleCheck = () => setAgreeTerms(!agreeTerms);
+
+  const handlePostOther = () => {
+    navigate(SCREENS.CREATE_POST);
+  };
+
+  const handleManagePost = () => {
+    navigate('UserPosts', { type: 'createPost' });
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -229,7 +202,31 @@ const ConfirmPostScreen = () => {
             onPress={handleContinue}
           />
         </ScrollView>
-        <PopupConfirmPost ref={confirmPostRef} />
+        <PopupConfirmPost
+          ref={confirmPostRef}
+          onPressPostOther={handlePostOther}
+          onPressManagePost={handleManagePost}
+          label="Tin đăng đã được ghi nhận!"
+          description="Tin của bạn sẽ được kiểm duyệt trong 8h làm việc."
+          content={
+            <View>
+              <View style={styles.boxCodePost}>
+                <Text style={{ fontWeight: '500' }}>Mã tin đăng</Text>
+                <View style={styles.boxCode}>
+                  <Text style={styles.code}>346582154</Text>
+                </View>
+              </View>
+              <ItemConfirm
+                label="Thanh toán"
+                value="Vip Bạc"
+              />
+              <ItemConfirm
+                label="Đơn giá/ ngày"
+                value="50,000 VNĐ"
+              />
+            </View>
+          }
+        />
       </SafeAreaView>
     </View>
   );

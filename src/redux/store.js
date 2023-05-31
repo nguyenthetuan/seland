@@ -15,6 +15,7 @@ import {
   authReducer,
   commonReducer,
   homeReducer,
+  paymentReducer,
   postReducer,
   realEstatesReducer,
   userRealEstatesReducer,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   userRealEstates: userRealEstatesReducer,
   post: postReducer,
+  payment: paymentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

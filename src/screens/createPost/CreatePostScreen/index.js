@@ -9,9 +9,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
 import { COLOR_BLUE_1, SCREENS, YOUR_WANT } from '../../../constants';
-import { clearCreatePosts, selectPosts } from '../../../features';
+import {
+  clearCreatePosts,
+  createRealEstates,
+  selectPosts,
+} from '../../../features';
+import { dispatchThunk } from '../../../utils';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
+import PopupConfirmPost from '../components/PopupConfirm';
 import RealEstateInformation from '../components/RealEstateInformation';
 import styles from './styles';
 
@@ -55,10 +61,13 @@ const CreatePostScreen = () => {
   const basicInfoRef = useRef();
   const realEstateRef = useRef();
   const articleDetailRef = useRef();
+  const confirmPostRef = useRef();
+
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
   const dispatch = useDispatch();
-  const { loading } = useSelector(selectPosts);
+  const { loading, basicInformation, realEstateInformation, articleDetails } =
+    useSelector(selectPosts);
 
   const handleClosePost = () => {
     dispatch(clearCreatePosts());
@@ -73,6 +82,54 @@ const CreatePostScreen = () => {
 
   const handleSelect = value => {
     setSaveType(value);
+  };
+
+  const createSuccess = value => {
+    if (value?.real_estate_id) {
+      if (saveType === YOUR_WANT.POST_PUBLIC) {
+        navigate(SCREENS.CONFIRM_POST_SCREEN, {
+          realEstateId: value?.real_estate_id,
+        });
+        setTab(TAB.BASIC_INFORMATION);
+      } else {
+        confirmPostRef.current.openPopup();
+      }
+      dispatch(clearCreatePosts());
+      basicInfoRef.current && basicInfoRef.current.clearForm();
+    }
+  };
+
+  const createPosts = () => {
+    const params = {
+      ...basicInformation,
+      ...realEstateInformation,
+      ...articleDetails,
+    };
+    const formData = new FormData();
+
+    Object.keys(params).forEach((key, value) => {
+      if (key === 'isPhoto' || key === 'photo' || key === 'video') return;
+
+      if (params[key]) {
+        formData.append(key, params[key]);
+      }
+    });
+
+    // append image to form
+    if (params?.photo?.length) {
+      params?.photo.forEach((item, index) => {
+        const file = {
+          uri: item.uri,
+          name: item.fileName,
+          type: item.type,
+        };
+        formData.append(`images[${index}]`, file);
+      });
+    }
+
+    // append video to form
+
+    dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
   const handleContinue = () => {
@@ -100,8 +157,7 @@ const CreatePostScreen = () => {
         if (errorsArticle) {
           break;
         } else {
-          navigate(SCREENS.CONFIRM_POST_SCREEN);
-          setTab(tab + 1);
+          createPosts();
           break;
         }
       default:
@@ -113,6 +169,16 @@ const CreatePostScreen = () => {
   const handleBack = () => {
     scrollViewRef.current?.scrollTo();
     setTab(tab - 1);
+  };
+
+  const handlePostOther = () => {
+    setTab(TAB.BASIC_INFORMATION);
+    navigate(SCREENS.CREATE_POST);
+  };
+
+  const handleManagePost = () => {
+    setTab(TAB.BASIC_INFORMATION);
+    navigate('UserPosts', { type: 'createPost' });
   };
 
   const renderTab = () => {
@@ -252,6 +318,19 @@ const CreatePostScreen = () => {
           </View>
         )}
       </ScrollView>
+      <PopupConfirmPost
+        ref={confirmPostRef}
+        onPressPostOther={handlePostOther}
+        onPressManagePost={handleManagePost}
+        label={t('common.saving').replace(
+          'typesave',
+          saveType === YOUR_WANT.SAVE_PRIVATE ? 'riêng tư' : 'nháp!'
+        )}
+        description={t('common.postingSave').replace(
+          'typeSave',
+          saveType === YOUR_WANT.SAVE_PRIVATE ? 'riêng tư' : 'nháp!'
+        )}
+      />
     </SafeAreaView>
   );
 };
