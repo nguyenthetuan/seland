@@ -12,7 +12,15 @@ import styles from './styles';
 
 const PopupConfirmPost = forwardRef(
   (
-    { onPressManagePost, onPressPostOther, label, description, content },
+    {
+      onPressManagePost,
+      onPressPostOther,
+      label,
+      description,
+      content,
+      titleButtonRight,
+      titleButtonLeft,
+    },
     ref
   ) => {
     const [visible, setVisible] = useState(false);
@@ -48,7 +56,7 @@ const PopupConfirmPost = forwardRef(
               <Button
                 buttonStyle={[styles.btnPopup, { borderColor: COLOR_GRAY_4 }]}
                 titleStyle={{ color: COLOR_GRAY_7 }}
-                title="Quản lý đăng tin"
+                title={titleButtonLeft}
                 outline
                 onPress={handleManagePost}
               />
@@ -57,7 +65,7 @@ const PopupConfirmPost = forwardRef(
                   styles.btnPopup,
                   { backgroundColor: COLOR_BLUE_1 },
                 ]}
-                title="Đăng tin khác"
+                title={titleButtonRight}
                 onPress={handlePostOther}
               />
             </View>
@@ -73,6 +81,8 @@ PopupConfirmPost.defaultProps = {
   onPressPostOther: () => {},
   label: '',
   description: '',
+  titleButtonLeft: '',
+  titleButtonRight: '',
 };
 
 PopupConfirmPost.propTypes = {
@@ -80,6 +90,8 @@ PopupConfirmPost.propTypes = {
   onPressManagePost: PropTypes.func,
   label: PropTypes.string,
   description: PropTypes.string,
+  titleButtonLeft: PropTypes.string,
+  titleButtonRight: PropTypes.string,
   content: PropTypes.node.isRequired,
 };
 

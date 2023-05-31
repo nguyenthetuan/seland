@@ -322,6 +322,8 @@ const CreatePostScreen = () => {
         ref={confirmPostRef}
         onPressPostOther={handlePostOther}
         onPressManagePost={handleManagePost}
+        titleButtonLeft="Quản lý đăng tin"
+        titleButtonRight="Đăng tin khác"
         label={t('common.saving').replace(
           'typesave',
           saveType === YOUR_WANT.SAVE_PRIVATE ? 'riêng tư' : 'nháp!'

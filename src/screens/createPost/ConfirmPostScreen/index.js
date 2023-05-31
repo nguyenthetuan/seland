@@ -24,7 +24,8 @@ const ConfirmPostScreen = () => {
   const { rank, createRealEstate, loading } = useSelector(selectPosts);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const confirmPostRef = useRef();
+  const confirmPaymentSuccessRef = useRef();
+  const confirmCancelPaymentRef = useRef();
 
   const {
     control,
@@ -46,7 +47,7 @@ const ConfirmPostScreen = () => {
   }, []);
 
   const createSuccess = () => {
-    confirmPostRef.current.openPopup();
+    confirmPaymentSuccessRef.current.openPopup();
   };
 
   const handleContinue = async () => {
@@ -71,6 +72,14 @@ const ConfirmPostScreen = () => {
     navigate('UserPosts', { type: 'createPost' });
   };
 
+  const handleBack = () => confirmCancelPaymentRef.current.openPopup();
+
+  const handleCancel = () => {};
+
+  const handleConfirm = () => {
+    goBack();
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Loading
@@ -83,7 +92,7 @@ const ConfirmPostScreen = () => {
         <View style={styles.header}>
           <Icon
             name="close"
-            onPress={goBack}
+            onPress={handleBack}
           />
           <Text style={styles.createPostNews}>
             {t('common.createPostNews')}
@@ -203,9 +212,20 @@ const ConfirmPostScreen = () => {
           />
         </ScrollView>
         <PopupConfirmPost
-          ref={confirmPostRef}
+          ref={confirmCancelPaymentRef}
+          onPressPostOther={handleConfirm}
+          onPressManagePost={handleCancel}
+          titleButtonLeft="Huỷ"
+          titleButtonRight="Xác nhận"
+          label="Huỷ thanh toán!"
+          description="Khi huỷ thanh toán, bài đăng tự động lưu vào tin nháp."
+        />
+        <PopupConfirmPost
+          ref={confirmPaymentSuccessRef}
           onPressPostOther={handlePostOther}
           onPressManagePost={handleManagePost}
+          titleButtonLeft="Quản lý đăng tin"
+          titleButtonRight="Đăng tin khác"
           label="Tin đăng đã được ghi nhận!"
           description="Tin của bạn sẽ được kiểm duyệt trong 8h làm việc."
           content={
