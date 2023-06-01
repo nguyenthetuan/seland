@@ -3,7 +3,7 @@ import { Icon } from '@rneui/themed';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { FlatList, Pressable, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -242,9 +242,14 @@ const UserPostsScreen = () => {
                 control={control}
                 inputContainerStyle={styles.searchInput}
                 name="title"
-                onChangeText={submit}
+                onSubmitEditing={submit}
+                returnKeyType="search"
                 placeholder={t('input.searchByCodeTitle')}
-                rightIcon={<Icon name="search" />}
+                rightIcon={
+                  <Pressable onPress={submit}>
+                    <Icon name="search" />
+                  </Pressable>
+                }
               />
             </View>
             <View style={styles.flex}>
