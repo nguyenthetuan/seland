@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
@@ -24,11 +24,13 @@ import {
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
+import ModalFilter from './components/ModalFilter/index.js';
 import styles from './styles';
 
 const UserPostsScreen = () => {
   const route = useRoute();
   const { goBack, reset } = useNavigation();
+  const filterRef = useRef();
 
   const dispatch = useDispatch();
   const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
@@ -39,6 +41,9 @@ const UserPostsScreen = () => {
     dateStart: '',
     dateEnd: '',
   });
+  const onOpenFilter = () => {
+    filterRef.current.onOpen();
+  };
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstatesUser());
@@ -265,6 +270,7 @@ const UserPostsScreen = () => {
                 />
               }
               title={t('button.filter')}
+              onPress={onOpenFilter}
             />
           </View>
           <View style={styles.sort}>
@@ -290,6 +296,7 @@ const UserPostsScreen = () => {
           />
         </Screen>
       </View>
+      <ModalFilter ref={filterRef} />
     </>
   );
 };
