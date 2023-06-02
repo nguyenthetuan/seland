@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   postButtons: {
     flexGrow: 0,
     marginBottom: 16,
+    marginTop: 10,
   },
   search: {
     flex: 2,
