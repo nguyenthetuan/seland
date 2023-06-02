@@ -23,6 +23,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 24,
   },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
+    marginTop: '7%',
+  },
   header: {
     alignItems: 'center',
     borderBottomColor: COLOR_GRAY_2,

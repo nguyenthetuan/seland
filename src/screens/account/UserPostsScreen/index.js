@@ -24,7 +24,7 @@ import {
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
-import ModalFilter from './components/ModalFilter/index.js';
+import ModalFilter from './components/ModalFilter';
 import styles from './styles';
 
 const UserPostsScreen = () => {
@@ -141,11 +141,16 @@ const UserPostsScreen = () => {
     }
   };
 
-  const { control, getValues, handleSubmit } = useForm({
+  const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: {
       title: '',
       date: 'week',
       sort_by: 'createdAt',
+      real_estate_type_id: null,
+      area_range_id: null,
+      province_id: null,
+      type: null,
+      status: '',
     },
   });
 
@@ -301,7 +306,12 @@ const UserPostsScreen = () => {
           />
         </Screen>
       </View>
-      <ModalFilter ref={filterRef} />
+      <ModalFilter
+        ref={filterRef}
+        control={control}
+        setValueHookForm={setValue}
+        onPressConfirm={submit}
+      />
     </>
   );
 };

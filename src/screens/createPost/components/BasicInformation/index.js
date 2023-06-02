@@ -18,7 +18,6 @@ import {
   clearDistricts,
   clearWards,
   createBasicInformation,
-  getAllInformation,
   getDistricts,
   getProvinces,
   getWards,
@@ -92,7 +91,6 @@ const BasicInformation = forwardRef((props, ref) => {
 
   const refresh = async () => {
     const { province_id, district_id } = basicInformation;
-    dispatchThunk(dispatch, getAllInformation());
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
