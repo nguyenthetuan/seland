@@ -10,9 +10,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 8,
-    paddingVertical: 8,
+    paddingVertical: 10,
   },
   title: {
+    fontSize: 17,
     fontWeight: 500,
     marginLeft: 4,
   },

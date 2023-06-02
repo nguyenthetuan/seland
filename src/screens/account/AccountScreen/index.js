@@ -27,7 +27,8 @@ const AccountScreen = () => {
 
   const navigateToCreatePost = () => navigate('CreatePostNavigator');
 
-  const navigateToUserPosts = () => navigate('UserPosts');
+  const navigateToUserPosts = () => navigate(SCREENS.USER_POSTS);
+  const navigateToDraftUserPosts = () => navigate(SCREENS.DRAFT_POSTS);
 
   const navigateToPersonalInformation = () =>
     navigate(SCREENS.PERSONAL_INFORMATION);
@@ -64,7 +65,7 @@ const AccountScreen = () => {
     },
     {
       name: 'draftPosts',
-      onPress: () => {},
+      onPress: navigateToDraftUserPosts,
     },
   ];
 

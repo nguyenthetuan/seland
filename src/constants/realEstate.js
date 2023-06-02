@@ -4,9 +4,13 @@ const REAL_ESTATE = {
 };
 
 export const YOUR_WANT = {
-  SAVE_PRIVATE: 1,
-  POST_PUBLIC: 2,
-  SAVE_DRAFTS: 3,
+  INACTIVE: 0,
+  POST_PUBLIC: 1,
+  SAVE_PRIVATE: 2,
+  PENDING: 3,
+  SAVE_DRAFTS: 4,
+  REJECT: 5,
+  DOWN: 6,
 };
 
 export default REAL_ESTATE;
