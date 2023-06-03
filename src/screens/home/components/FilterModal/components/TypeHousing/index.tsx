@@ -65,13 +65,19 @@ const TypeHousing = (props: IProps) => {
 
   const onSelectTypeHousing = (item: ITypeHousingItem) => {
     const data = [...listChooseTypeHousing];
-    data.push(item);
+    const index = data.findIndex(e => e.index == item.index);
+    if (index == -1) {
+      data.push(item);
+    } else {
+      return;
+    }
     setListChooseTypeHousing(data);
   };
 
   const onRemoveTypeHousing = (item: ITypeHousingItem) => {
+    const index = listChooseTypeHousing.indexOf(item);
     const data = [...listChooseTypeHousing];
-    data.filter(e => e === item);
+    data.splice(index, 1);
     setListChooseTypeHousing(data);
   };
 
@@ -137,6 +143,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_GRAY_6,
     marginRight: 8,
     padding: 4,
+    flexDirection: 'row',
   },
 });
 

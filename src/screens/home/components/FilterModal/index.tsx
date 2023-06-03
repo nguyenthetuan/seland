@@ -21,13 +21,14 @@ import {
   COLOR_GRAY_8,
   COLOR_WHITE,
 } from '../../../../constants';
+import TypeHousing from './components/TypeHousing';
 import { SliderComponent } from './SliderComponent';
 
 const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   boxRealEstate: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
   },
   btnSelect: {
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   },
   district: {
     paddingRight: 4,
-    width: "50%",
+    width: '50%',
   },
   filterPost: {
     color: COLOR_GRAY_8,
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
   },
   txtFilter: {
-    marginBottom: 4
+    marginBottom: 4,
   },
   txtSelect: {
     fontSize: 14,
@@ -91,15 +92,15 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   wrapArea: {
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   wrapButton: {
     flexDirection: 'row',
-    paddingHorizontal: 0
+    paddingHorizontal: 0,
   },
   wrapFilter: {
     marginTop: 8,
-  }
+  },
 });
 
 // const type = [
@@ -112,8 +113,7 @@ const Filter = forwardRef((props, ref) => {
   const [showFilter, setShowFilter] = useState(false);
 
   const { control, handleSubmit } = useForm({
-    defaultValues: {
-    },
+    defaultValues: {},
   });
 
   const realEstateType = [{ label: 'Mua', value: 1 }];
@@ -151,16 +151,23 @@ const Filter = forwardRef((props, ref) => {
             <Button
               buttonStyle={styles.btnSelect}
               titleStyle={styles.txtSelect}
-              onPress={() => { } }
+              onPress={() => {}}
               title={t('button.buySell')}
-              radius={4} color={undefined} loading={undefined} outline={undefined}            />
+              radius={4}
+              color={undefined}
+              loading={undefined}
+              outline={undefined}
+            />
             <Button
               buttonStyle={styles.btnSelect}
               titleStyle={styles.txtSelect}
-              onPress={() => { } }
+              onPress={() => {}}
               title={t('button.lease')}
               outline={Boolean(true)}
-              radius={4} color={undefined} loading={false}            />
+              radius={4}
+              color={undefined}
+              loading={false}
+            />
           </View>
 
           <View style={styles.wrapArea}>
@@ -177,7 +184,13 @@ const Filter = forwardRef((props, ref) => {
                     data={realEstateType}
                     defaultButtonText={t('select.district')}
                     name="real_estate_type_id"
-                    onSelect={handleSubmit(onSelect)} label={undefined} labelStyle={undefined} required={undefined} errors={undefined} containerSelect={undefined}                  />
+                    onSelect={handleSubmit(onSelect)}
+                    label={undefined}
+                    labelStyle={undefined}
+                    required={undefined}
+                    errors={undefined}
+                    containerSelect={undefined}
+                  />
                 </View>
                 <View style={styles.ward}>
                   <Select
@@ -189,7 +202,13 @@ const Filter = forwardRef((props, ref) => {
                     data={realEstateType}
                     defaultButtonText={t('select.ward')}
                     name="real_estate_type_id"
-                    onSelect={handleSubmit(onSelect)} label={undefined} labelStyle={undefined} required={undefined} errors={undefined} containerSelect={undefined}                  />
+                    onSelect={handleSubmit(onSelect)}
+                    label={undefined}
+                    labelStyle={undefined}
+                    required={undefined}
+                    errors={undefined}
+                    containerSelect={undefined}
+                  />
                 </View>
               </View>
 
@@ -199,14 +218,29 @@ const Filter = forwardRef((props, ref) => {
                   control={control}
                   name="address"
                   required
-                  placeholder={t('input.addressPlaceHolder')} inputContainerStyle={undefined} isEmail={undefined} isNumeric={undefined} isPassword={undefined} isWebsite={undefined} label={undefined} labelStyle={undefined} onChangeText={undefined} onFocus={undefined} rightLabel={undefined} showPasswordPolicy={undefined}                />
+                  placeholder={t('input.addressPlaceHolder')}
+                  inputContainerStyle={undefined}
+                  isEmail={undefined}
+                  isNumeric={undefined}
+                  isPassword={undefined}
+                  isWebsite={undefined}
+                  label={undefined}
+                  labelStyle={undefined}
+                  onChangeText={undefined}
+                  onFocus={undefined}
+                  rightLabel={undefined}
+                  showPasswordPolicy={undefined}
+                />
               </View>
             </View>
           </View>
 
           <SliderComponent title={t('common.priceRange') || undefined} />
 
-          <Text style={null}>{t('select.typeHousing')}</Text>
+          <View>
+            <Text style={null}>{t('select.typeHousing')}</Text>
+            <TypeHousing />
+          </View>
           <Text style={null}>{t('common.priceRange')}</Text>
           <Text style={null}>{t('common.acreage')}</Text>
           <Text style={null}>{t('common.compass')}</Text>
@@ -229,7 +263,10 @@ const Filter = forwardRef((props, ref) => {
               }}
               radius={5}
               title={t('button.reset')}
-              outline color={undefined} loading={undefined}            />
+              outline
+              color={undefined}
+              loading={undefined}
+            />
             <Button
               buttonStyle={{
                 width: width * 0.45,
@@ -239,7 +276,11 @@ const Filter = forwardRef((props, ref) => {
               // eslint-disable-next-line react-native/no-inline-styles
               titleStyle={{ fontSize: 14, lineHeight: 22 }}
               radius={5}
-              title={t('button.apply')} color={undefined} loading={undefined} outline={undefined}            />
+              title={t('button.apply')}
+              color={undefined}
+              loading={undefined}
+              outline={undefined}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
