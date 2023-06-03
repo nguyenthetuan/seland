@@ -22,7 +22,7 @@ const Button = ({
     disabled={loading}
     disabledStyle={styles.disabled}
     loading={loading}
-    radius={8}
+    radius={props?.radius}
     title={
       <Text
         style={StyleSheet.flatten([styles.title(color, outline), titleStyle])}
@@ -39,6 +39,7 @@ Button.defaultProps = {
   color: COLOR_BLUE_1,
   loading: false,
   outline: false,
+  radius: 8,
   title: '',
   titleStyle: {},
 };
@@ -48,6 +49,7 @@ Button.propTypes = {
   color: PropTypes.string,
   loading: PropTypes.bool,
   outline: PropTypes.bool,
+  radius: PropTypes.number,
   title: PropTypes.string,
   titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
