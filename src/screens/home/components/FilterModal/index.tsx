@@ -147,15 +147,9 @@ const optionsLegalDocuments = [
   { title: 'Tất cả', value: 'Tất cả' },
   { title: 'Sổ hồng', value: 'Sổ hồng' },
   { title: 'Sổ đỏ', value: 'Sổ đỏ' },
-  { title: 'Tất cả', value: 'Tất cả' },
-  { title: 'Sổ hồng', value: 'Sổ hồng' },
-  { title: 'Sổ đỏ', value: 'Sổ đỏ' },
 ];
 
 const optionsLocation = [
-  { title: 'Tất cả', value: 'Tất cả' },
-  { title: 'Hẻm', value: 'Hẻm' },
-  { title: 'Mặt tiền', value: 'Mặt tiền' },
   { title: 'Tất cả', value: 'Tất cả' },
   { title: 'Hẻm', value: 'Hẻm' },
   { title: 'Mặt tiền', value: 'Mặt tiền' },
@@ -167,7 +161,7 @@ const optionsBedroom = [
   { title: '2', value: '2' },
   { title: '3', value: '3' },
   { title: '4', value: '4' },
-  { title: '5', value: '5' },
+  { title: '5+', value: '5+' },
 ];
 
 const listTypeHousing = [
@@ -212,7 +206,7 @@ const initValues = {
   bedroom: [],
   bathroom: [],
   numberFloors: [],
-}
+};
 
 const Filter = forwardRef((props, ref) => {
   const { t } = useTranslation();
@@ -239,15 +233,15 @@ const Filter = forwardRef((props, ref) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log("dataFilter ====", data);
-  }
+    console.log('dataFilter ====', data);
+  };
 
   const clearForm = () => {
     Object.entries(initValues).forEach(
       ([key, value]: any) => value && setValue(key, value)
     );
     setValue('address', '');
-  }
+  };
 
   const onOpen = () => setShowFilter(true);
 

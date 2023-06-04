@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     color: COLOR_BLACK_1,
   },
   wrapListOption: {
-    flex: 1,
     flexDirection: 'row',
     marginTop: 4,
   },

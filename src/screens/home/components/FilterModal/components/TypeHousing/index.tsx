@@ -90,28 +90,45 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
       </TouchableOpacity>
 
       {showTypeHousing ? (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.container}
-        >
-          {options.map((item: string, index: number) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                onPress={() => onSelectTypeHousing(item)}
-                style={{ backgroundColor: COLOR_GRAY_10 }}
-              >
-                <Text style={null}>{t(`${type}.${item}`)}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+        <View style={styles.wrapContainer}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.container}
+          >
+            {options.map((item: string, index: number) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => onSelectTypeHousing(item)}
+                  style={{
+                    backgroundColor: COLOR_GRAY_10,
+                    paddingLeft: 4,
+                    paddingBottom: 4,
+                  }}
+                >
+                  <Text style={null}>{t(`${type}.${item}`)}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
       ) : null}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapContainer: {
+    height: 160,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderRadius: 4,
+  },
   container: {
     maxHeight: 150,
   },
