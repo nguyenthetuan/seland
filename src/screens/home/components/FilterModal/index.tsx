@@ -199,14 +199,29 @@ const listCompass = [
   'WEST',
 ];
 
+const initValues = {
+  district: '',
+  ward: '',
+  address: '',
+  typeHousing: [],
+  priceRange: [0, 500000000],
+  acreage: [0, 30],
+  compass: [],
+  legalDocuments: [],
+  location: [],
+  bedroom: [],
+  bathroom: [],
+  numberFloors: [],
+}
+
 const Filter = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [showFilter, setShowFilter] = useState(false);
 
-  const { control, handleSubmit, setValue } = useForm({
-    defaultValues: {},
+  const { control, handleSubmit, setValue, getValues } = useForm({
+    defaultValues: initValues,
   });
 
   const { basicInformation, projects, demands } = useSelector(selectPosts);
@@ -222,6 +237,17 @@ const Filter = forwardRef((props, ref) => {
   const onSelect = (value: any) => {
     console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
   };
+
+  const onSubmit = (data: any) => {
+    console.log("dataFilter ====", data);
+  }
+
+  const clearForm = () => {
+    Object.entries(initValues).forEach(
+      ([key, value]: any) => value && setValue(key, value)
+    );
+    setValue('address', '');
+  }
 
   const onOpen = () => setShowFilter(true);
 
@@ -375,13 +401,15 @@ const Filter = forwardRef((props, ref) => {
             <TypeHousing
               options={listTypeHousing}
               type={'typeHousing'}
+              control={control}
+              name="typeHousing"
             />
           </View>
 
           <SliderComponent
             title={t('common.priceRange') || undefined}
             options={optionsPriceRange}
-            defaultValues={[20000000, 400000000]}
+            defaultValues={initValues.priceRange}
             minimumValue={0}
             maximumValue={1000000000}
             step={10000000}
@@ -396,7 +424,7 @@ const Filter = forwardRef((props, ref) => {
           <SliderComponent
             title={t('common.acreage') || undefined}
             options={optionsAcreage}
-            defaultValues={[80, 100]}
+            defaultValues={initValues.acreage}
             minimumValue={0}
             maximumValue={100}
             step={5}
@@ -410,6 +438,8 @@ const Filter = forwardRef((props, ref) => {
             <TypeHousing
               options={listCompass}
               type={'compass'}
+              control={control}
+              name="compass"
             />
           </View>
 
@@ -464,6 +494,7 @@ const Filter = forwardRef((props, ref) => {
               outline
               color={undefined}
               loading={undefined}
+              onPress={clearForm}
               icon={
                 <View style={styles.wrapIcon}>
                   <Reload />
@@ -476,9 +507,9 @@ const Filter = forwardRef((props, ref) => {
                 backgroundColor: COLOR_BLUE_1,
                 borderColor: COLOR_BLUE_1,
               }}
-              // eslint-disable-next-line react-native/no-inline-styles
               titleStyle={{ fontSize: 14, lineHeight: 22 }}
               radius={5}
+              onPress={handleSubmit(onSubmit)}
               title={t('button.apply')}
               color={undefined}
               loading={undefined}

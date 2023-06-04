@@ -16,10 +16,13 @@ import {
   COLOR_GRAY_3,
 } from '../../../../../../constants';
 import { Icon } from '@rneui/themed';
+import { useController } from 'react-hook-form';
 
 interface IProps {
   options?: any[];
   type: string;
+  name: string;
+  control?: any;
 }
 
 interface ITypeHousingItem {
@@ -27,33 +30,34 @@ interface ITypeHousingItem {
   item: string;
 }
 
-const TypeHousing = ({ options = [], type }: IProps) => {
+const TypeHousing = ({ options = [], type, name, control }: IProps) => {
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
 
+  const {
+    field: { onChange, value },
+  } = useController({ control, name });
+
   const [showTypeHousing, setShowTypeHousing] = useState<boolean>(false);
-  const [listChooseTypeHousing, setListChooseTypeHousing] = useState<
-    Array<String>
-  >([]);
 
   const onShowListTypeHousing = () => {
     setShowTypeHousing(!showTypeHousing);
   };
 
   const onSelectTypeHousing = (item: string) => {
-    const data = [...listChooseTypeHousing];
+    const data = [...value];
     if (data.includes(item)) {
       return;
     }
     data.push(item);
-    setListChooseTypeHousing(data);
+    onChange(data);
   };
 
   const onRemoveTypeHousing = (item: String) => {
-    const index = listChooseTypeHousing.indexOf(item);
-    const data = [...listChooseTypeHousing];
+    const index = value.indexOf(item);
+    const data = [...value];
     data.splice(index, 1);
-    setListChooseTypeHousing(data);
+    onChange(data);
   };
 
   return (
@@ -62,7 +66,7 @@ const TypeHousing = ({ options = [], type }: IProps) => {
         style={styles.typeHousingContainer}
         onPress={onShowListTypeHousing}
       >
-        {listChooseTypeHousing.map((item, index) => {
+        {value.map((item: any, index: number) => {
           return (
             <TouchableOpacity
               style={styles.typeHousing}

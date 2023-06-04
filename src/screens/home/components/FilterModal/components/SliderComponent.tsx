@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { COLOR_BLACK_1, COLOR_BLUE_1, COLOR_GRAY_2, COLOR_GRAY_8, COLOR_SLIDER_1 } from "../../../../../constants";
 import {Slider} from '@miblanchard/react-native-slider';
 import { ThumbSlider } from "../../../../../assets";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "../../../../../components";
 import { useController } from "react-hook-form";
 
@@ -104,7 +104,7 @@ export const SliderComponent = ({
     field: { onChange, value = defaultValues },
   } = useController({ control, name });
 
-  const [buttonSelected, setButtonSelected] = useState<Array<string|number>>([]);
+  const [buttonSelected, setButtonSelected] = useState<Array<string|number>>([options[0]?.value]);
 
   const handleOnClick = (option: string | number) => {
     let newArrButton = [...buttonSelected];
@@ -122,6 +122,12 @@ export const SliderComponent = ({
       onChange([Number(arrVal[0]), Number(arrVal[1])]);
     }
   };
+
+  useEffect(() => {
+    if (value[0] == defaultValues[0] && value[1] == defaultValues[1]) {
+      setButtonSelected([options[0]?.value]);
+    }
+  }, [defaultValues, value]);
 
   const renderSlider = useCallback(() => {
     return (
