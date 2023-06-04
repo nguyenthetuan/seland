@@ -9,7 +9,9 @@ import {
 import { Text } from '../../../../../../components';
 import { COLOR_GRAY_4, COLOR_GRAY_6 } from '../../../../../../constants';
 
-interface IProps {}
+interface IProps {
+  options?: any[];
+}
 
 interface ITypeHousingItem {
   index: number;
@@ -35,25 +37,7 @@ interface ITypeHousingItem {
 //   },
 // ];
 
-const listTypeHousing = [
-  'ALL',
-  'HOME',
-  'STREET_HOUSE',
-  'APARTMENT',
-  'VILLA',
-  'SHOP_HOUSE',
-  'PENT_HOUSE',
-  'LAND',
-  'PROJECT_LAND',
-  'OFFICE',
-  'FLOOR_PLAN_STORE',
-  'WAREHOUSE_FACTORY',
-  'HOSTELS_ROOMS',
-  'RESORTS_FARMS',
-  'OTHER',
-];
-
-const TypeHousing = (props: IProps) => {
+const TypeHousing = ({options = []}: IProps) => {
   const [showTypeHousing, setShowTypeHousing] = useState<boolean>(false);
   const [listChooseTypeHousing, setListChooseTypeHousing] = useState<
     Array<ITypeHousingItem>
@@ -98,10 +82,11 @@ const TypeHousing = (props: IProps) => {
         style={styles.typeHousingContainer}
         onPress={onShowListTypeHousing}
       >
-        {listChooseTypeHousing.map(item => {
+        {listChooseTypeHousing.map((item, idx) => {
           return (
             <TouchableOpacity
               style={styles.typeHousing}
+              key={idx}
               onPress={() => onRemoveTypeHousing(item)}
             >
               <Text
@@ -117,7 +102,7 @@ const TypeHousing = (props: IProps) => {
 
       {showTypeHousing ? (
         <FlatList
-          data={listTypeHousing}
+          data={options}
           renderItem={renderListTypeHousing}
           style={styles.container}
         />

@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     color: outline ? color : COLOR_WHITE,
     fontWeight: 500,
   }),
+  wrap: {
+    flexDirection: 'row'
+  }
 });
 
 export default styles;

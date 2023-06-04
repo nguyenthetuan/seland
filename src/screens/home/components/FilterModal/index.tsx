@@ -22,7 +22,9 @@ import {
   COLOR_WHITE,
 } from '../../../../constants';
 import TypeHousing from './components/TypeHousing';
-import { SliderComponent } from './SliderComponent';
+import { SliderComponent } from './components/SliderComponent';
+import { SelectComponent } from './components/SelectComponent';
+import { Reload } from '../../../../assets';
 
 const { width } = Dimensions.get('screen');
 
@@ -61,6 +63,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 16
   },
   header: {
     alignItems: 'center',
@@ -96,17 +99,91 @@ const styles = StyleSheet.create({
   },
   wrapButton: {
     flexDirection: 'row',
-    paddingHorizontal: 0,
+    paddingVertical: 0,
+    marginVertical: 0,
+  },
+  wrapInput: {
+    marginVertical: 0,
+    paddingVertical: 0,
   },
   wrapFilter: {
     marginTop: 8,
   },
+  wrapTypeHousing: {
+    marginBottom: 4
+  },
+  wrapIcon: {
+    marginRight: 12
+  }
 });
 
-// const type = [
-//   { label: 'Mua', value: '1' },
-//   { label: 'Bán', value: '2' },
-// ];
+const optionsPriceRange = [
+  {title: 'Dưới 500 triệu', value: '500000000'},
+  {title: '500 - 800 triệu', value: '500000000-800000000'},
+  {title: '800 triệu - 1 tỷ', value: '800000000-1000000000'},
+];
+
+const optionsAcreage = [
+  {title: 'Dưới 30m²', value: '30'},
+  {title: '30 - 50m²', value: '30-50'},
+  {title: '50 - 80m²', value: '50-80'},
+];
+
+const optionsLegalDocuments = [
+  {title: 'Tất cả', value: 'Tất cả'},
+  {title: 'Sổ hồng', value: 'Sổ hồng'},
+  {title: 'Sổ đỏ', value: 'Sổ đỏ'},
+  {title: 'Tất cả', value: 'Tất cả'},
+  {title: 'Sổ hồng', value: 'Sổ hồng'},
+  {title: 'Sổ đỏ', value: 'Sổ đỏ'},
+];
+
+const optionsLocation = [
+  {title: 'Tất cả', value: 'Tất cả'},
+  {title: 'Hẻm', value: 'Hẻm'},
+  {title: 'Mặt tiền', value: 'Mặt tiền'},
+  {title: 'Tất cả', value: 'Tất cả'},
+  {title: 'Hẻm', value: 'Hẻm'},
+  {title: 'Mặt tiền', value: 'Mặt tiền'},
+];
+
+const optionsBedroom = [
+  {title: 'Tất cả', value: 'Tất cả'},
+  {title: '1', value: '1'},
+  {title: '2', value: '2'},
+  {title: '3', value: '3'},
+  {title: '4', value: '4'},
+  {title: '5', value: '5'},
+];
+
+const listTypeHousing = [
+  'ALL',
+  'HOME',
+  'STREET_HOUSE',
+  'APARTMENT',
+  'VILLA',
+  'SHOP_HOUSE',
+  'PENT_HOUSE',
+  'LAND',
+  'PROJECT_LAND',
+  'OFFICE',
+  'FLOOR_PLAN_STORE',
+  'WAREHOUSE_FACTORY',
+  'HOSTELS_ROOMS',
+  'RESORTS_FARMS',
+  'OTHER',
+];
+
+const listCompass = [
+  'Đông Nam',
+  'Đông Bắc',
+  'Tây Bắc',
+  'Tây Nam',
+  'Bắc',
+  'Nam',
+  'Đông',
+  'Tây'
+];
 
 const Filter = forwardRef((props, ref) => {
   const { t } = useTranslation();
@@ -115,6 +192,8 @@ const Filter = forwardRef((props, ref) => {
   const { control, handleSubmit } = useForm({
     defaultValues: {},
   });
+
+  console.log("controll=====", control);
 
   const realEstateType = [{ label: 'Mua', value: 1 }];
 
@@ -235,27 +314,89 @@ const Filter = forwardRef((props, ref) => {
             </View>
           </View>
 
-          <SliderComponent title={t('common.priceRange') || undefined} />
-
-          <View>
+          <View style={styles.wrapTypeHousing}>
             <Text style={null}>{t('select.typeHousing')}</Text>
-            <TypeHousing />
+            <TypeHousing options={listTypeHousing} />
           </View>
-          <Text style={null}>{t('common.priceRange')}</Text>
+
+          <SliderComponent
+            title={t('common.priceRange') || undefined}
+            options={optionsPriceRange}
+            defaultValues={[20000000, 400000000]}
+            minimumValue={0}
+            maximumValue={1000000000}
+            step={10000000}
+            control={control}
+            name='priceRange'
+            convertDisplay={(val: string) => (val || "0").toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'}
+          />
+
+          <SliderComponent
+            title={t('common.acreage') || undefined}
+            options={optionsAcreage}
+            defaultValues={[80, 100]}
+            minimumValue={0}
+            maximumValue={100}
+            step={5}
+            control={control}
+            name='acreage'
+            convertDisplay={(val: string) => (val || "0").toString() + 'm²'}
+          />
+
+          <View style={styles.wrapTypeHousing}>
+            <Text style={null}>{t('select.compass')}</Text>
+            <TypeHousing options={listCompass} />
+          </View>
+
+          <SelectComponent
+            title={t('common.legalDocuments') || ""}
+            options={optionsLegalDocuments}
+            name='legalDocuments'
+            control={control}
+          />
+
+          <SelectComponent
+            title={t('common.location') || ""}
+            options={optionsLocation}
+            name='location'
+            control={control}
+          />
+
+          <SelectComponent
+            title={t('common.bedroom') || ""}
+            options={optionsBedroom}
+            name='bedroom'
+            control={control}
+          />
+
+          <SelectComponent
+            title={t('common.bathroom') || ""}
+            options={optionsBedroom}
+            name='bathroom'
+            control={control}
+          />
+
+          <SelectComponent
+            title={t('common.numberFloors') || ""}
+            options={optionsBedroom}
+            name='numberFloors'
+            control={control}
+          />
+
+          {/* <Text style={null}>{t('common.priceRange')}</Text>
           <Text style={null}>{t('common.acreage')}</Text>
           <Text style={null}>{t('common.compass')}</Text>
           <Text style={null}>{t('common.legalDocuments')}</Text>
           <Text style={null}>{t('common.location')}</Text>
           <Text style={null}>{t('common.bedroom')}</Text>
           <Text style={null}>{t('common.bathroom')}</Text>
-          <Text style={null}>{t('common.numberFloors')}</Text>
+          <Text style={null}>{t('common.numberFloors')}</Text> */}
           <View style={styles.footer}>
             <Button
               buttonStyle={{
                 width: width * 0.45,
-                borderColor: COLOR_GRAY_7,
+                borderColor: COLOR_GRAY_2,
               }}
-              // eslint-disable-next-line react-native/no-inline-styles
               titleStyle={{
                 color: COLOR_BLACK_1,
                 fontSize: 14,
@@ -266,6 +407,7 @@ const Filter = forwardRef((props, ref) => {
               outline
               color={undefined}
               loading={undefined}
+              icon={<View style={styles.wrapIcon}><Reload/></View>}
             />
             <Button
               buttonStyle={{

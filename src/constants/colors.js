@@ -34,3 +34,4 @@ export const COLOR_RED_2 = '#cf1322';
 export const COLOR_WHITE = '#fff';
 export const COLOR_PURPLE_1 = '#722ed1';
 export const COLOR_PURPLE_2 = '#f9f0ff';
+export const COLOR_SLIDER_1 = '#91D5FF';
