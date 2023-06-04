@@ -37,99 +37,11 @@ import {
   getProvinces,
   selectPosts,
   getWards,
+  clearWards,
 } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 
 const { width } = Dimensions.get('screen');
-
-const styles = StyleSheet.create({
-  boxRealEstate: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  btnSelect: {
-    height: 30,
-    marginRight: 8,
-    maxWidth: 96,
-    paddingHorizontal: 15,
-    paddingVertical: 4,
-  },
-  buttonClose: {
-    backgroundColor: COLOR_BLUE_1,
-    borderRadius: 5,
-    padding: 6,
-  },
-  buttonSelect: {
-    borderColor: COLOR_GRAY_2,
-    borderRadius: 2,
-    height: 36,
-  },
-  district: {
-    paddingRight: 4,
-    width: '50%',
-  },
-  filterPost: {
-    color: COLOR_GRAY_8,
-    fontSize: 18,
-    fontWeight: 'bold',
-    lineHeight: 24,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 16,
-  },
-  header: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  rowTextStyle: {
-    fontSize: 12,
-    lineHeight: 15,
-  },
-  scroll: {
-    paddingHorizontal: 10,
-  },
-  textButtonSelect: {
-    fontSize: 12,
-    lineHeight: 15,
-    marginHorizontal: 2,
-  },
-  txtFilter: {
-    marginBottom: 4,
-  },
-  txtSelect: {
-    fontSize: 14,
-    lineHeight: 18,
-  },
-  ward: {
-    paddingLeft: 4,
-    width: '50%',
-  },
-  wrapArea: {
-    flexDirection: 'row',
-  },
-  wrapButton: {
-    flexDirection: 'row',
-    paddingVertical: 0,
-    marginVertical: 0,
-  },
-  wrapInput: {
-    marginVertical: 0,
-    paddingVertical: 0,
-  },
-  wrapFilter: {
-    marginTop: 8,
-  },
-  wrapTypeHousing: {
-    marginBottom: 12,
-  },
-  wrapIcon: {
-    marginRight: 12,
-  },
-});
 
 const optionsPriceRange = [
   { title: 'Dưới 500 triệu', value: '500000000' },
@@ -206,6 +118,9 @@ const initValues = {
   bedroom: [],
   bathroom: [],
   numberFloors: [],
+  province_id: 'HNI',
+  ward_id: null,
+  district_id: null,
 };
 
 const Filter = forwardRef((props, ref) => {
@@ -224,9 +139,12 @@ const Filter = forwardRef((props, ref) => {
     label: t('select.district'),
     value: null,
   };
+   const emptyWardOption = {
+    label: t('select.ward'),
+    value: null
+  }
   const districtOptions = [emptyDistrictOption, ...districts];
-
-  const realEstateType = [{ label: 'Mua', value: 1 }];
+  const wardOptions = [emptyWardOption, ...wards];
 
   const onSelect = (value: any) => {
     console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
@@ -249,13 +167,28 @@ const Filter = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({ onOpen }));
 
-  const fetchDistricts = (params: any, callback: () => void) =>
+  const fetchDistricts = (params: any, callback?: () => void) =>{
     dispatchThunk(dispatch, getDistricts(params), callback);
+  }
 
   const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
 
+  const handleSelectDistrict = (selectedItem: any) => {
+    setValue('ward_id', null);
+    const { value } = selectedItem;
+    if (value) {
+      fetchWards({
+        province_code: getValues().province_id,
+        district_code: selectedItem.value,
+      });
+    } else {
+      dispatch(clearWards());
+    }
+  };
+
   const refresh = async () => {
-    const { province_id, district_id } = basicInformation;
+    const { district_id } = basicInformation;
+    const province_id = "HNI";
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
@@ -337,8 +270,8 @@ const Filter = forwardRef((props, ref) => {
                     control={control}
                     data={districtOptions}
                     defaultButtonText={t('select.district')}
-                    name="real_estate_type_id"
-                    onSelect={handleSubmit(onSelect)}
+                    name="district_id"
+                    onSelect={handleSelectDistrict}
                     label={undefined}
                     labelStyle={undefined}
                     required={undefined}
@@ -353,9 +286,9 @@ const Filter = forwardRef((props, ref) => {
                     rowStyle={styles.buttonSelect}
                     rowTextStyle={styles.rowTextStyle}
                     control={control}
-                    data={realEstateType}
+                    data={wardOptions}
                     defaultButtonText={t('select.ward')}
-                    name="real_estate_type_id"
+                    name="ward_id"
                     onSelect={handleSubmit(onSelect)}
                     label={undefined}
                     labelStyle={undefined}
@@ -519,3 +452,92 @@ const Filter = forwardRef((props, ref) => {
 Filter.displayName = 'Filter';
 
 export default Filter;
+
+const styles = StyleSheet.create({
+  boxRealEstate: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  btnSelect: {
+    height: 30,
+    marginRight: 8,
+    maxWidth: 96,
+    paddingHorizontal: 15,
+    paddingVertical: 4,
+  },
+  buttonClose: {
+    backgroundColor: COLOR_BLUE_1,
+    borderRadius: 5,
+    padding: 6,
+  },
+  buttonSelect: {
+    borderColor: COLOR_GRAY_2,
+    borderRadius: 2,
+    height: 36,
+  },
+  district: {
+    paddingRight: 4,
+    width: '50%',
+  },
+  filterPost: {
+    color: COLOR_GRAY_8,
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 24,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+  },
+  header: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  rowTextStyle: {
+    fontSize: 12,
+    lineHeight: 15,
+  },
+  scroll: {
+    paddingHorizontal: 10,
+  },
+  textButtonSelect: {
+    fontSize: 12,
+    lineHeight: 15,
+    marginHorizontal: 2,
+  },
+  txtFilter: {
+    marginBottom: 4,
+  },
+  txtSelect: {
+    fontSize: 14,
+    lineHeight: 18,
+  },
+  ward: {
+    paddingLeft: 4,
+    width: '50%',
+  },
+  wrapArea: {
+    flexDirection: 'row',
+  },
+  wrapButton: {
+    flexDirection: 'row',
+    paddingVertical: 0,
+    marginVertical: 0,
+  },
+  wrapInput: {
+    marginVertical: 0,
+    paddingVertical: 0,
+  },
+  wrapFilter: {
+    marginTop: 8,
+  },
+  wrapTypeHousing: {
+    marginBottom: 12,
+  },
+  wrapIcon: {
+    marginRight: 12,
+  },
+});
