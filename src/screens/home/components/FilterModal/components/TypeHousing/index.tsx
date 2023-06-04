@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FlatList,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import { Text } from '../../../../../../components';
-import { COLOR_GRAY_4, COLOR_GRAY_6 } from '../../../../../../constants';
+import {
+  COLOR_GRAY_4,
+  COLOR_GRAY_6,
+  COLOR_GRAY_10,
+  COLOR_GRAY_3,
+} from '../../../../../../constants';
+import { Icon } from '@rneui/themed';
 
 interface IProps {
   options?: any[];
@@ -17,27 +25,11 @@ interface ITypeHousingItem {
   index: number;
   item: string;
 }
-// const listTypeHousing = [
-//   { ALL: 'Tất cả (Mặc định)' },
-//   {
-//     HOME: 'Nhà riêng',
-//     STREET_HOUSE: 'Nhà mặt phố',
-//     APARTMENT: 'Căn hộ chung cư',
-//     VILLA: 'Biệt thự',
-//     SHOP_HOUSE: 'Shop-house',
-//     PENT_HOUSE: 'Pent-house',
-//     LAND: 'Đất',
-//     PROJECT_LAND: 'Đất nền dự án',
-//     OFFICE: 'Văn phòng',
-//     FLOOR_PLAN_STORE: 'Mặt bằng, cửa hàng',
-//     WAREHOUSE_FACTORY: 'Kho, nhà xưởng',
-//     HOSTELS_ROOMS: 'Nhà trọ, phòng trọ',
-//     RESORTS_FARMS: 'Resorts, farms',
-//     OTHER: 'Bất động sản khác',
-//   },
-// ];
 
-const TypeHousing = ({options = []}: IProps) => {
+const TypeHousing = ({ options = [] }: IProps) => {
+  const { t } = useTranslation();
+  const screenWidth = Dimensions.get('window').width;
+
   const [showTypeHousing, setShowTypeHousing] = useState<boolean>(false);
   const [listChooseTypeHousing, setListChooseTypeHousing] = useState<
     Array<ITypeHousingItem>
@@ -70,8 +62,9 @@ const TypeHousing = ({options = []}: IProps) => {
       <TouchableOpacity
         key={item.index}
         onPress={() => onSelectTypeHousing(item)}
+        style={{ backgroundColor: COLOR_GRAY_10 }}
       >
-        <Text style={null}>{item.item}</Text>
+        <Text style={null}>{t(`typeHousing.${item.item}`)}</Text>
       </TouchableOpacity>
     );
   };
@@ -93,8 +86,13 @@ const TypeHousing = ({options = []}: IProps) => {
                 style={null}
                 numberOfLines={1}
               >
-                {item.item}
+                {t(`typeHousing.${item.item}`)}
               </Text>
+              <Icon
+                name="close"
+                color={COLOR_GRAY_3}
+                size={20}
+              />
             </TouchableOpacity>
           );
         })}
@@ -120,14 +118,15 @@ const styles = StyleSheet.create({
     borderColor: COLOR_GRAY_4,
     minHeight: 32,
     borderRadius: 5,
-    flexDirection: 'row',
-    flex: 1,
     padding: 4,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   typeHousing: {
     backgroundColor: COLOR_GRAY_6,
     marginRight: 8,
     padding: 4,
+    alignItems: 'center',
     flexDirection: 'row',
   },
 });

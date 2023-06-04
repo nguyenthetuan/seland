@@ -1,5 +1,10 @@
 import { Icon } from '@rneui/themed';
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useEffect,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -25,6 +30,15 @@ import TypeHousing from './components/TypeHousing';
 import { SliderComponent } from './components/SliderComponent';
 import { SelectComponent } from './components/SelectComponent';
 import { Reload } from '../../../../assets';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectCommon,
+  getDistricts,
+  getProvinces,
+  selectPosts,
+  getWards,
+} from '../../../../features';
+import { dispatchThunk } from '../../../../utils';
 
 const { width } = Dimensions.get('screen');
 
@@ -63,7 +77,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 16
+    marginTop: 16,
   },
   header: {
     alignItems: 'center',
@@ -110,50 +124,50 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   wrapTypeHousing: {
-    marginBottom: 4
+    marginBottom: 12,
   },
   wrapIcon: {
-    marginRight: 12
-  }
+    marginRight: 12,
+  },
 });
 
 const optionsPriceRange = [
-  {title: 'Dưới 500 triệu', value: '500000000'},
-  {title: '500 - 800 triệu', value: '500000000-800000000'},
-  {title: '800 triệu - 1 tỷ', value: '800000000-1000000000'},
+  { title: 'Dưới 500 triệu', value: '500000000' },
+  { title: '500 - 800 triệu', value: '500000000-800000000' },
+  { title: '800 triệu - 1 tỷ', value: '800000000-1000000000' },
 ];
 
 const optionsAcreage = [
-  {title: 'Dưới 30m²', value: '30'},
-  {title: '30 - 50m²', value: '30-50'},
-  {title: '50 - 80m²', value: '50-80'},
+  { title: 'Dưới 30m²', value: '30' },
+  { title: '30 - 50m²', value: '30-50' },
+  { title: '50 - 80m²', value: '50-80' },
 ];
 
 const optionsLegalDocuments = [
-  {title: 'Tất cả', value: 'Tất cả'},
-  {title: 'Sổ hồng', value: 'Sổ hồng'},
-  {title: 'Sổ đỏ', value: 'Sổ đỏ'},
-  {title: 'Tất cả', value: 'Tất cả'},
-  {title: 'Sổ hồng', value: 'Sổ hồng'},
-  {title: 'Sổ đỏ', value: 'Sổ đỏ'},
+  { title: 'Tất cả', value: 'Tất cả' },
+  { title: 'Sổ hồng', value: 'Sổ hồng' },
+  { title: 'Sổ đỏ', value: 'Sổ đỏ' },
+  { title: 'Tất cả', value: 'Tất cả' },
+  { title: 'Sổ hồng', value: 'Sổ hồng' },
+  { title: 'Sổ đỏ', value: 'Sổ đỏ' },
 ];
 
 const optionsLocation = [
-  {title: 'Tất cả', value: 'Tất cả'},
-  {title: 'Hẻm', value: 'Hẻm'},
-  {title: 'Mặt tiền', value: 'Mặt tiền'},
-  {title: 'Tất cả', value: 'Tất cả'},
-  {title: 'Hẻm', value: 'Hẻm'},
-  {title: 'Mặt tiền', value: 'Mặt tiền'},
+  { title: 'Tất cả', value: 'Tất cả' },
+  { title: 'Hẻm', value: 'Hẻm' },
+  { title: 'Mặt tiền', value: 'Mặt tiền' },
+  { title: 'Tất cả', value: 'Tất cả' },
+  { title: 'Hẻm', value: 'Hẻm' },
+  { title: 'Mặt tiền', value: 'Mặt tiền' },
 ];
 
 const optionsBedroom = [
-  {title: 'Tất cả', value: 'Tất cả'},
-  {title: '1', value: '1'},
-  {title: '2', value: '2'},
-  {title: '3', value: '3'},
-  {title: '4', value: '4'},
-  {title: '5', value: '5'},
+  { title: 'Tất cả', value: 'Tất cả' },
+  { title: '1', value: '1' },
+  { title: '2', value: '2' },
+  { title: '3', value: '3' },
+  { title: '4', value: '4' },
+  { title: '5', value: '5' },
 ];
 
 const listTypeHousing = [
@@ -182,18 +196,29 @@ const listCompass = [
   'Bắc',
   'Nam',
   'Đông',
-  'Tây'
+  'Tây',
 ];
 
 const Filter = forwardRef((props, ref) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
   const [showFilter, setShowFilter] = useState(false);
 
   const { control, handleSubmit } = useForm({
     defaultValues: {},
   });
 
-  console.log("controll=====", control);
+  console.log('controll=====', control);
+  const { basicInformation, projects, demands } = useSelector(selectPosts);
+  const { provinces, districts, wards } = useSelector(selectCommon);
+  console.log('provinces: ', provinces);
+  console.log('districts: ', districts);
+  const emptyDistrictOption = {
+    label: t('select.district'),
+    value: null,
+  };
+  const districtOptions = [emptyDistrictOption, ...districts];
 
   const realEstateType = [{ label: 'Mua', value: 1 }];
 
@@ -206,6 +231,33 @@ const Filter = forwardRef((props, ref) => {
   const onClose = () => setShowFilter(false);
 
   useImperativeHandle(ref, () => ({ onOpen }));
+
+  const fetchDistricts = (params: any, callback: () => void) =>
+    dispatchThunk(dispatch, getDistricts(params), callback);
+
+  const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
+
+  const refresh = async () => {
+    const { province_id, district_id } = basicInformation;
+    await Promise.all([
+      dispatchThunk(dispatch, getProvinces()),
+      province_id &&
+        fetchDistricts({
+          province_code: province_id,
+        }),
+
+      province_id &&
+        district_id &&
+        fetchWards({
+          province_code: province_id,
+          district_code: district_id,
+        }),
+    ]);
+  };
+
+  useEffect(() => {
+    refresh();
+  }, []);
 
   return (
     <Modal visible={showFilter}>
@@ -260,7 +312,7 @@ const Filter = forwardRef((props, ref) => {
                     rowStyle={styles.buttonSelect}
                     rowTextStyle={styles.rowTextStyle}
                     control={control}
-                    data={realEstateType}
+                    data={districtOptions}
                     defaultButtonText={t('select.district')}
                     name="real_estate_type_id"
                     onSelect={handleSubmit(onSelect)}
@@ -309,6 +361,7 @@ const Filter = forwardRef((props, ref) => {
                   onFocus={undefined}
                   rightLabel={undefined}
                   showPasswordPolicy={undefined}
+                  renderErrorMessage={false}
                 />
               </View>
             </View>
@@ -327,8 +380,11 @@ const Filter = forwardRef((props, ref) => {
             maximumValue={1000000000}
             step={10000000}
             control={control}
-            name='priceRange'
-            convertDisplay={(val: string) => (val || "0").toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'}
+            name="priceRange"
+            convertDisplay={(val: string) =>
+              (val || '0').toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
+              ' VND'
+            }
           />
 
           <SliderComponent
@@ -339,8 +395,8 @@ const Filter = forwardRef((props, ref) => {
             maximumValue={100}
             step={5}
             control={control}
-            name='acreage'
-            convertDisplay={(val: string) => (val || "0").toString() + 'm²'}
+            name="acreage"
+            convertDisplay={(val: string) => (val || '0').toString() + 'm²'}
           />
 
           <View style={styles.wrapTypeHousing}>
@@ -349,37 +405,37 @@ const Filter = forwardRef((props, ref) => {
           </View>
 
           <SelectComponent
-            title={t('common.legalDocuments') || ""}
+            title={t('common.legalDocuments') || ''}
             options={optionsLegalDocuments}
-            name='legalDocuments'
+            name="legalDocuments"
             control={control}
           />
 
           <SelectComponent
-            title={t('common.location') || ""}
+            title={t('common.location') || ''}
             options={optionsLocation}
-            name='location'
+            name="location"
             control={control}
           />
 
           <SelectComponent
-            title={t('common.bedroom') || ""}
+            title={t('common.bedroom') || ''}
             options={optionsBedroom}
-            name='bedroom'
+            name="bedroom"
             control={control}
           />
 
           <SelectComponent
-            title={t('common.bathroom') || ""}
+            title={t('common.bathroom') || ''}
             options={optionsBedroom}
-            name='bathroom'
+            name="bathroom"
             control={control}
           />
 
           <SelectComponent
-            title={t('common.numberFloors') || ""}
+            title={t('common.numberFloors') || ''}
             options={optionsBedroom}
-            name='numberFloors'
+            name="numberFloors"
             control={control}
           />
 
@@ -407,7 +463,11 @@ const Filter = forwardRef((props, ref) => {
               outline
               color={undefined}
               loading={undefined}
-              icon={<View style={styles.wrapIcon}><Reload/></View>}
+              icon={
+                <View style={styles.wrapIcon}>
+                  <Reload />
+                </View>
+              }
             />
             <Button
               buttonStyle={{

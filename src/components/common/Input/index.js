@@ -25,6 +25,7 @@ const Input = ({
   required,
   rightLabel,
   showPasswordPolicy,
+  renderErrorMessage,
   ...props
 }) => {
   const {
@@ -86,7 +87,11 @@ const Input = ({
         onFocus={handleFocus}
         placeholder={placeholder || label}
         placeholderTextColor={COLOR_GRAY_5}
-        renderErrorMessage={!passwordPolicyVisible}
+        renderErrorMessage={
+          renderErrorMessage != undefined
+            ? renderErrorMessage
+            : !passwordPolicyVisible
+        }
         rightIcon={
           isPassword && (
             <Icon
