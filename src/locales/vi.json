@@ -266,6 +266,16 @@
     "RESORTS_FARMS": "Resorts, farms",
     "OTHER": "Bất động sản khác"
   },
+  "compass": {
+    "SOUTHEAST": "Đông Nam",
+    "NORTHEAST": "Đông Bắc",
+    "NORTHWEST": "Tây Bắc",
+    "SOUTHWEST": "Tây Nam",
+    "NORTH": "Bắc",
+    "SOUTH": "Nam",
+    "EAST": "Đông",
+    "WEST": "Tây"
+  },
   "select": {
     "sex": "Giới tính",
     "male": "Nam",

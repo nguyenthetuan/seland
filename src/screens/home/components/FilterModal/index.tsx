@@ -189,14 +189,14 @@ const listTypeHousing = [
 ];
 
 const listCompass = [
-  'Đông Nam',
-  'Đông Bắc',
-  'Tây Bắc',
-  'Tây Nam',
-  'Bắc',
-  'Nam',
-  'Đông',
-  'Tây',
+  'SOUTHEAST',
+  'NORTHEAST',
+  'NORTHWEST',
+  'SOUTHWEST',
+  'NORTH',
+  'SOUTH',
+  'EAST',
+  'WEST',
 ];
 
 const Filter = forwardRef((props, ref) => {
@@ -205,15 +205,12 @@ const Filter = forwardRef((props, ref) => {
 
   const [showFilter, setShowFilter] = useState(false);
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     defaultValues: {},
   });
 
-  console.log('controll=====', control);
   const { basicInformation, projects, demands } = useSelector(selectPosts);
   const { provinces, districts, wards } = useSelector(selectCommon);
-  console.log('provinces: ', provinces);
-  console.log('districts: ', districts);
   const emptyDistrictOption = {
     label: t('select.district'),
     value: null,
@@ -258,6 +255,12 @@ const Filter = forwardRef((props, ref) => {
   useEffect(() => {
     refresh();
   }, []);
+
+  useEffect(() => {
+    Object.entries(basicInformation).forEach(
+      ([key, value]) => value && setValue(key, value)
+    );
+  }, [basicInformation, setValue]);
 
   return (
     <Modal visible={showFilter}>
@@ -369,7 +372,10 @@ const Filter = forwardRef((props, ref) => {
 
           <View style={styles.wrapTypeHousing}>
             <Text style={null}>{t('select.typeHousing')}</Text>
-            <TypeHousing options={listTypeHousing} />
+            <TypeHousing
+              options={listTypeHousing}
+              type={'typeHousing'}
+            />
           </View>
 
           <SliderComponent
@@ -401,7 +407,10 @@ const Filter = forwardRef((props, ref) => {
 
           <View style={styles.wrapTypeHousing}>
             <Text style={null}>{t('select.compass')}</Text>
-            <TypeHousing options={listCompass} />
+            <TypeHousing
+              options={listCompass}
+              type={'compass'}
+            />
           </View>
 
           <SelectComponent
@@ -439,14 +448,6 @@ const Filter = forwardRef((props, ref) => {
             control={control}
           />
 
-          {/* <Text style={null}>{t('common.priceRange')}</Text>
-          <Text style={null}>{t('common.acreage')}</Text>
-          <Text style={null}>{t('common.compass')}</Text>
-          <Text style={null}>{t('common.legalDocuments')}</Text>
-          <Text style={null}>{t('common.location')}</Text>
-          <Text style={null}>{t('common.bedroom')}</Text>
-          <Text style={null}>{t('common.bathroom')}</Text>
-          <Text style={null}>{t('common.numberFloors')}</Text> */}
           <View style={styles.footer}>
             <Button
               buttonStyle={{

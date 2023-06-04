@@ -19,6 +19,7 @@ import { Icon } from '@rneui/themed';
 
 interface IProps {
   options?: any[];
+  type: string;
 }
 
 interface ITypeHousingItem {
@@ -26,47 +27,33 @@ interface ITypeHousingItem {
   item: string;
 }
 
-const TypeHousing = ({ options = [] }: IProps) => {
+const TypeHousing = ({ options = [], type }: IProps) => {
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
 
   const [showTypeHousing, setShowTypeHousing] = useState<boolean>(false);
   const [listChooseTypeHousing, setListChooseTypeHousing] = useState<
-    Array<ITypeHousingItem>
+    Array<String>
   >([]);
 
   const onShowListTypeHousing = () => {
     setShowTypeHousing(!showTypeHousing);
   };
 
-  const onSelectTypeHousing = (item: ITypeHousingItem) => {
+  const onSelectTypeHousing = (item: string) => {
     const data = [...listChooseTypeHousing];
-    const index = data.findIndex(e => e.index == item.index);
-    if (index == -1) {
-      data.push(item);
-    } else {
+    if (data.includes(item)) {
       return;
     }
+    data.push(item);
     setListChooseTypeHousing(data);
   };
 
-  const onRemoveTypeHousing = (item: ITypeHousingItem) => {
+  const onRemoveTypeHousing = (item: String) => {
     const index = listChooseTypeHousing.indexOf(item);
     const data = [...listChooseTypeHousing];
     data.splice(index, 1);
     setListChooseTypeHousing(data);
-  };
-
-  const renderListTypeHousing = (item: ITypeHousingItem) => {
-    return (
-      <TouchableOpacity
-        key={item.index}
-        onPress={() => onSelectTypeHousing(item)}
-        style={{ backgroundColor: COLOR_GRAY_10 }}
-      >
-        <Text style={null}>{t(`typeHousing.${item.item}`)}</Text>
-      </TouchableOpacity>
-    );
   };
 
   return (
@@ -75,18 +62,18 @@ const TypeHousing = ({ options = [] }: IProps) => {
         style={styles.typeHousingContainer}
         onPress={onShowListTypeHousing}
       >
-        {listChooseTypeHousing.map((item, idx) => {
+        {listChooseTypeHousing.map((item, index) => {
           return (
             <TouchableOpacity
               style={styles.typeHousing}
-              key={idx}
+              key={index}
               onPress={() => onRemoveTypeHousing(item)}
             >
               <Text
                 style={null}
                 numberOfLines={1}
               >
-                {t(`typeHousing.${item.item}`)}
+                {t(`${type}.${item}`)}
               </Text>
               <Icon
                 name="close"
@@ -99,11 +86,22 @@ const TypeHousing = ({ options = [] }: IProps) => {
       </TouchableOpacity>
 
       {showTypeHousing ? (
-        <FlatList
-          data={options}
-          renderItem={renderListTypeHousing}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
           style={styles.container}
-        />
+        >
+          {options.map((item: string, index: number) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => onSelectTypeHousing(item)}
+                style={{ backgroundColor: COLOR_GRAY_10 }}
+              >
+                <Text style={null}>{t(`${type}.${item}`)}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
       ) : null}
     </>
   );
