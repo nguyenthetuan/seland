@@ -66,7 +66,7 @@ const CreatePostScreen = () => {
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
   const dispatch = useDispatch();
-  const { loading, basicInformation, realEstateInformation, articleDetails } =
+  const { loading, basicInformation, realEstateInformation, createRealEstate } =
     useSelector(selectPosts);
 
   const handleClosePost = () => {
@@ -99,17 +99,23 @@ const CreatePostScreen = () => {
     }
   };
 
-  const createPosts = () => {
+  const createPosts = value => {
     const params = {
       ...basicInformation,
       ...realEstateInformation,
-      ...articleDetails,
+      ...value,
       status: saveType,
     };
     const formData = new FormData();
 
     Object.keys(params).forEach((key, value) => {
-      if (key === 'isPhoto' || key === 'photo' || key === 'video') return;
+      if (
+        key === 'isPhoto' ||
+        key === 'photo' ||
+        key === 'video' ||
+        key === 'urlVideo'
+      )
+        return;
 
       if (params[key]) {
         formData.append(key, params[key]);
@@ -127,8 +133,21 @@ const CreatePostScreen = () => {
         formData.append(`images[${index}]`, file);
       });
     }
-
     // append video to form
+    if (params?.video?.length) {
+      params?.photo.forEach((item, index) => {
+        const file = {
+          uri: item.uri,
+          name: item.fileName,
+          type: item.type,
+        };
+        formData.append(`video`, file);
+      });
+    }
+
+    if (params?.urlVideo) {
+      formData.append(`video`, params?.urlVideo);
+    }
 
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
@@ -154,11 +173,11 @@ const CreatePostScreen = () => {
           break;
         }
       case TAB.ARTICLE_DETAILS:
-        const errorsArticle = articleDetailRef.current.handleNext();
-        if (errorsArticle) {
+        const response = articleDetailRef.current.handleNext();
+        if (response?.error) {
           break;
         } else {
-          createPosts();
+          createPosts(response);
           break;
         }
       default:
@@ -203,7 +222,7 @@ const CreatePostScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Loading
-        visible={loading}
+        visible={loading || createRealEstate?.loading}
         textContent={t('common.loading')}
         color={COLOR_BLUE_1}
         textStyle={styles.spinnerTextStyle}

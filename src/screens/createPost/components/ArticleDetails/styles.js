@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     borderColor: COLOR_GRAY_5,
     borderRadius: 2,
     borderWidth: 1,
-    marginBottom: 24,
     marginHorizontal: 10,
     padding: 16,
   },
@@ -83,7 +82,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 20,
     marginLeft: 16,
-    marginTop: -16,
   },
   image: {
     borderRadius: 5,
@@ -101,6 +99,9 @@ const styles = StyleSheet.create({
   },
   inputContainerContent: {
     height: 64,
+    marginHorizontal: 10,
+  },
+  inputContainerStyle: {
     marginHorizontal: 10,
   },
   inputContainerTitle: {

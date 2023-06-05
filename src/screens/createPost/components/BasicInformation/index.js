@@ -62,10 +62,6 @@ const BasicInformation = forwardRef((props, ref) => {
     label: t('select.ward'),
     value: null,
   };
-  const emptyRealEstateType = {
-    label: t('select.realEstateType'),
-    value: null,
-  };
   const emptyProject = {
     label: t('select.nameProject'),
     value: null,
@@ -74,10 +70,6 @@ const BasicInformation = forwardRef((props, ref) => {
   const provinceOptions = [emptyProvinceOption, ...provinces];
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
-  const realEstateTypeOptions = [
-    emptyRealEstateType,
-    ...formatDataValueId(realEstateType),
-  ];
   const projectOptions = [emptyProject, ...formatDataNameId(projects)];
 
   const { control, setValue, getValues, reset } = useForm({
@@ -205,7 +197,7 @@ const BasicInformation = forwardRef((props, ref) => {
         province: !value.province_id ? 'Vui lòng chọn Thành phố' : null,
         district: !value.district_id ? 'Vui lòng chọn Quận/huyện' : null,
         ward: !value.ward_id ? 'Vui lòng chọn Phường/xã' : null,
-        addressDetail: !value.ward_id ? 'Vui nhập địa chỉ' : null,
+        addressDetail: !value.address_detail ? 'Vui nhập địa chỉ' : null,
       });
       return true;
     }
@@ -258,7 +250,7 @@ const BasicInformation = forwardRef((props, ref) => {
         buttonStyle={styles.select}
         control={control}
         errors={errors?.realEstateType}
-        data={realEstateTypeOptions}
+        data={[...formatDataValueId(realEstateType)]}
         defaultButtonText="Please Select"
         label={t('select.realEstateType')}
         labelStyle={styles.inputLabel}
