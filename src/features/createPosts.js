@@ -60,12 +60,19 @@ export const createRealEstates = createAsyncThunk(
   async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestCreateRealEstates(params);
-      if (data) {
-        return fulfillWithValue({ ...data });
-      }
-      return rejectWithValue('Loi tao bai dang');
+      return fulfillWithValue({ ...data });
     } catch (error) {
-      return rejectWithValue('Loi tao bai dang');
+      const { data } = error;
+      let errorString = 'Lỗi hệ thống';
+      if (data) {
+        errorString = ` ${
+          Object.keys(data)[Object.keys(data).length - 1]
+        }: ${data?.[
+          Object.keys(data)[Object.keys(data).length - 1]
+        ].toString()}`;
+      }
+
+      return rejectWithValue(errorString);
     }
   }
 );
