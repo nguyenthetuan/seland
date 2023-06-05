@@ -104,6 +104,7 @@ const CreatePostScreen = () => {
       ...basicInformation,
       ...realEstateInformation,
       ...articleDetails,
+      status: saveType,
     };
     const formData = new FormData();
 
