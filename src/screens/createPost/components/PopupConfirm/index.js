@@ -32,13 +32,13 @@ const PopupConfirmPost = forwardRef(
     useImperativeHandle(ref, () => ({ openPopup }));
 
     const handleButtonLeft = () => {
+      onPressButtonLeft();
       setVisible(false);
-      onPressButtonRight();
     };
 
     const handleButtonRight = () => {
+      onPressButtonRight();
       setVisible(false);
-      onPressButtonLeft();
     };
 
     return (

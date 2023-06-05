@@ -179,10 +179,11 @@ const CreatePostScreen = () => {
 
   const handleManagePost = () => {
     setTab(TAB.BASIC_INFORMATION);
-    if (YOUR_WANT.SAVE_PRIVATE) {
-      navigate(SCREENS.USER_POSTS, { type: 'createPost' });
-    } else {
+
+    if (saveType === YOUR_WANT.SAVE_DRAFTS) {
       navigate(SCREENS.DRAFT_POSTS);
+    } else {
+      navigate(SCREENS.USER_POSTS, { type: 'createPost' });
     }
   };
 

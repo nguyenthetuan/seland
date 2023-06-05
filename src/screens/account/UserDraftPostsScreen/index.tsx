@@ -33,7 +33,7 @@ const UserDraftPostsScreen = () => {
   };
   useEffect(() => {
     const params = {
-      type: YOUR_WANT.SAVE_DRAFTS,
+      status: YOUR_WANT.SAVE_DRAFTS,
     };
     dispatchThunk(dispatch, getListRealEstatesUser(params));
   }, [dispatch]);
