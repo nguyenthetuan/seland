@@ -44,7 +44,7 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
     setShowTypeHousing(!showTypeHousing);
   };
 
-  const onSelectTypeHousing = (item: string) => {
+  const onSelectTypeHousing = (item: string | number) => {
     const data = [...value];
     if (data.includes(item)) {
       return;
@@ -53,12 +53,23 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
     onChange(data);
   };
 
-  const onRemoveTypeHousing = (item: String) => {
+  const onRemoveTypeHousing = (item: string | number) => {
     const index = value.indexOf(item);
     const data = [...value];
     data.splice(index, 1);
     onChange(data);
   };
+
+  const getTitleFromValue = (val: string | number) => {
+    let title = '';
+    options.forEach((option) => {
+      if (option.value == val) {
+        title = option.title;
+        return;
+      }
+    })
+    return title;
+  }
 
   return (
     <>
@@ -71,13 +82,13 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
             <TouchableOpacity
               style={styles.typeHousing}
               key={index}
-              onPress={() => onRemoveTypeHousing(item)}
+              onPress={() => onRemoveTypeHousing(item?.value)}
             >
               <Text
                 style={null}
                 numberOfLines={1}
               >
-                {t(`${type}.${item}`)}
+                {t(`${type}.${getTitleFromValue(item)}`)}
               </Text>
               <Icon
                 name="close"
@@ -95,18 +106,18 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
             showsVerticalScrollIndicator={false}
             style={styles.container}
           >
-            {options.map((item: string, index: number) => {
+            {options.map((item: {title: string, value: number}, index: number) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={() => onSelectTypeHousing(item)}
+                  onPress={() => onSelectTypeHousing(item?.value)}
                   style={{
                     backgroundColor: COLOR_GRAY_10,
                     paddingLeft: 4,
                     paddingBottom: 4,
                   }}
                 >
-                  <Text style={null}>{t(`${type}.${item}`)}</Text>
+                  <Text style={null}>{t(`${type}.${item?.title}`)}</Text>
                 </TouchableOpacity>
               );
             })}

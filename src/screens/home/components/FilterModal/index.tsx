@@ -56,53 +56,52 @@ const optionsAcreage = [
 ];
 
 const optionsLegalDocuments = [
-  { title: 'Tất cả', value: 'Tất cả' },
-  { title: 'Sổ hồng', value: 'Sổ hồng' },
-  { title: 'Sổ đỏ', value: 'Sổ đỏ' },
+  // { title: 'Tất cả', value: 'Tất cả' },
+  { title: 'Sổ đỏ', value: 18 },
+  { title: 'Sổ hồng', value: 19 },
+  { title: "Đang chờ sổ", value: 20},
+  { title: "Hợp đồng mua bán", value: 21}
 ];
 
 const optionsLocation = [
-  { title: 'Tất cả', value: 'Tất cả' },
-  { title: 'Hẻm', value: 'Hẻm' },
-  { title: 'Mặt tiền', value: 'Mặt tiền' },
+  { title: 'Hẻm', value: 30 },
+  { title: 'Mặt tiền', value: 31 },
 ];
 
 const optionsBedroom = [
-  { title: 'Tất cả', value: 'Tất cả' },
-  { title: '1', value: '1' },
-  { title: '2', value: '2' },
-  { title: '3', value: '3' },
-  { title: '4', value: '4' },
-  { title: '5+', value: '5+' },
+  // { title: 'Tất cả', value: 'Tất cả' },
+  { title: '1', value: 1 },
+  { title: '2', value: 2 },
+  { title: '3', value: 3 },
+  { title: '4', value: 4 },
+  { title: '5+', value: 5 },
 ];
 
 const listTypeHousing = [
-  'ALL',
-  'HOME',
-  'STREET_HOUSE',
-  'APARTMENT',
-  'VILLA',
-  'SHOP_HOUSE',
-  'PENT_HOUSE',
-  'LAND',
-  'PROJECT_LAND',
-  'OFFICE',
-  'FLOOR_PLAN_STORE',
-  'WAREHOUSE_FACTORY',
-  'HOSTELS_ROOMS',
-  'RESORTS_FARMS',
-  'OTHER',
+  // {title: 'ALL', value: 0},
+  {title: 'HOME', value: 1},
+  {title: 'STREET_HOUSE', value: 2},
+  {title: 'APARTMENT', value: 3},
+  {title: 'VILLA', value: 4},
+  {title: 'SHOP_HOUSE', value: 5},
+  {title: 'PENT_HOUSE', value: 6},
+  {title: 'LAND', value: 7},
+  {title: 'PROJECT_LAND', value: 8},
+  {title: 'OFFICE', value: 9},
+  {title: 'WAREHOUSE_FACTORY', value: 11},
+  {title: 'RESORTS_FARMS', value: 12},
+  {title: 'OTHER', value: 13},
 ];
 
 const listCompass = [
-  'SOUTHEAST',
-  'NORTHEAST',
-  'NORTHWEST',
-  'SOUTHWEST',
-  'NORTH',
-  'SOUTH',
-  'EAST',
-  'WEST',
+  {title: 'EAST', value: 2},
+  {title: 'SOUTH', value: 3},
+  {title: 'WEST', value: 4},
+  {title: 'NORTH', value: 5},
+  {title: 'NORTHEAST', value: 6},
+  {title: 'SOUTHEAST', value: 7},
+  {title: 'NORTHWEST', value: 8},
+  {title: 'SOUTHWEST', value: 9},
 ];
 
 const initValues = {
@@ -123,7 +122,7 @@ const initValues = {
   district_id: null,
 };
 
-const Filter = forwardRef((props, ref) => {
+const Filter = forwardRef((props: any, ref) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -151,7 +150,7 @@ const Filter = forwardRef((props, ref) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log('dataFilter ====', data);
+    props?.onSubmit && props?.onSubmit(data);
   };
 
   const clearForm = () => {
@@ -165,7 +164,7 @@ const Filter = forwardRef((props, ref) => {
 
   const onClose = () => setShowFilter(false);
 
-  useImperativeHandle(ref, () => ({ onOpen }));
+  useImperativeHandle(ref, () => ({ onOpen, onClose }));
 
   const fetchDistricts = (params: any, callback?: () => void) =>{
     dispatchThunk(dispatch, getDistricts(params), callback);

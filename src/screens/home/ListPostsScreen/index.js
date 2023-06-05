@@ -92,6 +92,38 @@ const ListPostsScreen = () => {
     filterRef.current.onOpen();
   };
 
+  const convertDataFilter = (data) => {
+    const res = {};
+    res.price_range_id = `${Number(data?.priceRange[0])/(10**9)}-${Number(data?.priceRange[1])/(10**9)}`;
+    res.area_range_id = `${Number(data?.acreage[0])}-${Number(data?.acreage[1])}`;
+    res.sort_by = 'asc';
+    if (data?.typeHousing?.length > 0) {
+      res.real_estate_type_id = data?.typeHousing?.join(',');
+    }
+    if (data?.compass?.length > 0) {
+      res.main_direction_id = data?.compass?.join(',');
+    }
+    if (data?.bedroom?.length > 0) {
+      res.bedroom = data?.bedroom?.join(',');
+    }
+    if (data?.bathroom?.length > 0) {
+      res.bathroom = data?.bathroom?.join(',');
+    }
+    if (data?.numberFloors > 0) {
+      res.floor = data?.numberFloors.join(',');
+    }
+    if (data?.location > 0) {
+      res.location_id = data?.location.join(',');
+    }
+    return res;
+  }
+
+  const onFilter = (data) => {
+    const dataFilter = convertDataFilter(data);
+    dispatchThunk(dispatch, getListRealEstates(dataFilter));
+    filterRef?.current?.onClose();
+  }
+
   return (
     <>
       <Loading
@@ -179,7 +211,7 @@ const ListPostsScreen = () => {
           }
         />
       </View>
-      <Filter ref={filterRef} />
+      <Filter ref={filterRef} onSubmit={onFilter} />
     </>
   );
 };
