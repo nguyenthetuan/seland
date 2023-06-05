@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "17093422411",
+    "project_id": "seland-4fa18",
+    "storage_bucket": "seland-4fa18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17093422411:android:51c48768ee3dcf91c44cce",
+        "android_client_info": {
+          "package_name": "com.seland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17093422411-dp8g027j1imnr1vvcgmvpuisg6obp83q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-dmECSw4P9VqerJliNHDAm2-1LnK51cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17093422411-dp8g027j1imnr1vvcgmvpuisg6obp83q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "17093422411-b9pcb164v8sttd6slbhgfabqdfl9sf1k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.SeLand"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
