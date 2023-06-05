@@ -16,7 +16,7 @@ const routes = [
   },
   {
     component: UserPostsScreen,
-    name: 'UserPosts',
+    name: SCREENS.USER_POSTS,
   },
 ];
 

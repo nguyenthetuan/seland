@@ -25,10 +25,6 @@ export const getHeaders = customHeaders => {
 };
 
 const successHandler = response => {
-  if (__DEV__) {
-    console.log(`Response success API: ${response.config.url}`, response.data);
-  }
-
   const { data, status } = response;
 
   if (!data || status !== 200) {
@@ -44,10 +40,6 @@ const errorHandler = error => {
   }
 
   const resData = error.response?.data;
-
-  if (__DEV__) {
-    console.log(`Response error API:`, resData);
-  }
 
   throw resData;
 };
