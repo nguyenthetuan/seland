@@ -202,7 +202,7 @@ const CreatePostScreen = () => {
     if (saveType === YOUR_WANT.SAVE_DRAFTS) {
       navigate(SCREENS.DRAFT_POSTS);
     } else {
-      navigate(SCREENS.USER_POSTS, { type: 'createPost' });
+      navigate(SCREENS.USER_POSTS, { type: 'createPost', status: saveType });
     }
   };
 
