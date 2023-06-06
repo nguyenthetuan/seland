@@ -10,7 +10,7 @@ import styles from './styles';
 
 interface AuthHeadingProps {
   hasBack?: boolean;
-  hasHello: boolean;
+  hasHello?: boolean;
   children: string;
 }
 
