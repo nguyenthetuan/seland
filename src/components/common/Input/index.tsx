@@ -1,39 +1,67 @@
 import { Icon, Input as RNEInput } from '@rneui/themed';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import {
+  InputModeOptions,
+  StyleSheet,
+  TextInputAndroidProps,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import { COLOR_GRAY_5, COLOR_RED_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
+interface InputProps {
+  autoComplete: TextInputAndroidProps['autoComplete'];
+  control: any;
+  isEmail?: boolean;
+  isNumeric?: boolean;
+  isPassword?: boolean;
+  isWebsite?: boolean;
+  inputContainerStyle?: ViewStyle;
+  label: string;
+  labelStyle?: Object | [];
+  name: string;
+  onChangeText?: (v: string) => void;
+  onFocus: () => void;
+  placeholder?: string;
+  required?: boolean;
+  rightLabel?: string;
+  showPasswordPolicy?: boolean;
+  disabled: boolean;
+  errorMessage?: string;
+  inputMode?: InputModeOptions;
+}
+
 const Input = ({
   control,
   inputContainerStyle,
-  isEmail,
-  isNumeric,
-  isPassword,
-  isWebsite,
-  label,
-  labelStyle,
+  isEmail = false,
+  isNumeric = false,
+  isPassword = false,
+  isWebsite = false,
+  label = '',
+  labelStyle = {},
   name,
   onChangeText,
   onFocus,
-  placeholder,
-  required,
-  rightLabel,
-  showPasswordPolicy,
+  placeholder = '',
+  required = false,
+  rightLabel = '',
+  showPasswordPolicy = false,
   ...props
-}) => {
+}: InputProps) => {
   const {
     field: { onBlur, onChange, value },
   } = useController({ control, name });
   const { t } = useTranslation();
-  const [isFocused, setIsFocused] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [passwordPolicyVisible, setPasswordPolicyVisible] = useState(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [passwordPolicyVisible, setPasswordPolicyVisible] =
+    useState<boolean>(false);
 
   const handleBlur = () => {
     onBlur();
@@ -41,7 +69,7 @@ const Input = ({
     setIsFocused(false);
   };
 
-  const handleChange = text => {
+  const handleChange = (text: string) => {
     if (onChangeText) onChangeText(text);
     onChange(
       isNumeric
@@ -104,40 +132,6 @@ const Input = ({
       )}
     </View>
   );
-};
-
-Input.defaultProps = {
-  inputContainerStyle: {},
-  isEmail: false,
-  isNumeric: false,
-  isPassword: false,
-  isWebsite: false,
-  label: '',
-  labelStyle: {},
-  onChangeText: () => {},
-  onFocus: () => {},
-  placeholder: '',
-  required: false,
-  rightLabel: '',
-  showPasswordPolicy: false,
-};
-
-Input.propTypes = {
-  control: PropTypes.any.isRequired,
-  inputContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  isEmail: PropTypes.bool,
-  isNumeric: PropTypes.bool,
-  isPassword: PropTypes.bool,
-  isWebsite: PropTypes.bool,
-  label: PropTypes.string,
-  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  name: PropTypes.string.isRequired,
-  onChangeText: PropTypes.func,
-  onFocus: PropTypes.func,
-  placeholder: PropTypes.string,
-  required: PropTypes.bool,
-  rightLabel: PropTypes.node,
-  showPasswordPolicy: PropTypes.bool,
 };
 
 export default Input;
