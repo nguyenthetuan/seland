@@ -88,7 +88,7 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
                 style={null}
                 numberOfLines={1}
               >
-                {t(`${type}.${getTitleFromValue(item)}`)}
+                {t(`${getTitleFromValue(item)}`)}
               </Text>
               <Icon
                 name="close"
@@ -117,7 +117,7 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
                     paddingBottom: 4,
                   }}
                 >
-                  <Text style={null}>{t(`${type}.${item?.title}`)}</Text>
+                  <Text style={null}>{t(`${item?.title}`)}</Text>
                 </TouchableOpacity>
               );
             })}
