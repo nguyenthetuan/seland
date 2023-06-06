@@ -11,10 +11,11 @@ interface Iprops {
   control: Control<any>;
   handleSubmit?: any;
   onSelect: (value: any) => void;
+  onFilter: (value?: any) => void;
 }
 
 const HeaderFilterPosts: FC<Iprops> = props => {
-  const { control, handleSubmit, onSelect } = props;
+  const { control, handleSubmit, onSelect, onFilter } = props;
   const { t } = useTranslation();
   const filterRef: any = useRef();
 
@@ -67,6 +68,11 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
+
+  const onSubmit = () => {
+    onFilter && onFilter();
+    filterRef.current.onClose();
+  }
 
   return (
     <>
@@ -136,7 +142,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
           onSelect={handleSubmit(onSelect)}
         />
       </View>
-      <Filter ref={filterRef} />
+      <Filter ref={filterRef} onSubmit={onSubmit} />
     </>
   );
 };

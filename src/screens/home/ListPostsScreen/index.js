@@ -94,11 +94,11 @@ const ListPostsScreen = () => {
               control={control}
               handleSubmit={handleSubmit}
               onSelect={onSelect}
+              onFilter={onFilter}
             />
           }
         />
       </View>
-      <Filter ref={filterRef} onSubmit={onFilter} />
     </>
   );
 };

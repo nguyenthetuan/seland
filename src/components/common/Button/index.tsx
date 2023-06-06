@@ -9,11 +9,13 @@ import styles from './styles';
 interface ButtonProps {
   buttonStyle: {};
   color?: string;
-  loading: boolean;
+  loading?: boolean;
   outline?: boolean;
   title?: string | null;
   titleStyle?: {};
   onPress?: () => void;
+  icon?: any;
+  radius?: number;
 }
 
 const Button = ({
