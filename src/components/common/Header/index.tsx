@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({
   icon = 'arrow-back-ios',
-  onPress = () => {},
+  onPress,
   right = null,
   title = '',
 }: HeaderProps) => {
