@@ -17,6 +17,4 @@ const NoResults = () => {
   );
 };
 
-NoResults.propTypes = {};
-
 export default NoResults;

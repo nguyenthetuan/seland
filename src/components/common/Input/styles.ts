@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     marginVertical: 8,
   },
-  input: isFocused => ({
+  input: (isFocused: boolean) => ({
     borderColor: isFocused ? COLOR_BLUE_4 : COLOR_GRAY_5,
     borderRadius: 2,
     borderWidth: 1,

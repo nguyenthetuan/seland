@@ -1,13 +1,24 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { SafeAreaView, View } from 'react-native';
 
 import Text from '../Text';
 import styles from './styles';
 
-const Header = ({ icon, onPress, right, title }) => {
+interface HeaderProps {
+  icon?: string;
+  onPress: () => void;
+  right?: ReactNode;
+  title: string;
+}
+
+const Header = ({
+  icon = 'arrow-back-ios',
+  onPress,
+  right = null,
+  title = '',
+}: HeaderProps) => {
   const { goBack } = useNavigation();
 
   return (
@@ -23,20 +34,6 @@ const Header = ({ icon, onPress, right, title }) => {
       {right}
     </SafeAreaView>
   );
-};
-
-Header.defaultProps = {
-  icon: 'arrow-back-ios',
-  onPress: null,
-  right: null,
-  title: '',
-};
-
-Header.propTypes = {
-  icon: PropTypes.string,
-  onPress: PropTypes.func,
-  right: PropTypes.node,
-  title: PropTypes.string,
 };
 
 export default Header;
