@@ -84,10 +84,7 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
               key={index}
               onPress={() => onRemoveTypeHousing(item?.value)}
             >
-              <Text
-                style={null}
-                numberOfLines={1}
-              >
+              <Text>
                 {t(`${getTitleFromValue(item)}`)}
               </Text>
               <Icon
@@ -117,7 +114,7 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
                     paddingBottom: 4,
                   }}
                 >
-                  <Text style={null}>{t(`${item?.title}`)}</Text>
+                  <Text>{t(`${item?.title}`)}</Text>
                 </TouchableOpacity>
               );
             })}

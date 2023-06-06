@@ -302,30 +302,18 @@ const Filter = forwardRef((props: any, ref) => {
 
               <View>
                 <Input
-                  autoComplete="address"
                   control={control}
                   name="address"
                   required
-                  placeholder={t('input.addressPlaceHolder')}
+                  placeholder={t('input.addressPlaceHolder') || ""}
                   inputContainerStyle={undefined}
-                  isEmail={undefined}
-                  isNumeric={undefined}
-                  isPassword={undefined}
-                  isWebsite={undefined}
-                  label={undefined}
-                  labelStyle={undefined}
-                  onChangeText={undefined}
-                  onFocus={undefined}
-                  rightLabel={undefined}
-                  showPasswordPolicy={undefined}
-                  renderErrorMessage={false}
                 />
               </View>
             </View>
           </View>
 
           <View style={styles.wrapTypeHousing}>
-            <Text style={null}>{t('select.typeHousing')}</Text>
+            <Text>{t('select.typeHousing')}</Text>
             <TypeHousing
               options={typeHousingOptions}
               type={'typeHousing'}
@@ -362,7 +350,7 @@ const Filter = forwardRef((props: any, ref) => {
           />
 
           <View style={styles.wrapTypeHousing}>
-            <Text style={null}>{t('select.compass')}</Text>
+            <Text>{t('select.compass')}</Text>
             <TypeHousing
               options={optionsData.compassOptions}
               type={'compass'}
