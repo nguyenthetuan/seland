@@ -8,6 +8,7 @@ const SCREENS = {
   MAPS: 'MapScreen',
   DRAFT_POSTS: 'DraftPosts',
   USER_POSTS: 'UserPosts',
+  LIST_PROJECT: 'ListProject',
 };
 
 export default SCREENS;

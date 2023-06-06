@@ -4,21 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { NoResults } from '../../../components';
 import { COLOR_BLUE_1 } from '../../../constants';
-import {
-  getListRealEstates,
-  selectRealEstates,
-} from '../../../features/realEstates';
+import { getListProjects, selectHome } from '../../../features';
 import { dispatchThunk } from '../../../utils';
-import Filter from '../components/FilterModal';
 import HeaderFilterPosts from '../components/HeaderFilterPosts';
 import HeaderListPosts from '../components/HeaderListPosts';
-import ItemRealEstates from '../components/ItemRealEstates';
+import ItemProject from './components/ItemProject';
 import styles from './styles';
 
-const ListPostsScreen = () => {
+const ListProjectScreen = () => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       real_estate_type_id: '',
@@ -27,24 +22,24 @@ const ListPostsScreen = () => {
       sort_by: '',
     },
   });
-  const filterRef = useRef();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { data: listPosts, loading: loadingListPost } =
-    useSelector(selectRealEstates);
-  const onSelect = value => {
+  const onSelect = (value: any) => {
     console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
   };
+  const { listProject } = useSelector(selectHome);
+  const { data } = listProject;
+  const { loading } = listProject;
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListRealEstates());
+    dispatchThunk(dispatch, getListProjects());
   }, [dispatch]);
 
   return (
     <>
       <Loading
-        visible={loadingListPost}
-        textContent={t('common.loading')}
+        visible={loading}
+        textContent={`${t('common.loading')}`}
         color={COLOR_BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
@@ -53,10 +48,10 @@ const ListPostsScreen = () => {
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
-          data={listPosts}
-          renderItem={({ item }) => <ItemRealEstates item={item} />}
-          keyExtractor={(_, index) => `itemPost${index}`}
-          ListEmptyComponent={loadingListPost ? null : <NoResults />}
+          data={data}
+          renderItem={({ item }) => <ItemProject item={item} />}
+          keyExtractor={(_, index) => `itemProject${index}`}
+          ListEmptyComponent={loading ? null : <NoResults />}
           ListHeaderComponent={
             <HeaderFilterPosts
               control={control}
@@ -66,9 +61,8 @@ const ListPostsScreen = () => {
           }
         />
       </View>
-      <Filter ref={filterRef} />
     </>
   );
 };
 
-export default ListPostsScreen;
+export default ListProjectScreen;
