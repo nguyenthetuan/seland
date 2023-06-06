@@ -14,7 +14,11 @@ interface AuthHeadingProps {
   children: string;
 }
 
-const AuthHeading = ({ hasBack, hasHello, children }: AuthHeadingProps) => {
+const AuthHeading = ({
+  hasBack = false,
+  hasHello = false,
+  children,
+}: AuthHeadingProps) => {
   const { goBack } = useNavigation();
   const { t } = useTranslation();
 
