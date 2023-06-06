@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from '@rneui/themed';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { Text } from '../../components';
@@ -81,8 +81,37 @@ const BottomTabNavigator = () => {
     },
   ];
 
+  const tabBar = ({ descriptors, state }) => {
+    const focusedOptions = descriptors[state.routes[state.index].key].options;
+    console.log(
+      '🚀 ~ file: index.js:86 ~ tabBar ~ focusedOptions:',
+      focusedOptions
+    );
+
+    if (focusedOptions?.tabBarStyle?.display === 'none') {
+      return null;
+    }
+    return (
+      <View>
+        {state?.routes.map((route, index) => {
+          console.log(
+            '🚀 ~ file: index.js:103 ~ {state?.routes.map ~ route:',
+            route
+          );
+
+          return (
+            <TouchableOpacity>
+              <Text>bottm</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
+
   return (
     <Navigator
+      // tabBar={tabBar}
       screenOptions={{
         gestureEnabled: false,
         headerShown: false,

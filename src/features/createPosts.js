@@ -28,16 +28,6 @@ export const createRealEstateInformation = createAsyncThunk(
     }
   }
 );
-export const createArticleDetails = createAsyncThunk(
-  'createArticleDetails',
-  async (params, { fulfillWithValue, rejectWithValue }) => {
-    try {
-      return fulfillWithValue(params);
-    } catch (error) {
-      return rejectWithValue('');
-    }
-  }
-);
 
 export const getAllInformation = createAsyncThunk(
   'getAllInformation',
@@ -60,12 +50,19 @@ export const createRealEstates = createAsyncThunk(
   async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestCreateRealEstates(params);
-      if (data) {
-        return fulfillWithValue({ ...data });
-      }
-      return rejectWithValue('Loi tao bai dang');
+      return fulfillWithValue({ ...data });
     } catch (error) {
-      return rejectWithValue('Loi tao bai dang');
+      const { data } = error;
+      let errorString = 'Lỗi hệ thống';
+      if (data) {
+        errorString = ` ${
+          Object.keys(data)[Object.keys(data).length - 1]
+        }: ${data?.[
+          Object.keys(data)[Object.keys(data).length - 1]
+        ].toString()}`;
+      }
+
+      return rejectWithValue(errorString);
     }
   }
 );
@@ -103,18 +100,6 @@ const initialRealEstateInformation = {
   road_type_id: '',
 };
 
-const initialArticleDetails = {
-  title: '',
-  content: '',
-  name: '',
-  phone_number: '',
-  type: null,
-  urlVideo: '',
-  isPhoto: true,
-  photo: [],
-  video: [],
-};
-
 const slice = createSlice({
   name: 'post',
   initialState: {
@@ -122,7 +107,6 @@ const slice = createSlice({
     error: '',
     basicInformation: initialBasicInformation,
     realEstateInformation: initialRealEstateInformation,
-    articleDetails: initialArticleDetails,
     realEstateType: [],
     information: [],
     projects: [],
@@ -140,7 +124,6 @@ const slice = createSlice({
     clearCreatePosts: state => {
       state.basicInformation = initialBasicInformation;
       state.realEstateInformation = initialRealEstateInformation;
-      state.articleDetails = initialArticleDetails;
     },
   },
   extraReducers: builder => {
@@ -153,20 +136,12 @@ const slice = createSlice({
       state.realEstateInformation = action.payload;
     });
     // create form Article Details
-    builder.addCase(createArticleDetails.fulfilled, (state, action) => {
-      state.articleDetails = action.payload;
-    });
-    // create form Article Details
     builder.addCase(createRealEstates.pending, state => {
       state.createRealEstate.loading = true;
     });
     builder.addCase(createRealEstates.fulfilled, (state, action) => {
       state.createRealEstate.loading = false;
       state.createRealEstate.data = action.payload;
-      // xoa data khi tao thanh cong
-      state.basicInformation = initialBasicInformation;
-      state.realEstateInformation = initialRealEstateInformation;
-      state.articleDetails = initialArticleDetails;
       state.createRealEstate.error = '';
     });
     builder.addCase(createRealEstates.rejected, (state, action) => {

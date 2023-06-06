@@ -69,7 +69,7 @@ const ConfirmPostScreen = () => {
   };
 
   const handleManagePost = () => {
-    navigate('UserPosts', { type: 'createPost' });
+    navigate(SCREENS.USER_POSTS, { type: 'createPost' });
   };
 
   const handleBack = () => confirmCancelPaymentRef.current.openPopup();

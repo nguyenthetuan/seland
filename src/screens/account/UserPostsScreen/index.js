@@ -49,6 +49,22 @@ const UserPostsScreen = () => {
     dispatchThunk(dispatch, getListRealEstatesUser());
   }, [dispatch]);
 
+  const handleSelectStatus = value => {
+    dispatchThunk(
+      dispatch,
+      value >= 0
+        ? getListRealEstatesUser({
+            'real_estate_type[]': value,
+          })
+        : getListRealEstatesUser()
+    );
+    setStatus(value);
+  };
+
+  useEffect(() => {
+    if (route?.params?.status) handleSelectStatus(route?.params?.status);
+  }, [route?.params?.status]);
+
   const statuses = [
     {
       label: 'all',
@@ -223,17 +239,7 @@ const UserPostsScreen = () => {
           renderItem={({ item: { label, value } }) => (
             <Button
               buttonStyle={[styles.marginHorizontal, styles.postButton]}
-              onPress={() => {
-                dispatchThunk(
-                  dispatch,
-                  value >= 0
-                    ? getListRealEstatesUser({
-                        'real_estate_type[]': value,
-                      })
-                    : getListRealEstatesUser()
-                );
-                setStatus(value);
-              }}
+              onPress={() => handleSelectStatus(value)}
               outline={value !== status}
               title={t(`button.${label}`)}
             />

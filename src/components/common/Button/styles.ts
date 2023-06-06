@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   disabled: {
     backgroundColor: COLOR_GRAY_5,
   },
-  outline: borderColor => ({
+  outline: (borderColor: string) => ({
     borderColor,
     borderWidth: 1,
   }),

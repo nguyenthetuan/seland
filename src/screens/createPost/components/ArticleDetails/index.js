@@ -1,7 +1,6 @@
 import { CheckBox, Icon } from '@rneui/themed';
 import React, {
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -11,17 +10,12 @@ import { useTranslation } from 'react-i18next';
 import { Image, Pressable, TouchableOpacity, View } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLOR_BLACK_2 } from '../../../../constants';
-import {
-  createArticleDetails,
-  selectPosts,
-  selectUser,
-} from '../../../../features';
-import { dispatchThunk } from '../../../../utils';
+import { selectUser } from '../../../../features';
 import Category from '../Category';
 import styles from './styles';
 
@@ -71,16 +65,14 @@ const IAm1 = [
 
 const ArticleDetails = forwardRef((props, ref) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { articleDetails } = useSelector(selectPosts);
   const { data: user } = useSelector(selectUser);
   const [typeUpload, setTypeUpload] = useState({
-    photo: articleDetails?.photo || [],
-    video: articleDetails?.video || [],
-    isPhoto: articleDetails?.isPhoto || true,
+    photo: [],
+    video: [],
+    isPhoto: true,
   });
   const [iam, setIam] = React.useState(1);
-  const [typeBroker, setTypeBroker] = React.useState(articleDetails?.type || 1);
+  const [typeBroker, setTypeBroker] = React.useState(1);
   // const [listStoreBDS, setListStoreBDS] = useState(StoreBDS);
   // const [listShareBroker, setListShareBroker] = useState(StoreBDS);
   const [errors, setErrors] = useState();
@@ -94,12 +86,6 @@ const ArticleDetails = forwardRef((props, ref) => {
       phone_number: '',
     },
   });
-
-  useEffect(() => {
-    Object.entries(articleDetails).forEach(
-      ([key, value]) => value && setValue(key, value)
-    );
-  }, [articleDetails, setValue]);
 
   const toggleCheck = value => {
     setIam(value);
@@ -197,27 +183,32 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
-
-    // todo bỏ check up ảnh typeUpload?.photo?.length === 0 ||
-    if (!value.title || !value.content) {
+    if (
+      !value.title ||
+      !value.content ||
+      typeUpload?.photo?.length === 0 ||
+      typeUpload?.photo?.length <= 2
+    ) {
       setErrors({
         title: !value.title ? 'Vui lòng nhập tiêu đề bài viết' : null,
         content: !value.content ? 'Vui lòng nhập nội dung' : null,
-        photo: typeUpload?.photo?.length === 0 ? 'Vui lòng chọn ảnh' : null,
+        photo:
+          typeUpload?.photo?.length <= 2 || typeUpload?.photo?.length === 0
+            ? 'Vui lòng chọn ít nhất 03 ảnh'
+            : null,
       });
-      return true;
+      return {
+        error: true,
+      };
     }
     setErrors();
-    dispatchThunk(
-      dispatch,
-      createArticleDetails({
-        ...value,
-        type: typeBroker,
-        isPhoto: typeUpload?.isPhoto,
-        photo: typeUpload.photo,
-        video: typeUpload.video,
-      })
-    );
+    return {
+      ...value,
+      type: typeBroker,
+      isPhoto: typeUpload?.isPhoto,
+      photo: typeUpload.photo,
+      video: typeUpload.video,
+    };
   };
 
   const onFocusTitle = () => {
@@ -265,6 +256,7 @@ const ArticleDetails = forwardRef((props, ref) => {
           label="Dán link video của bạn tại đây."
           placeholder="VD: https://www.youtube.com/watch?v=bymBAF8d_sc"
           labelStyle={styles.inputLabel}
+          inputContainerStyle={styles.inputContainerStyle}
           name="urlVideo"
           renderErrorMessage={false}
           onEndEditing={handleRemoveVideo}

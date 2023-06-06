@@ -1,6 +1,5 @@
 import { Icon } from '@rneui/themed';
 import dayjs from 'dayjs';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -11,18 +10,30 @@ import { COLOR_BLACK_3 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-const DateTimePicker = ({ control, name, label, labelStyle }) => {
+interface DateTimePickerProps {
+  control: any;
+  label: string;
+  labelStyle: {} | [];
+  name: string;
+}
+
+const DateTimePicker = ({
+  control,
+  name,
+  label = '',
+  labelStyle = {},
+}: DateTimePickerProps) => {
   const {
     field: { onChange, value },
   } = useController({ control, name });
   const { t } = useTranslation();
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState<boolean>();
 
   const handleShow = () => setOpen(true);
 
   const handleCancel = () => setOpen(false);
 
-  const handleConfirm = date => {
+  const handleConfirm = (date: string) => {
     onChange(dayjs(date).format('YYYY-MM-DD'));
     handleCancel();
   };
@@ -63,18 +74,6 @@ const DateTimePicker = ({ control, name, label, labelStyle }) => {
       />
     </View>
   );
-};
-
-DateTimePicker.defaultProps = {
-  label: '',
-  labelStyle: {},
-};
-
-DateTimePicker.propTypes = {
-  control: PropTypes.any.isRequired,
-  label: PropTypes.string,
-  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  name: PropTypes.string.isRequired,
 };
 
 export default DateTimePicker;

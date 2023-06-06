@@ -6,6 +6,9 @@ const SCREENS = {
   CONFIRM_POST_SCREEN: 'ConfirmPostScreen',
   CREATE_POST: 'CreatePost',
   MAPS: 'MapScreen',
+  DRAFT_POSTS: 'DraftPosts',
+  USER_POSTS: 'UserPosts',
+  LIST_PROJECT: 'ListProject',
 };
 
 export default SCREENS;

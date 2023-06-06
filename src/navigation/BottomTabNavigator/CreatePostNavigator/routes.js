@@ -4,6 +4,7 @@ import {
   CreatePostScreen,
   UserPostsScreen,
 } from '../../../screens';
+import UserDraftPostsScreen from '../../../screens/account/UserDraftPostsScreen';
 
 const routes = [
   {
@@ -16,7 +17,11 @@ const routes = [
   },
   {
     component: UserPostsScreen,
-    name: 'UserPosts',
+    name: SCREENS.USER_POSTS,
+  },
+  {
+    component: UserDraftPostsScreen,
+    name: SCREENS.DRAFT_POSTS,
   },
 ];
 
