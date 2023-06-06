@@ -1,13 +1,25 @@
 import { CheckBox as RNECheckBox } from '@rneui/themed';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useController } from 'react-hook-form';
 
 import { COLOR_BLUE_1, COLOR_GRAY_5 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
+import { ViewStyle } from 'react-native';
 
-const CheckBox = ({ control, name, title, ...props }) => {
+interface CheckBoxProps {
+  control: any;
+  name: string;
+  title: ReactNode;
+  checkedColor?: string;
+  checkedIcon?: string;
+  containerStyle?: ViewStyle;
+  iconType?: string;
+  uncheckedColor?: string;
+  uncheckedIcon?: string;
+}
+
+const CheckBox = ({ control, name, title = '', ...props }: CheckBoxProps) => {
   const {
     field: { onBlur, onChange, value },
   } = useController({ control, name });
@@ -29,16 +41,6 @@ const CheckBox = ({ control, name, title, ...props }) => {
       {...props}
     />
   );
-};
-
-CheckBox.defaultProps = {
-  title: '',
-};
-
-CheckBox.propTypes = {
-  control: PropTypes.any.isRequired,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.node,
 };
 
 export default CheckBox;
