@@ -38,7 +38,7 @@ interface InputProps {
 
 const Input = ({
   control,
-  inputContainerStyle,
+  inputContainerStyle = {},
   isEmail = false,
   isNumeric = false,
   isPassword = false,
@@ -46,8 +46,8 @@ const Input = ({
   label = '',
   labelStyle = {},
   name,
-  onChangeText,
-  onFocus,
+  onChangeText = () => {},
+  onFocus = () => {},
   placeholder = '',
   required = false,
   rightLabel = '',
