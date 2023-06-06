@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
@@ -9,7 +8,13 @@ import { COLOR_BLUE_1 } from '../../../constants';
 import Text from '../../common/Text';
 import styles from './styles';
 
-const AuthHeading = ({ hasBack, hasHello, children }) => {
+interface AuthHeadingProps {
+  hasBack?: boolean;
+  hasHello: boolean;
+  children: string;
+}
+
+const AuthHeading = ({ hasBack, hasHello, children }: AuthHeadingProps) => {
   const { goBack } = useNavigation();
   const { t } = useTranslation();
 
@@ -25,24 +30,12 @@ const AuthHeading = ({ hasBack, hasHello, children }) => {
               onPress={goBack}
               size={28}
             />
-            <Text> </Text>
           </>
         )}
         <Text style={styles.heading}>{children}</Text>
       </View>
     </View>
   );
-};
-
-AuthHeading.defaultProps = {
-  hasBack: false,
-  hasHello: false,
-};
-
-AuthHeading.propTypes = {
-  children: PropTypes.node.isRequired,
-  hasBack: PropTypes.bool,
-  hasHello: PropTypes.bool,
 };
 
 export default AuthHeading;

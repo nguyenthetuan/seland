@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   heading: {
     color: COLOR_BLUE_1,
     fontSize: 24,
-    fontWeight: 500,
+    fontWeight: '500',
     lineHeight: 32,
   },
   headingContainer: {
