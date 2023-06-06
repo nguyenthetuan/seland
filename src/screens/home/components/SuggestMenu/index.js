@@ -49,6 +49,7 @@ const SuggestMenu = () => {
   const { t } = useTranslation();
 
   const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
+  const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
 
   const listCategory = [
     {
@@ -63,6 +64,7 @@ const SuggestMenu = () => {
     {
       name: 'Dự án',
       icon: <ProjectHome />,
+      onPress: navigateToListProject,
     },
     {
       name: 'Đất CN',
