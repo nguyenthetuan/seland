@@ -15,9 +15,9 @@ interface HeaderProps {
 
 const Header = ({
   icon = 'arrow-back-ios',
-  onPress,
-  right,
-  title,
+  onPress = () => {},
+  right = null,
+  title = '',
 }: HeaderProps) => {
   const { goBack } = useNavigation();
 
