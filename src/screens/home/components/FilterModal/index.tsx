@@ -160,6 +160,7 @@ const Filter = forwardRef((props: any, ref) => {
       ([key, value]: any) => value && setValue(key, value)
     );
     setValue('address', '');
+    props?.onSubmit && props?.onSubmit({...initValues, priceRange: [], acreage: []});
   };
 
   const onOpen = () => setShowFilter(true);

@@ -42,9 +42,17 @@ const ListPostsScreen = () => {
 
   const convertDataFilter = (data) => {
     const res = {};
-    res.price_range_id = `${Number(data?.priceRange[0])/(10**9)}-${Number(data?.priceRange[1])/(10**9)}`;
-    res.area_range_id = `${Number(data?.acreage[0])}-${Number(data?.acreage[1])}`;
     res.sort_by = 'asc';
+
+    if (data?.priceRange?.length > 0) {
+      res.price_range_id = `${Number(data?.priceRange[0])/(10**9)}-${Number(data?.priceRange[1])/(10**9)}`;
+    }
+    if (data?.acreage?.length > 0) {
+      res.area_range_id = `${Number(data?.acreage[0])}-${Number(data?.acreage[1])}`;
+    }
+    if (data?.priceRange?.length > 0) {
+      res.price_range_id = `${Number(data?.priceRange[0])/(10**9)}-${Number(data?.priceRange[1])/(10**9)}`;
+    }
     if (data?.typeHousing?.length > 0) {
       res.real_estate_type_id = data?.typeHousing?.join(',');
     }
