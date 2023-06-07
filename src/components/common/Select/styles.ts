@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'left',
   },
-  text: value => ({
+  text: (value: any) => ({
     color: value ? COLOR_BLACK_1 : COLOR_GRAY_5,
     fontSize: 16,
     lineHeight: 24,

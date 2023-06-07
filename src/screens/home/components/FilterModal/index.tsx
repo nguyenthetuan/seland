@@ -266,14 +266,9 @@ const Filter = forwardRef((props: any, ref) => {
                     rowTextStyle={styles.rowTextStyle}
                     control={control}
                     data={districtOptions}
-                    defaultButtonText={t('select.district')}
+                    defaultButtonText={t('select.district') || ""}
                     name="district_id"
                     onSelect={handleSelectDistrict}
-                    label={undefined}
-                    labelStyle={undefined}
-                    required={undefined}
-                    errors={undefined}
-                    containerSelect={undefined}
                   />
                 </View>
                 <View style={styles.ward}>
@@ -284,14 +279,9 @@ const Filter = forwardRef((props: any, ref) => {
                     rowTextStyle={styles.rowTextStyle}
                     control={control}
                     data={wardOptions}
-                    defaultButtonText={t('select.ward')}
+                    defaultButtonText={t('select.ward') || ""}
                     name="ward_id"
                     onSelect={handleSubmit(onSelect)}
-                    label={undefined}
-                    labelStyle={undefined}
-                    required={undefined}
-                    errors={undefined}
-                    containerSelect={undefined}
                   />
                 </View>
               </View>
