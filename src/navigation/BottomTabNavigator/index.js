@@ -106,7 +106,7 @@ const BottomTabNavigator = () => {
 
             if (!isFocused && !event.defaultPrevented) {
               if (route.name === 'CreatePostNavigator') {
-                if (user?.name && user?.is_phone_verified === 0) {
+                if (user?.name && user?.is_phone_verified === 1) {
                   navigation.navigate(route.name);
                 } else {
                   navigation.navigate(SCREENS.PERSONAL_INFORMATION);
