@@ -116,9 +116,18 @@ const CreatePostScreen = () => {
         key === 'urlVideo'
       )
         return;
-
+      const information = [
+        'legal_documents_id',
+        'house_status_id',
+        'usage_condition_id',
+        'location_type_id',
+      ];
       if (params[key]) {
-        formData.append(key, params[key]);
+        if (information.includes(key)) {
+          formData.append(`information[${key}]`, params[key]);
+        } else {
+          formData.append(key, params[key]);
+        }
       }
     });
 

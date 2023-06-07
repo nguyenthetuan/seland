@@ -54,7 +54,7 @@ const UserPostsScreen = () => {
       dispatch,
       value >= 0
         ? getListRealEstatesUser({
-            'real_estate_type[]': value,
+            status: value,
           })
         : getListRealEstatesUser()
     );
