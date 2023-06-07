@@ -18,7 +18,7 @@ import styles from './styles';
 const UserDraftPostsScreen = () => {
   const dispatch = useDispatch();
   const route: any = useRoute();
-  const { goBack, reset }: any = useNavigation();
+  const { goBack, reset } = useNavigation();
   const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
   const handleBack = () => {
