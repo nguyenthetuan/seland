@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -20,7 +21,7 @@ import {
   LoveSmall,
 } from '../../../../assets';
 import { Text } from '../../../../components';
-import { COLOR_GRAY_7, COLOR_WHITE } from '../../../../constants';
+import { COLOR_GRAY_7, COLOR_WHITE, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import styles from './styles';
 
@@ -42,6 +43,7 @@ ItemInfo.propTypes = {
 
 const ItemHottestRealEstate = ({ item, type }) => {
   const { t } = useTranslation();
+  const { navigate } = useNavigation();
 
   const onPressCall = () => {
     let phoneNumber = item?.phone_number;
@@ -61,9 +63,15 @@ const ItemHottestRealEstate = ({ item, type }) => {
   };
 
   const onToLocation = () => {};
+  const onGoDetail = () => {
+    navigate(SCREENS.DETAIL_POST);
+  };
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onGoDetail}
+    >
       <View style={styles.boxImage}>
         <Image
           style={styles.image}
