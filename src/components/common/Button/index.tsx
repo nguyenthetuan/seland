@@ -9,11 +9,13 @@ import styles from './styles';
 interface ButtonProps {
   buttonStyle: {};
   color?: string;
-  loading: boolean;
+  loading?: boolean;
   outline?: boolean;
   title?: string | null;
   titleStyle?: {};
   onPress?: () => void;
+  icon?: any;
+  radius?: number;
 }
 
 const Button = ({
@@ -31,7 +33,7 @@ const Button = ({
     disabled={loading}
     disabledStyle={styles.disabled}
     loading={loading}
-    radius={8}
+    radius={props?.radius}
     title={
       <Text
         style={StyleSheet.flatten([styles.title(color, outline), titleStyle])}

@@ -27,6 +27,7 @@ export { default as LoveSmall } from './love-small.svg';
 export { default as MenuThreeLine } from './menu-three-line.svg';
 export { default as NewsHome } from './news-home.svg';
 export { default as ProjectHome } from './project-home.svg';
+export { default as Reload } from './reload.svg';
 export { default as Save } from './save.svg';
 export { default as TickButton } from './tick.svg';
 export { default as TrainHome } from './train-home.svg';

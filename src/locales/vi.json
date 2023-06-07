@@ -213,6 +213,7 @@
     "name": "Họ tên",
     "email": "Email",
     "address": "Địa chỉ",
+    "addressPlaceHolder": "Nhập địa chỉ",
     "companyName": "Tên công ty",
     "taxCode": "Mã số thuế",
     "website": "Website",

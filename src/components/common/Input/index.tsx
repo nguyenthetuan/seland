@@ -15,25 +15,26 @@ import Text from '../Text';
 import styles from './styles';
 
 interface InputProps {
-  autoComplete: TextInputAndroidProps['autoComplete'];
+  autoComplete?: TextInputAndroidProps['autoComplete'];
   control: any;
   isEmail?: boolean;
   isNumeric?: boolean;
   isPassword?: boolean;
   isWebsite?: boolean;
   inputContainerStyle?: ViewStyle;
-  label: string;
+  label?: string;
   labelStyle?: Object | [];
   name: string;
   onChangeText?: (v: string) => void;
-  onFocus: () => void;
+  onFocus?: () => void;
   placeholder?: string;
   required?: boolean;
   rightLabel?: string;
   showPasswordPolicy?: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   errorMessage?: string;
   inputMode?: InputModeOptions;
+  renderErrorMessage?: any;
 }
 
 const Input = ({
@@ -46,6 +47,7 @@ const Input = ({
   label = '',
   labelStyle = {},
   name,
+  renderErrorMessage,
   onChangeText = () => {},
   onFocus = () => {},
   placeholder = '',
@@ -114,7 +116,11 @@ const Input = ({
         onFocus={handleFocus}
         placeholder={placeholder || label}
         placeholderTextColor={COLOR_GRAY_5}
-        renderErrorMessage={!passwordPolicyVisible}
+        renderErrorMessage={
+          renderErrorMessage != undefined
+            ? renderErrorMessage
+            : !passwordPolicyVisible
+        }
         rightIcon={
           isPassword && (
             <Icon
