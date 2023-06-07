@@ -7,7 +7,7 @@ import {
 } from '../constants';
 import { get, post } from '../utils';
 
-export const requestGetListRealEstates = () => get(GET_LIST_REAL_ESTATES_ROUTE);
+export const requestGetListRealEstates = (params) => get(GET_LIST_REAL_ESTATES_ROUTE, params);
 
 export const requestGetAllInformation = () => get(GET_ALL_INFORMATION);
 
