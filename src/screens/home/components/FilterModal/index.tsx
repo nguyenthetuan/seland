@@ -242,9 +242,6 @@ const Filter = forwardRef((props: any, ref) => {
               onPress={() => {}}
               title={t('button.buySell')}
               radius={4}
-              color={undefined}
-              loading={undefined}
-              outline={undefined}
             />
             <Button
               buttonStyle={styles.btnSelect}
@@ -253,7 +250,6 @@ const Filter = forwardRef((props: any, ref) => {
               title={t('button.lease')}
               outline={Boolean(true)}
               radius={4}
-              color={undefined}
               loading={false}
             />
           </View>
@@ -306,7 +302,6 @@ const Filter = forwardRef((props: any, ref) => {
                   name="address"
                   required
                   placeholder={t('input.addressPlaceHolder') || ""}
-                  inputContainerStyle={undefined}
                 />
               </View>
             </View>
@@ -323,7 +318,7 @@ const Filter = forwardRef((props: any, ref) => {
           </View>
 
           <SliderComponent
-            title={t('common.priceRange') || undefined}
+            title={t('common.priceRange') || ""}
             options={optionsPriceRange}
             defaultValues={initValues.priceRange}
             minimumValue={0}
@@ -338,7 +333,7 @@ const Filter = forwardRef((props: any, ref) => {
           />
 
           <SliderComponent
-            title={t('common.acreage') || undefined}
+            title={t('common.acreage') || ""}
             options={optionsAcreage}
             defaultValues={initValues.acreage}
             minimumValue={0}
@@ -408,8 +403,6 @@ const Filter = forwardRef((props: any, ref) => {
               radius={5}
               title={t('button.reset')}
               outline
-              color={undefined}
-              loading={undefined}
               onPress={clearForm}
               icon={
                 <View style={styles.wrapIcon}>
@@ -427,9 +420,6 @@ const Filter = forwardRef((props: any, ref) => {
               radius={5}
               onPress={handleSubmit(onSubmit)}
               title={t('button.apply')}
-              color={undefined}
-              loading={undefined}
-              outline={undefined}
             />
           </View>
         </ScrollView>

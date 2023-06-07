@@ -165,8 +165,6 @@ export const SliderComponent = ({
               onPress={() => handleOnClick(option.value)}
               title={option.title}
               radius={4}
-              color={undefined}
-              loading={undefined}
               outline={isSelected}
             />
           );

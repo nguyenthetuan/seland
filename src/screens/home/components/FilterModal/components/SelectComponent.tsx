@@ -60,8 +60,6 @@ export const SelectComponent = ({
               onPress={() => handlePressButton(option.value)}
               title={option.title}
               radius={4}
-              color={undefined}
-              loading={undefined}
               outline={!isSelected}
             />
           );
