@@ -1,5 +1,4 @@
 import { Icon } from '@rneui/themed';
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { useController } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
@@ -9,27 +8,45 @@ import { COLOR_BLACK_1, COLOR_RED_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
+interface SelectProps {
+  buttonStyle: {} | [];
+  buttonTextStyle: {};
+  control: any;
+  data: { value: number }[];
+  label: string;
+  errors?: string;
+  required?: boolean;
+  name: string;
+  labelStyle?: {};
+  containerSelect?: {} | [];
+  onSelect?: (data: any) => void;
+  rowStyle: {};
+  rowTextStyle?: {} | [];
+  defaultButtonText?: string | null;
+}
+
 const Select = ({
-  buttonStyle,
-  buttonTextStyle,
+  buttonStyle = {},
+  buttonTextStyle = {},
   control,
-  data,
-  label,
-  labelStyle,
+  data = [],
+  label = '',
+  labelStyle = {},
   name,
-  onSelect,
-  required,
-  errors,
-  rowStyle,
-  containerSelect,
-  rowTextStyle,
+  onSelect = () => {},
+  required = false,
+  errors = '',
+  rowStyle = {},
+  containerSelect = {},
+  rowTextStyle = {},
+  defaultButtonText = '',
   ...props
-}) => {
+}: SelectProps) => {
   const {
     field: { onChange, value },
   } = useController({ control, name });
 
-  const handleChange = selectedItem => {
+  const handleChange = (selectedItem: { label: string; value: number }) => {
     if (onSelect) onSelect(selectedItem);
     onChange(selectedItem.value);
   };
@@ -65,46 +82,12 @@ const Select = ({
         renderDropdownIcon={renderDropdownIcon}
         rowStyle={StyleSheet.flatten([rowStyle])}
         rowTextForSelection={item => item.label}
-        rowTextStyle={StyleSheet.flatten(styles.rowTextStyle, rowTextStyle)}
+        rowTextStyle={StyleSheet.flatten([styles.rowTextStyle, rowTextStyle])}
         {...props}
       />
       <Text style={{ fontSize: 12, color: 'red' }}>{errors}</Text>
     </View>
   );
-};
-
-Select.defaultProps = {
-  buttonStyle: {},
-  buttonTextStyle: {},
-  data: [],
-  label: '',
-  errors: '',
-  rowTextStyle: {},
-  rowStyle: {},
-  buttonTextStyle: {},
-  buttonStyle: {},
-  required: false,
-  labelStyle: {},
-  containerSelect: {},
-  onSelect: () => {},
-  rowStyle: {},
-  rowTextStyle: {},
-};
-
-Select.propTypes = {
-  buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  buttonTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  control: PropTypes.any.isRequired,
-  data: PropTypes.array,
-  label: PropTypes.string,
-  errors: PropTypes.string,
-  required: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  containerSelect: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  onSelect: PropTypes.func,
-  rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  rowTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default Select;
