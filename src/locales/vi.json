@@ -249,33 +249,6 @@
     "managePost": "Quản lý tin",
     "account": "Tài khoản"
   },
-  "typeHousing": {
-    "ALL": "Tất cả (Mặc định)",
-    "HOME": "Nhà riêng",
-    "STREET_HOUSE": "Nhà mặt phố",
-    "APARTMENT": "Căn hộ chung cư",
-    "VILLA": "Biệt thự",
-    "SHOP_HOUSE": "Shop-house",
-    "PENT_HOUSE": "Pent-house",
-    "LAND": "Đất",
-    "PROJECT_LAND": "Đất nền dự án",
-    "OFFICE": "Văn phòng",
-    "FLOOR_PLAN_STORE": "Mặt bằng, cửa hàng",
-    "WAREHOUSE_FACTORY": "Kho, nhà xưởng",
-    "HOSTELS_ROOMS": "Nhà trọ, phòng trọ",
-    "RESORTS_FARMS": "Khu nghỉ dưỡng, trang trại",
-    "OTHER": "Bất động sản khác"
-  },
-  "compass": {
-    "SOUTHEAST": "Đông Nam",
-    "NORTHEAST": "Đông Bắc",
-    "NORTHWEST": "Tây Bắc",
-    "SOUTHWEST": "Tây Nam",
-    "NORTH": "Bắc",
-    "SOUTH": "Nam",
-    "EAST": "Đông",
-    "WEST": "Tây"
-  },
   "select": {
     "sex": "Giới tính",
     "male": "Nam",
