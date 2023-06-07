@@ -12,7 +12,6 @@ import {
   selectRealEstates,
 } from '../../../features/realEstates';
 import { dispatchThunk } from '../../../utils';
-import Filter from '../components/FilterModal';
 import HeaderFilterPosts from '../components/HeaderFilterPosts';
 import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
@@ -32,6 +31,7 @@ const ListPostsScreen = () => {
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
     useSelector(selectRealEstates);
+
   const onSelect = value => {
     console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
   };
@@ -62,6 +62,15 @@ const ListPostsScreen = () => {
     }
     if (data?.location > 0) {
       res.location_id = data?.location.join(',');
+    }
+    if (data?.province_id) {
+      res.province_id = data?.province_id;
+    }
+    if (data?.ward_id) {
+      res.ward_id = data?.ward_id;
+    }
+    if (data?.district_id) {
+      res.district_id = data?.district_id;
     }
     return res;
   }
