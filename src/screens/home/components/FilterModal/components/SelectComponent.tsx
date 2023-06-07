@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   btnSelect: {
     height: 30,
     marginRight: 8,
-    width: 104,
+    minWidth: 104,
     paddingHorizontal: 15,
     paddingVertical: 4,
   },

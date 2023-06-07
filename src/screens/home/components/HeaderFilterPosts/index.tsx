@@ -69,8 +69,8 @@ const HeaderFilterPosts: FC<Iprops> = props => {
     filterRef.current.onOpen();
   };
 
-  const onSubmit = () => {
-    onFilter && onFilter();
+  const onSubmit = (params: any) => {
+    onFilter && onFilter(params);
     filterRef.current.onClose();
   }
 
