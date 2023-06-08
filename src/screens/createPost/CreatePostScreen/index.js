@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
@@ -62,6 +62,7 @@ const CreatePostScreen = () => {
   const realEstateRef = useRef();
   const articleDetailRef = useRef();
   const confirmPostRef = useRef();
+  const currentTab = useRef();
 
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
@@ -69,15 +70,54 @@ const CreatePostScreen = () => {
   const { loading, basicInformation, realEstateInformation, createRealEstate } =
     useSelector(selectPosts);
 
+  useEffect(() => {
+    currentTab.current = TAB.BASIC_INFORMATION;
+  }, []);
+
   const handleClosePost = () => {
     dispatch(clearCreatePosts());
     basicInfoRef.current && basicInfoRef.current.clearForm();
-    setTab(0);
+    currentTab.current = TAB.BASIC_INFORMATION;
+    setTab(TAB.BASIC_INFORMATION);
     goBack();
   };
-
   const handleTab = value => {
+    console.log(
+      '🚀 ~ file: index.js:85 ~ handleTab ~ value:',
+      value,
+      currentTab.current
+    );
     setTab(value);
+    if (
+      currentTab.current === TAB.BASIC_INFORMATION &&
+      value === TAB.REAL_ESTATE_INFORMATION
+    ) {
+      basicInfoRef.current.handleNext();
+      currentTab.current = value;
+    }
+    if (
+      currentTab.current === TAB.BASIC_INFORMATION &&
+      value === TAB.ARTICLE_DETAILS
+    ) {
+      basicInfoRef.current.handleNext();
+      currentTab.current = value;
+    }
+
+    if (
+      currentTab.current === TAB.REAL_ESTATE_INFORMATION &&
+      value === TAB.ARTICLE_DETAILS
+    ) {
+      realEstateRef.current.handleNext();
+      currentTab.current = value;
+    }
+
+    if (
+      currentTab.current === TAB.ARTICLE_DETAILS &&
+      value === TAB.REAL_ESTATE_INFORMATION
+    ) {
+      articleDetailRef.current.handleNext();
+      currentTab.current = value;
+    }
   };
 
   const handleSelect = value => {
@@ -196,6 +236,12 @@ const CreatePostScreen = () => {
   };
 
   const handleBack = () => {
+    if (tab === 2) {
+      articleDetailRef.current.handleNext();
+    }
+    if (tab === 1) {
+      realEstateRef.current.handleNext();
+    }
     scrollViewRef.current?.scrollTo();
     setTab(tab - 1);
   };
