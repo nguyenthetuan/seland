@@ -30,13 +30,13 @@ export const SelectComponent = ({
   } = useController({ control, name });
 
   const handlePressButton = (val: string | number) => {
-    let newVal = [...value];
-    if (value.includes(val)) {
-      newVal = value.filter((item: string) => item !== val);
-    } else {
-      newVal = [...newVal, val];
-    }
-    onChange(newVal);
+    // let newVal = [...value];
+    // if (value.includes(val)) {
+    //   newVal = value.filter((item: string) => item !== val);
+    // } else {
+    //   newVal = [...newVal, val];
+    // }
+    onChange([val]);
   };
 
   return (

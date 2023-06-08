@@ -44,10 +44,10 @@ const ListPostsScreen = () => {
     const res = {};
     res.sort_by = 'asc';
 
-    if (data?.priceRange?.length > 0) {
+    if (data?.priceRange?.length > 0 && data?.priceRange[1] !== 1) {
       res.price_range_id = `${Number(data?.priceRange[0])/(10**9)}-${Number(data?.priceRange[1])/(10**9)}`;
     }
-    if (data?.acreage?.length > 0) {
+    if (data?.acreage?.length > 0 && data?.acreage[1] !== 1) {
       res.area_range_id = `${Number(data?.acreage[0])}-${Number(data?.acreage[1])}`;
     }
     if (data?.typeHousing?.length > 0) {
@@ -68,7 +68,7 @@ const ListPostsScreen = () => {
     if (data?.location > 0) {
       res.location_id = data?.location.join(',');
     }
-    if (data?.province_id) {
+    if (data?.province_id && data?.ward_id) {
       res.province_id = data?.province_id;
     }
     if (data?.ward_id) {

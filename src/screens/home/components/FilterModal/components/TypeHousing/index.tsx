@@ -49,8 +49,9 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
     if (data.includes(item)) {
       return;
     }
-    data.push(item);
-    onChange(data);
+    // data.push(item);
+    // onChange(data);
+    onChange([item]);
   };
 
   const onRemoveTypeHousing = (item: string | number) => {
