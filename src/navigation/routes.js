@@ -1,17 +1,15 @@
-import { SCREENS } from '../../../constants';
+import { SCREENS } from '../constants';
 import {
-  AccountScreen,
   ChangePasswordScreen,
+  ListPostsScreen,
+  ListProjectScreen,
+  MapScreen,
   PersonalInformationScreen,
+  UserDraftPostsScreen,
   UserPostsScreen,
-} from '../../../screens';
-import UserDraftPostsScreen from '../../../screens/account/UserDraftPostsScreen';
+} from '../screens';
 
 const routes = [
-  {
-    component: AccountScreen,
-    name: SCREENS.ACCOUNT,
-  },
   {
     component: ChangePasswordScreen,
     name: SCREENS.CHANGE_PASSWORD,
@@ -27,6 +25,18 @@ const routes = [
   {
     component: UserDraftPostsScreen,
     name: SCREENS.DRAFT_POSTS,
+  },
+  {
+    component: ListPostsScreen,
+    name: SCREENS.LIST_POSTS,
+  },
+  {
+    component: MapScreen,
+    name: SCREENS.MAPS,
+  },
+  {
+    component: ListProjectScreen,
+    name: SCREENS.LIST_PROJECT,
   },
 ];
 

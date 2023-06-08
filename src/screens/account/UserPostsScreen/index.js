@@ -29,7 +29,6 @@ import styles from './styles';
 
 const UserPostsScreen = () => {
   const route = useRoute();
-  const { goBack, reset } = useNavigation();
   const filterRef = useRef();
 
   const dispatch = useDispatch();
@@ -54,7 +53,7 @@ const UserPostsScreen = () => {
       dispatch,
       value >= 0
         ? getListRealEstatesUser({
-            'real_estate_type[]': value,
+            status: value,
           })
         : getListRealEstatesUser()
     );
@@ -146,17 +145,6 @@ const UserPostsScreen = () => {
     },
   ];
 
-  const handleBack = () => {
-    if (route?.params?.type === 'createPost') {
-      reset({
-        index: 0,
-        routes: [{ name: 'AccountNavigator' }],
-      });
-    } else {
-      goBack();
-    }
-  };
-
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: {
       title: '',
@@ -228,10 +216,7 @@ const UserPostsScreen = () => {
         </View>
       </Modal>
       <View style={[styles.flex, styles.whiteBackground]}>
-        <Header
-          title={t('header.userPosts')}
-          onPress={handleBack}
-        />
+        <Header title={t('header.userPosts')} />
         <FlatList
           style={styles.postButtons}
           data={statuses}

@@ -3,11 +3,16 @@ import { Icon } from '@rneui/themed';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Text } from '../../components';
-import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../constants';
-import { getAllInformation, getProfile } from '../../features';
+import {
+  COLOR_BLUE_1,
+  COLOR_GRAY_2,
+  COLOR_WHITE,
+  SCREENS,
+} from '../../constants';
+import { getAllInformation, getProfile, selectUser } from '../../features';
 import { dispatchThunk, getScreens } from '../../utils';
 import routes from './routes';
 import styles from './styles';
@@ -17,6 +22,7 @@ const { Navigator, Screen } = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { data: user } = useSelector(selectUser);
 
   useEffect(() => {
     dispatchThunk(dispatch, getProfile());
@@ -81,27 +87,41 @@ const BottomTabNavigator = () => {
     },
   ];
 
-  const tabBar = ({ descriptors, state }) => {
+  const tabBar = ({ descriptors, state, navigation }) => {
     const focusedOptions = descriptors[state.routes[state.index].key].options;
-    console.log(
-      '🚀 ~ file: index.js:86 ~ tabBar ~ focusedOptions:',
-      focusedOptions
-    );
-
     if (focusedOptions?.tabBarStyle?.display === 'none') {
       return null;
     }
     return (
-      <View>
+      <View style={styles.boxButton}>
         {state?.routes.map((route, index) => {
-          console.log(
-            '🚀 ~ file: index.js:103 ~ {state?.routes.map ~ route:',
-            route
-          );
+          const isFocused = state.index === index;
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
 
+            if (!isFocused && !event.defaultPrevented) {
+              if (route.name === 'CreatePostNavigator') {
+                if (user?.name && user?.is_phone_verified === 1) {
+                  navigation.navigate(route.name);
+                } else {
+                  navigation.navigate(SCREENS.PERSONAL_INFORMATION);
+                }
+                return;
+              }
+              navigation.navigate(route.name);
+            }
+          };
           return (
-            <TouchableOpacity>
-              <Text>bottm</Text>
+            <TouchableOpacity
+              key={route.name}
+              onPress={onPress}
+            >
+              {options[index].tabBarIcon({ focused: isFocused })}
+              {options[index].tabBarLabel({ focused: isFocused })}
             </TouchableOpacity>
           );
         })}
@@ -111,13 +131,13 @@ const BottomTabNavigator = () => {
 
   return (
     <Navigator
-      // tabBar={tabBar}
+      tabBar={tabBar}
       screenOptions={{
         gestureEnabled: false,
         headerShown: false,
       }}
     >
-      {getScreens(Screen, routes, options)}
+      {getScreens(Screen, routes)}
     </Navigator>
   );
 };

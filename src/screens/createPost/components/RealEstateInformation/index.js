@@ -97,15 +97,6 @@ const RealEstateInformation = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
-    if (!value.area || !value.price || !value.price_unit) {
-      setErrors({
-        area: !value.area ? 'Vui lòng nhập Diện tích' : null,
-        price: !value.price ? 'Vui lòng nhập giá' : null,
-        priceUnit: !value.price_unit ? 'Vui lòng chọn Đơn vị' : null,
-      });
-      return true;
-    }
-    setErrors();
     dispatchThunk(
       dispatch,
       createRealEstateInformation({
@@ -120,6 +111,15 @@ const RealEstateInformation = forwardRef((props, ref) => {
         road_type_id: roadTypeId.toString(),
       })
     );
+    if (!value.area || !value.price || !value.price_unit) {
+      setErrors({
+        area: !value.area ? 'Vui lòng nhập Diện tích' : null,
+        price: !value.price ? 'Vui lòng nhập giá' : null,
+        priceUnit: !value.price_unit ? 'Vui lòng chọn Đơn vị' : null,
+      });
+      return true;
+    }
+    setErrors();
   };
 
   const clearForm = () => {
