@@ -3,32 +3,21 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import { TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/base';
-import { Select } from '../../../../components';
 import { Control } from 'react-hook-form';
-import Filter from '../FilterModal';
+import { Select } from '../../../../../components';
+import Filter from '../../../../home/components/FilterModal';
 
 interface Iprops {
   control: Control<any>;
   handleSubmit?: any;
   onSelect: (value: any) => void;
-  onFilter: (value?: any) => void;
+  onFilter?: (value?: any) => void;
 }
 
-const HeaderFilterPosts: FC<Iprops> = props => {
+const FilterWarehouse: FC<Iprops> = props => {
   const { control, handleSubmit, onSelect, onFilter } = props;
   const { t } = useTranslation();
   const filterRef: any = useRef();
-
-  const type = [
-    {
-      label: 'Mua',
-      value: '1',
-    },
-    {
-      label: 'Bán',
-      value: '2',
-    },
-  ];
   const sortBy = [
     {
       label: 'newest',
@@ -63,14 +52,15 @@ const HeaderFilterPosts: FC<Iprops> = props => {
       value: 'price_per_m_desc',
     },
   ];
-  const realEstateType = [{ label: 'Mua', value: 1 }];
+  const listWareHouse = [{ label: t('button.all'), value: 1 }];
+  const listAgency = [{ label: t('button.all'), value: 1 }];
 
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
 
-  const onSubmit = (params: any) => {
-    onFilter && onFilter(params);
+  const onSubmit = () => {
+    onFilter && onFilter();
     filterRef.current.onClose();
   };
 
@@ -92,10 +82,14 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={realEstateType}
-              defaultButtonText={t('select.typeHousing') || ''}
+              data={listWareHouse}
               name="real_estate_type_id"
               onSelect={handleSubmit(onSelect)}
+              defaultButtonText={
+                t('select.realEstates', {
+                  realEstates: t('button.all'),
+                }) || ''
+              }
             />
           </View>
           <View style={styles.areaRange}>
@@ -105,22 +99,13 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={[{ label: 'test', value: 'test' }]}
-              defaultButtonText={t('select.area') || ''}
+              data={listAgency}
+              defaultButtonText={
+                t('select.agency', {
+                  agency: t('button.all'),
+                }) || ''
+              }
               name="area_range_id"
-              onSelect={handleSubmit(onSelect)}
-            />
-          </View>
-          <View style={styles.boxStatus}>
-            <Select
-              buttonStyle={styles.buttonSelect}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={type}
-              defaultButtonText={t('select.type') || ''}
-              name="type"
               onSelect={handleSubmit(onSelect)}
             />
           </View>
@@ -152,4 +137,4 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   );
 };
 
-export default HeaderFilterPosts;
+export default FilterWarehouse;

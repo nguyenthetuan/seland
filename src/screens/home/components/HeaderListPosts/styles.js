@@ -19,18 +19,18 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_WHITE,
     borderBottomColor: COLOR_GRAY_2,
     borderBottomWidth: 1,
-    elevation: 5,
+    // elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
-    shadowColor: COLOR_BLACK_1,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
+    // shadowColor: COLOR_BLACK_1,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
 
-    shadowRadius: 3.84,
+    // shadowRadius: 3.84,
   },
   inputContainer: {
     height: 40,

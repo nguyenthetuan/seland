@@ -8,6 +8,7 @@ import {
   UserDraftPostsScreen,
   UserPostsScreen,
 } from '../screens';
+import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
 import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
 
 const routes = [
@@ -42,6 +43,10 @@ const routes = [
   {
     component: AgencyInformationTab,
     name: SCREENS.AGENCY_INFORMATION_TAB,
+  },
+  {
+    component: WarehouseLandScreen,
+    name: SCREENS.WAREHOUSELAND,
   },
 ];
 
