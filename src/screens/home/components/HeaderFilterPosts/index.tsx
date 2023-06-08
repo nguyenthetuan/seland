@@ -93,7 +93,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowTextStyle={styles.rowTextStyle}
               control={control}
               data={realEstateType}
-              defaultButtonText={t('select.typeHousing')}
+              defaultButtonText={t('select.typeHousing') || ""}
               name="real_estate_type_id"
               onSelect={handleSubmit(onSelect)}
             />
@@ -106,7 +106,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowTextStyle={styles.rowTextStyle}
               control={control}
               data={[{ label: 'test', value: 'test' }]}
-              defaultButtonText={t('select.area')}
+              defaultButtonText={t('select.area') || ""}
               name="area_range_id"
               onSelect={handleSubmit(onSelect)}
             />
@@ -119,7 +119,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowTextStyle={styles.rowTextStyle}
               control={control}
               data={type}
-              defaultButtonText={t('select.type')}
+              defaultButtonText={t('select.type') || ""}
               name="type"
               onSelect={handleSubmit(onSelect)}
             />
@@ -137,7 +137,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
           }))}
           defaultButtonText={t('select.sortBy', {
             sortBy: t('select.newest'),
-          })}
+          }) || ""}
           name="sort_by"
           onSelect={handleSubmit(onSelect)}
         />
