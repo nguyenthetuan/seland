@@ -1,9 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
 import { Avatar, Icon } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
+import Toast from 'react-native-simple-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../assets';
@@ -55,6 +57,7 @@ const schema = yup.object({
 
 const PersonalInformationScreen = () => {
   const dispatch = useDispatch();
+  const { goBack } = useNavigation();
   const { loading, data: user } = useSelector(selectUser);
   const { t } = useTranslation();
   const [Iam, setIam] = useState(user.user_type_id || 1);
@@ -266,6 +269,11 @@ const PersonalInformationScreen = () => {
   //   }
   // };
 
+  const updateSuccess = () => {
+    Toast.show('Cập nhật thành công.');
+    goBack();
+  };
+
   const onSubmit = data => {
     dispatchThunk(
       dispatch,
@@ -277,7 +285,8 @@ const PersonalInformationScreen = () => {
         address: data.address.trim(),
         name_company: data.name_company.trim(),
         company_address: data.company_address.trim(),
-      })
+      }),
+      updateSuccess
     );
   };
 

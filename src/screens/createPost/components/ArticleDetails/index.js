@@ -1,6 +1,7 @@
 import { CheckBox, Icon } from '@rneui/themed';
 import React, {
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -10,12 +11,17 @@ import { useTranslation } from 'react-i18next';
 import { Image, Pressable, TouchableOpacity, View } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLOR_BLACK_2 } from '../../../../constants';
-import { selectUser } from '../../../../features';
+import {
+  createArticleDetails,
+  selectPosts,
+  selectUser,
+} from '../../../../features';
+import { dispatchThunk } from '../../../../utils';
 import Category from '../Category';
 import styles from './styles';
 
@@ -65,11 +71,13 @@ const IAm1 = [
 
 const ArticleDetails = forwardRef((props, ref) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { articleDetails } = useSelector(selectPosts);
   const { data: user } = useSelector(selectUser);
   const [typeUpload, setTypeUpload] = useState({
-    photo: [],
-    video: [],
-    isPhoto: true,
+    photo: articleDetails?.photo || [],
+    video: articleDetails?.video || [],
+    isPhoto: articleDetails?.isPhoto || true,
   });
   const [iam, setIam] = React.useState(1);
   const [typeBroker, setTypeBroker] = React.useState(1);
@@ -86,6 +94,12 @@ const ArticleDetails = forwardRef((props, ref) => {
       phone_number: '',
     },
   });
+
+  useEffect(() => {
+    Object.entries(articleDetails).forEach(
+      ([key, value]) => value && setValue(key, value)
+    );
+  }, [articleDetails, setValue]);
 
   const toggleCheck = value => {
     setIam(value);
@@ -183,6 +197,16 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
+    dispatchThunk(
+      dispatch,
+      createArticleDetails({
+        ...value,
+        type: typeBroker,
+        isPhoto: typeUpload?.isPhoto,
+        photo: typeUpload.photo,
+        video: typeUpload.video,
+      })
+    );
     if (
       !value.title ||
       !value.content ||
@@ -202,6 +226,7 @@ const ArticleDetails = forwardRef((props, ref) => {
       };
     }
     setErrors();
+
     return {
       ...value,
       type: typeBroker,
