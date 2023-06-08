@@ -23,7 +23,6 @@ const BottomTabNavigator = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { data: user } = useSelector(selectUser);
-  console.log('🚀 ~ file: index.js:21 ~ BottomTabNavigator ~ user:', user);
 
   useEffect(() => {
     dispatchThunk(dispatch, getProfile());
