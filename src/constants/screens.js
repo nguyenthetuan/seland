@@ -13,6 +13,7 @@ const SCREENS = {
   HOME: 'Home',
   LIST_POSTS: 'ListPosts',
   MANAGE_POSTS: 'ManagePost',
+  WAREHOUSELAND: 'WareHouseLand',
 };
 
 export default SCREENS;

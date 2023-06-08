@@ -8,6 +8,7 @@ import {
   UserDraftPostsScreen,
   UserPostsScreen,
 } from '../screens';
+import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
 
 const routes = [
   {
@@ -37,6 +38,10 @@ const routes = [
   {
     component: ListProjectScreen,
     name: SCREENS.LIST_PROJECT,
+  },
+  {
+    component: WarehouseLandScreen,
+    name: SCREENS.WAREHOUSELAND,
   },
 ];
 
