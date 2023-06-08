@@ -183,6 +183,13 @@ const BasicInformation = forwardRef((props, ref) => {
 
   const handleNext = () => {
     const value = getValues();
+    dispatchThunk(
+      dispatch,
+      createBasicInformation({
+        ...value,
+        demand_id: isBuy,
+      })
+    );
     if (
       !value.real_estate_type_id ||
       !value.province_id ||
@@ -202,13 +209,6 @@ const BasicInformation = forwardRef((props, ref) => {
       return true;
     }
     setErrors();
-    dispatchThunk(
-      dispatch,
-      createBasicInformation({
-        ...value,
-        demand_id: isBuy,
-      })
-    );
     return false;
   };
 
