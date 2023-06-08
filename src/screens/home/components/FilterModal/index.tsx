@@ -87,6 +87,7 @@ const initValues = {
   province_id: 'HNI',
   ward_id: null,
   district_id: null,
+  demand_id: 1,
 };
 
 const Filter = forwardRef((props: any, ref) => {
@@ -99,7 +100,9 @@ const Filter = forwardRef((props: any, ref) => {
     defaultValues: initValues,
   });
 
-  const { basicInformation, realEstateType, information } = useSelector(selectPosts);
+  const [tabSelected, setTabSelected] = useState(1);
+
+  const { basicInformation, realEstateType, information, demands } = useSelector(selectPosts);
   const { provinces, districts, wards } = useSelector(selectCommon);
 
   const optionsData = useMemo(() => {
@@ -212,6 +215,10 @@ const Filter = forwardRef((props: any, ref) => {
   }, []);
 
   useEffect(() => {
+    setValue("demand_id", tabSelected);
+  }, [tabSelected]);
+
+  useEffect(() => {
     Object.entries(basicInformation).forEach(
       ([key, value]) => value && setValue(key, value)
     );
@@ -237,22 +244,16 @@ const Filter = forwardRef((props: any, ref) => {
           <Text style={styles.txtFilter}>{t('select.type')}</Text>
 
           <View style={styles.wrapButton}>
-            <Button
-              buttonStyle={styles.btnSelect}
-              titleStyle={styles.txtSelect}
-              onPress={() => {}}
-              title={t('button.buySell')}
-              radius={4}
-            />
-            <Button
-              buttonStyle={styles.btnSelect}
-              titleStyle={styles.txtSelect}
-              onPress={() => {}}
-              title={t('button.lease')}
-              outline={Boolean(true)}
-              radius={4}
-              loading={false}
-            />
+            {demands.map((demandItem: {value: string, id: any}) =>
+              <Button
+                buttonStyle={styles.btnSelect}
+                titleStyle={styles.txtSelect}
+                onPress={() => setTabSelected(demandItem?.id)}
+                title={demandItem?.value}
+                radius={4}
+                outline={tabSelected !== demandItem?.id}
+              />
+            )}
           </View>
 
           <View style={styles.wrapArea}>

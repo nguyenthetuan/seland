@@ -77,6 +77,9 @@ const ListPostsScreen = () => {
     if (data?.district_id) {
       res.district_id = data?.district_id;
     }
+    if (data?.demand_id) {
+      res.demand_id = data?.demand_id;
+    }
     return res;
   }
 
