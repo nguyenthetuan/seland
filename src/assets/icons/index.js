@@ -1,5 +1,6 @@
 export { default as Acreage } from './acreage.svg';
 export { default as AcreageSmall } from './acreageSmall.svg';
+export { default as ArrowLeft } from './arrow-left.svg';
 export { default as Bathroom } from './bathroom.svg';
 export { default as BDSHome } from './bds-home.svg';
 export { default as BecomeAnAgentHome } from './become-an-agent-home.svg';
