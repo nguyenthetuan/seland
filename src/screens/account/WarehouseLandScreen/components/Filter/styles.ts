@@ -1,17 +1,15 @@
 import { StyleSheet } from 'react-native';
-import { COLOR_GRAY_2 } from '../../../../constants';
+import { COLOR_GRAY_2 } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   areaRange: {
-    marginHorizontal: 5,
-    width: '26%',
+    width: '42%',
   },
   boxRealEstate: {
-    width: '33%',
+    width: '42%',
+    marginRight: 5,
   },
-  boxStatus: {
-    width: '27%',
-  },
+
   btnFilter: {
     alignItems: 'center',
     borderColor: COLOR_GRAY_2,
@@ -34,6 +32,7 @@ const styles = StyleSheet.create({
   filter: {
     flexDirection: 'row',
     marginTop: 10,
+    justifyContent: 'space-between',
   },
   rowTextStyle: {
     fontSize: 12,

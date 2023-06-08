@@ -33,6 +33,8 @@ const AccountScreen = () => {
   const navigateToPersonalInformation = () =>
     navigate(SCREENS.PERSONAL_INFORMATION);
 
+  const navigateToWarehouseLand = () => navigate(SCREENS.WAREHOUSELAND);
+
   const navigateToChangePassword = () => navigate(SCREENS.CHANGE_PASSWORD);
 
   const activityHistory = [
@@ -72,7 +74,7 @@ const AccountScreen = () => {
   const realEstateManagement = [
     {
       name: 'myRealEstates',
-      onPress: () => {},
+      onPress: navigateToWarehouseLand,
     },
   ];
 

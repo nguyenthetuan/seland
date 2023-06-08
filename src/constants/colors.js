@@ -17,11 +17,25 @@ export const COLOR_GRAY_7 = '#595959';
 export const COLOR_GRAY_8 = '#333333';
 export const COLOR_GRAY_9 = '#6d6e76';
 export const COLOR_GRAY_10 = '#fafafa';
+export const COLOR_GRAY_11 = '#999999';
+
 export const COLOR_GREEN_1 = '#389e0d';
 export const COLOR_GREEN_2 = '#ebf6e7';
 export const COLOR_GREEN_3 = '#52C41A';
 export const COLOR_GREEN_4 = '#e6f7ff';
 export const COLOR_GREEN_5 = '#389f0d';
+export const COLOR_GREEN_6 = '#1CA557';
+export const COLOR_GREEN_7 = '#4DA846';
+export const COLOR_GREEN_8 = '#80AC35';
+export const COLOR_GREEN_9 = '#B0AF25';
+
+export const COLOR_YELLOW_1 = '#E3B313';
+export const COLOR_YELLOW_3 = '#FAA80F';
+export const COLOR_YELLOW_4 = '#F49116';
+export const COLOR_YELLOW_5 = '#EF781E';
+export const COLOR_YELLOW_6 = '#E96026';
+export const COLOR_YELLOW_7 = '#E13D31';
+
 export const COLOR_ORANGE_1 = '#fa541c';
 export const COLOR_ORANGE_2 = '#d46b08';
 export const COLOR_ORANGE_3 = '#d28012';

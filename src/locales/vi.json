@@ -148,7 +148,25 @@
     "realEstateType": "Loại bất động sản",
     "currentStatusHouse": "Hiện trạng nhà",
     "usageStatus": "Trạng thái sử dụng",
-    "noResults": "Không tìm thấy kết quả."
+    "noResults": "Không tìm thấy kết quả.",
+    "active": "Đang hiển thị",
+    "virtualNews": "Tin ảo",
+    "freeNews": "Tin miễn phí",
+    "dateStart": "Ngày đăng",
+    "expirationDate": "Ngày hết hạn",
+    "repost": "Đăng lại",
+    "pushNews": "Đẩy tin",
+    "editNews": "Sửa tin",
+    "copyNews": "Sao chép tin đăng",
+    "requestContact": "Yêu cầu liên hệ",
+    "history": "Lịch sử hoạt động",
+    "seeNews": "Xem tin đăng trên website",
+    "lowNews": "Hạ tin",
+    "deleteNews": "Xóa tin",
+    "positionPost": "Vị trí tin đăng",
+    "display": "Hiển thị",
+    "seePost": "Xem tin",
+    "care": "Quan tâm"
   },
   "error": {
     "network": "Không thể kết nối với máy chủ",
@@ -276,6 +294,8 @@
     "pricePerM2Desc": "Giá /m2 cao",
     "lastWeek": "1 tuần qua",
     "last30Days": "30 ngày qua",
-    "dateRange": "Tuỳ chọn"
+    "dateRange": "Tuỳ chọn",
+    "realEstates": "Kho BĐS: {{realEstates}}",
+    "agency": "Môi giới: {{agency}}"
   }
 }
