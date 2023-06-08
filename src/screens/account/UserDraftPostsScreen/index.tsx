@@ -18,19 +18,9 @@ import styles from './styles';
 const UserDraftPostsScreen = () => {
   const dispatch = useDispatch();
   const route: any = useRoute();
-  const { goBack, reset } = useNavigation();
   const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
-  const handleBack = () => {
-    if (route?.params?.type === 'createPost') {
-      reset({
-        index: 0,
-        routes: [{ name: 'AccountNavigator' }],
-      });
-    } else {
-      goBack();
-    }
-  };
+
   useEffect(() => {
     const params = {
       status: YOUR_WANT.SAVE_DRAFTS,
@@ -48,10 +38,7 @@ const UserDraftPostsScreen = () => {
       />
 
       <View style={[styles.flex, styles.whiteBackground]}>
-        <Header
-          title={t('header.userPosts')}
-          onPress={handleBack}
-        />
+        <Header title={t('header.userPosts')} />
         <FlatList
           style={[styles.list, styles.marginHorizontal]}
           data={userRealEstates}

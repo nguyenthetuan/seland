@@ -8,7 +8,7 @@ import styles from './styles';
 
 interface HeaderProps {
   icon?: string;
-  onPress: () => void;
+  onPress?: () => void;
   right?: ReactNode;
   title: string;
 }
