@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { COLOR_BLUE_1, COLOR_GRAY_2, SCREENS } from '../../../constants';
 import {
@@ -13,6 +13,7 @@ import {
   getListRealEstateByLocation,
   getListRealEstatesForYou,
   getListRealEstatesHots,
+  selectHome,
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import Category from '../components/Category';
@@ -29,6 +30,8 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
+  const { listRealEstatesForYou, listProject, listRealEstatesHots } =
+    useSelector(selectHome);
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstatesHots());
@@ -37,6 +40,10 @@ const HomeScreen = () => {
     dispatchThunk(dispatch, getListProjects());
     dispatchThunk(dispatch, getListNews());
   }, [dispatch]);
+  console.log(
+    '🚀 ~ file: index.js:156 ~ HomeScreen ~ listProject.length:',
+    listProject.length
+  );
 
   const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
 
@@ -79,24 +86,31 @@ const HomeScreen = () => {
           </Pressable>
         </View>
         <SuggestMenu />
-        <Category
-          label={t('common.hottestRealEstate')}
-          onSeeAll={navigateToListPosts}
-        >
-          <HottestRealEstateCategory />
-        </Category>
-        <Category
-          label={t('common.realEstateForYou')}
-          onSeeAll={navigateToListPosts}
-        >
-          <RealEstateForYouCategory />
-        </Category>
-        <Category
-          label={t('common.project')}
-          onSeeAll={navigateToListPosts}
-        >
-          <ProjectCategory />
-        </Category>
+        {listRealEstatesHots?.data?.length ? (
+          <Category
+            label={t('common.hottestRealEstate')}
+            onSeeAll={navigateToListPosts}
+          >
+            <HottestRealEstateCategory />
+          </Category>
+        ) : null}
+        {listRealEstatesForYou?.data?.length ? (
+          <Category
+            label={t('common.realEstateForYou')}
+            onSeeAll={navigateToListPosts}
+          >
+            <RealEstateForYouCategory />
+          </Category>
+        ) : null}
+        {listProject?.data?.length ? (
+          <Category
+            label={t('common.project')}
+            onSeeAll={navigateToListPosts}
+          >
+            <ProjectCategory />
+          </Category>
+        ) : null}
+
         <Category
           label={t('common.realEstateByLocation')}
           isSeeAll={false}
