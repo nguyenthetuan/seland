@@ -221,6 +221,7 @@ const CreatePostScreen = () => {
           break;
         } else {
           setTab(tab + 1);
+          currentTab.current = tab + 1;
           break;
         }
       case TAB.REAL_ESTATE_INFORMATION:
@@ -230,6 +231,7 @@ const CreatePostScreen = () => {
           break;
         } else {
           setTab(tab + 1);
+          currentTab.current = tab + 1;
           break;
         }
       case TAB.ARTICLE_DETAILS:
