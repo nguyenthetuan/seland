@@ -10,6 +10,7 @@ import {
 } from '../screens';
 import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
 import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
+import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 
 const routes = [
   {
@@ -43,6 +44,10 @@ const routes = [
   {
     component: AgencyInformationTab,
     name: SCREENS.AGENCY_INFORMATION_TAB,
+  },
+  {
+    component: UpgradeAccountTab,
+    name: SCREENS.UPGRADE_ACCOUNT_TAB,
   },
   {
     component: WarehouseLandScreen,

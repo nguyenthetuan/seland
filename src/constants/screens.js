@@ -14,6 +14,8 @@ const SCREENS = {
   UPGRADE_ACCOUNT_TAB: 'UpgradeAccountTab',
   AGENCY_INFORMATION_TAB: 'AgencyInformationTab',
   LIST_PROJECT: 'ListProject',
+  INDIVIDUAL_FEATURE_SCREEN: 'IndividualFeatureScreen',
+  NOTES_SCREEN: 'NotesScreen',
   HISTORY: 'History',
   HOME: 'Home',
   LIST_POSTS: 'ListPosts',

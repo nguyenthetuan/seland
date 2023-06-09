@@ -45,7 +45,12 @@ const UserPostsScreen = () => {
   };
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListRealEstatesUser());
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        sort_by: 'createdAt',
+      })
+    );
   }, [dispatch]);
 
   const handleSelectStatus = value => {
@@ -55,7 +60,9 @@ const UserPostsScreen = () => {
         ? getListRealEstatesUser({
             status: value,
           })
-        : getListRealEstatesUser()
+        : getListRealEstatesUser({
+            sort_by: 'createdAt',
+          })
     );
     setStatus(value);
   };

@@ -210,7 +210,8 @@
   },
   "header": {
     "personalInformation": "Thông tin cá nhân",
-    "userPosts": "Danh sách tin"
+    "userPosts": "Danh sách tin",
+    "listDraft": "Danh sách tin nháp"
   },
   "heading": {
     "hello": "Xin chào bạn",
@@ -300,6 +301,13 @@
     "pricePerM2Desc": "Giá /m2 cao",
     "lastWeek": "1 tuần qua",
     "last30Days": "30 ngày qua",
+    "dateRange": "Tuỳ chọn"
+  },
+  "upgradeAccount": {
+    "buyAccount": "Mua gói tài khoản",
+    "accountPackages": "Các gói tài khoản",
+    "individualFeatures": "Các tính năng lẻ",
+    "note": "Chú thích",
     "dateRange": "Tuỳ chọn",
     "realEstates": "Kho BĐS: {{realEstates}}",
     "agency": "Môi giới: {{agency}}"

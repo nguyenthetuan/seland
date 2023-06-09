@@ -7,7 +7,7 @@ import Text from '../Text';
 import styles from './styles';
 
 interface ButtonProps {
-  buttonStyle: {};
+  buttonStyle?: {};
   color?: string;
   loading?: boolean;
   outline?: boolean;

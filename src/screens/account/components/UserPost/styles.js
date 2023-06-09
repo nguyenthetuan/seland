@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   },
   location: {
     color: COLOR_GRAY_7,
+    flex: 1,
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 8,

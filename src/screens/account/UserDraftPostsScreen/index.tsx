@@ -24,6 +24,7 @@ const UserDraftPostsScreen = () => {
   useEffect(() => {
     const params = {
       status: YOUR_WANT.SAVE_DRAFTS,
+      sort_by: 'createdAt',
     };
     dispatchThunk(dispatch, getListRealEstatesUser(params));
   }, [dispatch]);
@@ -38,7 +39,7 @@ const UserDraftPostsScreen = () => {
       />
 
       <View style={[styles.flex, styles.whiteBackground]}>
-        <Header title={t('header.userPosts')} />
+        <Header title={t('header.listDraft')} />
         <FlatList
           style={[styles.list, styles.marginHorizontal]}
           data={userRealEstates}
