@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Container, Input, Select, Text } from '../../../../../components';
+import { Button, Container, Input, Select, Text } from '../../../../../components';
 import {
   COLOR_BLUE_1,
   COLOR_BLUE_2,
@@ -79,7 +79,6 @@ const GeneralInformationScreen = () => {
     refresh();
   }, []);
 
-
   const handleSelectProvince = (selectedItem: any) => {
     setValue('district_id', null);
     setValue('ward_id', null);
@@ -136,6 +135,7 @@ const GeneralInformationScreen = () => {
       <Text style={styles.label}>{t('common.companyInformation')}</Text>
       
       <Input
+        errorStyle={styles.errorStyle}
         control={control}
         // errorMessage={errors.name?.message}
         label={t('input.companyName') || ""}
@@ -145,6 +145,7 @@ const GeneralInformationScreen = () => {
       />
 
       <Input
+        errorStyle={styles.errorStyle}
         control={control}
         // errorMessage={errors.name?.message}
         label={t('input.presentativeName') || ""}
@@ -154,6 +155,7 @@ const GeneralInformationScreen = () => {
       />
 
       <Input
+        errorStyle={styles.errorStyle}
         control={control}
         // errorMessage={errors.name?.message}
         label={t('input.companyAddress') || ""}
@@ -203,6 +205,7 @@ const GeneralInformationScreen = () => {
       </View>
 
       <Input
+        errorStyle={styles.errorStyle}
         control={control}
         // errorMessage={errors.name?.message}
         label={t('input.phoneNumber') || ""}
@@ -213,6 +216,7 @@ const GeneralInformationScreen = () => {
       />
 
       <Input
+        errorStyle={styles.errorStyle}
         control={control}
         // errorMessage={errors.name?.message}
         label={t('input.taxCode') || ""}
@@ -220,6 +224,13 @@ const GeneralInformationScreen = () => {
         name="taxCode"
         isNumeric
         required
+      />
+
+      <Button
+        buttonStyle={styles.buttonSave}
+        // loading={loading}
+        onPress={() => {}}
+        title={t('button.save')}
       />
 
     </View>
@@ -258,6 +269,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     marginTop: 24,
   },
+  buttonSave: {
+    marginVertical: 24,
+    height: 38,
+    borderRadius: 5,
+  },
   checked: {
     position: 'absolute',
     right: 4,
@@ -266,6 +282,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR_WHITE,
     flex: 1,
+  },
+  errorStyle: {
+    marginVertical: 0
   },
   form: {
     marginHorizontal: 8,
