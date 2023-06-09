@@ -4,7 +4,7 @@ import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingBottom: 50,
+    paddingBottom: 150,
   },
   list: {
     backgroundColor: COLOR_WHITE,
