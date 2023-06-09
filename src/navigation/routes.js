@@ -9,6 +9,7 @@ import {
   UserPostsScreen,
 } from '../screens';
 import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
+import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 
 const routes = [
   {
@@ -38,6 +39,10 @@ const routes = [
   {
     component: ListProjectScreen,
     name: SCREENS.LIST_PROJECT,
+  },
+  {
+    component: UpgradeAccountTab,
+    name: SCREENS.UPGRADE_ACCOUNT_TAB,
   },
   {
     component: WarehouseLandScreen,

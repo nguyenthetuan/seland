@@ -1,5 +1,6 @@
 export { default as Acreage } from './acreage.svg';
 export { default as AcreageSmall } from './acreageSmall.svg';
+export { default as ArrowLeft } from './arrow-left.svg';
 export { default as Bathroom } from './bathroom.svg';
 export { default as BDSHome } from './bds-home.svg';
 export { default as BecomeAnAgentHome } from './become-an-agent-home.svg';
@@ -8,6 +9,7 @@ export { default as IconBell } from './bell.svg';
 export { default as Building } from './building.svg';
 export { default as BuySellHome } from './buy-sell-home.svg';
 export { default as CalculateCashFlowHome } from './calculate-cash-flow-home.svg';
+export { default as Check } from './check.svg';
 export { default as Compass } from './compass.svg';
 export { default as IconCopy } from './copy.svg';
 export { default as IconDelete } from './delete.svg';

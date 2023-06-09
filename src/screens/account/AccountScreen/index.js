@@ -29,6 +29,7 @@ const AccountScreen = () => {
 
   const navigateToUserPosts = () => navigate(SCREENS.USER_POSTS);
   const navigateToDraftUserPosts = () => navigate(SCREENS.DRAFT_POSTS);
+  const navigateToUpgradeAccount = () => navigate(SCREENS.UPGRADE_ACCOUNT_TAB);
 
   const navigateToPersonalInformation = () =>
     navigate(SCREENS.PERSONAL_INFORMATION);
@@ -134,7 +135,7 @@ const AccountScreen = () => {
     },
     {
       name: 'upgradeAccount',
-      onPress: () => {},
+      onPress: navigateToUpgradeAccount,
     },
     {
       name: 'changePassword',

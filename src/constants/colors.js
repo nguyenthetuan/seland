@@ -1,6 +1,10 @@
 export const COLOR_BLACK_1 = 'rgba(0,0,0, 0.85)';
 export const COLOR_BLACK_2 = 'rgba(0,0,0, 0.45)';
 export const COLOR_BLACK_3 = 'rgba(0, 0, 0, 0.25)';
+export const COLOR_WHITE_1 = 'rgba(255, 255, 255, 0.85)';
+export const COLOR_WHITE_2 = 'rgba(255, 255, 255, 0.45)';
+export const COLOR_WHITE_3 = 'rgba(255, 255, 255, 0.25)';
+export const COLOR_WHITE_4 = 'rgba(255, 255, 255, 0.15)';
 export const COLOR_BLUE_1 = '#1d4279';
 export const COLOR_BLUE_2 = '#096dd9';
 export const COLOR_BLUE_3 = '#40a9ff';
