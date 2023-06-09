@@ -30,12 +30,9 @@ const ItemProject: FC<Iprops> = props => {
       <View style={styles.content}>
         <View style={styles.boxName}>
           <Text style={styles.name}>{item?.project_name}</Text>
-          <View style={styles.boxMonopoly}>
-            <Text style={styles.monopoly}> {t('common.monopoly')}</Text>
+          <View style={styles.boxTypeHouse}>
+            <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
           </View>
-        </View>
-        <View style={styles.boxTypeHouse}>
-          <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
         </View>
         <View style={styles.boxPrice}>
           <Text style={styles.price}>
@@ -64,7 +61,7 @@ const ItemProject: FC<Iprops> = props => {
         <View style={styles.footer}>
           <View style={styles.status}>
             {item?.status === 1 && (
-              <Text style={styles.textStatus}>{t('common.onSale')}</Text>
+              <Text style={styles.textStatus}>{t('common.project')}</Text>
             )}
           </View>
           <View style={styles.row}>
