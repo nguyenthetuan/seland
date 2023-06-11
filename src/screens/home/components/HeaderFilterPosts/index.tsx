@@ -6,6 +6,8 @@ import { Icon } from '@rneui/base';
 import { Select } from '../../../../components';
 import { Control } from 'react-hook-form';
 import Filter from '../FilterModal';
+import { useNavigation } from '@react-navigation/native';
+import { SCREENS } from '../../../../constants';
 
 interface Iprops {
   control: Control<any>;
@@ -17,7 +19,7 @@ interface Iprops {
 const HeaderFilterPosts: FC<Iprops> = props => {
   const { control, handleSubmit, onSelect, onFilter } = props;
   const { t } = useTranslation();
-  const filterRef: any = useRef();
+  const { navigate } = useNavigation();
 
   const type = [
     {
@@ -65,13 +67,8 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   ];
   const realEstateType = [{ label: 'Mua', value: 1 }];
 
-  const onOpenFilter = () => {
-    filterRef.current.onOpen();
-  };
-
   const onSubmit = (params: any) => {
     onFilter && onFilter(params);
-    filterRef.current.onClose();
   };
 
   return (
@@ -80,7 +77,11 @@ const HeaderFilterPosts: FC<Iprops> = props => {
         <View style={styles.filter}>
           <TouchableOpacity
             style={styles.btnFilter}
-            onPress={onOpenFilter}
+            onPress={() => {
+              navigate(SCREENS.FILTER_SCREEN, {
+                onSubmit,
+              });
+            }}
           >
             <Icon name="filter-list" />
           </TouchableOpacity>
@@ -144,10 +145,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
           onSelect={handleSubmit(onSelect)}
         />
       </View>
-      <Filter
-        ref={filterRef}
-        onSubmit={onSubmit}
-      />
+      <Filter onSubmit={onSubmit} />
     </>
   );
 };
