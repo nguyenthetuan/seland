@@ -40,6 +40,8 @@ import {
   selectPosts,
   getWards,
   clearWards,
+  selectRealEstates,
+  getAllFilter,
 } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import REAL_ESTATE from '../../../../constants/realEstate';
@@ -48,25 +50,61 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('screen');
 
-const optionsPriceRange = [
-  { title: 'Dưới 500 triệu', value: '500000000' },
-  { title: '500 - 800 triệu', value: '500000000-800000000' },
-  { title: '800 triệu - 1 tỷ', value: '800000000-1000000000' },
-];
+const convertOptionsFromApi = ({value, id}: {value: string, id: string | number}) => {
+  return ({
+    title: value,
+    value: id
+  })
+}
 
-const optionsAcreage = [
-  { title: 'Dưới 30m²', value: '30' },
-  { title: '30 - 50m²', value: '30-50' },
-  { title: '50 - 80m²', value: '50-80' },
-];
+const convertValuePriceToTitle = (priceItem: {value: string}) => {
+  let stringVal = "";
+  const arrVal = priceItem?.value?.split("-");
 
-const optionsBedroom = [
-  { title: '1', value: 1 },
-  { title: '2', value: 2 },
-  { title: '3', value: 3 },
-  { title: '4', value: 4 },
-  { title: '5+', value: 5 },
-];
+  if (Number(arrVal[0]) < 1) {
+    stringVal = `${Number(arrVal[0]) * 1000} triệu`;
+  } else if (Number(arrVal[0]) >= 1) {
+    stringVal = `${Number(arrVal[0])} tỷ`;
+  }
+
+  if (Number(arrVal[1]) < 1) {
+    stringVal = `${stringVal} - ${Number(arrVal[1]) * 1000} triệu`;
+  } else if (Number(arrVal[1]) >= 1) {
+    stringVal = `${stringVal} - ${Number(arrVal[1])} tỷ`;
+  }
+
+  if (Number(arrVal[0]) == 0) {
+    stringVal = `Dưới ${Number(arrVal[1]) * 1000} triệu`;
+  } else if (Number(arrVal[1]) == 0) {
+    stringVal = `Trên ${Number(arrVal[0])} tỷ`;
+  }
+
+  return (
+    {
+      value: priceItem?.value,
+      title: stringVal,
+    }
+  )
+}
+
+const convertValueAreaToTitle = (priceItem: {value: string}) => {
+  let stringVal = "";
+  const arrVal = priceItem?.value?.split("-");
+  if (Number(arrVal[0]) === 0) {
+    stringVal = `Dưới ${Number(arrVal[1])}m²`;
+  } else if (Number(arrVal[1]) === 0) {
+    stringVal = `Trên ${Number(arrVal[0])}m²`;
+  } else {
+    stringVal = `${Number(arrVal[0])}m²-${Number(arrVal[1])}m²`
+  }
+
+  return (
+    {
+      value: priceItem?.value,
+      title: stringVal,
+    }
+  )
+}
 
 interface TOptions {
   title: string;
@@ -105,40 +143,35 @@ const FilterScreen = (props: any) => {
 
   const [tabSelected, setTabSelected] = useState(1);
 
-  const { basicInformation, realEstateType, information, demands } =
+  const { basicInformation, demands } =
     useSelector(selectPosts);
+
+  const { 
+    area,
+    bathroom,
+    bedroom,
+    floor,
+    more,
+    price,
+    real_estate_type 
+  } = useSelector(selectRealEstates);
+
+  const directionOptions = more?.[0]?.children?.map((directionItem: any)=> ({
+    value: directionItem?.id,
+    title: directionItem?.value
+  }))
+
+  const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
+    value: legalDocumentItem?.id,
+    title: legalDocumentItem?.value
+  }))
+
+  const locationOptions = more?.[5]?.children?.map((locationItem: any)=> ({
+    value: locationItem?.id,
+    title: locationItem?.value
+  }))
+
   const { provinces, districts, wards } = useSelector(selectCommon);
-
-  const optionsData = useMemo(() => {
-    let compassOptions: TOptions[] = [];
-    let legalDocumentOptions: TOptions[] = [];
-    let locationOptions: TOptions[] = [];
-
-    information.forEach((item: any) => {
-      if (item?.value === REAL_ESTATE.COMPASS) {
-        compassOptions = item?.children?.map((compassItem: any) => ({
-          title: compassItem?.value,
-          value: compassItem?.id,
-        }));
-      } else if (item?.value === REAL_ESTATE.LEGAL_DOCUMENT) {
-        legalDocumentOptions = item?.children?.map((compassItem: any) => ({
-          title: compassItem?.value,
-          value: compassItem?.id,
-        }));
-      } else if (item?.value === REAL_ESTATE.LOCATION) {
-        locationOptions = item?.children?.map((compassItem: any) => ({
-          title: compassItem?.value,
-          value: compassItem?.id,
-        }));
-      }
-    });
-
-    return {
-      compassOptions,
-      legalDocumentOptions,
-      locationOptions,
-    };
-  }, [information]);
 
   const emptyDistrictOption = {
     label: t('select.district'),
@@ -151,7 +184,7 @@ const FilterScreen = (props: any) => {
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
 
-  const typeHousingOptions = realEstateType.map(
+  const typeHousingOptions = real_estate_type.map(
     (type: { value: string; id: string | number }) => ({
       title: type.value,
       value: type.id,
@@ -163,7 +196,11 @@ const FilterScreen = (props: any) => {
   };
 
   const onSubmit = (data: any) => {
-    navigate(SCREENS.LIST_POST);
+    navigate(SCREENS.LIST_POST, {
+      district_id: data?.district_id,
+      typeHousing: data?.typeHousing,
+      demand_id: tabSelected,
+    });
     params?.onSubmit && params?.onSubmit(data);
   };
 
@@ -172,8 +209,13 @@ const FilterScreen = (props: any) => {
       ([key, value]: any) => value && setValue(key, value)
     );
     setValue('address', '');
-    props?.onSubmit &&
-      props?.onSubmit({ ...initValues, priceRange: [], acreage: [] });
+    params?.onSubmit &&
+      params?.onSubmit({ ...initValues, priceRange: [], acreage: [] });
+    navigate(SCREENS.LIST_POST, {
+      district_id: "",
+      typeHousing: "",
+      demand_id: "",
+    });
   };
 
   const fetchDistricts = (params: any, callback?: () => void) => {
@@ -219,6 +261,10 @@ const FilterScreen = (props: any) => {
   }, []);
 
   useEffect(() => {
+    dispatchThunk(dispatch, getAllFilter());
+  }, [dispatch])
+
+  useEffect(() => {
     setValue('demand_id', tabSelected);
   }, [tabSelected]);
 
@@ -229,7 +275,7 @@ const FilterScreen = (props: any) => {
   }, [basicInformation, setValue]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scroll}>
         <View style={styles.header}>
           <Text style={styles.filterPost}>{t('heading.filterPost')}</Text>
@@ -291,14 +337,14 @@ const FilterScreen = (props: any) => {
               </View>
             </View>
 
-            <View>
+            {/* <View>
               <Input
                 control={control}
                 name="address"
                 required
                 placeholder={t('input.addressPlaceHolder') || ''}
               />
-            </View>
+            </View> */}
           </View>
         </View>
 
@@ -309,27 +355,28 @@ const FilterScreen = (props: any) => {
             type={'typeHousing'}
             control={control}
             name="typeHousing"
+            multipleChoice
           />
         </View>
 
         <SliderComponent
           title={t('common.priceRange') || ''}
-          options={optionsPriceRange}
+          options={price.map((priceItem: any) => convertValuePriceToTitle(priceItem))}
           defaultValues={initValues.priceRange}
           minimumValue={0}
-          maximumValue={1000000000}
-          step={10000000}
+          maximumValue={100000000000}
+          step={1000000000}
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
-            (val || '0').toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
+            (Number(val)*10**9 || '0').toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
             ' VND'
           }
         />
 
         <SliderComponent
           title={t('common.acreage') || ''}
-          options={optionsAcreage}
+          options={area.map((areaItem: any) => convertValueAreaToTitle(areaItem))}
           defaultValues={initValues.acreage}
           minimumValue={0}
           maximumValue={100}
@@ -342,7 +389,7 @@ const FilterScreen = (props: any) => {
         <View style={styles.wrapTypeHousing}>
           <Text>{t('select.compass')}</Text>
           <TypeHousing
-            options={optionsData.compassOptions}
+            options={directionOptions}
             type={'compass'}
             control={control}
             name="compass"
@@ -351,35 +398,35 @@ const FilterScreen = (props: any) => {
 
         <SelectComponent
           title={t('common.legalDocuments') || ''}
-          options={optionsData.legalDocumentOptions}
+          options={legalDocumentOptions}
           name="legalDocuments"
           control={control}
         />
 
         <SelectComponent
           title={t('common.location') || ''}
-          options={optionsData.locationOptions}
+          options={locationOptions}
           name="location"
           control={control}
         />
 
         <SelectComponent
           title={t('common.bedroom') || ''}
-          options={optionsBedroom}
+          options={bedroom.map((bedroomItem: any) => convertOptionsFromApi(bedroomItem))}
           name="bedroom"
           control={control}
         />
 
         <SelectComponent
           title={t('common.bathroom') || ''}
-          options={optionsBedroom}
+          options={bathroom.map((bathroomItem: any) => convertOptionsFromApi(bathroomItem))}
           name="bathroom"
           control={control}
         />
 
         <SelectComponent
           title={t('common.numberFloors') || ''}
-          options={optionsBedroom}
+          options={floor.map((bathroomItem: any) => convertOptionsFromApi(bathroomItem))}
           name="numberFloors"
           control={control}
         />

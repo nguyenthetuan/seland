@@ -23,6 +23,7 @@ interface IProps {
   type: string;
   name: string;
   control?: any;
+  multipleChoice?: boolean;
 }
 
 interface ITypeHousingItem {
@@ -30,7 +31,7 @@ interface ITypeHousingItem {
   item: string;
 }
 
-const TypeHousing = ({ options = [], type, name, control }: IProps) => {
+const TypeHousing = ({ options = [], type, name, control, multipleChoice = false }: IProps) => {
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
 
@@ -49,9 +50,12 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
     if (data.includes(item)) {
       return;
     }
-    // data.push(item);
-    // onChange(data);
-    onChange([item]);
+    if (multipleChoice) {
+      data.push(item);
+      onChange(data);
+    } else {
+      onChange([item]);
+    }
   };
 
   const onRemoveTypeHousing = (item: string | number) => {
@@ -156,6 +160,7 @@ const styles = StyleSheet.create({
     padding: 4,
     alignItems: 'center',
     flexDirection: 'row',
+    marginBottom: 8
   },
 });
 

@@ -4,6 +4,7 @@ const {
   COLOR_BLUE_1,
   COLOR_GRAY_2,
   COLOR_GRAY_8,
+  COLOR_WHITE,
 } = require('../../../../constants');
 
 const styles = StyleSheet.create({
@@ -27,6 +28,9 @@ const styles = StyleSheet.create({
     borderColor: COLOR_GRAY_2,
     borderRadius: 2,
     height: 36,
+  },
+  container: {
+    backgroundColor: COLOR_WHITE
   },
   district: {
     paddingRight: 4,
@@ -54,6 +58,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
   },
   scroll: {
+    backgroundColor: COLOR_WHITE,
     paddingHorizontal: 10,
   },
   textButtonSelect: {
