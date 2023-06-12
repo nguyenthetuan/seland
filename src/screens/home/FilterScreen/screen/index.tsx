@@ -161,28 +161,28 @@ const FilterScreen = (props: any) => {
     title: directionItem?.value
   }))
 
-  const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
-    value: legalDocumentItem?.id,
-    title: legalDocumentItem?.value
-  }))
+  // const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
+  //   value: legalDocumentItem?.id,
+  //   title: legalDocumentItem?.value
+  // }))
 
   const locationOptions = more?.[5]?.children?.map((locationItem: any)=> ({
     value: locationItem?.id,
     title: locationItem?.value
   }))
 
-  const { provinces, districts, wards } = useSelector(selectCommon);
+  // const { provinces, districts, wards } = useSelector(selectCommon);
 
-  const emptyDistrictOption = {
-    label: t('select.district'),
-    value: null,
-  };
-  const emptyWardOption = {
-    label: t('select.ward'),
-    value: null,
-  };
-  const districtOptions = [emptyDistrictOption, ...districts];
-  const wardOptions = [emptyWardOption, ...wards];
+  // const emptyDistrictOption = {
+  //   label: t('select.district'),
+  //   value: null,
+  // };
+  // const emptyWardOption = {
+  //   label: t('select.ward'),
+  //   value: null,
+  // };
+  // const districtOptions = [emptyDistrictOption, ...districts];
+  // const wardOptions = [emptyWardOption, ...wards];
 
   const typeHousingOptions = real_estate_type.map(
     (type: { value: string; id: string | number }) => ({
@@ -218,11 +218,11 @@ const FilterScreen = (props: any) => {
     });
   };
 
-  const fetchDistricts = (params: any, callback?: () => void) => {
-    dispatchThunk(dispatch, getDistricts(params), callback);
-  };
+  // const fetchDistricts = (params: any, callback?: () => void) => {
+  //   dispatchThunk(dispatch, getDistricts(params), callback);
+  // };
 
-  const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
+  // const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
 
   // const handleSelectDistrict = (selectedItem: any) => {
   //   setValue('ward_id', null);
