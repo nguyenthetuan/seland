@@ -28,6 +28,7 @@ interface SelectProps {
   containerSelect?: any;
   rowTextStyle?: any;
   defaultButtonText?: string;
+  title?: string;
 }
 
 const Select = ({
@@ -45,6 +46,7 @@ const Select = ({
   containerSelect,
   rowTextStyle,
   defaultButtonText,
+  title,
   ...props
 }: SelectProps) => {
   const {
@@ -76,7 +78,9 @@ const Select = ({
       )}
       <SelectDropdown
         buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
-        buttonTextAfterSelection={selectedItem => selectedItem.label}
+        buttonTextAfterSelection={selectedItem =>
+          title ? `${title}: ${selectedItem.label}` : selectedItem.label
+        }
         buttonTextStyle={StyleSheet.flatten([
           styles.text(data.findIndex(item => item.value === value)),
           buttonTextStyle,

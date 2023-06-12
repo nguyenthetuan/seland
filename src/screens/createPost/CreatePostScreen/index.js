@@ -82,38 +82,49 @@ const CreatePostScreen = () => {
     goBack();
   };
   const handleTab = value => {
-    console.log(
-      '🚀 ~ file: index.js:85 ~ handleTab ~ value:',
-      value,
-      currentTab.current
-    );
     setTab(value);
     if (
       currentTab.current === TAB.BASIC_INFORMATION &&
-      value === TAB.REAL_ESTATE_INFORMATION
+      value === TAB.REAL_ESTATE_INFORMATION &&
+      tab === TAB.BASIC_INFORMATION
     ) {
       basicInfoRef.current.handleNext();
       currentTab.current = value;
+      return;
     }
     if (
       currentTab.current === TAB.BASIC_INFORMATION &&
-      value === TAB.ARTICLE_DETAILS
+      value === TAB.ARTICLE_DETAILS &&
+      tab === TAB.BASIC_INFORMATION
     ) {
       basicInfoRef.current.handleNext();
       currentTab.current = value;
+      return;
     }
 
     if (
       currentTab.current === TAB.REAL_ESTATE_INFORMATION &&
-      value === TAB.ARTICLE_DETAILS
+      value === TAB.ARTICLE_DETAILS &&
+      tab === TAB.REAL_ESTATE_INFORMATION
     ) {
       realEstateRef.current.handleNext();
       currentTab.current = value;
+      return;
     }
 
     if (
       currentTab.current === TAB.ARTICLE_DETAILS &&
-      value === TAB.REAL_ESTATE_INFORMATION
+      value === TAB.REAL_ESTATE_INFORMATION &&
+      tab === TAB.ARTICLE_DETAILS
+    ) {
+      articleDetailRef.current.handleNext();
+      currentTab.current = value;
+      return;
+    }
+    if (
+      currentTab.current === TAB.ARTICLE_DETAILS &&
+      value === TAB.BASIC_INFORMATION &&
+      tab === TAB.ARTICLE_DETAILS
     ) {
       articleDetailRef.current.handleNext();
       currentTab.current = value;
@@ -210,6 +221,7 @@ const CreatePostScreen = () => {
           break;
         } else {
           setTab(tab + 1);
+          currentTab.current = tab + 1;
           break;
         }
       case TAB.REAL_ESTATE_INFORMATION:
@@ -219,6 +231,7 @@ const CreatePostScreen = () => {
           break;
         } else {
           setTab(tab + 1);
+          currentTab.current = tab + 1;
           break;
         }
       case TAB.ARTICLE_DETAILS:

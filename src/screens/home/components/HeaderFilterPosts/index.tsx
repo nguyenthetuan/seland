@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import { TouchableOpacity, View } from 'react-native';
@@ -6,29 +6,87 @@ import { Icon } from '@rneui/base';
 import { Select } from '../../../../components';
 import { Control } from 'react-hook-form';
 import Filter from '../FilterModal';
+import { useNavigation } from '@react-navigation/native';
+import { SCREENS } from '../../../../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllFilter, getDistricts, getProvinces, selectCommon, selectPosts, selectRealEstates } from '../../../../features';
+import { dispatchThunk } from '../../../../utils';
 
 interface Iprops {
   control: Control<any>;
   handleSubmit?: any;
   onSelect: (value: any) => void;
   onFilter: (value?: any) => void;
+  route?: any;
+  setValue?: any;
 }
 
 const HeaderFilterPosts: FC<Iprops> = props => {
-  const { control, handleSubmit, onSelect, onFilter } = props;
+  const { control, handleSubmit, onSelect, onFilter, route, setValue } = props;
   const { t } = useTranslation();
-  const filterRef: any = useRef();
+  const { navigate } = useNavigation();
 
-  const type = [
-    {
-      label: 'Mua',
-      value: '1',
-    },
-    {
-      label: 'Bán',
-      value: '2',
-    },
-  ];
+  const params = route?.params;
+  const district_id = params?.district_id;
+  const typeHousing = params?.typeHousing;
+  const demand_id = params?.demand_id;
+
+  useEffect(() => {
+    setValue('district_id', district_id)
+  }, [district_id]);
+
+  useEffect(() => {
+    if (typeHousing && typeHousing.length > 0) {
+      setValue('typeHousing', typeHousing?.[0]);
+    }
+  }, [typeHousing]);
+
+  useEffect(() => {
+    setValue('demand_id', demand_id)
+  }, [demand_id]);
+
+  const { districts } = useSelector(selectCommon);
+
+  const {
+    real_estate_type 
+  } = useSelector(selectRealEstates);
+
+  const dispatch = useDispatch();
+
+  const emptyDistrictOption = {
+    label: t('select.district'),
+    value: null,
+  };
+
+  const province_id = 'HNI';
+  const districtOptions = [emptyDistrictOption, ...districts];
+
+  const fetchDistricts = (params: any, callback?: () => void) => {
+    dispatchThunk(dispatch, getDistricts(params), callback);
+  };
+
+  const refresh = async () => {
+    await Promise.all([
+      dispatchThunk(dispatch, getProvinces()),
+      province_id &&
+        fetchDistricts({
+          province_code: province_id,
+        }),
+    ]);
+  };
+
+  useEffect(() => {
+    refresh();
+  }, []);
+
+  const { demands } =
+    useSelector(selectPosts);
+
+  const demansOption = demands.map((demandItem: { value: string; id: any }) => ({
+    label: demandItem?.value,
+    value: demandItem?.id
+  }))
+
   const sortBy = [
     {
       label: 'newest',
@@ -63,16 +121,21 @@ const HeaderFilterPosts: FC<Iprops> = props => {
       value: 'price_per_m_desc',
     },
   ];
-  const realEstateType = [{ label: 'Mua', value: 1 }];
-
-  const onOpenFilter = () => {
-    filterRef.current.onOpen();
-  };
 
   const onSubmit = (params: any) => {
     onFilter && onFilter(params);
-    filterRef.current.onClose();
   };
+
+  const typeHousingOptions = real_estate_type.map(
+    (type: { value: string; id: string | number }) => ({
+      label: type.value,
+      value: type.id,
+    })
+  );
+
+  useEffect(() => {
+    dispatchThunk(dispatch, getAllFilter());
+  }, [dispatch])
 
   return (
     <>
@@ -80,7 +143,11 @@ const HeaderFilterPosts: FC<Iprops> = props => {
         <View style={styles.filter}>
           <TouchableOpacity
             style={styles.btnFilter}
-            onPress={onOpenFilter}
+            onPress={() => {
+              navigate(SCREENS.FILTER_SCREEN, {
+                onSubmit,
+              });
+            }}
           >
             <Icon name="filter-list" />
           </TouchableOpacity>
@@ -92,9 +159,9 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={realEstateType}
+              data={typeHousingOptions}
               defaultButtonText={t('select.typeHousing') || ''}
-              name="real_estate_type_id"
+              name="typeHousing"
               onSelect={handleSubmit(onSelect)}
             />
           </View>
@@ -105,9 +172,9 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={[{ label: 'test', value: 'test' }]}
+              data={districtOptions}
               defaultButtonText={t('select.area') || ''}
-              name="area_range_id"
+              name="district_id"
               onSelect={handleSubmit(onSelect)}
             />
           </View>
@@ -118,9 +185,9 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={type}
+              data={demansOption}
               defaultButtonText={t('select.type') || ''}
-              name="type"
+              name="demand_id"
               onSelect={handleSubmit(onSelect)}
             />
           </View>
@@ -144,10 +211,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
           onSelect={handleSubmit(onSelect)}
         />
       </View>
-      <Filter
-        ref={filterRef}
-        onSubmit={onSubmit}
-      />
+      <Filter onSubmit={onSubmit} />
     </>
   );
 };

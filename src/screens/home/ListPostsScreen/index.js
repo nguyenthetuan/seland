@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,12 +18,12 @@ import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
-const ListPostsScreen = () => {
-  const { control, handleSubmit } = useForm({
+const ListPostsScreen = (props) => {
+  const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
-      real_estate_type_id: '',
-      area_range_id: '',
-      status: '',
+      district_id: '',
+      typeHousing: '',
+      demand_id: '',
       sort_by: '',
     },
   });
@@ -31,10 +32,6 @@ const ListPostsScreen = () => {
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
     useSelector(selectRealEstates);
-
-  const onSelect = value => {
-    console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
-  };
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstates());
@@ -56,7 +53,10 @@ const ListPostsScreen = () => {
     }
     if (data?.typeHousing?.length > 0) {
       res.real_estate_type_id = data?.typeHousing?.join(',');
+    } else if (['number', 'string'].includes(typeof (data?.typeHousing))) {
+      res.real_estate_type_id = data?.typeHousing;
     }
+
     if (data?.compass?.length > 0) {
       res.main_direction_id = data?.compass?.join(',');
     }
@@ -93,6 +93,12 @@ const ListPostsScreen = () => {
     filterRef?.current?.onClose();
   };
 
+  const onSelect = value => {
+    // console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
+    const dataFilter = convertDataFilter(value);
+    dispatchThunk(dispatch, getListRealEstates(dataFilter));
+  };
+
   return (
     <>
       <Loading
@@ -116,6 +122,8 @@ const ListPostsScreen = () => {
               handleSubmit={handleSubmit}
               onSelect={onSelect}
               onFilter={onFilter}
+              setValue={setValue}
+              {...props}
             />
           }
         />
