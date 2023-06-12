@@ -65,7 +65,6 @@ const slice = createSlice({
     builder.addCase(getAllFilter.fulfilled, (state, action) => {
       state.loading = false;
       // eslint-disable-next-line prefer-destructuring
-      console.log("go heree==========", action.payload?.[0]);
       state.area = action.payload[0]?.area;
       state.bathroom = action.payload[0]?.bathroom;
       state.bedroom = action.payload[0]?.bedroom;

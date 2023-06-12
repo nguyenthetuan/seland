@@ -53,7 +53,10 @@ const ListPostsScreen = (props) => {
     }
     if (data?.typeHousing?.length > 0) {
       res.real_estate_type_id = data?.typeHousing?.join(',');
+    } else if (['number', 'string'].includes(typeof (data?.typeHousing))) {
+      res.real_estate_type_id = data?.typeHousing;
     }
+
     if (data?.compass?.length > 0) {
       res.main_direction_id = data?.compass?.join(',');
     }
