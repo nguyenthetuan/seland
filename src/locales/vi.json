@@ -279,6 +279,7 @@
     "area": "Khu vực",
     "type": "Loại hình",
     "sortBy": "Sắp xếp theo: {{sortBy}}",
+    "sortBySelect": "Sắp xếp theo",
     "newest": "Mới nhất",
     "priceAsc": "Giá tăng dần",
     "priceDesc": "Giá giảm dần",
@@ -304,6 +305,8 @@
     "note": "Chú thích",
     "dateRange": "Tuỳ chọn",
     "realEstates": "Kho BĐS: {{realEstates}}",
-    "agency": "Môi giới: {{agency}}"
+    "agency": "Môi giới: {{agency}}",
+    "realEstatesSelect": "Kho BĐS",
+    "agencySelect": "Môi giới"
   }
 }

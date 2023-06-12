@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     fontWeight: 400,
-    paddingLeft: 8,
+    marginLeft: 8,
   },
   boxImage: {
     height: 200,

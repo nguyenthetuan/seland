@@ -165,8 +165,9 @@ const UserPostsScreen = () => {
     },
   });
 
-  const onSubmit = data =>
+  const onSubmit = data => {
     dispatchThunk(dispatch, getListRealEstatesUser(data));
+  };
 
   const submit = handleSubmit(onSubmit);
 
