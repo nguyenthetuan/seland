@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import { TouchableOpacity, View } from 'react-native';
@@ -6,6 +6,15 @@ import { Icon } from '@rneui/base';
 import { Control } from 'react-hook-form';
 import { Select } from '../../../../../components';
 import Filter from '../../../../home/components/FilterModal';
+import { dispatchThunk } from '../../../../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  loadListAllWareHouses,
+  loadListAgency,
+  selectWareHouses,
+} from '../../../../../features';
+import { formatSelect } from '../../../../../utils/format';
+import { IModalFilterWarehouse } from '../../../../../utils/interface/common';
 
 interface Iprops {
   control: Control<any>;
@@ -17,6 +26,7 @@ interface Iprops {
 const FilterWarehouse: FC<Iprops> = props => {
   const { control, handleSubmit, onSelect, onFilter } = props;
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const filterRef: any = useRef();
   const sortBy = [
     {
@@ -52,17 +62,22 @@ const FilterWarehouse: FC<Iprops> = props => {
       value: 'price_per_m_desc',
     },
   ];
-  const listWareHouse = [{ label: t('button.all'), value: 1 }];
-  const listAgency = [{ label: t('button.all'), value: 1 }];
-
+  const { listAllWareHouses, listAgency } = useSelector(selectWareHouses);
+  const listAllWareHousesConvert =
+    listAllWareHouses && formatSelect(listAllWareHouses);
+  const listAgencyConvert = listAgency && formatSelect(listAgency);
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
 
-  const onSubmit = () => {
-    onFilter && onFilter();
+  const onSubmit = (value: IModalFilterWarehouse) => {
+    onFilter && onFilter(value);
     filterRef.current.onClose();
   };
+  useEffect(() => {
+    dispatchThunk(dispatch, loadListAllWareHouses());
+    dispatchThunk(dispatch, loadListAgency());
+  }, [dispatch]);
 
   return (
     <>
@@ -82,14 +97,10 @@ const FilterWarehouse: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={listWareHouse}
-              name="real_estate_type_id"
+              data={listAllWareHousesConvert}
+              name="real_estate_warehouse_id"
               onSelect={handleSubmit(onSelect)}
-              defaultButtonText={
-                t('select.realEstates', {
-                  realEstates: t('button.all'),
-                }) || ''
-              }
+              title={t('upgradeAccount.realEstatesSelect') || ''}
             />
           </View>
           <View style={styles.areaRange}>
@@ -99,14 +110,10 @@ const FilterWarehouse: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={listAgency}
-              defaultButtonText={
-                t('select.agency', {
-                  agency: t('button.all'),
-                }) || ''
-              }
+              data={listAgencyConvert}
               name="area_range_id"
               onSelect={handleSubmit(onSelect)}
+              title={t('upgradeAccount.agencySelect') || ''}
             />
           </View>
         </View>
@@ -120,18 +127,16 @@ const FilterWarehouse: FC<Iprops> = props => {
             ...item,
             label: t(`select.${item?.label}`),
           }))}
-          defaultButtonText={
-            t('select.sortBy', {
-              sortBy: t('select.newest'),
-            }) || ''
-          }
-          name="sort_by"
+          title={t('select.sortBySelect') || ''}
+          name="sort_order"
           onSelect={handleSubmit(onSelect)}
         />
       </View>
       <Filter
         ref={filterRef}
         onSubmit={onSubmit}
+        control={control}
+        handleSubmit={handleSubmit}
       />
     </>
   );

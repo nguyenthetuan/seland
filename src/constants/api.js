@@ -21,3 +21,6 @@ export const GET_ALL_INFORMATION = '/getAllInformation';
 export const GET_ALL_FILTER = '/getAllFilter';
 export const GET_LIST_RANK = '/getListRank';
 export const POST_PAYMENT = '/auth/postPayment';
+export const GET_ALL_WAREHOUSES = '/auth/getAllWarehouses';
+export const GET_AGENCY = '/auth/getBrokersBasedOnCurrentUserAgency';
+export const GET_REAL_ESTATEWAREHOUSES = '/auth/getRealEstateWarehouses';

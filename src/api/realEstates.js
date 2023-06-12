@@ -1,14 +1,18 @@
 import {
   CREATE_REAL_ESTATE,
+  GET_AGENCY,
   GET_ALL_FILTER,
   GET_ALL_INFORMATION,
+  GET_ALL_WAREHOUSES,
   GET_LIST_RANK,
   GET_LIST_REAL_ESTATES_ROUTE,
+  GET_REAL_ESTATEWAREHOUSES,
   POST_PAYMENT,
 } from '../constants';
 import { get, post } from '../utils';
 
-export const requestGetListRealEstates = (params) => get(GET_LIST_REAL_ESTATES_ROUTE, params);
+export const requestGetListRealEstates = params =>
+  get(GET_LIST_REAL_ESTATES_ROUTE, params);
 
 export const requestGetAllInformation = () => get(GET_ALL_INFORMATION);
 
@@ -22,3 +26,7 @@ export const requestCreateRealEstates = params =>
   });
 
 export const requestPostPayment = params => post(POST_PAYMENT, params);
+export const requestGetAllWareHouse = () => get(GET_ALL_WAREHOUSES);
+export const requestGetAgency = () => get(GET_AGENCY);
+export const requestGetRealEstateWarehouses = params =>
+  get(GET_REAL_ESTATEWAREHOUSES, params);
