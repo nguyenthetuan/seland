@@ -18,16 +18,16 @@ interface SelectProps {
   buttonTextStyle?: TextStyle;
   control?: any;
   data?: IOptions[];
-  label?: string;
+  label?: string | undefined | null;
   labelStyle?: any;
   name?: string;
   onSelect?: Function;
   required?: boolean;
-  errors?: string;
+  errors?: string | null;
   rowStyle?: any;
   containerSelect?: any;
   rowTextStyle?: any;
-  defaultButtonText?: string;
+  defaultButtonText?: string | null;
   title?: string;
 }
 
