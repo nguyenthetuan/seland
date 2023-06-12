@@ -18,6 +18,7 @@ const SCREENS = {
   LIST_POSTS: 'ListPosts',
   MANAGE_POSTS: 'ManagePost',
   WAREHOUSELAND: 'WareHouseLand',
+  FILTER_SCREEN: 'FilterScreen',
 };
 
 export default SCREENS;
