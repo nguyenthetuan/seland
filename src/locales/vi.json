@@ -65,6 +65,7 @@
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản",
     "broker": "Môi giới",
+    "brokerOther": "Môi giới khác",
     "landlord": "Chủ đất"
   },
   "common": {
