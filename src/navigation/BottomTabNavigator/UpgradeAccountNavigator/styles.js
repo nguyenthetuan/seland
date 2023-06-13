@@ -1,4 +1,9 @@
-import { COLOR_BLACK_1, COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
+import {
+  COLOR_BLACK_1,
+  COLOR_BLUE_1,
+  COLOR_WHITE,
+  COLOR_GRAY_2,
+} from '../../../constants';
 
 const { StyleSheet } = require('react-native');
 
@@ -18,6 +23,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: 32,
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: COLOR_GRAY_2,
     // width: '30%',
   },
   headerContainer: {
