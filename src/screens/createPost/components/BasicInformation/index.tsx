@@ -51,10 +51,16 @@ const BasicInformation = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const { basicInformation, realEstateType, projects, demands } =
     useSelector(selectPosts);
+  console.log(
+    '🚀 ~ file: index.tsx:53 ~ BasicInformation ~ basicInformation:',
+    basicInformation
+  );
   const [isBuy, setIsBuy] = useState(basicInformation?.demand_id || 1);
   const [errors, setErrors] = useState<errorsProps>();
   const [showInfoApartmentBuilding, setShowInfoApartmentBuilding] =
-    useState<boolean>(false);
+    useState<boolean>(
+      basicInformation?.real_estate_type_id === 3 ? true : false
+    );
   const dispatch = useDispatch();
   const { provinces, districts, wards } = useSelector(selectCommon);
 
