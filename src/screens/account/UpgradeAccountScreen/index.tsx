@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, SafeAreaView, View } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Button } from '../../../components';
 import { COLOR_ORANGE_6 } from '../../../constants';
@@ -12,78 +12,87 @@ const dataMock = [
     title: 'Miễn phí',
     price: 'XX VND',
     listFeature: [
-      "Xem quy hoạch",
-      "Đăng tin rao vặt",
-      "Tìm kiếm BĐS trên bản đồ quy hoạch",
+      'Xem quy hoạch',
+      'Đăng tin rao vặt',
+      'Tìm kiếm BĐS trên bản đồ quy hoạch',
     ],
-    avatar: <Free />
+    avatar: <Free />,
   },
   {
     title: 'Chuyên nghiệp',
     price: 'XX VND',
     listFeature: [
-      "Xem quy hoạch",
-      "Đăng tin rao vặt",
-      "Tìm kiếm BĐS trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
+      'Xem quy hoạch',
+      'Đăng tin rao vặt',
+      'Tìm kiếm BĐS trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
     ],
   },
   {
     title: 'Cho thuê chuyên nghiệp',
     price: 'XX VND',
     listFeature: [
-      "Xem quy hoạch",
-      "Đăng tin rao vặt",
-      "Tìm kiếm BĐS trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
+      'Xem quy hoạch',
+      'Đăng tin rao vặt',
+      'Tìm kiếm BĐS trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
     ],
-    avatar: 'https://assets-global.website-files.com/6171adb6a942ed69f5e6b5ee/638dfe7bdfce23da20cc0be5_lucid-nft.png'
+    avatar:
+      'https://assets-global.website-files.com/6171adb6a942ed69f5e6b5ee/638dfe7bdfce23da20cc0be5_lucid-nft.png',
   },
   {
     title: 'Nhà Đầu Tư Chuyên Nghiệp',
     price: 'XX VND',
     listFeature: [
-      "Xem quy hoạch",
-      "Đăng tin rao vặt",
-      "Tìm kiếm BĐS trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
+      'Xem quy hoạch',
+      'Đăng tin rao vặt',
+      'Tìm kiếm BĐS trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
     ],
-    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSrW7NEA4RsNNxWPoKr4UbAAnawwyr0mdDIg&usqp=CAU',
+    avatar:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSrW7NEA4RsNNxWPoKr4UbAAnawwyr0mdDIg&usqp=CAU',
   },
   {
     title: 'Đại lý',
     price: 'XX VND',
     listFeature: [
-      "Xem quy hoạch",
-      "Đăng tin rao vặt",
-      "Tìm kiếm BĐS trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
-    ]
+      'Xem quy hoạch',
+      'Đăng tin rao vặt',
+      'Tìm kiếm BĐS trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
+    ],
   },
   {
     title: 'Đặc biệt',
     price: 'XX VND',
     listFeature: [
-      "Xem quy hoạch",
-      "Đăng tin rao vặt",
-      "Tìm kiếm BĐS trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
-      "Vẽ ranh trên bản đồ quy hoạch",
-    ]
+      'Xem quy hoạch',
+      'Đăng tin rao vặt',
+      'Tìm kiếm BĐS trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
+      'Vẽ ranh trên bản đồ quy hoạch',
+    ],
   },
-]
+];
 
 const { width } = Dimensions.get('screen');
 
 const UpgradeAccountScreen = () => {
-
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
-  const renderItem = ({item, index}: {item: any, index: number}) => <PackageInformation key={index} title={item?.title} price={item?.price} listFeature={item?.listFeature} avatar={item?.avatar} />
+  const renderItem = ({ item, index }: { item: any; index: number }) => (
+    <PackageInformation
+      key={index}
+      title={item?.title}
+      price={item?.price}
+      listFeature={item?.listFeature}
+      avatar={item?.avatar}
+    />
+  );
 
   const pagination = () => {
     return (
@@ -94,12 +103,12 @@ const UpgradeAccountScreen = () => {
         inactiveDotStyle={styles.inactiveDotStyle}
         inactiveDotScale={1}
       />
-    )
-  }
+    );
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Carousel
           data={dataMock}
           renderItem={renderItem}
@@ -110,8 +119,11 @@ const UpgradeAccountScreen = () => {
         />
         {pagination()}
 
-        <Button title="Mua gói ngay" color={COLOR_ORANGE_6} />
-      </View>
+        <Button
+          title="Mua gói ngay"
+          color={COLOR_ORANGE_6}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };

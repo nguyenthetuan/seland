@@ -74,7 +74,10 @@ const UpgradeAccountTab = () => {
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={isFocused ? styles.bgcTabActive : styles.bgcTabInactive}
+              style={[
+                isFocused ? styles.bgcTabActive : styles.bgcTabInactive,
+                { marginRight: 8 },
+              ]}
             >
               <Animated.Text
                 numberOfLines={1}
@@ -102,7 +105,12 @@ const UpgradeAccountTab = () => {
         <Text style={styles.headerTitle}>{t('upgradeAccount.buyAccount')}</Text>
       </View>
 
-      <Tab.Navigator tabBar={props => <TabBarTitle {...props} />}>
+      <Tab.Navigator
+        screenOptions={{
+          swipeEnabled: false,
+        }}
+        tabBar={props => <TabBarTitle {...props} />}
+      >
         <Tab.Screen
           name={SCREENS.UPGRADE_ACCOUNT_SCREEN}
           component={UpgradeAccountScreen}
