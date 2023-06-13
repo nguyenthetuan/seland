@@ -309,5 +309,8 @@
     "agency": "Môi giới: {{agency}}",
     "realEstatesSelect": "Kho BĐS",
     "agencySelect": "Môi giới"
+  },
+  "detailPost": {
+    "seeMap": "Xem trên bản đồ"
   }
 }
