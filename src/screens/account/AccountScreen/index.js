@@ -38,6 +38,8 @@ const AccountScreen = () => {
 
   const navigateToChangePassword = () => navigate(SCREENS.CHANGE_PASSWORD);
 
+  const navigateToDepositScreen = () => navigate(SCREENS.DEPOSIT_SCREEN);
+
   const activityHistory = [
     {
       name: 'viewedPosts',
@@ -225,7 +227,10 @@ const AccountScreen = () => {
             </View>
             <Text style={styles.valuePromotion}>50,000 đ</Text>
           </View>
-          <TouchableOpacity style={styles.payment}>
+          <TouchableOpacity
+            style={styles.payment}
+            onPress={navigateToDepositScreen}
+          >
             <Icon
               color={COLOR_WHITE}
               name="account-balance-wallet"

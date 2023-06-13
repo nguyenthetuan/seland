@@ -6,6 +6,7 @@ import {
   COLOR_BLUE_2,
   COLOR_GRAY_5,
   COLOR_GRAY_7,
+  COLOR_ORANGE_5,
   COLOR_ORANGE_6,
   COLOR_ORANGE_7,
 } from '../../../../constants';
@@ -18,6 +19,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     marginTop: 7,
+  },
+  txtExpand: {
+    color: COLOR_ORANGE_5,
+    fontSize: 14,
+  },
+  btnExpand: {
+    alignSelf: 'center',
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   boxSelectAddress: {
     flexDirection: 'row',

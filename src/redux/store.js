@@ -20,6 +20,7 @@ import {
   realEstatesReducer,
   userRealEstatesReducer,
   userReducer,
+  wareHousesReducer,
 } from '../features';
 
 const persistConfig = {
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   userRealEstates: userRealEstatesReducer,
   post: postReducer,
   payment: paymentReducer,
+  wareHouses: wareHousesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

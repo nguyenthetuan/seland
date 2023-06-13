@@ -18,16 +18,17 @@ interface SelectProps {
   buttonTextStyle?: TextStyle;
   control?: any;
   data?: IOptions[];
-  label?: string;
+  label?: string | undefined | null;
   labelStyle?: any;
   name?: string;
   onSelect?: Function;
   required?: boolean;
-  errors?: string;
+  errors?: string | null;
   rowStyle?: any;
   containerSelect?: any;
   rowTextStyle?: any;
-  defaultButtonText?: string;
+  defaultButtonText?: string | null;
+  title?: string;
 }
 
 const Select = ({
@@ -45,6 +46,7 @@ const Select = ({
   containerSelect,
   rowTextStyle,
   defaultButtonText,
+  title,
   ...props
 }: SelectProps) => {
   const {
@@ -76,7 +78,9 @@ const Select = ({
       )}
       <SelectDropdown
         buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
-        buttonTextAfterSelection={selectedItem => selectedItem.label}
+        buttonTextAfterSelection={selectedItem =>
+          title ? `${title}: ${selectedItem.label}` : selectedItem.label
+        }
         buttonTextStyle={StyleSheet.flatten([
           styles.text(data.findIndex(item => item.value === value)),
           buttonTextStyle,

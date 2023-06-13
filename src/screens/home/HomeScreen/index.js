@@ -40,10 +40,6 @@ const HomeScreen = () => {
     dispatchThunk(dispatch, getListProjects());
     dispatchThunk(dispatch, getListNews());
   }, [dispatch]);
-  console.log(
-    '🚀 ~ file: index.js:156 ~ HomeScreen ~ listProject.length:',
-    listProject.length
-  );
 
   const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
 
