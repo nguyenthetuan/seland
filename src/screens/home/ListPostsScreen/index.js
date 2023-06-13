@@ -19,11 +19,11 @@ import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
 const ListPostsScreen = (props) => {
-  const { control, handleSubmit, setValue } = useForm({
+  const { control, handleSubmit, setValue, getValues } = useForm({
     defaultValues: {
       district_id: '',
       typeHousing: '',
-      demand_id: '',
+      demand_id: 1,
       sort_by: '',
     },
   });
@@ -41,9 +41,13 @@ const ListPostsScreen = (props) => {
     const res = {};
     res.sort_by = 'asc';
 
+    if (data?.sort_by) {
+      res.sort_by = data?.sort_by;
+    }
+
     if (data?.priceRange?.length > 0 && data?.priceRange[1] !== 1) {
-      res.price_range_id = `${Number(data?.priceRange[0]) / 10 ** 9}-${
-        Number(data?.priceRange[1]) / 10 ** 9
+      res.price_range_id = `${Number(data?.priceRange[0])}-${
+        Number(data?.priceRange[1])
       }`;
     }
     if (data?.acreage?.length > 0 && data?.acreage[1] !== 1) {
@@ -52,9 +56,9 @@ const ListPostsScreen = (props) => {
       )}`;
     }
     if (data?.typeHousing?.length > 0) {
-      res.real_estate_type_id = data?.typeHousing?.join(',');
-    } else if (['number', 'string'].includes(typeof (data?.typeHousing))) {
-      res.real_estate_type_id = data?.typeHousing;
+      res.real_estate_type = data?.typeHousing;
+    } else if (data?.typeHousing && ['number', 'string'].includes(typeof (data?.typeHousing))) {
+      res.real_estate_type = [data?.typeHousing];
     }
 
     if (data?.compass?.length > 0) {
@@ -94,7 +98,7 @@ const ListPostsScreen = (props) => {
   };
 
   const onSelect = value => {
-    // console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
+    console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
     const dataFilter = convertDataFilter(value);
     dispatchThunk(dispatch, getListRealEstates(dataFilter));
   };
@@ -119,6 +123,7 @@ const ListPostsScreen = (props) => {
           ListHeaderComponent={
             <HeaderFilterPosts
               control={control}
+              getValues={getValues}
               handleSubmit={handleSubmit}
               onSelect={onSelect}
               onFilter={onFilter}
