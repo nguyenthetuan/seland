@@ -19,6 +19,7 @@ const SCREENS = {
   MANAGE_POSTS: 'ManagePost',
   WAREHOUSELAND: 'WareHouseLand',
   FILTER_SCREEN: 'FilterScreen',
+  DEPOSIT_SCREEN: 'DepositScreen',
 };
 
 export default SCREENS;
