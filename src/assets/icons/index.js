@@ -49,3 +49,5 @@ export { default as TickButton } from './tick.svg';
 export { default as TrainHome } from './train-home.svg';
 export { default as IconUpload } from './upload.svg';
 export { default as IconUploadWhite } from './upload-white.svg';
+export { default as Circle } from './circle.svg';
+export { default as CircleCheck } from './circle-check.svg';

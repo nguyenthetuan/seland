@@ -29,7 +29,7 @@ import styles from './styles';
 
 const UserPostsScreen = () => {
   const route = useRoute();
-  const filterRef = useRef();
+  const filterRef = useRef<any>();
 
   const dispatch = useDispatch();
   const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
@@ -53,7 +53,7 @@ const UserPostsScreen = () => {
     );
   }, [dispatch]);
 
-  const handleSelectStatus = value => {
+  const handleSelectStatus = (value: number) => {
     dispatchThunk(
       dispatch,
       value >= 0
@@ -165,13 +165,13 @@ const UserPostsScreen = () => {
     },
   });
 
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     dispatchThunk(dispatch, getListRealEstatesUser(data));
   };
 
   const submit = handleSubmit(onSubmit);
 
-  const handleSelectDate = selectedItem => {
+  const handleSelectDate = (selectedItem: { value?: string }) => {
     if (selectedItem.value === 'date_range') setModalVisible(true);
     else submit();
   };
@@ -190,7 +190,10 @@ const UserPostsScreen = () => {
     hideDateRangePicker();
   };
 
-  const handleSelectDateRange = selectedDateRange => {
+  const handleSelectDateRange = (selectedDateRange: {
+    firstDate: string;
+    secondDate: string;
+  }) => {
     setDateRange({
       dateStart: selectedDateRange.firstDate,
       dateEnd: selectedDateRange.secondDate,
@@ -226,7 +229,7 @@ const UserPostsScreen = () => {
       <View style={[styles.flex, styles.whiteBackground]}>
         <Header title={t('header.userPosts')} />
         <FlatList
-          style={styles.postButtons}
+          style={styles.listButton}
           data={statuses}
           horizontal
           renderItem={({ item: { label, value } }) => (
@@ -239,71 +242,73 @@ const UserPostsScreen = () => {
           )}
           showsHorizontalScrollIndicator={false}
         />
-        <Screen noSafeArea>
-          <View style={styles.searchFilter}>
-            <View style={styles.search}>
-              <Input
-                control={control}
-                inputContainerStyle={styles.searchInput}
-                name="title"
-                onSubmitEditing={submit}
-                returnKeyType="search"
-                placeholder={t('input.searchByCodeTitle')}
-                rightIcon={
-                  <Pressable onPress={submit}>
-                    <Icon name="search" />
-                  </Pressable>
-                }
-              />
-            </View>
-            <View style={styles.flex}>
-              <Select
-                buttonStyle={styles.selectButton}
-                control={control}
-                data={calendar.map(item => ({
-                  ...item,
-                  label: t(`select.${item?.label}`),
-                }))}
-                name="date"
-                onSelect={handleSelectDate}
-                rowStyle={styles.selectButton}
-              />
-            </View>
-            <Button
-              buttonStyle={styles.filterButton}
-              icon={
-                <Icon
-                  color={COLOR_WHITE}
-                  name="filter-alt"
-                  size={16}
+        <FlatList
+          style={styles.list}
+          data={userRealEstates}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <UserPost item={item} />}
+          ListHeaderComponent={
+            <>
+              <View style={styles.searchFilter}>
+                <View style={styles.search}>
+                  <Input
+                    control={control}
+                    inputContainerStyle={styles.searchInput}
+                    name="title"
+                    onSubmitEditing={submit}
+                    returnKeyType="search"
+                    placeholder={t('input.searchByCodeTitle')}
+                    rightIcon={
+                      <Pressable onPress={submit}>
+                        <Icon name="search" />
+                      </Pressable>
+                    }
+                  />
+                </View>
+                <View style={styles.flex}>
+                  <Select
+                    buttonStyle={styles.selectButton}
+                    control={control}
+                    data={calendar.map(item => ({
+                      ...item,
+                      label: t(`select.${item?.label}`),
+                    }))}
+                    name="date"
+                    onSelect={handleSelectDate}
+                    rowStyle={styles.selectButton}
+                  />
+                </View>
+                <Button
+                  buttonStyle={styles.filterButton}
+                  icon={
+                    <Icon
+                      color={COLOR_WHITE}
+                      name="filter-alt"
+                      size={16}
+                    />
+                  }
+                  title={t('button.filter')}
+                  onPress={onOpenFilter}
                 />
-              }
-              title={t('button.filter')}
-              onPress={onOpenFilter}
-            />
-          </View>
-          <View style={styles.sort}>
-            <Select
-              buttonStyle={styles.selectButton}
-              control={control}
-              data={sortBy.map(item => ({
-                ...item,
-                label: t(`select.${item?.label}`),
-              }))}
-              defaultButtonText={t('select.newest')}
-              name="sort_by"
-              onSelect={handleSubmit(onSubmit)}
-              rowStyle={styles.selectButton}
-            />
-          </View>
-          <FlatList
-            style={[styles.list, styles.marginHorizontal]}
-            data={userRealEstates}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => <UserPost item={item} />}
-            ListEmptyComponent={!loading && <NoResults />}
-          />
-        </Screen>
+              </View>
+              <View style={styles.sort}>
+                <Select
+                  buttonStyle={styles.selectButton}
+                  control={control}
+                  data={sortBy.map(item => ({
+                    ...item,
+                    label: t(`select.${item?.label}`),
+                  }))}
+                  defaultButtonText={t('select.newest')}
+                  name="sort_by"
+                  onSelect={handleSubmit(onSubmit)}
+                  rowStyle={styles.selectButton}
+                />
+              </View>
+            </>
+          }
+          ListEmptyComponent={<>{!loading && <NoResults />}</>}
+        />
       </View>
       <ModalFilter
         ref={filterRef}

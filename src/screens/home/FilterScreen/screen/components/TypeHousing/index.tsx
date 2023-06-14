@@ -104,6 +104,14 @@ const TypeHousing = ({ options = [], type, name, control, multipleChoice = false
 
       {showTypeHousing ? (
         <View style={styles.wrapContainer}>
+          <View style={styles.wrapIcon}>
+            <Icon
+              name="close"
+              color={COLOR_GRAY_3}
+              size={20}
+              onPress={onShowListTypeHousing}
+            />
+          </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.container}
@@ -141,6 +149,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     borderRadius: 4,
+    position: 'relative',
   },
   container: {
     maxHeight: 150,
@@ -162,6 +171,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 8
   },
+  wrapIcon: {
+    position: 'absolute',
+    right: 0,
+    zIndex: 1000
+  }
 });
 
 export default TypeHousing;

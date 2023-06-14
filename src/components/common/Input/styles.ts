@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   },
   error: {
     color: COLOR_RED_1,
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 12,
+    lineHeight: 19,
     marginHorizontal: 0,
     marginVertical: 8,
   },

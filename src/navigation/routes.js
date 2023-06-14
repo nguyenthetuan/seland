@@ -12,6 +12,7 @@ import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
 import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
 import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 import FilterScreen from '../screens/home/FilterScreen/screen/index';
+import DepositScreen from '../screens/account/DepositScreen/index';
 
 const routes = [
   {
@@ -57,6 +58,10 @@ const routes = [
   {
     component: FilterScreen,
     name: SCREENS.FILTER_SCREEN,
+  },
+  {
+    component: DepositScreen,
+    name: SCREENS.DEPOSIT_SCREEN,
   },
 ];
 

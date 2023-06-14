@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     height: 36,
   },
   container: {
-    backgroundColor: COLOR_WHITE
+    backgroundColor: COLOR_WHITE,
+    flex: 1,
   },
   district: {
     paddingRight: 4,

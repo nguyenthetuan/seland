@@ -15,7 +15,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
-    marginVertical: 16,
+    paddingHorizontal: 8,
+  },
+  listButton: {
+    height: 50,
+    marginBottom: 16,
   },
   loadingText: {
     color: COLOR_BLUE_1,
@@ -26,6 +30,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   postButton: {
+    height: 40,
+    padding: 0,
+    paddingVertical: 0,
     width: 150,
   },
   postButtons: {

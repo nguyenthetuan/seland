@@ -12,7 +12,7 @@ import { Image, Pressable, TouchableOpacity, View } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLOR_BLACK_2 } from '../../../../constants';
@@ -41,7 +41,7 @@ const IAm1 = [
     key: 1,
   },
   {
-    value: 'broker',
+    value: 'brokerOther',
     key: 2,
   },
 ];
@@ -69,6 +69,12 @@ const IAm1 = [
 //   },
 // ];
 
+interface errorsProps {
+  photo?: string | undefined;
+  content?: string | undefined;
+  title?: string | undefined;
+}
+
 const ArticleDetails = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -83,7 +89,7 @@ const ArticleDetails = forwardRef((props, ref) => {
   const [typeBroker, setTypeBroker] = React.useState(1);
   // const [listStoreBDS, setListStoreBDS] = useState(StoreBDS);
   // const [listShareBroker, setListShareBroker] = useState(StoreBDS);
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState<errorsProps>();
 
   const { control, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -101,11 +107,11 @@ const ArticleDetails = forwardRef((props, ref) => {
     );
   }, [articleDetails, setValue]);
 
-  const toggleCheck = value => {
+  const toggleCheck = (value: any) => {
     setIam(value);
   };
 
-  const toggleIam = value => {
+  const toggleIam = (value: any) => {
     setTypeBroker(value);
   };
 
@@ -171,15 +177,15 @@ const ArticleDetails = forwardRef((props, ref) => {
     }
   };
 
-  const handleDeleteFile = value => {
+  const handleDeleteFile = (value: any) => {
     if (typeUpload.isPhoto) {
       const newPhoto = typeUpload.photo.filter(
-        item => item?.fileName !== value
+        (item: any) => item?.fileName !== value
       );
       setTypeUpload({ ...typeUpload, photo: newPhoto });
     } else {
       const newVideo = typeUpload.video.filter(
-        item => item?.fileName !== value
+        (item: any) => item?.fileName !== value
       );
       setTypeUpload({ ...typeUpload, video: newVideo });
     }
@@ -214,18 +220,18 @@ const ArticleDetails = forwardRef((props, ref) => {
       typeUpload?.photo?.length <= 2
     ) {
       setErrors({
-        title: !value.title ? 'Vui lòng nhập tiêu đề bài viết' : null,
-        content: !value.content ? 'Vui lòng nhập nội dung' : null,
+        title: !value.title ? 'Vui lòng nhập tiêu đề bài viết' : undefined,
+        content: !value.content ? 'Vui lòng nhập nội dung' : undefined,
         photo:
           typeUpload?.photo?.length <= 2 || typeUpload?.photo?.length === 0
             ? 'Vui lòng chọn ít nhất 03 ảnh'
-            : null,
+            : undefined,
       });
       return {
         error: true,
       };
     }
-    setErrors();
+    setErrors({});
 
     return {
       ...value,
@@ -250,7 +256,7 @@ const ArticleDetails = forwardRef((props, ref) => {
     });
   };
 
-  const handleRemoveVideo = e => {
+  const handleRemoveVideo = (e: any) => {
     if (e.nativeEvent.text) setTypeUpload({ ...typeUpload, video: [] });
   };
 
@@ -261,180 +267,181 @@ const ArticleDetails = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({ handleNext, clearForm }));
   return (
     <View>
-      <View style={styles.boxSelectTypeUpload}>
-        <Button
-          buttonStyle={styles.btnSelectTypeUpload(typeUpload.isPhoto ? 2 : 0)}
-          outline
-          title="Hình ảnh BĐS"
-          onPress={() => setTypeUpload({ ...typeUpload, isPhoto: true })}
-        />
-        <Button
-          buttonStyle={styles.btnSelectTypeUpload(typeUpload.isPhoto ? 0 : 2)}
-          outline
-          title="Video BĐS"
-          onPress={() => setTypeUpload({ ...typeUpload, isPhoto: false })}
-        />
-      </View>
-      {typeUpload.isPhoto ? null : (
+      <KeyboardAwareScrollView>
+        <View style={styles.boxSelectTypeUpload}>
+          <Button
+            buttonStyle={styles.btnSelectTypeUpload(typeUpload.isPhoto ? 2 : 0)}
+            outline
+            title="Hình ảnh BĐS"
+            onPress={() => setTypeUpload({ ...typeUpload, isPhoto: true })}
+          />
+          <Button
+            buttonStyle={styles.btnSelectTypeUpload(typeUpload.isPhoto ? 0 : 2)}
+            outline
+            title="Video BĐS"
+            onPress={() => setTypeUpload({ ...typeUpload, isPhoto: false })}
+          />
+        </View>
+        {typeUpload.isPhoto ? null : (
+          <Input
+            control={control}
+            label="Dán link video của bạn tại đây."
+            placeholder="VD: https://www.youtube.com/watch?v=bymBAF8d_sc"
+            labelStyle={styles.inputLabel}
+            inputContainerStyle={styles.inputContainerStyle}
+            name="urlVideo"
+            renderErrorMessage={false}
+            onEndEditing={handleRemoveVideo}
+          />
+        )}
+
+        {file.length ? (
+          <View style={styles.boxFile}>
+            {file?.map((item: { fileName?: string; uri?: string }) => (
+              <View
+                key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
+                  item?.fileName
+                }`}
+                style={styles.boxImage}
+              >
+                {typeUpload.isPhoto ? (
+                  <Image
+                    source={{ uri: item?.uri }}
+                    style={styles.image}
+                  />
+                ) : (
+                  <View style={[styles.image]} />
+                )}
+
+                <Pressable
+                  style={styles.btnDeleteImage}
+                  onPress={() => handleDeleteFile(item?.fileName)}
+                >
+                  <Icon
+                    name="close"
+                    size={20}
+                  />
+                </Pressable>
+              </View>
+            ))}
+            {typeUpload?.isPhoto && file.length < 11 ? (
+              <Pressable
+                style={styles.btnAddImage}
+                onPress={handleSelectFile}
+              >
+                <Icon name="add" />
+              </Pressable>
+            ) : null}
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={styles.boxUpload}
+            onPress={handleSelectFile}
+          >
+            <ImageUpload />
+            <Text style={{ marginTop: 20 }}>
+              {t('common.selectFileToUpload').replace(
+                'file',
+                t(typeUpload.isPhoto ? 'common.image' : 'common.video')
+              )}
+            </Text>
+            <Text style={{ color: COLOR_BLACK_2 }}>
+              {t(
+                typeUpload.isPhoto
+                  ? 'common.supportSingleOrBulkUpload'
+                  : 'common.supportUploadAVideo'
+              )}
+            </Text>
+          </TouchableOpacity>
+        )}
+        <Text style={styles.errorPhoto}>{errors?.photo}</Text>
         <Input
           control={control}
-          label="Dán link video của bạn tại đây."
-          placeholder="VD: https://www.youtube.com/watch?v=bymBAF8d_sc"
+          label={t('input.title')}
           labelStyle={styles.inputLabel}
-          inputContainerStyle={styles.inputContainerStyle}
-          name="urlVideo"
+          name="title"
+          required
+          onFocus={onFocusTitle}
+          inputContainerStyle={styles.inputContainerTitle}
+          errorMessage={errors?.title}
           renderErrorMessage={false}
-          onEndEditing={handleRemoveVideo}
         />
-      )}
-
-      {file.length ? (
-        <View style={styles.boxFile}>
-          {file?.map(item => (
-            <View
-              key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
-                item?.fileName
-              }`}
-              style={styles.boxImage}
-            >
-              {typeUpload.isPhoto ? (
-                <Image
-                  source={{ uri: item?.uri }}
-                  style={styles.image}
-                />
-              ) : (
-                <View style={[styles.image]} />
-              )}
-
-              <Pressable
-                style={styles.btnDeleteImage}
-                onPress={() => handleDeleteFile(item?.fileName)}
-              >
-                <Icon
-                  name="close"
-                  size={20}
-                />
-              </Pressable>
-            </View>
-          ))}
-          {typeUpload?.isPhoto && file.length < 11 ? (
-            <Pressable
-              style={styles.btnAddImage}
-              onPress={handleSelectFile}
-            >
-              <Icon name="add" />
-            </Pressable>
-          ) : null}
-        </View>
-      ) : (
-        <TouchableOpacity
-          style={styles.boxUpload}
-          onPress={handleSelectFile}
-        >
-          <ImageUpload />
-          <Text style={{ marginTop: 20 }}>
-            {t('common.selectFileToUpload').replace(
-              'file',
-              t(typeUpload.isPhoto ? 'common.image' : 'common.video')
-            )}
-          </Text>
-          <Text style={{ color: COLOR_BLACK_2 }}>
-            {t(
-              typeUpload.isPhoto
-                ? 'common.supportSingleOrBulkUpload'
-                : 'common.supportUploadAVideo'
-            )}
-          </Text>
-        </TouchableOpacity>
-      )}
-      <Text style={styles.errorPhoto}>{errors?.photo}</Text>
-      <Input
-        control={control}
-        label={t('input.title')}
-        labelStyle={styles.inputLabel}
-        name="title"
-        required
-        onFocus={onFocusTitle}
-        inputContainerStyle={styles.inputContainerTitle}
-        errorMessage={errors?.title}
-        renderErrorMessage={false}
-      />
-      <Input
-        control={control}
-        label={t('input.content')}
-        labelStyle={styles.inputLabel}
-        name="content"
-        multiline
-        required
-        onFocus={onFocusContent}
-        errorMessage={errors?.content}
-        inputContainerStyle={styles.inputContainerContent}
-        renderErrorMessage={false}
-      />
-      <Category label="Thông tin liên hệ">
-        <Text>{t('Hiển thị công khai')}</Text>
-        <Text
-          style={styles.nameAndPhone}
-        >{`${user?.phone_number} - ${user?.name}`}</Text>
-        <Text>{t('Người đăng là')}</Text>
-        <View style={styles.boxCheck}>
-          {IAm.map(item => (
-            <CheckBox
-              key={`checkIam${item?.key}`}
-              title={t(`checkbox.${item?.value}`)}
-              checked={iam === item?.key}
-              onPress={() => toggleCheck(item?.key)}
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-            />
-          ))}
-        </View>
-        {iam === 2 ? (
-          <View>
-            <View style={styles.line} />
-            <Text>{t('Hiển thị riêng tư')}</Text>
-            <Text style={styles.content}>
-              Đây là thông tin bảo mật của bạn, thông tin này sẽ hiển thị với
-              riêng tư bạn, không hiển thị với người xem bài đăng.
-            </Text>
-            <Text style={styles.content}>
-              Bạn vui lòng điền các thông tin sau để giúp bạn quản lý nguồn hàng
-              hiệu quả.
-            </Text>
-            <Text style={styles.txtInformationContact}>
-              Thông tin liên hệ người đã gửi BĐS này cho bạn.
-            </Text>
-            <View style={styles.boxCheck}>
-              {IAm1.map(item => (
-                <CheckBox
-                  key={`checkIam${item?.key}`}
-                  title={t(`checkbox.${item?.value}`)}
-                  checked={typeBroker === item?.key}
-                  onPress={() => toggleIam(item?.key)}
-                  checkedIcon="dot-circle-o"
-                  uncheckedIcon="circle-o"
-                />
-              ))}
-            </View>
-            <Input
-              control={control}
-              label={t('input.name')}
-              labelStyle={styles.inputLabel}
-              name="name"
-            />
-            <Input
-              autoComplete="tel"
-              control={control}
-              inputMode="numeric"
-              isNumeric
-              label={t('input.phoneNumber')}
-              labelStyle={styles.inputLabel}
-              name="phone_number"
-            />
+        <Input
+          control={control}
+          label={t('input.content')}
+          labelStyle={styles.inputLabel}
+          name="content"
+          multiline
+          required
+          onFocus={onFocusContent}
+          errorMessage={errors?.content}
+          inputContainerStyle={styles.inputContainerContent}
+          renderErrorMessage={false}
+        />
+        <Category label="Thông tin liên hệ">
+          <Text>{t('Hiển thị công khai')}</Text>
+          <Text
+            style={styles.nameAndPhone}
+          >{`${user?.phone_number} - ${user?.name}`}</Text>
+          <Text>{t('Người đăng là')}</Text>
+          <View style={styles.boxCheck}>
+            {IAm.map(item => (
+              <CheckBox
+                key={`checkIam${item?.key}`}
+                title={t(`checkbox.${item?.value}`)}
+                checked={iam === item?.key}
+                onPress={() => toggleCheck(item?.key)}
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+              />
+            ))}
           </View>
-        ) : null}
-      </Category>
-      {/* <Category label="Chính sách bán hàng">
+          {iam === 2 ? (
+            <View>
+              <View style={styles.line} />
+              <Text>{t('Hiển thị riêng tư')}</Text>
+              <Text style={styles.content}>
+                Đây là thông tin bảo mật của riêng bạn, thông tin này sẽ hiển
+                thị với riêng tư bạn, không hiển thị với người xem bài đăng.
+              </Text>
+              <Text style={styles.content}>
+                Bạn vui lòng điền các thông tin sau để giúp bạn quản lý nguồn
+                hàng hiệu quả.
+              </Text>
+              <Text style={styles.txtInformationContact}>
+                Thông tin liên hệ người đã gửi BĐS này cho bạn.
+              </Text>
+              <View style={styles.boxCheck}>
+                {IAm1.map(item => (
+                  <CheckBox
+                    key={`checkIam${item?.key}`}
+                    title={t(`checkbox.${item?.value}`)}
+                    checked={typeBroker === item?.key}
+                    onPress={() => toggleIam(item?.key)}
+                    checkedIcon="dot-circle-o"
+                    uncheckedIcon="circle-o"
+                  />
+                ))}
+              </View>
+              <Input
+                control={control}
+                label={t('input.name')}
+                labelStyle={styles.inputLabel}
+                name="name"
+              />
+              <Input
+                autoComplete="tel"
+                control={control}
+                inputMode="numeric"
+                isNumeric
+                label={t('input.phoneNumber')}
+                labelStyle={styles.inputLabel}
+                name="phone_number"
+              />
+            </View>
+          ) : null}
+        </Category>
+        {/* <Category label="Chính sách bán hàng">
         <Text style={styles.label}>{t('THỜI HẠN CHÍNH SÁCH')}</Text>
         <View style={styles.boxDate}>
           <View style={styles.itemDate}>
@@ -515,7 +522,7 @@ const ArticleDetails = forwardRef((props, ref) => {
           name="bonus_collaborator"
         />
       </Category> */}
-      {/* <Category label="Chia sẻ với các môi giới">
+        {/* <Category label="Chia sẻ với các môi giới">
         <InputBase
           inputContainerStyle={styles.inputContainer}
           style={styles.txtInput}
@@ -534,7 +541,7 @@ const ArticleDetails = forwardRef((props, ref) => {
           />
         ))}
       </Category> */}
-      {/* <Category label="Chọn kho BĐS">
+        {/* <Category label="Chọn kho BĐS">
         <InputBase
           inputContainerStyle={styles.inputContainer}
           style={styles.txtInput}
@@ -553,6 +560,7 @@ const ArticleDetails = forwardRef((props, ref) => {
           />
         ))}
       </Category> */}
+      </KeyboardAwareScrollView>
     </View>
   );
 });

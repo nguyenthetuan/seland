@@ -1,5 +1,5 @@
-import { Icon, Input as RNEInput } from '@rneui/themed';
-import React, { useState } from 'react';
+import { Icon, Input as RNEInput, InputProps } from '@rneui/themed';
+import React, { ReactNode, useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,7 +14,7 @@ import { COLOR_GRAY_5, COLOR_RED_1 } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-interface InputProps {
+interface InputCustomProps extends InputProps {
   autoComplete?: TextInputAndroidProps['autoComplete'];
   control: any;
   isEmail?: boolean;
@@ -22,7 +22,7 @@ interface InputProps {
   isPassword?: boolean;
   isWebsite?: boolean;
   inputContainerStyle?: ViewStyle;
-  label?: string;
+  // label?: string | undefined;
   labelStyle?: Object | [];
   errorStyle?: Object | [];
   name: string;
@@ -30,10 +30,9 @@ interface InputProps {
   onFocus?: () => void;
   placeholder?: string;
   required?: boolean;
-  rightLabel?: string;
+  rightLabel?: string | ReactNode;
   showPasswordPolicy?: boolean;
   disabled?: boolean;
-  errorMessage?: string;
   inputMode?: InputModeOptions;
   renderErrorMessage?: any;
 }
@@ -53,11 +52,11 @@ const Input = ({
   onFocus = () => {},
   placeholder = '',
   required = false,
-  rightLabel = '',
+  rightLabel,
   showPasswordPolicy = false,
   errorStyle={},
   ...props
-}: InputProps) => {
+}: InputCustomProps) => {
   const {
     field: { onBlur, onChange, value },
   } = useController({ control, name });

@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     fontWeight: 500,
   }),
   wrap: {
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 });
 
 export default styles;

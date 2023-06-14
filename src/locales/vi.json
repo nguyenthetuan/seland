@@ -67,6 +67,7 @@
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản",
     "broker": "Môi giới",
+    "brokerOther": "Môi giới khác",
     "landlord": "Chủ đất"
   },
   "common": {
@@ -87,7 +88,7 @@
     "skip": "Bỏ qua",
     "millionPerM2": "triệu/m²",
     "m2": "m2",
-    "locationRealEstate": "Vị trí của bất động sản",
+    "locationRealEstate": "Vị trí bất động sản",
     "loading": "Đang tải...",
     "lease": "Cho thuê",
     "buy": "Bán",
@@ -244,7 +245,7 @@
     "website": "Website",
     "apartmentCode": "Mã căn",
     "yearBuilt": "Năm xây dựng",
-    "handoverYear": "Năm bàn giáo",
+    "handoverYear": "Năm bàn giao",
     "quickAddressEntry": "Nhập địa chỉ nhanh",
     "specificAddress": "Địa chỉ hiển thị trên tin đăng",
     "locationOnMap": "Vị trí trên bản đồ (toạ độ)",
