@@ -281,7 +281,9 @@ const BasicInformation = forwardRef((props, ref) => {
         />
         {showInfoApartmentBuilding && (
           <View>
-            <Text>{t('common.locationRealEstate')}</Text>
+            <Text style={styles.locationRealEstate}>
+              {t('common.locationRealEstate')}
+            </Text>
             <Input
               control={control}
               label={t('input.apartmentCode')}

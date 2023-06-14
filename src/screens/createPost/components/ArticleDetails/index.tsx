@@ -355,29 +355,31 @@ const ArticleDetails = forwardRef((props, ref) => {
           </TouchableOpacity>
         )}
         <Text style={styles.errorPhoto}>{errors?.photo}</Text>
-        <Input
-          control={control}
-          label={t('input.title')}
-          labelStyle={styles.inputLabel}
-          name="title"
-          required
-          onFocus={onFocusTitle}
-          inputContainerStyle={styles.inputContainerTitle}
-          errorMessage={errors?.title}
-          renderErrorMessage={false}
-        />
-        <Input
-          control={control}
-          label={t('input.content')}
-          labelStyle={styles.inputLabel}
-          name="content"
-          multiline
-          required
-          onFocus={onFocusContent}
-          errorMessage={errors?.content}
-          inputContainerStyle={styles.inputContainerContent}
-          renderErrorMessage={false}
-        />
+        <View style={{ marginHorizontal: 10 }}>
+          <Input
+            control={control}
+            label={t('input.title')}
+            labelStyle={styles.inputLabel}
+            name="title"
+            required
+            onFocus={onFocusTitle}
+            inputContainerStyle={styles.inputContainerTitle}
+            errorMessage={errors?.title}
+            renderErrorMessage={false}
+          />
+          <Input
+            control={control}
+            label={t('input.content')}
+            labelStyle={styles.inputLabel}
+            name="content"
+            multiline
+            required
+            onFocus={onFocusContent}
+            errorMessage={errors?.content}
+            inputContainerStyle={styles.inputContainerContent}
+            renderErrorMessage={false}
+          />
+        </View>
         <Category label="Thông tin liên hệ">
           <Text>{t('Hiển thị công khai')}</Text>
           <Text
@@ -402,7 +404,7 @@ const ArticleDetails = forwardRef((props, ref) => {
               <Text>{t('Hiển thị riêng tư')}</Text>
               <Text style={styles.content}>
                 Đây là thông tin bảo mật của riêng bạn, thông tin này sẽ hiển
-                thị với riêng tư bạn, không hiển thị với người xem bài đăng.
+                thị với riêng bạn, không hiển thị với người xem bài đăng.
               </Text>
               <Text style={styles.content}>
                 Bạn vui lòng điền các thông tin sau để giúp bạn quản lý nguồn

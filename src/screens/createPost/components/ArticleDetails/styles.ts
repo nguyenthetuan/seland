@@ -92,17 +92,13 @@ const styles = StyleSheet.create({
   },
   inputContainerContent: {
     height: 64,
-    marginHorizontal: 10,
   },
   inputContainerStyle: {
     marginHorizontal: 10,
   },
-  inputContainerTitle: {
-    marginHorizontal: 10,
-  },
+  inputContainerTitle: {},
   inputLabel: {
     color: COLORS.GRAY_7,
-    marginLeft: 10,
   },
   itemDate: {
     alignItems: 'center',
