@@ -62,9 +62,12 @@ const CollaboratorInformationScreen = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.WHITE_1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.wrapHeader}>
-          <View style={styles.wrapHeaderIcon}>
-            <ArrowLeft onPress={goBack} />
-          </View>
+          <TouchableOpacity
+            style={styles.wrapHeaderIcon}
+            onPress={goBack}
+          >
+            <ArrowLeft />
+          </TouchableOpacity>
           <Text style={styles.title}>
             {t('collaboratorInformation.header')}
           </Text>

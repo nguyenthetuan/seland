@@ -91,9 +91,20 @@ const BankAccount = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
       <ScrollView style={styles.container}>
         <View style={styles.wrapHeader}>
-          <View style={styles.wrapHeaderIcon}>
-            <ArrowLeft onPress={goBack} />
-          </View>
+          <TouchableOpacity
+            style={[
+              styles.wrapHeaderIcon,
+              {
+                height: 24,
+                width: 24,
+                justifyContent: 'center',
+                marginRight: -8,
+              },
+            ]}
+            onPress={goBack}
+          >
+            <ArrowLeft />
+          </TouchableOpacity>
           <Text style={styles.title}>Nạp tiền</Text>
         </View>
 

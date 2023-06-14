@@ -29,10 +29,14 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
   },
+  wrapIconContainer: {
+    height: 24,
+    width: 24,
+    justifyContent: 'center',
+  },
   headerTitle: {
     color: COLORS.BLACK_1,
     fontWeight: '500',
-    marginLeft: 16,
   },
   tabContainer: {
     paddingLeft: 8,
