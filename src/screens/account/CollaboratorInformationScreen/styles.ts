@@ -15,7 +15,9 @@ const styles = StyleSheet.create({
   },
   wrapHeaderIcon: {
     alignSelf: 'center',
-    marginRight: 8,
+    height: 24,
+    width: 24,
+    justifyContent: 'center',
   },
   wrapBottomContainer: {
     position: 'absolute',

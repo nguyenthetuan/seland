@@ -99,7 +99,10 @@ const UpgradeAccountTab = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={goBack}>
+        <TouchableOpacity
+          onPress={goBack}
+          style={styles.wrapIconContainer}
+        >
           <ArrowLeft />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('upgradeAccount.buyAccount')}</Text>
