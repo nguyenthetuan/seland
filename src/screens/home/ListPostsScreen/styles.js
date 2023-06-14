@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   areaRange: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   btnFilter: {
     alignItems: 'center',
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     borderWidth: 1,
     height: 36,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     width: 36,
   },
   buttonSelect: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     height: 36,
   },
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
   },
   headerListPosts: {
     alignItems: 'center',
-    backgroundColor: COLOR_WHITE,
-    borderBottomColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE,
+    borderBottomColor: COLORS.GRAY_2,
     borderBottomWidth: 1,
     elevation: 5,
     flexDirection: 'row',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     width: '60%',
   },
   inputSearch: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 8,
     borderWidth: 1,
     height: 40,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   list: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     paddingHorizontal: 10,
   },
   rowTextStyle: {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
   },
   spinnerTextStyle: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 16,
     lineHeight: 24,
   },

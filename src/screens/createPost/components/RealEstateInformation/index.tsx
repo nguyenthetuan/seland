@@ -12,11 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
-import {
-  COLOR_BLUE_3,
-  COLOR_ORANGE_5,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import { createRealEstateInformation, selectPosts } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import { formatDataValueId } from '../../CreatePostScreen';
@@ -497,7 +493,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
               style={[
                 styles.btnSelectUtils,
                 utilitiesId.includes(item?.id)
-                  ? { backgroundColor: COLOR_BLUE_3 }
+                  ? { backgroundColor: COLORS.BLUE_3 }
                   : {},
               ]}
               onPress={() => handleSelectUtils(item?.id)}
@@ -506,7 +502,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
                 style={
                   utilitiesId.includes(item?.id)
                     ? {
-                        color: COLOR_WHITE,
+                        color: COLORS.WHITE,
                       }
                     : {}
                 }
@@ -528,7 +524,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           <Icon
             name={show.nearbyAmenities ? 'expand-less' : 'keyboard-arrow-down'}
             size={20}
-            color={COLOR_ORANGE_5}
+            color={COLORS.ORANGE_5}
           />
         </Pressable>
         <Text style={styles.label}>{utilities[1]?.value}</Text>
@@ -539,7 +535,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
               style={[
                 styles.btnSelectUtils,
                 furnitureId.includes(item?.id)
-                  ? { backgroundColor: COLOR_BLUE_3 }
+                  ? { backgroundColor: COLORS.BLUE_3 }
                   : {},
               ]}
               onPress={() => handleFurniture(item?.id)}
@@ -548,7 +544,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
                 style={
                   furnitureId.includes(item?.id)
                     ? {
-                        color: COLOR_WHITE,
+                        color: COLORS.WHITE,
                       }
                     : {}
                 }
@@ -568,7 +564,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
           <Icon
             name={show.furniture ? 'expand-less' : 'keyboard-arrow-down'}
             size={20}
-            color={COLOR_ORANGE_5}
+            color={COLORS.ORANGE_5}
           />
         </Pressable>
         <Text style={styles.label}>{utilities[2]?.value}</Text>
@@ -580,7 +576,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
                 style={[
                   styles.btnSelectUtils,
                   securityId.includes(item?.id)
-                    ? { backgroundColor: COLOR_BLUE_3 }
+                    ? { backgroundColor: COLORS.BLUE_3 }
                     : {},
                 ]}
                 onPress={() => handleSecurity(item?.id)}
@@ -589,7 +585,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
                   style={
                     securityId.includes(item?.id)
                       ? {
-                          color: COLOR_WHITE,
+                          color: COLORS.WHITE,
                         }
                       : {}
                   }
@@ -609,7 +605,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
                 style={[
                   styles.btnSelectUtils,
                   roadTypeId.includes(item?.id)
-                    ? { backgroundColor: COLOR_BLUE_3 }
+                    ? { backgroundColor: COLORS.BLUE_3 }
                     : {},
                 ]}
                 onPress={() => handleRoadType(item?.id)}
@@ -618,7 +614,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
                   style={
                     roadTypeId.includes(item?.id)
                       ? {
-                          color: COLOR_WHITE,
+                          color: COLORS.WHITE,
                         }
                       : {}
                   }

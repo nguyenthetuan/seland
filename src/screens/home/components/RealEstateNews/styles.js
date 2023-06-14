@@ -1,12 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_2,
-  COLOR_BLUE_1,
-  COLOR_BLUE_5,
-  COLOR_GRAY_1,
-  COLOR_GRAY_9,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -24,7 +18,7 @@ const styles = StyleSheet.create({
   },
   btnSeeAll: {
     alignSelf: 'center',
-    borderColor: COLOR_GRAY_1,
+    borderColor: COLORS.GRAY_1,
     borderRadius: 5,
     height: 32,
     marginBottom: 5,
@@ -37,7 +31,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   description: {
-    color: COLOR_GRAY_9,
+    color: COLORS.GRAY_9,
     marginTop: 6,
   },
   image: {
@@ -53,27 +47,27 @@ const styles = StyleSheet.create({
     width: 135,
   },
   name: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 13,
     lineHeight: 18,
   },
   time: {
-    color: COLOR_BLACK_2,
+    color: COLORS.BLACK_2,
     fontSize: 13,
     lineHeight: 18,
   },
   title: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontWeight: 'bold',
     marginTop: 10,
   },
   title1: {
-    color: COLOR_BLUE_5,
+    color: COLORS.BLUE_5,
     fontWeight: 'bold',
     marginTop: 6,
   },
   txtSeeAll: {
-    color: COLOR_GRAY_1,
+    color: COLORS.GRAY_1,
     fontSize: 14,
   },
 });

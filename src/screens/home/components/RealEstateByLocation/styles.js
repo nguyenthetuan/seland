@@ -1,10 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_3,
-  COLOR_GRAY_1,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -14,7 +10,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxItem: {
-    borderColor: COLOR_BLACK_3,
+    borderColor: COLORS.BLACK_3,
     borderRadius: 8,
     borderWidth: 1,
     height: width * 0.46,
@@ -28,7 +24,7 @@ const styles = StyleSheet.create({
     width: width * 0.46,
   },
   btnSeeAll: {
-    borderColor: COLOR_GRAY_1,
+    borderColor: COLORS.GRAY_1,
     borderRadius: 5,
     height: 32,
     marginBottom: 1,
@@ -40,13 +36,13 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   name: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontWeight: 'bold',
     marginHorizontal: 20,
     marginTop: 20,
   },
   numberPost: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 14,
     lineHeight: 18,
     marginHorizontal: 20,
@@ -60,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   txtSeeAll: {
-    color: COLOR_GRAY_1,
+    color: COLORS.GRAY_1,
     fontSize: 14,
   },
 });

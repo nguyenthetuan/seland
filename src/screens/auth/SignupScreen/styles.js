@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_2 } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   button: {
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   login: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     textDecorationLine: 'underline',
   },
   tnc1: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   tnc2: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
   },
 });
 

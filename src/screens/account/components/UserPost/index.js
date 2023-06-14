@@ -8,16 +8,7 @@ import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
-import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_7,
-  COLOR_GREEN_1,
-  COLOR_GREEN_3,
-  COLOR_ORANGE_5,
-  COLOR_RED_1,
-  COLOR_RED_2,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import { yup } from '../../../../utils';
 import styles from './styles';
 
@@ -87,13 +78,13 @@ const UserPost = ({ item }) => {
   const rankBackground = () => {
     switch (item?.rank_id) {
       case 1:
-        return COLOR_BLACK_1;
+        return COLORS.BLACK_1;
       case 2:
-        return COLOR_GREEN_3;
+        return COLORS.GREEN_3;
       case 3:
-        return COLOR_ORANGE_5;
+        return COLORS.ORANGE_5;
       default:
-        return COLOR_RED_1;
+        return COLORS.RED_1;
     }
   };
 
@@ -134,7 +125,7 @@ const UserPost = ({ item }) => {
           <Icon
             name="phone"
             size={23}
-            color={COLOR_WHITE}
+            color={COLORS.WHITE}
           />
         </TouchableOpacity>
       </View>
@@ -179,7 +170,7 @@ const UserPost = ({ item }) => {
       <View style={[styles.locationContainer, styles.row]}>
         <Icon
           name="location-on"
-          color={COLOR_GRAY_7}
+          color={COLORS.GRAY_7}
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>
@@ -223,13 +214,13 @@ const UserPost = ({ item }) => {
       <View style={[styles.buttons, styles.row]}>
         <View style={[styles.buttonLeft, styles.flex]}>
           <Button
-            color={COLOR_GREEN_1}
+            color={COLORS.GREEN_1}
             title={t('button.editPost')}
           />
         </View>
         <View style={[styles.flex, styles.buttonMiddle]}>
           <Button
-            color={COLOR_RED_2}
+            color={COLORS.RED_2}
             title={t('button.hidePost')}
           />
         </View>

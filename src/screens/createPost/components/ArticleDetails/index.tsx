@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
-import { COLOR_BLACK_2 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import {
   createArticleDetails,
   selectPosts,
@@ -345,7 +345,7 @@ const ArticleDetails = forwardRef((props, ref) => {
                 t(typeUpload.isPhoto ? 'common.image' : 'common.video')
               )}
             </Text>
-            <Text style={{ color: COLOR_BLACK_2 }}>
+            <Text style={{ color: COLORS.BLACK_2 }}>
               {t(
                 typeUpload.isPhoto
                   ? 'common.supportSingleOrBulkUpload'
@@ -465,7 +465,7 @@ const ArticleDetails = forwardRef((props, ref) => {
         <TouchableOpacity style={styles.boxUpload}>
           <ImageUpload />
           <Text style={{ marginTop: 20 }}>Chọn ảnh để tải lên</Text>
-          <Text style={{ color: COLOR_BLACK_2 }}>
+          <Text style={{ color: COLORS.BLACK_2 }}>
             Hỗ trợ tải lên một lần hoặc hàng loạt.
           </Text>
         </TouchableOpacity>

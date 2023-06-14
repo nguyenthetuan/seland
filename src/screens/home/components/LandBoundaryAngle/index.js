@@ -4,11 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, TouchableNativeFeedback, View } from 'react-native';
 
 import { Button, Input, Text } from '../../../../components';
-import {
-  COLOR_BLUE_1,
-  COLOR_GRAY_4,
-  COLOR_GRAY_7,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 const LandBoundaryAngle = forwardRef((props, ref) => {
@@ -40,7 +36,7 @@ const LandBoundaryAngle = forwardRef((props, ref) => {
             </Text>
             <Button
               buttonStyle={{ marginBottom: 10 }}
-              titleStyle={{ color: COLOR_GRAY_7 }}
+              titleStyle={{ color: COLORS.GRAY_7 }}
               title="Chọn ảnh"
               outline
               onPress={closeLandBoundaryAngle}
@@ -107,8 +103,8 @@ const LandBoundaryAngle = forwardRef((props, ref) => {
 
             <View style={styles.boxButton}>
               <Button
-                buttonStyle={[styles.btnPopup, { borderColor: COLOR_GRAY_4 }]}
-                titleStyle={{ color: COLOR_GRAY_7 }}
+                buttonStyle={[styles.btnPopup, { borderColor: COLORS.GRAY_4 }]}
+                titleStyle={{ color: COLORS.GRAY_7 }}
                 title="Huỷ bỏ"
                 outline
                 onPress={closeLandBoundaryAngle}
@@ -116,7 +112,7 @@ const LandBoundaryAngle = forwardRef((props, ref) => {
               <Button
                 buttonStyle={[
                   styles.btnPopup,
-                  { backgroundColor: COLOR_BLUE_1 },
+                  { backgroundColor: COLORS.BLUE_1 },
                 ]}
                 title="Tìm kiếm"
                 onPress={closeLandBoundaryAngle}

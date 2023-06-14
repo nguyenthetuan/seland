@@ -1,15 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_7,
-  COLOR_ORANGE_5,
-  COLOR_ORANGE_6,
-  COLOR_ORANGE_7,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -21,7 +12,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   txtExpand: {
-    color: COLOR_ORANGE_5,
+    color: COLORS.ORANGE_5,
     fontSize: 14,
   },
   btnExpand: {
@@ -45,7 +36,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxTitle: {
-    backgroundColor: COLOR_ORANGE_7,
+    backgroundColor: COLORS.ORANGE_7,
     marginVertical: 10,
     padding: 10,
   },
@@ -68,7 +59,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   btnSelectUtils: {
-    borderColor: COLOR_BLUE_1,
+    borderColor: COLORS.BLUE_1,
     borderRadius: 16,
     borderWidth: 1,
     marginHorizontal: 5,
@@ -77,14 +68,14 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   btnTypeRealEstate: selected => ({
-    borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
+    borderColor: selected ? COLORS.BLUE_2 : COLORS.GRAY_5,
     borderWidth: 2,
     padding: 0,
     height: 40,
     width: width * 0.46,
   }),
   btnYouWant: {
-    borderColor: COLOR_BLUE_1,
+    borderColor: COLORS.BLUE_1,
     borderRadius: 5,
     width: width * 0.45,
   },
@@ -106,7 +97,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
   },
   dot: select => ({
-    backgroundColor: select ? COLOR_ORANGE_6 : COLOR_GRAY_5,
+    backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
     borderRadius: 7,
     height: 10,
     width: 10,
@@ -121,10 +112,10 @@ const styles = StyleSheet.create({
     width: width * 0.46,
   },
   inputLabel: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
   },
   isBuy: selected => ({
-    borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
+    borderColor: selected ? COLORS.BLUE_2 : COLORS.GRAY_5,
     borderWidth: 2,
     padding: 0,
     height: 40,
@@ -141,23 +132,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   labelTab: select => ({
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontWeight: select ? 'bold' : 400,
   }),
   line: {
-    backgroundColor: COLOR_GRAY_5,
+    backgroundColor: COLORS.GRAY_5,
     height: 1,
     marginVertical: 10,
     width: '100%',
   },
   line1: select => ({
-    backgroundColor: select ? COLOR_ORANGE_6 : COLOR_GRAY_5,
+    backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
     height: 2,
     marginHorizontal: 5,
     width: '30%',
   }),
   m2: {
-    color: COLOR_ORANGE_6,
+    color: COLORS.ORANGE_6,
     fontSize: 12,
     marginBottom: 10,
     marginLeft: 12,
@@ -179,17 +170,17 @@ const styles = StyleSheet.create({
     width: width * 0.46,
   },
   title: {
-    color: COLOR_ORANGE_6,
+    color: COLORS.ORANGE_6,
     fontWeight: 'bold',
   },
   txtCheck: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 14,
     lineHeight: 22,
     marginLeft: 10,
   },
   txtType: select => ({
-    color: select ? COLOR_BLUE_1 : COLOR_GRAY_7,
+    color: select ? COLORS.BLUE_1 : COLORS.GRAY_7,
     fontWeight: 'bold',
   }),
   youWantCenter: {

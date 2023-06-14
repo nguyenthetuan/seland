@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
-import { COLOR_RED_1 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import {
   clearDistricts,
   clearWards,
@@ -244,7 +244,7 @@ const BasicInformation = forwardRef((props, ref) => {
       <KeyboardAwareScrollView>
         <Text style={styles.youWantCenter}>
           {t('common.need')}
-          <Text style={{ color: COLOR_RED_1 }}> *</Text>
+          <Text style={{ color: COLORS.RED_1 }}> *</Text>
         </Text>
         <View style={styles.boxType}>
           {demands.map((item: { id?: number; value?: string }) => (

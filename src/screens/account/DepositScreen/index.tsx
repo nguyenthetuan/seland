@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import { Icon, Input } from '@rneui/themed';
 import { ArrowLeft, Circle, CircleCheck } from '../../../assets';
-import { COLOR_BLACK_1, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 import QRCode from 'react-native-qrcode-svg';
 
 type TPrefixAmount = {
@@ -88,7 +88,7 @@ const BankAccount = () => {
   const onCancel = () => {};
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR_WHITE }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
       <ScrollView style={styles.container}>
         <View style={styles.wrapHeader}>
           <View style={styles.wrapHeaderIcon}>
@@ -105,7 +105,7 @@ const BankAccount = () => {
             onChangeText={text => onChangeAmount(text)}
             value={amount}
             renderErrorMessage={false}
-            cursorColor={COLOR_BLACK_1}
+            cursorColor={COLORS.BLACK_1}
           />
 
           <View style={styles.wrapAmountContainer}>

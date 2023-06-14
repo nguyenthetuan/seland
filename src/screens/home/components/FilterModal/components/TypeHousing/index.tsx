@@ -9,12 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Text } from '../../../../../../components';
-import {
-  COLOR_GRAY_4,
-  COLOR_GRAY_6,
-  COLOR_GRAY_10,
-  COLOR_GRAY_3,
-} from '../../../../../../constants';
+import { COLORS } from '../../../../../../constants';
 import { Icon } from '@rneui/themed';
 import { useController } from 'react-hook-form';
 
@@ -63,14 +58,14 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
 
   const getTitleFromValue = (val: string | number) => {
     let title = '';
-    options.forEach((option) => {
+    options.forEach(option => {
       if (option.value == val) {
         title = option.title;
         return;
       }
-    })
+    });
     return title;
-  }
+  };
 
   return (
     <>
@@ -85,12 +80,10 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
               key={index}
               onPress={() => onRemoveTypeHousing(item?.value)}
             >
-              <Text>
-                {t(`${getTitleFromValue(item)}`)}
-              </Text>
+              <Text>{t(`${getTitleFromValue(item)}`)}</Text>
               <Icon
                 name="close"
-                color={COLOR_GRAY_3}
+                color={COLORS.GRAY_3}
                 size={20}
               />
             </TouchableOpacity>
@@ -104,21 +97,23 @@ const TypeHousing = ({ options = [], type, name, control }: IProps) => {
             showsVerticalScrollIndicator={false}
             style={styles.container}
           >
-            {options.map((item: {title: string, value: number}, index: number) => {
-              return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => onSelectTypeHousing(item?.value)}
-                  style={{
-                    backgroundColor: COLOR_GRAY_10,
-                    paddingLeft: 4,
-                    paddingBottom: 4,
-                  }}
-                >
-                  <Text>{t(`${item?.title}`)}</Text>
-                </TouchableOpacity>
-              );
-            })}
+            {options.map(
+              (item: { title: string; value: number }, index: number) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => onSelectTypeHousing(item?.value)}
+                    style={{
+                      backgroundColor: COLORS.GRAY_10,
+                      paddingLeft: 4,
+                      paddingBottom: 4,
+                    }}
+                  >
+                    <Text>{t(`${item?.title}`)}</Text>
+                  </TouchableOpacity>
+                );
+              }
+            )}
           </ScrollView>
         </View>
       ) : null}
@@ -143,7 +138,7 @@ const styles = StyleSheet.create({
   },
   typeHousingContainer: {
     borderWidth: 1,
-    borderColor: COLOR_GRAY_4,
+    borderColor: COLORS.GRAY_4,
     minHeight: 32,
     borderRadius: 5,
     padding: 4,
@@ -151,7 +146,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   typeHousing: {
-    backgroundColor: COLOR_GRAY_6,
+    backgroundColor: COLORS.GRAY_6,
     marginRight: 8,
     padding: 4,
     alignItems: 'center',

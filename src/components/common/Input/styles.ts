@@ -1,12 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLACK_2,
-  COLOR_BLUE_4,
-  COLOR_GRAY_5,
-  COLOR_RED_1,
-} from '../../../constants/colors';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   boxLabel: {
@@ -21,14 +15,14 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
   error: {
-    color: COLOR_RED_1,
+    color: COLORS.RED_1,
     fontSize: 12,
     lineHeight: 19,
     marginHorizontal: 0,
     marginVertical: 8,
   },
   input: (isFocused: boolean) => ({
-    borderColor: isFocused ? COLOR_BLUE_4 : COLOR_GRAY_5,
+    borderColor: isFocused ? COLORS.BLUE_4 : COLORS.GRAY_5,
     borderRadius: 2,
     borderWidth: 1,
     paddingHorizontal: 12,
@@ -36,12 +30,12 @@ const styles = StyleSheet.create({
     height: 40,
   }),
   label: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 16,
     lineHeight: 24,
   },
   passwordPolicy: {
-    color: COLOR_BLACK_2,
+    color: COLORS.BLACK_2,
     marginBottom: 8,
     marginLeft: 8,
   },

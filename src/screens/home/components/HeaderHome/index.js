@@ -9,7 +9,7 @@ import {
   MenuThreeLine,
 } from '../../../../assets';
 import { Text } from '../../../../components';
-import { COLOR_WHITE } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import DrawerMenuHome from '../DrawerMenu';
 import styles from './styles';
 
@@ -21,7 +21,7 @@ const HeaderHome = () => {
 
   return (
     <View>
-      <SafeAreaView style={{ backgroundColor: COLOR_WHITE }}>
+      <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
         <View style={styles.headerHome}>
           <View style={styles.headerLeft}>
             <TouchableOpacity

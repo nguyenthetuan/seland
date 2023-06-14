@@ -4,7 +4,7 @@ import { useController } from 'react-hook-form';
 import { StyleSheet, TextStyle, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
-import { COLOR_BLACK_1, COLOR_RED_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -61,7 +61,7 @@ const Select = ({
   const renderDropdownIcon = useCallback(
     () => (
       <Icon
-        color={COLOR_BLACK_1}
+        color={COLORS.BLACK_1}
         name="expand-more"
       />
     ),
@@ -73,7 +73,7 @@ const Select = ({
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
-          {required && <Text style={{ color: COLOR_RED_1 }}> *</Text>}
+          {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
         </Text>
       )}
       <SelectDropdown

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_GRAY_4, COLOR_ORANGE_6 } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,13 +10,13 @@ const styles = StyleSheet.create({
   inactiveDotStyle: {
     width: 8,
     height: 8,
-    backgroundColor: COLOR_GRAY_4,
+    backgroundColor: COLORS.GRAY_4,
   },
   dotStyle: {
     width: 24,
     height: 8,
     borderRadius: 20,
-    backgroundColor: COLOR_ORANGE_6,
+    backgroundColor: COLORS.ORANGE_6,
   },
 });
 

@@ -19,15 +19,7 @@ import {
 } from 'react-native';
 
 import { Button, Input, Select, Text } from '../../../../components';
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_GRAY_2,
-  COLOR_GRAY_7,
-  COLOR_GRAY_8,
-  COLOR_WHITE,
-  SCREENS,
-} from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import TypeHousing from './components/TypeHousing/index';
 import { SliderComponent } from './components/SliderComponent';
 import { SelectComponent } from './components/SelectComponent';
@@ -50,16 +42,22 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('screen');
 
-const convertOptionsFromApi = ({value, id}: {value: string, id: string | number}) => {
-  return ({
+const convertOptionsFromApi = ({
+  value,
+  id,
+}: {
+  value: string;
+  id: string | number;
+}) => {
+  return {
     title: value,
-    value: id
-  })
-}
+    value: id,
+  };
+};
 
-const convertValuePriceToTitle = (priceItem: {value: string}) => {
-  let stringVal = "";
-  const arrVal = priceItem?.value?.split("-");
+const convertValuePriceToTitle = (priceItem: { value: string }) => {
+  let stringVal = '';
+  const arrVal = priceItem?.value?.split('-');
 
   if (Number(arrVal[0]) < 1) {
     stringVal = `${Number(arrVal[0]) * 1000} triệu`;
@@ -79,32 +77,28 @@ const convertValuePriceToTitle = (priceItem: {value: string}) => {
     stringVal = `Trên ${Number(arrVal[0])} tỷ`;
   }
 
-  return (
-    {
-      value: priceItem?.value,
-      title: stringVal,
-    }
-  )
-}
+  return {
+    value: priceItem?.value,
+    title: stringVal,
+  };
+};
 
-const convertValueAreaToTitle = (priceItem: {value: string}) => {
-  let stringVal = "";
-  const arrVal = priceItem?.value?.split("-");
+const convertValueAreaToTitle = (priceItem: { value: string }) => {
+  let stringVal = '';
+  const arrVal = priceItem?.value?.split('-');
   if (Number(arrVal[0]) === 0) {
     stringVal = `Dưới ${Number(arrVal[1])}m²`;
   } else if (Number(arrVal[1]) === 0) {
     stringVal = `Trên ${Number(arrVal[0])}m²`;
   } else {
-    stringVal = `${Number(arrVal[0])}m²-${Number(arrVal[1])}m²`
+    stringVal = `${Number(arrVal[0])}m²-${Number(arrVal[1])}m²`;
   }
 
-  return (
-    {
-      value: priceItem?.value,
-      title: stringVal,
-    }
-  )
-}
+  return {
+    value: priceItem?.value,
+    title: stringVal,
+  };
+};
 
 interface TOptions {
   title: string;
@@ -143,33 +137,25 @@ const FilterScreen = (props: any) => {
 
   const [tabSelected, setTabSelected] = useState(1);
 
-  const { basicInformation, demands } =
-    useSelector(selectPosts);
+  const { basicInformation, demands } = useSelector(selectPosts);
 
-  const { 
-    area,
-    bathroom,
-    bedroom,
-    floor,
-    more,
-    price,
-    real_estate_type 
-  } = useSelector(selectRealEstates);
+  const { area, bathroom, bedroom, floor, more, price, real_estate_type } =
+    useSelector(selectRealEstates);
 
-  const directionOptions = more?.[0]?.children?.map((directionItem: any)=> ({
+  const directionOptions = more?.[0]?.children?.map((directionItem: any) => ({
     value: directionItem?.id,
-    title: directionItem?.value
-  }))
+    title: directionItem?.value,
+  }));
 
   // const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
   //   value: legalDocumentItem?.id,
   //   title: legalDocumentItem?.value
   // }))
 
-  const locationOptions = more?.[5]?.children?.map((locationItem: any)=> ({
+  const locationOptions = more?.[5]?.children?.map((locationItem: any) => ({
     value: locationItem?.id,
-    title: locationItem?.value
-  }))
+    title: locationItem?.value,
+  }));
 
   // const { provinces, districts, wards } = useSelector(selectCommon);
 
@@ -212,9 +198,9 @@ const FilterScreen = (props: any) => {
     params?.onSubmit &&
       params?.onSubmit({ ...initValues, priceRange: [], acreage: [] });
     navigate(SCREENS.LIST_POST, {
-      district_id: "",
-      typeHousing: "",
-      demand_id: "",
+      district_id: '',
+      typeHousing: '',
+      demand_id: '',
     });
   };
 
@@ -262,7 +248,7 @@ const FilterScreen = (props: any) => {
 
   useEffect(() => {
     dispatchThunk(dispatch, getAllFilter());
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
     setValue('demand_id', tabSelected);
@@ -285,7 +271,7 @@ const FilterScreen = (props: any) => {
           >
             <Icon
               name="close"
-              color={COLOR_WHITE}
+              color={COLORS.WHITE}
               size={20}
             />
           </TouchableOpacity>
@@ -361,7 +347,9 @@ const FilterScreen = (props: any) => {
 
         <SliderComponent
           title={t('common.priceRange') || ''}
-          options={price.map((priceItem: any) => convertValuePriceToTitle(priceItem))}
+          options={price.map((priceItem: any) =>
+            convertValuePriceToTitle(priceItem)
+          )}
           defaultValues={initValues.priceRange}
           minimumValue={0}
           maximumValue={100000000000}
@@ -369,14 +357,17 @@ const FilterScreen = (props: any) => {
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
-            (Number(val)*10**9 || '0').toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
-            ' VND'
+            (Number(val) * 10 ** 9 || '0')
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
           }
         />
 
         <SliderComponent
           title={t('common.acreage') || ''}
-          options={area.map((areaItem: any) => convertValueAreaToTitle(areaItem))}
+          options={area.map((areaItem: any) =>
+            convertValueAreaToTitle(areaItem)
+          )}
           defaultValues={initValues.acreage}
           minimumValue={0}
           maximumValue={100}
@@ -412,21 +403,27 @@ const FilterScreen = (props: any) => {
 
         <SelectComponent
           title={t('common.bedroom') || ''}
-          options={bedroom.map((bedroomItem: any) => convertOptionsFromApi(bedroomItem))}
+          options={bedroom.map((bedroomItem: any) =>
+            convertOptionsFromApi(bedroomItem)
+          )}
           name="bedroom"
           control={control}
         />
 
         <SelectComponent
           title={t('common.bathroom') || ''}
-          options={bathroom.map((bathroomItem: any) => convertOptionsFromApi(bathroomItem))}
+          options={bathroom.map((bathroomItem: any) =>
+            convertOptionsFromApi(bathroomItem)
+          )}
           name="bathroom"
           control={control}
         />
 
         <SelectComponent
           title={t('common.numberFloors') || ''}
-          options={floor.map((bathroomItem: any) => convertOptionsFromApi(bathroomItem))}
+          options={floor.map((bathroomItem: any) =>
+            convertOptionsFromApi(bathroomItem)
+          )}
           name="numberFloors"
           control={control}
         />
@@ -435,10 +432,10 @@ const FilterScreen = (props: any) => {
           <Button
             buttonStyle={{
               width: width * 0.45,
-              borderColor: COLOR_GRAY_2,
+              borderColor: COLORS.GRAY_2,
             }}
             titleStyle={{
-              color: COLOR_BLACK_1,
+              color: COLORS.BLACK_1,
               fontSize: 14,
               lineHeight: 22,
             }}
@@ -455,8 +452,8 @@ const FilterScreen = (props: any) => {
           <Button
             buttonStyle={{
               width: width * 0.45,
-              backgroundColor: COLOR_BLUE_1,
-              borderColor: COLOR_BLUE_1,
+              backgroundColor: COLORS.BLUE_1,
+              borderColor: COLORS.BLUE_1,
             }}
             titleStyle={{ fontSize: 14, lineHeight: 22 }}
             radius={5}

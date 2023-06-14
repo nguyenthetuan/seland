@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLOR_GRAY_2 } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   areaRange: {
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
   btnFilter: {
     alignItems: 'center',
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     borderWidth: 1,
     height: 36,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: 36,
   },
   buttonSelect: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     height: 36,
   },

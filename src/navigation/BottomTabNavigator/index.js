@@ -6,12 +6,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Text } from '../../components';
-import {
-  COLOR_BLUE_1,
-  COLOR_GRAY_2,
-  COLOR_WHITE,
-  SCREENS,
-} from '../../constants';
+import { COLORS, SCREENS } from '../../constants';
 import { getAllInformation, getProfile, selectUser } from '../../features';
 import { dispatchThunk, getScreens } from '../../utils';
 import routes from './routes';
@@ -33,7 +28,7 @@ const BottomTabNavigator = () => {
     () => (
       <View style={styles.createPost}>
         <Icon
-          color={COLOR_WHITE}
+          color={COLORS.WHITE}
           name="note-add"
         />
       </View>
@@ -46,7 +41,7 @@ const BottomTabNavigator = () => {
       function tabBarIcon({ focused }) {
         return (
           <Icon
-            color={focused ? COLOR_BLUE_1 : COLOR_GRAY_2}
+            color={focused ? COLORS.BLUE_1 : COLORS.GRAY_2}
             name={name}
           />
         );

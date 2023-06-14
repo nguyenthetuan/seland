@@ -4,7 +4,7 @@ import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
-import { COLOR_BLUE_1 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import { selectHome, selectWareHouses } from '../../../../features';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
@@ -34,7 +34,7 @@ const SameAreaRealEstate = () => {
       <View>
         <ActivityIndicator
           size="small"
-          color={COLOR_BLUE_1}
+          color={COLORS.BLUE_1}
         />
       </View>
     );

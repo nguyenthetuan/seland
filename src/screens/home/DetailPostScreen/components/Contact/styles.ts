@@ -1,21 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { deviceWidth } from '../../../../../configs/theme/common';
-import {
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_3,
-  COLOR_GRAY_4,
-  COLOR_GRAY_5,
-  COLOR_ORANGE_1,
-  COLOR_ORANGE_4,
-  COLOR_ORANGE_6,
-  COLOR_WHITE,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   contactWrapper: {
     borderWidth: 1,
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 8,
     padding: 12,
     flexDirection: 'row',
@@ -25,7 +15,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   contact: {
-    borderBottomColor: COLOR_GRAY_5,
+    borderBottomColor: COLORS.GRAY_5,
     borderBottomWidth: 1,
     paddingBottom: 20,
   },
@@ -38,14 +28,14 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 100,
-    backgroundColor: COLOR_ORANGE_4,
+    backgroundColor: COLORS.ORANGE_4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
   },
   textAvatar: {
-    color: COLOR_ORANGE_1,
+    color: COLORS.ORANGE_1,
     fontWeight: '500',
     fontSize: 20,
   },
@@ -63,7 +53,7 @@ const styles = StyleSheet.create({
   contactSee: {
     fontSize: 15,
     lineHeight: 20,
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
   },
   flex: {
     flexDirection: 'row',
@@ -78,24 +68,24 @@ const styles = StyleSheet.create({
   },
   zaloButton: {
     width: (deviceWidth - 50) / 2 - 5,
-    borderColor: COLOR_BLUE_2,
+    borderColor: COLORS.BLUE_2,
   },
   callText: {
     color: '#5B8C00',
     marginLeft: 10,
   },
   zaloText: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     marginLeft: 10,
   },
   adviseButton: {
-    backgroundColor: COLOR_ORANGE_6,
+    backgroundColor: COLORS.ORANGE_6,
     borderWidth: 1,
     borderColor: '#AD6800',
     marginBottom: 10,
   },
   adviseText: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontWeight: '500',
     fontSize: 16,
     marginLeft: 11,
@@ -108,7 +98,7 @@ const styles = StyleSheet.create({
   },
   buttonActionItem: {
     width: (deviceWidth - 50) / 2 - 5,
-    borderColor: COLOR_GRAY_4,
+    borderColor: COLORS.GRAY_4,
     marginBottom: 10,
   },
   titleActionItem: {
@@ -116,7 +106,7 @@ const styles = StyleSheet.create({
   },
   reportMistake: {
     alignItems: 'flex-end',
-    color: COLOR_GRAY_3,
+    color: COLORS.GRAY_3,
     textDecorationLine: 'underline',
     alignSelf: 'flex-end',
   },
@@ -124,7 +114,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   cooperationTitle: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     marginBottom: 10,
     fontSize: 18,
     fontWeight: '700',
@@ -144,7 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomColor: COLOR_GRAY_5,
+    borderBottomColor: COLORS.GRAY_5,
     borderBottomWidth: 1,
     paddingVertical: 10,
   },
@@ -163,10 +153,10 @@ const styles = StyleSheet.create({
   buttonCollapse: {
     width: deviceWidth - 50,
     marginBottom: 10,
-    borderColor: COLOR_BLUE_2,
+    borderColor: COLORS.BLUE_2,
   },
   titleCollapse: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
   },
 });
 

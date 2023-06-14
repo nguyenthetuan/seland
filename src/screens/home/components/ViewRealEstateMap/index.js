@@ -6,7 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Modalize } from 'react-native-modalize';
 
 import { Text } from '../../../../components';
-import { COLOR_BLUE_2 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import ItemRealEstatesMaps from '../ItemRealEstatesMaps';
 import styles from './styles';
 
@@ -98,7 +98,7 @@ const ViewRealEstateMap = forwardRef((props, ref) => {
             <Icon
               name="chevron-right"
               size={20}
-              color={COLOR_BLUE_2}
+              color={COLORS.BLUE_2}
             />
             <Text style={styles.seeAll}>
               Xem thêm 828 Đất nông nghiệp Thánh phố Phú Quốc

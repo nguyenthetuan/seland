@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
-import { COLOR_BLUE_1, SCREENS, YOUR_WANT } from '../../../constants';
+import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
 import {
   clearCreatePosts,
   createRealEstates,
@@ -292,7 +292,7 @@ const CreatePostScreen = () => {
       <Loading
         visible={loading || createRealEstate?.loading}
         textContent={t('common.loading')}
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.header}>
@@ -326,7 +326,7 @@ const CreatePostScreen = () => {
               onPress={() => handleSelect(item.key)}
             >
               <Icon
-                color={COLOR_BLUE_1}
+                color={COLORS.BLUE_1}
                 name={
                   saveType === item?.key
                     ? 'radio-button-checked'

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
-import { COLOR_BLACK_3 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -52,7 +52,7 @@ const DateTimePicker = ({
       >
         <Text>{value ? dayjs(value).format('DD/MM/YYYY') : 'Select date'}</Text>
         <Icon
-          color={COLOR_BLACK_3}
+          color={COLORS.BLACK_3}
           name="calendar-today"
           size={16}
         />

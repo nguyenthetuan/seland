@@ -1,18 +1,18 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: 150,
   },
   list: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     paddingHorizontal: 10,
   },
 
   spinnerTextStyle: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 16,
     lineHeight: 24,
   },

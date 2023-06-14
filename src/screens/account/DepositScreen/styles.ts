@@ -1,16 +1,9 @@
 import { StyleSheet } from 'react-native';
-import {
-  COLOR_BLACK_1,
-  COLOR_WHITE,
-  COLOR_GREEN_1,
-  COLOR_GRAY_2,
-  COLOR_BLUE_1,
-  COLOR_GRAY_6,
-} from '../../../constants/colors';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
     paddingLeft: 16,
     paddingRight: 16,
@@ -27,7 +20,7 @@ const styles = StyleSheet.create({
   wrapInputContainer: {
     borderRadius: 1,
     borderWidth: 1,
-    borderColor: COLOR_GREEN_1,
+    borderColor: COLORS.GREEN_1,
     marginLeft: -8,
     marginRight: -8,
     padding: 8,
@@ -42,17 +35,17 @@ const styles = StyleSheet.create({
   amountContainer: {
     width: '30%',
     height: 40,
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderWidth: 1,
   },
   selectedAmountContainer: {
     width: '30%',
     height: 40,
-    backgroundColor: COLOR_GREEN_1,
+    backgroundColor: COLORS.GREEN_1,
     borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -60,7 +53,7 @@ const styles = StyleSheet.create({
   selectedTitle: {
     fontWeight: '500',
     fontSize: 16,
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
   },
   wrapBottomContainer: {
     position: 'absolute',
@@ -68,7 +61,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: 8,
     paddingRight: 8,
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     paddingTop: 8,
   },
   wrapConfirmPayContainer: {
@@ -76,7 +69,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   confirmPayContainer: {
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     height: 40,
     width: '100%',
     borderRadius: 5,
@@ -85,11 +78,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   cancelPayContainer: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     height: 40,
     width: '100%',
     borderRadius: 5,
-    borderColor: COLOR_BLUE_1,
+    borderColor: COLORS.BLUE_1,
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -97,17 +90,17 @@ const styles = StyleSheet.create({
   cancelText: {
     fontWeight: '500',
     fontSize: 16,
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
   },
   wrapBankContainer: {
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     padding: 8,
     marginBottom: 10,
   },
   selectedPaymentContainer: {
-    backgroundColor: COLOR_GRAY_6,
+    backgroundColor: COLORS.GRAY_6,
     width: '100%',
     padding: 16,
     marginBottom: 24,
@@ -120,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     paddingTop: 24,
     paddingBottom: 24,
   },
@@ -130,7 +123,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '500',
     fontSize: 16,
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
   },
 });
 

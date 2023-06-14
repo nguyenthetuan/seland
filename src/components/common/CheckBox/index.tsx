@@ -2,7 +2,7 @@ import { CheckBox as RNECheckBox } from '@rneui/themed';
 import React, { ReactNode } from 'react';
 import { useController } from 'react-hook-form';
 
-import { COLOR_BLUE_1, COLOR_GRAY_5 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 import { ViewStyle } from 'react-native';
@@ -29,14 +29,14 @@ const CheckBox = ({ control, name, title = '', ...props }: CheckBoxProps) => {
   return (
     <RNECheckBox
       checked={value}
-      checkedColor={COLOR_BLUE_1}
+      checkedColor={COLORS.BLUE_1}
       checkedIcon="check-box"
       containerStyle={styles.checkbox}
       iconType="material"
       onBlur={onBlur}
       onPress={handlePress}
       title={<Text>{title}</Text>}
-      uncheckedColor={COLOR_GRAY_5}
+      uncheckedColor={COLORS.GRAY_5}
       uncheckedIcon="check-box-outline-blank"
       {...props}
     />

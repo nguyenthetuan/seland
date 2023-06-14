@@ -7,7 +7,7 @@ import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NoResults } from '../../../components';
-import { COLOR_BLUE_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import {
   getListRealEstates,
   selectRealEstates,
@@ -111,7 +111,7 @@ const ListPostsScreen = props => {
       <Loading
         visible={loadingListPost}
         textContent={t('common.loading')}
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.boxListPost}>

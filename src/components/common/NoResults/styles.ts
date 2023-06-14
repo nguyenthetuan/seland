@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_GRAY_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     marginTop: '40%',
   },
   noResults: {
-    color: COLOR_GRAY_1,
+    color: COLORS.GRAY_1,
     fontSize: 14,
     lineHeight: 20,
   },

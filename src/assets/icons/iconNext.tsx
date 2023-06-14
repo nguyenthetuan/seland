@@ -1,9 +1,9 @@
 import React from 'react';
 import { Svg, Path, SvgProps } from 'react-native-svg';
-import { COLOR_BLACK_1, COLOR_BLUE_2 } from '../../constants';
+import { COLORS } from '../../constants';
 
 const IconNext: React.FC<SvgProps> = ({
-  color = COLOR_BLUE_2,
+  color = COLORS.BLUE_2,
   width = 6,
   height = 9,
 }) => {

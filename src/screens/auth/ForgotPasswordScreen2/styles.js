@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_BLUE_2, COLOR_GRAY_5 } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   blueText: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     textDecorationLine: 'underline',
   },
   button: {
@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   grayText: {
-    color: COLOR_BLACK_2,
+    color: COLORS.BLACK_2,
   },
   otp: {
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 8,
     borderWidth: 1,
     fontSize: 24,

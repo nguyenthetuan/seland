@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_2,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxZoning: {
@@ -16,14 +12,14 @@ const styles = StyleSheet.create({
   },
   headerListPosts: {
     alignItems: 'center',
-    backgroundColor: COLOR_WHITE,
-    borderBottomColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE,
+    borderBottomColor: COLORS.GRAY_2,
     borderBottomWidth: 1,
     // elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
-    // shadowColor: COLOR_BLACK_1,
+    // shadowColor: COLORS.BLACK_1,
     // shadowOffset: {
     //   width: 0,
     //   height: 2,
@@ -37,7 +33,7 @@ const styles = StyleSheet.create({
     width: '60%',
   },
   inputSearch: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 8,
     borderWidth: 1,
     height: 40,

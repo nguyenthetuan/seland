@@ -1,6 +1,5 @@
 import React from 'react';
 import { Svg, Path, SvgProps } from 'react-native-svg';
-import { COLOR_BLACK_1 } from '../../constants';
 
 const IconLength: React.FC<SvgProps> = ({
   color = '#434343',

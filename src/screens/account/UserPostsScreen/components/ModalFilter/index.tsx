@@ -19,12 +19,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Select } from '../../../../../components';
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_GRAY_7,
-  COLOR_WHITE,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import {
   clearDistricts,
   getDistricts,
@@ -164,7 +159,7 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
               >
                 <Icon
                   name="close"
-                  color={COLOR_WHITE}
+                  color={COLORS.WHITE}
                   size={20}
                 />
               </TouchableOpacity>
@@ -220,10 +215,10 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
             <Button
               buttonStyle={{
                 width: width * 0.45,
-                borderColor: COLOR_GRAY_7,
+                borderColor: COLORS.GRAY_7,
               }}
               titleStyle={{
-                color: COLOR_BLACK_1,
+                color: COLORS.BLACK_1,
                 fontSize: 14,
                 lineHeight: 22,
               }}
@@ -235,8 +230,8 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
             <Button
               buttonStyle={{
                 width: width * 0.45,
-                backgroundColor: COLOR_BLUE_1,
-                borderColor: COLOR_BLUE_1,
+                backgroundColor: COLORS.BLUE_1,
+                borderColor: COLORS.BLUE_1,
               }}
               titleStyle={{ fontSize: 14, lineHeight: 22 }}
               radius={5}

@@ -2,7 +2,7 @@ import { Button as RNEButton } from '@rneui/themed';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -20,7 +20,7 @@ interface ButtonProps {
 
 const Button = ({
   buttonStyle,
-  color = COLOR_BLUE_1,
+  color = COLORS.BLUE_1,
   loading = false,
   outline = false,
   title = '',
@@ -29,7 +29,7 @@ const Button = ({
 }: ButtonProps) => (
   <RNEButton
     buttonStyle={StyleSheet.flatten([styles.outline(color), buttonStyle])}
-    color={outline ? COLOR_WHITE : color}
+    color={outline ? COLORS.WHITE : color}
     disabled={loading}
     disabledStyle={styles.disabled}
     loading={loading}

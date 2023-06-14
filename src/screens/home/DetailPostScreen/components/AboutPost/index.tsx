@@ -8,7 +8,7 @@ import {
   IconCalculator,
   IconYoutube,
 } from '../../../../../assets';
-import { COLOR_BLUE_2 } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import { Button, Text } from '../../../../../components';
 import IconMapWhite from '../../../../../assets/icons/mapWhite';
 import IconLocation from '../../../../../assets/icons/IconLocation';
@@ -85,7 +85,7 @@ const AboutPost: FC<Iprops> = props => {
   return (
     <View style={styles.aboutPost}>
       <View style={styles.seeMore}>
-        <IconMapWhite color={COLOR_BLUE_2} />
+        <IconMapWhite color={COLORS.BLUE_2} />
         <Text style={styles.textViewMap}>{t('detailPost.seeMap') || ''}</Text>
         <View style={styles.icon}>
           <Icon360 />

@@ -6,12 +6,7 @@ import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DashedButton, Text } from '../../../components';
-import {
-  COLOR_GREEN_1,
-  COLOR_ORANGE_2,
-  COLOR_WHITE,
-  SCREENS,
-} from '../../../constants';
+import { COLORS, SCREENS } from '../../../constants';
 import { logout, selectUser } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { AccountMenu } from '../components';
@@ -208,7 +203,7 @@ const AccountScreen = () => {
             <View style={styles.boxLabelItem}>
               <Text>{t('common.balance')} </Text>
               <Icon
-                color={COLOR_ORANGE_2}
+                color={COLORS.ORANGE_2}
                 name="monetization-on"
                 size={20}
               />
@@ -220,7 +215,7 @@ const AccountScreen = () => {
             <View style={styles.boxLabelItem}>
               <Text>{t('common.promotion')} </Text>
               <Icon
-                color={COLOR_GREEN_1}
+                color={COLORS.GREEN_1}
                 name="redeem"
                 size={20}
               />
@@ -232,7 +227,7 @@ const AccountScreen = () => {
             onPress={navigateToDepositScreen}
           >
             <Icon
-              color={COLOR_WHITE}
+              color={COLORS.WHITE}
               name="account-balance-wallet"
               size={20}
             />

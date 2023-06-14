@@ -1,12 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_2,
-  COLOR_GRAY_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_10,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -17,8 +11,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   boxForm: {
-    backgroundColor: COLOR_GRAY_10,
-    borderColor: COLOR_GRAY_5,
+    backgroundColor: COLORS.GRAY_10,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 5,
     borderWidth: 1,
     flexDirection: 'row',
@@ -28,8 +22,8 @@ const styles = StyleSheet.create({
   },
   boxOrdinalNumber: {
     alignItems: 'center',
-    backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE,
+    borderColor: COLORS.GRAY_2,
     borderWidth: 0.5,
     justifyContent: 'center',
     marginVertical: 5,
@@ -38,7 +32,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   boxPopup: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     borderRadius: 8,
     padding: 20,
     width: width * 0.96,
@@ -52,7 +46,7 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: COLOR_BLACK_2,
+    backgroundColor: COLORS.BLACK_2,
     flexDirection: 'row',
     height: '100%',
     justifyContent: 'center',
@@ -66,7 +60,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   input: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     marginVertical: 4,
     width: width * 0.3,
   },

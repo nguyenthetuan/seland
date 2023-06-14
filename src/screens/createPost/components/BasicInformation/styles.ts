@@ -1,14 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_7,
-  COLOR_ORANGE_6,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -44,7 +36,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   btnYouWant: {
-    borderColor: COLOR_BLUE_1,
+    borderColor: COLORS.BLUE_1,
     borderRadius: 5,
     width: width * 0.45,
   },
@@ -72,7 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
   },
   dot: select => ({
-    backgroundColor: select ? COLOR_ORANGE_6 : COLOR_GRAY_5,
+    backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
     borderRadius: 7,
     height: 10,
     width: 10,
@@ -87,28 +79,28 @@ const styles = StyleSheet.create({
     width: width * 0.46,
   },
   inputLabel: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     marginTop: 16,
   },
   isBuy: selected => ({
-    borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
+    borderColor: selected ? COLORS.BLUE_2 : COLORS.GRAY_5,
     borderWidth: 2,
     // borderRadius: 5,
     padding: 0,
     height: 40,
   }),
   labelTab: select => ({
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontWeight: select ? 'bold' : 400,
   }),
   line: {
-    backgroundColor: COLOR_GRAY_5,
+    backgroundColor: COLORS.GRAY_5,
     height: 1,
     marginVertical: 10,
     width: '100%',
   },
   line1: select => ({
-    backgroundColor: select ? COLOR_ORANGE_6 : COLOR_GRAY_5,
+    backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
     height: 2,
     marginHorizontal: 5,
     width: '30%',
@@ -119,7 +111,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   reset: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     fontSize: 14,
     lineHeight: 22,
     // marginTop: 18,
@@ -138,13 +130,13 @@ const styles = StyleSheet.create({
     // padding: 10,
   },
   txtCheck: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 14,
     lineHeight: 22,
     marginLeft: 10,
   },
   txtType: select => ({
-    color: select ? COLOR_BLUE_1 : COLOR_GRAY_7,
+    color: select ? COLORS.BLUE_1 : COLORS.GRAY_7,
     fontWeight: 'bold',
   }),
   youWant: {

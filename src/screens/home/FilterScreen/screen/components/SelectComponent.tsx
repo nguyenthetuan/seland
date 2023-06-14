@@ -1,9 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_2,
-  COLOR_GRAY_8,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import { Button } from '../../../../../components';
 import { useController } from 'react-hook-form';
 
@@ -78,12 +74,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   buttonSelect: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     height: 36,
   },
   btnSelected: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
   },
   txtFilter: {
     marginBottom: 4,
@@ -95,7 +91,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   txtSelected: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
   },
   wrapListOption: {
     flexDirection: 'row',

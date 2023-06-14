@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { deviceWidth } from '../../../../../configs/theme/common';
-import { COLOR_BLACK_1, COLOR_GRAY_5 } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   detailPost: {
     borderWidth: 1,
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 8,
     padding: 12,
     marginBottom: 10,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   itemInfo: {
     borderBottomWidth: 1,
-    borderBottomColor: COLOR_GRAY_5,
+    borderBottomColor: COLORS.GRAY_5,
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 15,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     height: 3,
     borderRadius: 100,
     marginRight: 5,
-    backgroundColor: COLOR_BLACK_1,
+    backgroundColor: COLORS.BLACK_1,
   },
   itemContentText: {
     fontSize: 15,

@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import styles from './styles';
 import { Button } from '../../../../../components';
 import { IconSvg } from '../../../../../assets/icons/IconSvg';
-import { COLOR_WHITE } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import { IconZaloBlue } from '../../../../../assets';
 
 interface Iprops {}
@@ -23,7 +23,7 @@ const CallAndChat: FC<Iprops> = props => {
         icon={
           <IconSvg
             name="phone"
-            color={COLOR_WHITE}
+            color={COLORS.WHITE}
             width={20}
             height={20}
           />

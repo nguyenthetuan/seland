@@ -1,11 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_GRAY_2,
-  COLOR_GRAY_8,
-  COLOR_SLIDER_1,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import { Slider } from '@miblanchard/react-native-slider';
 import { ThumbSlider } from '../../../../../assets';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -135,9 +129,9 @@ export const SliderComponent = ({
           minimumValue={minimumValue}
           maximumValue={maximumValue}
           step={step}
-          minimumTrackTintColor={COLOR_SLIDER_1}
-          maximumTrackTintColor={COLOR_SLIDER_1}
-          thumbTintColor={COLOR_SLIDER_1}
+          minimumTrackTintColor={COLORS.SLIDER_1}
+          maximumTrackTintColor={COLORS.SLIDER_1}
+          thumbTintColor={COLORS.SLIDER_1}
           thumbImage={ThumbSlider}
           onSlidingComplete={val => onChange(val)}
           thumbStyle={{ width: 15, height: 15 }}
@@ -189,10 +183,10 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   btnSelected: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
   },
   buttonClose: {
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     borderRadius: 5,
     padding: 6,
   },
@@ -220,7 +214,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   txtSelected: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
   },
   wrapListOption: {
     flexDirection: 'row',
