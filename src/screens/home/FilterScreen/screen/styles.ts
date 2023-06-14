@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   district: {
     paddingRight: 4,
-    width: '50%',
+    width: '33%',
   },
   filterPost: {
     color: COLORS.GRAY_8,
@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   ward: {
-    paddingLeft: 4,
-    width: '50%',
+    width: '33%',
   },
   wrapArea: {
     flexDirection: 'row',

@@ -19,6 +19,7 @@ interface IProps {
   name: string;
   control?: any;
   multipleChoice?: boolean;
+  onSelectTypeHousing?: any;
 }
 
 interface ITypeHousingItem {
@@ -26,13 +27,7 @@ interface ITypeHousingItem {
   item: string;
 }
 
-const TypeHousing = ({
-  options = [],
-  type,
-  name,
-  control,
-  multipleChoice = false,
-}: IProps) => {
+const TypeHousing = ({ options = [], type, name, control, multipleChoice = false, onSelectTypeHousing: onSelectType }: IProps) => {
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
 
@@ -54,8 +49,10 @@ const TypeHousing = ({
     if (multipleChoice) {
       data.push(item);
       onChange(data);
+      onSelectType && onSelectType(data);
     } else {
       onChange([item]);
+      onSelectType && onSelectType([item]);
     }
   };
 
@@ -64,6 +61,7 @@ const TypeHousing = ({
     const data = [...value];
     data.splice(index, 1);
     onChange(data);
+    onSelectType && onSelectType(data);
   };
 
   const getTitleFromValue = (val: string | number) => {
@@ -83,7 +81,7 @@ const TypeHousing = ({
         style={styles.typeHousingContainer}
         onPress={onShowListTypeHousing}
       >
-        {value.map((item: any, index: number) => {
+        {(value?.length > 0 ? value : []).map((item: any, index: number) => {
           return (
             <TouchableOpacity
               style={styles.typeHousing}

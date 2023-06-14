@@ -11,9 +11,10 @@ import {
 import CollaboratorInformationScreen from '../screens/account/CollaboratorInformationScreen';
 import DepositScreen from '../screens/account/DepositScreen/index';
 import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
+import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
+import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 import DetailPostScreen from '../screens/home/DetailPostScreen';
 import FilterScreen from '../screens/home/FilterScreen/screen/index';
-import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 
 const routes = [
   {
@@ -43,6 +44,10 @@ const routes = [
   {
     component: ListProjectScreen,
     name: SCREENS.LIST_PROJECT,
+  },
+  {
+    component: AgencyInformationTab,
+    name: SCREENS.AGENCY_INFORMATION_TAB,
   },
   {
     component: UpgradeAccountTab,

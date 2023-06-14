@@ -1,23 +1,27 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/base';
-import { Select } from '../../../../components';
+import { Select, Text } from '../../../../components';
 import { Control } from 'react-hook-form';
 import Filter from '../FilterModal';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '../../../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  clearDistricts,
+  clearWards,
   getAllFilter,
   getDistricts,
   getProvinces,
+  getWards,
   selectCommon,
   selectPosts,
   selectRealEstates,
 } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
+import TypeHousing from '../../FilterScreen/screen/components/TypeHousing';
 
 interface Iprops {
   control: Control<any>;
@@ -29,6 +33,11 @@ interface Iprops {
   getValues?: any;
 }
 
+const projectOptions = [{
+  label: "Dự án 1",
+  value: 1
+}];
+
 const HeaderFilterPosts: FC<Iprops> = props => {
   const {
     control,
@@ -38,6 +47,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
     route,
     setValue,
     getValues,
+    reset,
   } = props;
   const { t } = useTranslation();
   const { navigate } = useNavigation();
@@ -46,6 +56,16 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   const district_id = params?.district_id;
   const typeHousing = params?.typeHousing;
   const demand_id = params?.demand_id;
+
+  const dataFilters = params?.dataFilters;
+
+  useEffect(() => {
+    if (dataFilters) {
+      Object.keys(dataFilters).map((key) => {
+        setValue(key, dataFilters[key]);
+      })
+    }
+  }, [dataFilters]);
 
   useEffect(() => {
     if (district_id) {
@@ -71,31 +91,66 @@ const HeaderFilterPosts: FC<Iprops> = props => {
     }
   }, [demand_id]);
 
-  const { districts } = useSelector(selectCommon);
+  const { provinces, districts, wards } = useSelector(selectCommon);
 
   const { real_estate_type } = useSelector(selectRealEstates);
 
   const dispatch = useDispatch();
 
+  const emptyProvinceOption = {
+    label: t('select.province'),
+    value: null,
+  };
   const emptyDistrictOption = {
     label: t('select.district'),
     value: null,
   };
+   const emptyWardOption = {
+    label: t('select.ward'),
+    value: null
+  }
 
-  const province_id = 'HNI';
+  const provinceOptions = [emptyProvinceOption, ...provinces];
   const districtOptions = [emptyDistrictOption, ...districts];
+  const wardOptions = [emptyWardOption, ...wards];
 
-  const fetchDistricts = (params: any, callback?: () => void) => {
+  const fetchDistricts = (params: { province_code: string; }, callback: undefined) =>
     dispatchThunk(dispatch, getDistricts(params), callback);
+
+  const fetchWards = (params: { province_code: any; district_code: any; }) => dispatchThunk(dispatch, getWards(params));
+
+  const handleSelectProvince = (selectedItem: any) => {
+    setValue('district_id', null);
+    setValue('ward_id', null);
+
+    const { value } = selectedItem;
+
+    if (value) {
+      fetchDistricts({
+        province_code: selectedItem.value,
+      });
+    } else {
+      dispatch(clearDistricts());
+      dispatch(clearWards());
+    }
+  };
+
+  const handleSelectDistrict = (selectedItem: any) => {
+    setValue('ward_id', null);
+    const { value } = selectedItem;
+    if (value) {
+      fetchWards({
+        province_code: getValues().province_id,
+        district_code: selectedItem.value,
+      });
+    } else {
+      dispatch(clearWards());
+    }
   };
 
   const refresh = async () => {
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
-      province_id &&
-        fetchDistricts({
-          province_code: province_id,
-        }),
     ]);
   };
 
@@ -153,7 +208,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
 
   const typeHousingOptions = real_estate_type.map(
     (type: { value: string; id: string | number }) => ({
-      label: type.value,
+      title: type.value,
       value: type.id,
     })
   );
@@ -170,6 +225,11 @@ const HeaderFilterPosts: FC<Iprops> = props => {
     handleSubmit(onSelect(paramsFilter));
   };
 
+  const onSelectTypeHousing = (val: any) => {
+    const paramsFilter = { ...getValues(), typeHousing: val };
+    handleSubmit(onSelect(paramsFilter));
+  }
+
   return (
     <>
       <View>
@@ -179,6 +239,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
             onPress={() => {
               navigate(SCREENS.FILTER_SCREEN, {
                 onSubmit,
+                dataFilters
               });
             }}
           >
@@ -187,17 +248,25 @@ const HeaderFilterPosts: FC<Iprops> = props => {
 
           <View style={styles.boxRealEstate}>
             <Select
-              buttonStyle={styles.buttonSelect}
+              buttonStyle={[styles.buttonSelect]}
               buttonTextStyle={styles.textButtonSelect}
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={typeHousingOptions}
-              defaultButtonText={t('select.typeHousing') || ''}
-              name="typeHousing"
-              onSelect={(val: any) => submitFilter(val, 'typeHousing')}
+              data={sortBy.map(item => ({
+                ...item,
+                label: t(`select.${item?.label}`),
+              }))}
+              defaultButtonText={
+                t('select.sortBy', {
+                  sortBy: t('select.newest'),
+                }) || ''
+              }
+              name="sort_by"
+              onSelect={(val: any) => submitFilter(val, 'sort_by')}
             />
           </View>
+
           <View style={styles.areaRange}>
             <Select
               buttonStyle={[styles.buttonSelect]}
@@ -205,10 +274,10 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               rowStyle={styles.buttonSelect}
               rowTextStyle={styles.rowTextStyle}
               control={control}
-              data={districtOptions}
-              defaultButtonText={t('select.area') || ''}
-              name="district_id"
-              onSelect={(val: any) => submitFilter(val, 'district_id')}
+              data={projectOptions}
+              defaultButtonText={t('common.project') || ''}
+              name="project_id"
+              onSelect={(val: any) => submitFilter(val, 'project_id')}
             />
           </View>
           <View style={styles.boxStatus}>
@@ -225,24 +294,68 @@ const HeaderFilterPosts: FC<Iprops> = props => {
             />
           </View>
         </View>
-        <Select
-          buttonStyle={[styles.buttonSelect, styles.buttonSort]}
-          buttonTextStyle={styles.textButtonSelect}
-          rowStyle={styles.buttonSelect}
-          rowTextStyle={styles.rowTextStyle}
-          control={control}
-          data={sortBy.map(item => ({
-            ...item,
-            label: t(`select.${item?.label}`),
-          }))}
-          defaultButtonText={
-            t('select.sortBy', {
-              sortBy: t('select.newest'),
-            }) || ''
-          }
-          name="sort_by"
-          onSelect={(val: any) => submitFilter(val, 'sort_by')}
-        />
+        
+        <View style={styles.row}>
+          <View style={styles.address}>
+            <Select
+              buttonStyle={styles.buttonAddress}
+              buttonTextStyle={styles.textButtonSelect}
+              rowStyle={styles.buttonSelect}
+              rowTextStyle={styles.rowTextStyle}
+              control={control}
+              data={provinceOptions}
+              defaultButtonText={t('select.province') || ''}
+              name="province_id"
+              onSelect={(val: any) => {
+                handleSelectProvince(val);
+                submitFilter(val, 'province_id')
+              }}
+            />
+          </View>
+          <View style={styles.address}>
+            <Select
+              buttonStyle={styles.buttonAddress}
+              buttonTextStyle={styles.textButtonSelect}
+              rowStyle={styles.buttonSelect}
+              rowTextStyle={styles.rowTextStyle}
+              control={control}
+              data={districtOptions}
+              defaultButtonText={t('select.province') || ''}
+              name="district_id"
+              onSelect={(val: any) => {
+                handleSelectDistrict(val);
+                submitFilter(val, 'district_id')
+              }}
+            />
+          </View>
+          <View style={styles.address}>
+            <Select
+              buttonStyle={styles.buttonAddress}
+              buttonTextStyle={styles.textButtonSelect}
+              rowStyle={styles.buttonSelect}
+              rowTextStyle={styles.rowTextStyle}
+              control={control}
+              data={wardOptions}
+              defaultButtonText={t('select.ward')}
+              name="ward_id"
+              onSelect={(val: any) => submitFilter(val, 'ward_id')}
+            />
+          </View>
+        </View>
+
+        <View style={styles.row}>
+          <View style={styles.wrapTypeHousing}>
+            <Text style={styles.textTypeHousing}>{t('select.typeHousing')}</Text>
+            <TypeHousing
+              options={typeHousingOptions}
+              type={'typeHousing'}
+              control={control}
+              name="typeHousing"
+              multipleChoice
+              onSelectTypeHousing={onSelectTypeHousing}
+            />
+          </View>
+        </View>
       </View>
       <Filter onSubmit={onSubmit} />
     </>

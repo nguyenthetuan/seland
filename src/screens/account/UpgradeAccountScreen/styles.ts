@@ -5,7 +5,8 @@ import { COLORS } from '../../../constants';
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    paddingVertical: 40,
+    paddingTop: 40,
+    paddingBottom: 100,
   },
   inactiveDotStyle: {
     width: 8,

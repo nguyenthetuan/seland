@@ -24,6 +24,7 @@ interface InputCustomProps extends InputProps {
   inputContainerStyle?: ViewStyle;
   // label?: string | undefined;
   labelStyle?: Object | [];
+  errorStyle?: Object | [];
   name: string;
   onChangeText?: (v: string) => void;
   onFocus?: () => void;
@@ -53,6 +54,7 @@ const Input = ({
   required = false,
   rightLabel,
   showPasswordPolicy = false,
+  errorStyle={},
   ...props
 }: InputCustomProps) => {
   const {
@@ -93,7 +95,7 @@ const Input = ({
     <View>
       <RNEInput
         style={styles.text}
-        errorStyle={styles.error}
+        errorStyle={StyleSheet.flatten([styles.error, errorStyle])}
         containerStyle={styles.containerInput}
         inputContainerStyle={StyleSheet.flatten([
           styles.input(isFocused),

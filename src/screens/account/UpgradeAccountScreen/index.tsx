@@ -107,8 +107,8 @@ const UpgradeAccountScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
+    <ScrollView>
+      <View style={styles.container}>
         <Carousel
           data={dataMock}
           renderItem={renderItem}
@@ -123,8 +123,8 @@ const UpgradeAccountScreen = () => {
           title="Mua gói ngay"
           color={COLORS.ORANGE_6}
         />
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </ScrollView>
   );
 };
 

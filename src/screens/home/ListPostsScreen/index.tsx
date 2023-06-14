@@ -18,14 +18,28 @@ import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
+const initValues = {
+  district: '',
+  ward: '',
+  address: '',
+  typeHousing: [],
+  priceRange: [0, 1],
+  acreage: [0, 1],
+  compass: [],
+  legalDocuments: [],
+  location: [],
+  bedroom: [],
+  bathroom: [],
+  numberFloors: [],
+  province_id: 'HNI',
+  ward_id: null,
+  district_id: null,
+  demand_id: 1,
+};
+
 const ListPostsScreen = props => {
-  const { control, handleSubmit, setValue, getValues } = useForm({
-    defaultValues: {
-      district_id: '',
-      typeHousing: '',
-      demand_id: 1,
-      sort_by: '',
-    },
+  const { control, handleSubmit, setValue, getValues, reset } = useForm({
+    defaultValues: initValues,
   });
   const filterRef = useRef();
   const { t } = useTranslation();
@@ -79,7 +93,7 @@ const ListPostsScreen = props => {
     if (data?.location > 0) {
       res.location_id = data?.location.join(',');
     }
-    if (data?.province_id && data?.ward_id) {
+    if (data?.province_id) {
       res.province_id = data?.province_id;
     }
     if (data?.ward_id) {
@@ -131,6 +145,7 @@ const ListPostsScreen = props => {
               onSelect={onSelect}
               onFilter={onFilter}
               setValue={setValue}
+              reset={reset}
               {...props}
             />
           }

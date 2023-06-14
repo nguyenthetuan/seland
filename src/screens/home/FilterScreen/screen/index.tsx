@@ -34,6 +34,7 @@ import {
   clearWards,
   selectRealEstates,
   getAllFilter,
+  clearDistricts,
 } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import REAL_ESTATE from '../../../../constants/realEstate';
@@ -131,11 +132,15 @@ const FilterScreen = (props: any) => {
   const dispatch = useDispatch();
   const { navigate, goBack } = useNavigation();
 
+  const dataFilters = params?.dataFilters;
+
+  const defaultVal: any = Object.assign(initValues, {...dataFilters, typeHousing: Array.isArray(dataFilters?.typeHousing) ? dataFilters?.typeHousing : (dataFilters?.typeHousing?.length > 0 ? [dataFilters?.typeHousing] : [])})
+
   const { control, handleSubmit, setValue, getValues } = useForm({
-    defaultValues: initValues,
+    defaultValues: defaultVal,
   });
 
-  const [tabSelected, setTabSelected] = useState(1);
+  const [tabSelected, setTabSelected] = useState(dataFilters?.demand_id || 1);
 
   const { basicInformation, demands } = useSelector(selectPosts);
 
@@ -147,28 +152,33 @@ const FilterScreen = (props: any) => {
     title: directionItem?.value,
   }));
 
-  // const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
-  //   value: legalDocumentItem?.id,
-  //   title: legalDocumentItem?.value
-  // }))
+  const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
+    value: legalDocumentItem?.id,
+    title: legalDocumentItem?.value
+  }))
 
   const locationOptions = more?.[5]?.children?.map((locationItem: any) => ({
     value: locationItem?.id,
     title: locationItem?.value,
   }));
 
-  // const { provinces, districts, wards } = useSelector(selectCommon);
+  const { provinces, districts, wards } = useSelector(selectCommon);
 
-  // const emptyDistrictOption = {
-  //   label: t('select.district'),
-  //   value: null,
-  // };
-  // const emptyWardOption = {
-  //   label: t('select.ward'),
-  //   value: null,
-  // };
-  // const districtOptions = [emptyDistrictOption, ...districts];
-  // const wardOptions = [emptyWardOption, ...wards];
+  const emptyProvinceOption = {
+    label: t('select.province'),
+    value: null,
+  };
+  const emptyDistrictOption = {
+    label: t('select.district'),
+    value: null,
+  };
+  const emptyWardOption = {
+    label: t('select.ward'),
+    value: null,
+  };
+  const provinceOptions = [emptyProvinceOption, ...provinces];
+  const districtOptions = [emptyDistrictOption, ...districts];
+  const wardOptions = [emptyWardOption, ...wards];
 
   const typeHousingOptions = real_estate_type.map(
     (type: { value: string; id: string | number }) => ({
@@ -186,6 +196,7 @@ const FilterScreen = (props: any) => {
       district_id: data?.district_id,
       typeHousing: data?.typeHousing,
       demand_id: tabSelected,
+      dataFilters: data
     });
     params?.onSubmit && params?.onSubmit(data);
   };
@@ -204,47 +215,63 @@ const FilterScreen = (props: any) => {
     });
   };
 
-  // const fetchDistricts = (params: any, callback?: () => void) => {
-  //   dispatchThunk(dispatch, getDistricts(params), callback);
-  // };
+  const fetchDistricts = (params: any, callback?: () => void) => {
+    dispatchThunk(dispatch, getDistricts(params), callback);
+  };
 
-  // const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
+  const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
 
-  // const handleSelectDistrict = (selectedItem: any) => {
-  //   setValue('ward_id', null);
-  //   const { value } = selectedItem;
-  //   if (value) {
-  //     fetchWards({
-  //       province_code: getValues().province_id,
-  //       district_code: selectedItem.value,
-  //     });
-  //   } else {
-  //     dispatch(clearWards());
-  //   }
-  // };
+  const handleSelectProvince = (selectedItem: any) => {
+    setValue('district_id', null);
+    setValue('ward_id', null);
 
-  // const refresh = async () => {
-  //   const { district_id } = basicInformation;
-  //   const province_id = 'HNI';
-  //   await Promise.all([
-  //     dispatchThunk(dispatch, getProvinces()),
-  //     province_id &&
-  //       fetchDistricts({
-  //         province_code: province_id,
-  //       }),
+    const { value } = selectedItem;
 
-  //     province_id &&
-  //       district_id &&
-  //       fetchWards({
-  //         province_code: province_id,
-  //         district_code: district_id,
-  //       }),
-  //   ]);
-  // };
+    if (value) {
+      fetchDistricts({
+        province_code: selectedItem.value,
+      });
+    } else {
+      dispatch(clearDistricts());
+      dispatch(clearWards());
+    }
+  };
 
-  // useEffect(() => {
-  //   refresh();
-  // }, []);
+  const handleSelectDistrict = (selectedItem: any) => {
+    setValue('ward_id', null);
+    const { value } = selectedItem;
+    if (value) {
+      fetchWards({
+        province_code: getValues().province_id,
+        district_code: selectedItem.value,
+      });
+    } else {
+      dispatch(clearWards());
+    }
+  };
+
+  const refresh = async () => {
+    const { district_id } = basicInformation;
+    const province_id = 'HNI';
+    await Promise.all([
+      dispatchThunk(dispatch, getProvinces()),
+      province_id &&
+        fetchDistricts({
+          province_code: province_id,
+        }),
+
+      province_id &&
+        district_id &&
+        fetchWards({
+          province_code: province_id,
+          district_code: district_id,
+        }),
+    ]);
+  };
+
+  useEffect(() => {
+    refresh();
+  }, []);
 
   useEffect(() => {
     dispatchThunk(dispatch, getAllFilter());
@@ -276,9 +303,9 @@ const FilterScreen = (props: any) => {
             />
           </TouchableOpacity>
         </View>
-        {/* <Text style={styles.txtFilter}>{t('select.type')}</Text> */}
+        <Text style={styles.txtFilter}>{t('select.type')}</Text>
 
-        {/* <View style={styles.wrapButton}>
+        <View style={styles.wrapButton}>
           {demands.map((demandItem: { value: string; id: any }) => (
             <Button
               buttonStyle={styles.btnSelect}
@@ -289,12 +316,25 @@ const FilterScreen = (props: any) => {
               outline={tabSelected !== demandItem?.id}
             />
           ))}
-        </View> */}
+        </View>
 
         <View style={styles.wrapArea}>
           <View style={styles.wrapFilter}>
-            {/* <Text style={styles.txtFilter}>{t('select.area')}</Text>
+            <Text style={styles.txtFilter}>{t('select.area')}</Text>
             <View style={styles.boxRealEstate}>
+              <View style={styles.district}>
+                <Select
+                  buttonStyle={styles.buttonSelect}
+                  buttonTextStyle={styles.textButtonSelect}
+                  rowStyle={styles.buttonSelect}
+                  rowTextStyle={styles.rowTextStyle}
+                  control={control}
+                  data={provinceOptions}
+                  defaultButtonText={t('select.province') || ''}
+                  name="province_id"
+                  onSelect={handleSelectProvince}
+                />
+              </View>
               <View style={styles.district}>
                 <Select
                   buttonStyle={styles.buttonSelect}
@@ -321,7 +361,7 @@ const FilterScreen = (props: any) => {
                   onSelect={handleSubmit(onSelect)}
                 />
               </View>
-            </View> */}
+            </View>
 
             {/* <View>
               <Input
@@ -352,8 +392,8 @@ const FilterScreen = (props: any) => {
           )}
           defaultValues={initValues.priceRange}
           minimumValue={0}
-          maximumValue={100000000000}
-          step={1000000000}
+          maximumValue={100}
+          step={1}
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
@@ -387,12 +427,12 @@ const FilterScreen = (props: any) => {
           />
         </View>
 
-        {/* <SelectComponent
+        <SelectComponent
           title={t('common.legalDocuments') || ''}
           options={legalDocumentOptions}
           name="legalDocuments"
           control={control}
-        /> */}
+        />
 
         <SelectComponent
           title={t('common.location') || ''}
