@@ -1,9 +1,8 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Image } from '@rneui/base';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
-import Loading from 'react-native-loading-spinner-overlay';
+import { TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import styles from './styles';
 import {
@@ -19,8 +18,7 @@ interface Iprops {}
 
 const ImagePost: FC<Iprops> = props => {
   const dispatch = useDispatch();
-  const route: any = useRoute();
-  const { goBack, reset }: any = useNavigation();
+  const { goBack }: any = useNavigation();
   const { t } = useTranslation();
   const listIcon = [
     {
@@ -46,10 +44,22 @@ const ImagePost: FC<Iprops> = props => {
         }}
       />
       <View style={styles.headerAction}>
-        <View style={styles.iconHeader}>{<IconBackWhite />}</View>
+        <TouchableOpacity
+          style={styles.iconHeader}
+          onPress={goBack}
+        >
+          {<IconBackWhite />}
+        </TouchableOpacity>
         <View style={styles.headerRight}>
-          {listIcon?.map(i => {
-            return <View style={styles.iconHeaderRight}>{i.icon}</View>;
+          {listIcon?.map((i, index) => {
+            return (
+              <View
+                style={styles.iconHeaderRight}
+                key={`icon-image-${index}`}
+              >
+                {i.icon}
+              </View>
+            );
           })}
         </View>
       </View>

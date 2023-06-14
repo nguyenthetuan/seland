@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxLocation: {
+    alignItems: 'center',
     flexDirection: 'row',
   },
   boxMonopoly: {
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     paddingTop: 5,
     padding: 3,
-    width: 60,
+    width: 70,
   },
   call: {
     backgroundColor: COLOR_GREEN_5,
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     lineHeight: 20,
+    marginLeft: 5,
   },
   love: {
     paddingLeft: 10,

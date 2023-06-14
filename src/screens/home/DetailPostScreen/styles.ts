@@ -1,24 +1,16 @@
-import { StyleSheet } from 'react-native';
-
-import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
-
+import { StyleSheet, Platform } from 'react-native';
+import { COLOR_WHITE } from '../../../constants';
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
+  detailPost: {
+    position: 'relative',
   },
-  list: {
-    marginVertical: 10,
+  callAndChat: {
+    position: 'absolute',
+    bottom: 0,
+    paddingBottom: Platform.OS === 'ios' ? 20 : 0,
+    backgroundColor: 'white',
   },
-  loadingText: {
-    color: COLOR_BLUE_1,
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  marginHorizontal: {
-    marginHorizontal: 8,
-  },
-
-  whiteBackground: {
+  detailPostWrapper: {
     backgroundColor: COLOR_WHITE,
   },
 });

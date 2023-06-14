@@ -1,24 +1,30 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
-import Loading from 'react-native-loading-spinner-overlay';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
 import AboutPost from './components/AboutPost';
-
+import Contact from './components/Contact';
+import DetailPost from './components/DetailPost';
 import ImagePost from './components/ImagePost';
+import RealEstate from './components/RealEstate';
 import styles from './styles';
+import CallAndChat from './components/CallAndChat';
 
 const DetailPostScreen = () => {
-  const dispatch = useDispatch();
-  const route: any = useRoute();
-  const { goBack, reset }: any = useNavigation();
-  const { t } = useTranslation();
-
   return (
     <View>
-      <ImagePost />
-      <AboutPost />
+      <View style={styles.detailPostWrapper}>
+        <ScrollView>
+          <View style={styles.detailPost}>
+            <ImagePost />
+            <AboutPost />
+            <DetailPost />
+            <Contact />
+            <RealEstate />
+          </View>
+        </ScrollView>
+        <View style={styles.callAndChat}>
+          <CallAndChat />
+        </View>
+      </View>
     </View>
   );
 };

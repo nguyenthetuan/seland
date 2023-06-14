@@ -9,7 +9,14 @@ import Filter from '../FilterModal';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '../../../../constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllFilter, getDistricts, getProvinces, selectCommon, selectPosts, selectRealEstates } from '../../../../features';
+import {
+  getAllFilter,
+  getDistricts,
+  getProvinces,
+  selectCommon,
+  selectPosts,
+  selectRealEstates,
+} from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 
 interface Iprops {
@@ -23,7 +30,15 @@ interface Iprops {
 }
 
 const HeaderFilterPosts: FC<Iprops> = props => {
-  const { control, handleSubmit, onSelect, onFilter, route, setValue, getValues } = props;
+  const {
+    control,
+    handleSubmit,
+    onSelect,
+    onFilter,
+    route,
+    setValue,
+    getValues,
+  } = props;
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
@@ -35,7 +50,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   useEffect(() => {
     if (district_id) {
       setValue('district_id', district_id);
-      const paramsFilter = {...getValues(), district_id};
+      const paramsFilter = { ...getValues(), district_id };
       handleSubmit(paramsFilter);
     }
   }, [district_id]);
@@ -43,7 +58,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   useEffect(() => {
     if (typeHousing && typeHousing.length > 0) {
       setValue('typeHousing', typeHousing?.[0]);
-      const paramsFilter = {...getValues(), typeHousing: [typeHousing?.[0]]};
+      const paramsFilter = { ...getValues(), typeHousing: [typeHousing?.[0]] };
       handleSubmit(paramsFilter);
     }
   }, [typeHousing]);
@@ -51,16 +66,14 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   useEffect(() => {
     if (demand_id) {
       setValue('demand_id', demand_id);
-      const paramsFilter = {...getValues(), demand_id};
+      const paramsFilter = { ...getValues(), demand_id };
       handleSubmit(paramsFilter);
     }
   }, [demand_id]);
 
   const { districts } = useSelector(selectCommon);
 
-  const {
-    real_estate_type 
-  } = useSelector(selectRealEstates);
+  const { real_estate_type } = useSelector(selectRealEstates);
 
   const dispatch = useDispatch();
 
@@ -90,13 +103,14 @@ const HeaderFilterPosts: FC<Iprops> = props => {
     refresh();
   }, []);
 
-  const { demands } =
-    useSelector(selectPosts);
+  const { demands } = useSelector(selectPosts);
 
-  const demansOption = demands.map((demandItem: { value: string; id: any }) => ({
-    label: demandItem?.value,
-    value: demandItem?.id
-  }))
+  const demansOption = demands.map(
+    (demandItem: { value: string; id: any }) => ({
+      label: demandItem?.value,
+      value: demandItem?.id,
+    })
+  );
 
   const sortBy = [
     {
@@ -146,12 +160,15 @@ const HeaderFilterPosts: FC<Iprops> = props => {
 
   useEffect(() => {
     dispatchThunk(dispatch, getAllFilter());
-  }, [dispatch])
+  }, [dispatch]);
 
-  const submitFilter = (val: {label: string, value: string | number}, fieldName: string) => {
-    const paramsFilter = {...getValues(), [fieldName]: val.value};
+  const submitFilter = (
+    val: { label: string; value: string | number },
+    fieldName: string
+  ) => {
+    const paramsFilter = { ...getValues(), [fieldName]: val.value };
     handleSubmit(onSelect(paramsFilter));
-  }
+  };
 
   return (
     <>
@@ -178,7 +195,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               data={typeHousingOptions}
               defaultButtonText={t('select.typeHousing') || ''}
               name="typeHousing"
-              onSelect={(val: any) => submitFilter(val, "typeHousing")}
+              onSelect={(val: any) => submitFilter(val, 'typeHousing')}
             />
           </View>
           <View style={styles.areaRange}>
@@ -191,7 +208,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               data={districtOptions}
               defaultButtonText={t('select.area') || ''}
               name="district_id"
-              onSelect={(val: any) => submitFilter(val, "district_id")}
+              onSelect={(val: any) => submitFilter(val, 'district_id')}
             />
           </View>
           <View style={styles.boxStatus}>
@@ -204,7 +221,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               data={demansOption}
               defaultButtonText={t('select.type') || ''}
               name="demand_id"
-              onSelect={(val: any) => submitFilter(val, "demand_id")}
+              onSelect={(val: any) => submitFilter(val, 'demand_id')}
             />
           </View>
         </View>
@@ -224,8 +241,8 @@ const HeaderFilterPosts: FC<Iprops> = props => {
             }) || ''
           }
           name="sort_by"
-          onSelect={(val: any) => submitFilter(val, "sort_by")}
-          />
+          onSelect={(val: any) => submitFilter(val, 'sort_by')}
+        />
       </View>
       <Filter onSubmit={onSubmit} />
     </>

@@ -20,6 +20,7 @@ import {
   LocationMapsSmall,
   LoveSmall,
 } from '../../../../assets';
+import { IconSvg } from '../../../../assets/icons/IconSvg';
 import { Text } from '../../../../components';
 import { COLOR_GRAY_7, COLOR_WHITE, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
@@ -64,7 +65,9 @@ const ItemHottestRealEstate = ({ item, type }) => {
 
   const onToLocation = () => {};
   const onGoDetail = () => {
-    navigate(SCREENS.DETAIL_POST);
+    if (type !== REAL_ESTATE.PROJECT) {
+      navigate(SCREENS.DETAIL_POST);
+    }
   };
 
   return (
@@ -154,7 +157,10 @@ const ItemHottestRealEstate = ({ item, type }) => {
               </Text>
             </View>
             <View style={styles.boxTypeHouse}>
-              <Text style={styles.typeHouse}>
+              <Text
+                style={styles.typeHouse}
+                numberOfLines={1}
+              >
                 {item?.real_estate_type_name}
               </Text>
             </View>
@@ -185,11 +191,7 @@ const ItemHottestRealEstate = ({ item, type }) => {
           </>
         )}
         <View style={styles.boxLocation}>
-          <Icon
-            color={COLOR_GRAY_7}
-            name="location-on"
-            size={18}
-          />
+          <IconSvg name="location" />
           <Text
             style={styles.location}
             numberOfLines={1}
