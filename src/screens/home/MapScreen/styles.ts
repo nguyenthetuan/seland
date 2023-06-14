@@ -1,13 +1,11 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { COLORS } from '../../../constants';
-
-const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   boxHeader: {
     alignItems: 'flex-start',
-    borderBottomColor: 'red',
+    borderBottomColor: COLORS.GRAY_5,
     borderBottomWidth: 1,
     paddingBottom: 10,
     paddingLeft: 10,

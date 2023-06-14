@@ -37,8 +37,8 @@ const ListPostsScreen = props => {
     dispatchThunk(dispatch, getListRealEstates());
   }, [dispatch]);
 
-  const convertDataFilter = data => {
-    const res = {};
+  const convertDataFilter = (data: any) => {
+    const res: any = {};
     res.sort_by = 'asc';
 
     if (data?.sort_by) {
@@ -94,13 +94,13 @@ const ListPostsScreen = props => {
     return res;
   };
 
-  const onFilter = data => {
+  const onFilter = (data: any) => {
     const dataFilter = convertDataFilter(data);
     dispatchThunk(dispatch, getListRealEstates(dataFilter));
     filterRef?.current?.onClose();
   };
 
-  const onSelect = value => {
+  const onSelect = (value: any) => {
     console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
     const dataFilter = convertDataFilter(value);
     dispatchThunk(dispatch, getListRealEstates(dataFilter));
