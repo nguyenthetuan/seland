@@ -35,6 +35,9 @@ const AccountScreen = () => {
 
   const navigateToDepositScreen = () => navigate(SCREENS.DEPOSIT_SCREEN);
 
+  const navigateToCollaboratorInformation = () =>
+    navigate(SCREENS.COLLABORATOR_SCREEN);
+
   const activityHistory = [
     {
       name: 'viewedPosts',
@@ -129,6 +132,10 @@ const AccountScreen = () => {
     {
       name: 'agencyInformation',
       onPress: () => {},
+    },
+    {
+      name: 'collaboratorInformation',
+      onPress: navigateToCollaboratorInformation,
     },
     {
       name: 'upgradeAccount',

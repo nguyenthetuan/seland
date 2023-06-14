@@ -21,6 +21,7 @@ const SCREENS = {
   FILTER_SCREEN: 'FilterScreen',
   DEPOSIT_SCREEN: 'DepositScreen',
   DETAIL_POST: 'DetailPost',
+  COLLABORATOR_SCREEN: 'CollaboratorInformationScreen',
 };
 
 export default SCREENS;

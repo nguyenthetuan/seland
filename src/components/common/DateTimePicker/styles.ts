@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
+  emptyValue: {
+    color: COLORS.GRAY_5,
+  },
   label: {
     marginBottom: 8,
   },

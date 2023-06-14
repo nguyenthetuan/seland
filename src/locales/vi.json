@@ -31,6 +31,7 @@
     "projectAds": "Quảng cáo dự án",
     "personalInformation": "Thông tin cá nhân",
     "agencyInformation": "Thông tin đại lý",
+    "collaboratorInformation": "Thông tin cộng tác viên",
     "upgradeAccount": "Nâng cấp tài khoản",
     "changePassword": "Thay đổi mật khẩu",
     "notification": "Thông báo",
@@ -333,5 +334,34 @@
     "realEstateNear": "Bất động sản cùng khu vực",
     "realEstateSeen": "Bất động đã xem",
     "neighbor": "Hàng xóm"
+  },
+  "collaboratorInformation": {
+    "header": "Trang cá nhân",
+    "collaboratorInformationAmater": "Thông tin cộng tác viên bán chuyên",
+    "collaboratorInformationPro": "Thông tin cộng tác viên chuyên nghiệp",
+    "name": "Họ và tên:",
+    "phoneNumber": "Số điện thoại:",
+    "dob": "Ngày sinh:",
+    "email": "Email:",
+    "job": "Công việc hiện tại:",
+    "yoe": "Số năm kinh nghiệm môi giới BĐS:",
+    "workZone": "Khu vực đăng ký làm môi giới BĐS:",
+    "workingYear": "Năm hoạt động:",
+    "save": "Lưu",
+    "frontIdCard": "Hình ảnh mặt trước CMT/CCCD",
+    "backIdCard": "Hình ảnh mặt sau CMT/CCCD",
+    "jobCert": "Ảnh giấy phép hành nghề",
+    "uploadTitle": "Nhấp hoặc kéo tệp vào khu vực này để tải lên",
+    "uploadDesc": "Hỗ trợ tải lên một hoặc hàng loạt"
+  },
+  "placeholder": {
+    "name": "Họ và tên",
+    "phoneNumber": "Số điện thoại",
+    "dob": "Ngày sinh",
+    "email": "Email",
+    "job": "Công việc hiện tại",
+    "yoe": "Số năm kinh nghiệm môi giới BĐS",
+    "workZone": "Khu vực đăng ký làm môi giới BĐS",
+    "workingYear": "Năm hoạt động"
   }
 }

@@ -28,7 +28,6 @@ const DateTimePicker = ({
   } = useController({ control, name });
   const { t } = useTranslation();
   const [open, setOpen] = useState<boolean>();
-
   const handleShow = () => setOpen(true);
 
   const handleCancel = () => setOpen(false);
@@ -50,7 +49,9 @@ const DateTimePicker = ({
         flexDirection="row"
         onPress={handleShow}
       >
-        <Text>{value ? dayjs(value).format('DD/MM/YYYY') : 'Select date'}</Text>
+        <Text style={value ? {} : styles.emptyValue}>
+          {value ? dayjs(value).format('DD/MM/YYYY') : 'Select date'}
+        </Text>
         <Icon
           color={COLORS.BLACK_3}
           name="calendar-today"
@@ -70,7 +71,7 @@ const DateTimePicker = ({
         onConfirm={handleConfirm}
         open={open}
         timeZoneOffsetInMinutes={-1 * new Date().getTimezoneOffset()}
-        title="Select date"
+        title={'Select date'}
       />
     </View>
   );
