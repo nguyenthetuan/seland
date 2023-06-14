@@ -5,13 +5,14 @@ import { COLOR_BLACK_1, COLOR_BLACK_3, COLOR_GRAY_10, COLOR_GRAY_2, COLOR_GRAY_7
 import { Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { IconOff, IconOn } from '../../../../../assets';
+import { IconClose, IconEdit, IconOff, IconOn, StatusFail, StatusSuccess } from '../../../../../assets';
 
 const ListStaffScreen = () => {
 
   const { t } = useTranslation();
 
   const isOnline = true;
+  const isSuccess = false;
 
   const {
     clearErrors,
@@ -57,20 +58,150 @@ const ListStaffScreen = () => {
           </View>
         {/* </View> */}
 
-        <View style={styles.row}>
+        <View style={styles.rowContent}>
           <View style={styles.wrapContent}>
+
             <View style={styles.wrapContentName}>
               <Text style={styles.contentName}>Tô Minh Tuấn</Text>
                 {isOnline ? <IconOn /> : <IconOff />}
             </View>
+
             <Text style={styles.contentPhone}>012345679</Text>
-            <Text style={styles.contentId}>Xác thực</Text>
-            <Text style={styles.contentAction}>Thao tác</Text>
+
+            <View style={styles.wrapContentId}>
+              <View style={styles.contentId}>
+                {isSuccess ? <StatusSuccess /> : <StatusFail />}
+              </View>
+            </View>
+
+            <View style={styles.wrapContentAction}>
+              <IconEdit />
+              <IconClose />
+            </View>
+
+          </View>
+        </View>
+        
+        <View style={styles.rowContent}>
+          <View style={styles.wrapContent}>
+
+            <View style={styles.wrapContentName}>
+              <Text style={styles.contentName}>Tô Minh Tuấn</Text>
+                {isOnline ? <IconOn /> : <IconOff />}
+            </View>
+
+            <Text style={styles.contentPhone}>012345679</Text>
+
+            <View style={styles.wrapContentId}>
+              <View style={styles.contentId}>
+                {isSuccess ? <StatusSuccess /> : <StatusFail />}
+              </View>
+            </View>
+
+            <View style={styles.wrapContentAction}>
+              <IconEdit />
+              <IconClose />
+            </View>
+
           </View>
         </View>
 
+        <View style={styles.rowContent}>
+          <View style={styles.wrapContent}>
+
+            <View style={styles.wrapContentName}>
+              <Text style={styles.contentName}>Tô Minh Tuấn</Text>
+                {isOnline ? <IconOn /> : <IconOff />}
+            </View>
+
+            <Text style={styles.contentPhone}>012345679</Text>
+
+            <View style={styles.wrapContentId}>
+              <View style={styles.contentId}>
+                {isSuccess ? <StatusSuccess /> : <StatusFail />}
+              </View>
+            </View>
+
+            <View style={styles.wrapContentAction}>
+              <IconEdit />
+              <IconClose />
+            </View>
+
+          </View>
+        </View>
+
+        <View style={styles.rowContent}>
+          <View style={styles.wrapContent}>
+
+            <View style={styles.wrapContentName}>
+              <Text style={styles.contentName}>Tô Minh Tuấn</Text>
+                {isOnline ? <IconOn /> : <IconOff />}
+            </View>
+
+            <Text style={styles.contentPhone}>012345679</Text>
+
+            <View style={styles.wrapContentId}>
+              <View style={styles.contentId}>
+                {isSuccess ? <StatusSuccess /> : <StatusFail />}
+              </View>
+            </View>
+
+            <View style={styles.wrapContentAction}>
+              <IconEdit />
+              <IconClose />
+            </View>
+
+          </View>
+        </View>
+
+        <View style={styles.rowContent}>
+          <View style={styles.wrapContent}>
+
+            <View style={styles.wrapContentName}>
+              <Text style={styles.contentName}>Tô Minh Tuấn</Text>
+                {isOnline ? <IconOn /> : <IconOff />}
+            </View>
+
+            <Text style={styles.contentPhone}>012345679</Text>
+
+            <View style={styles.wrapContentId}>
+              <View style={styles.contentId}>
+                {isSuccess ? <StatusSuccess /> : <StatusFail />}
+              </View>
+            </View>
+
+            <View style={styles.wrapContentAction}>
+              <IconEdit />
+              <IconClose />
+            </View>
+
+          </View>
+        </View>
+
+        <View style={styles.rowContent}>
+          <View style={styles.wrapContent}>
+
+            <View style={styles.wrapContentName}>
+              <Text style={styles.contentName}>Tô Minh Tuấn</Text>
+                {isOnline ? <IconOn /> : <IconOff />}
+            </View>
+
+            <Text style={styles.contentPhone}>012345679</Text>
+
+            <View style={styles.wrapContentId}>
+              <View style={styles.contentId}>
+                {isSuccess ? <StatusSuccess /> : <StatusFail />}
+              </View>
+            </View>
+
+            <View style={styles.wrapContentAction}>
+              <IconEdit />
+              <IconClose />
+            </View>
+
+          </View>
+        </View>
       </View>
-      <Text>ListStaffScreen</Text>
     </ScrollView>
   );
 };
@@ -119,6 +250,12 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
+  rowContent: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomColor: COLOR_GRAY_2,
+    borderBottomWidth: 1,
+  },
   wrapHeader: {
     backgroundColor: COLOR_GRAY_10,
     borderBottomColor: COLOR_GRAY_2,
@@ -133,7 +270,7 @@ const styles = StyleSheet.create({
   },
   headerPhone: {
     fontWeight: '500',
-    width: 108,
+    width: 100,
     fontSize: 13,
   },
   headerId: {
@@ -149,11 +286,12 @@ const styles = StyleSheet.create({
   wrapContent: {
     flexDirection: 'row',
     flex: 1,
+    paddingHorizontal: 10,
   },
   wrapContentName: {
     flexDirection: 'row',
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   contentName: {
     fontSize: 13,
@@ -161,14 +299,24 @@ const styles = StyleSheet.create({
   },
   contentPhone: {
     fontSize: 13,
-    width: 108,
+    width: 100,
+    alignItems: 'flex-start',
+    paddingHorizontal: 10,
+  },
+  wrapContentId: {
+    width: 72,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   contentId: {
-    fontSize: 13,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 72,
   },
-  contentAction: {
-    fontSize: 13,
+  wrapContentAction: {
+    flexDirection: 'row',
     width: 72,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 })
