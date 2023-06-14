@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native';
-import { COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 const styles = StyleSheet.create({
   detailPost: {
     position: 'relative',
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   detailPostWrapper: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
   },
 });
 

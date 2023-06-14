@@ -8,6 +8,7 @@ import {
   UserDraftPostsScreen,
   UserPostsScreen,
 } from '../screens';
+import CollaboratorInformationScreen from '../screens/account/CollaboratorInformationScreen';
 import DepositScreen from '../screens/account/DepositScreen/index';
 import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
 import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
@@ -67,6 +68,10 @@ const routes = [
   {
     component: DetailPostScreen,
     name: SCREENS.DETAIL_POST,
+  },
+  {
+    component: CollaboratorInformationScreen,
+    name: SCREENS.COLLABORATOR_SCREEN,
   },
 ];
 

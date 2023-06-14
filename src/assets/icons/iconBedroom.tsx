@@ -1,9 +1,9 @@
 import React from 'react';
 import { Svg, Path, SvgProps } from 'react-native-svg';
-import { COLOR_BLACK_1 } from '../../constants';
+import { COLORS } from '../../constants';
 
 const IconBedroom: React.FC<SvgProps> = ({
-  color = COLOR_BLACK_1,
+  color = COLORS.BLACK_1,
   width = 16,
   height = 17,
 }) => {

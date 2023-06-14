@@ -1,17 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_2,
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_6,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxItemSuggest: {
     alignItems: 'center',
-    borderColor: COLOR_BLUE_2,
+    borderColor: COLORS.BLUE_2,
     borderRadius: 5,
     borderWidth: 1,
     height: 90,
@@ -20,7 +14,7 @@ const styles = StyleSheet.create({
     width: '22%',
   },
   content: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 12,
     lineHeight: 14,
     textAlign: 'center',
@@ -32,7 +26,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   line: {
-    backgroundColor: COLOR_GRAY_6,
+    backgroundColor: COLORS.GRAY_6,
     height: 1.5,
     marginVertical: 5,
     width: '100%',

@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, View } from 'react-native';
@@ -6,7 +6,7 @@ import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Header, NoResults } from '../../../components';
-import { COLOR_BLUE_1, YOUR_WANT } from '../../../constants';
+import { COLORS, YOUR_WANT } from '../../../constants';
 import {
   getListRealEstatesUser,
   selectUserRealEstates,
@@ -32,7 +32,7 @@ const UserDraftPostsScreen = () => {
   return (
     <>
       <Loading
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textContent={`${t('common.loading')}`}
         textStyle={styles.loadingText}
         visible={loading}

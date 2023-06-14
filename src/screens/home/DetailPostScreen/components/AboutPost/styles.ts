@@ -1,12 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_GREEN_4,
-  COLOR_ORANGE_2,
-  COLOR_RED_2,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   aboutPost: {
@@ -18,7 +11,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textViewMap: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     marginLeft: 10,
     fontSize: 15,
     lineHeight: 20,
@@ -40,7 +33,7 @@ const styles = StyleSheet.create({
   buy: {
     width: 37,
     height: 20,
-    backgroundColor: COLOR_GREEN_4,
+    backgroundColor: COLORS.GREEN_4,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
@@ -48,7 +41,7 @@ const styles = StyleSheet.create({
   },
   buyText: {
     fontSize: 12,
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     lineHeight: 20,
   },
   buyTime: {
@@ -71,7 +64,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   BoxPriceRed: {
-    color: COLOR_RED_2,
+    color: COLORS.RED_2,
     marginRight: 20,
     fontSize: 20,
     lineHeight: 28,
@@ -86,20 +79,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: COLOR_ORANGE_2,
+    borderColor: COLORS.ORANGE_2,
     borderRadius: 5,
     paddingHorizontal: 11,
     paddingVertical: 3,
   },
   calculatorText: {
-    color: COLOR_ORANGE_2,
+    color: COLORS.ORANGE_2,
     fontWeight: '500',
     marginLeft: 11,
     fontSize: 16,
   },
   BoxListInfo: {
     borderWidth: 1,
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 8,
     padding: 12,
     flexDirection: 'row',
@@ -132,7 +125,7 @@ const styles = StyleSheet.create({
   },
   BoxAbout: {
     borderWidth: 1,
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 8,
     padding: 12,
     marginBottom: 10,

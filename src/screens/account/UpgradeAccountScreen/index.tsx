@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Button } from '../../../components';
-import { COLOR_ORANGE_6 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import PackageInformation from './components/PackageComponent';
 import styles from './styles';
 import { Free } from '../../../assets';
@@ -121,7 +121,7 @@ const UpgradeAccountScreen = () => {
 
         <Button
           title="Mua gói ngay"
-          color={COLOR_ORANGE_6}
+          color={COLORS.ORANGE_6}
         />
       </View>
     </ScrollView>

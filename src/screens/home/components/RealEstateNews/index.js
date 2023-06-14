@@ -4,7 +4,7 @@ import { ActivityIndicator, Image, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Button, Text } from '../../../../components';
-import { COLOR_BLUE_1 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import { selectHome } from '../../../../features';
 import styles from './styles';
 
@@ -17,7 +17,7 @@ const RealEstateNews = () => {
       <View>
         <ActivityIndicator
           size="small"
-          color={COLOR_BLUE_1}
+          color={COLORS.BLUE_1}
         />
       </View>
     );

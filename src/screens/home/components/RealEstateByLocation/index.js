@@ -9,7 +9,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import { Text } from '../../../../components';
-import { COLOR_BLUE_1 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import { selectHome } from '../../../../features';
 import styles from './styles';
 
@@ -22,7 +22,7 @@ const RealEstateByLocation = () => {
       <View>
         <ActivityIndicator
           size="small"
-          color={COLOR_BLUE_1}
+          color={COLORS.BLUE_1}
         />
       </View>
     );

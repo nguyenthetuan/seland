@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLOR_BLACK_1, COLOR_GRAY_2, COLOR_GRAY_3, COLOR_ORANGE_6, COLOR_WHITE_4 } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   avatar: {
@@ -8,12 +8,12 @@ const styles = StyleSheet.create({
     borderRadius: 80,
   },
   container: {
-    backgroundColor: COLOR_WHITE_4,
-    borderBottomColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE_4,
+    borderBottomColor: COLORS.GRAY_2,
     borderBottomWidth: 1,
     elevation: 4,
     padding: 40,
-    shadowColor: COLOR_WHITE_4,
+    shadowColor: COLORS.WHITE_4,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   itemFeature: {
     flexDirection: 'row',
     marginBottom: 16,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   wrapImage: {
     alignItems: 'center',
@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginTop: 16,
     marginBottom: 8,
-    color: COLOR_GRAY_3,
+    color: COLORS.GRAY_3,
     fontWeight: '400',
     fontSize: 16,
   },
   price: {
-    color: COLOR_ORANGE_6,
+    color: COLORS.ORANGE_6,
     fontSize: 30,
     fontWeight: '500',
     lineHeight: 40,
@@ -49,11 +49,10 @@ const styles = StyleSheet.create({
   textItem: {
     fontSize: 16,
     fontWeight: '400',
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     marginLeft: 16,
     lineHeight: 28,
-  }
+  },
 });
-
 
 export default styles;

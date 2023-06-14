@@ -1,9 +1,4 @@
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_WHITE,
-  COLOR_GRAY_2,
-} from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const { StyleSheet } = require('react-native');
 
@@ -11,7 +6,7 @@ const styles = StyleSheet.create({
   bgcTabActive: {
     alignContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     borderRadius: 4,
     height: 32,
     justifyContent: 'center',
@@ -20,11 +15,11 @@ const styles = StyleSheet.create({
   bgcTabInactive: {
     alignContent: 'center',
     alignItems: 'center',
+    borderColor: COLORS.GRAY_2,
     borderRadius: 4,
+    borderWidth: 1,
     height: 32,
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: COLOR_GRAY_2,
     // width: '30%',
   },
   headerContainer: {
@@ -34,24 +29,28 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
   },
+  wrapIconContainer: {
+    height: 24,
+    width: 24,
+    justifyContent: 'center',
+  },
   headerTitle: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontWeight: '500',
-    marginLeft: 16,
   },
   tabContainer: {
     paddingLeft: 8,
     paddingRight: 8,
   },
   tabHeaderActiveTitle: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 14,
     fontWeight: '400',
     paddingHorizontal: 16,
     paddingVertical: 4,
   },
   tabHeaderInactiveTitle: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 14,
     fontWeight: '400',
     paddingHorizontal: 16,

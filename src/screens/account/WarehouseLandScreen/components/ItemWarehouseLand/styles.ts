@@ -1,25 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLACK_3,
-  COLOR_BLUE_1,
-  COLOR_BLUE_6,
-  COLOR_GRAY_3,
-  COLOR_GRAY_7,
-  COLOR_GREEN_4,
-  COLOR_GREEN_5,
-  COLOR_ORANGE_5,
-  COLOR_ORANGE_6,
-  COLOR_PURPLE_1,
-  COLOR_PURPLE_2,
-  COLOR_RED_1,
-  COLOR_WHITE,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   acreage: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 15,
     lineHeight: 24,
     fontWeight: 400,
@@ -30,7 +15,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxItem: {
-    borderColor: COLOR_BLACK_3,
+    borderColor: COLORS.BLACK_3,
     borderRadius: 5,
     borderWidth: 1,
     marginVertical: 10,
@@ -42,13 +27,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   boxMonopoly: {
-    backgroundColor: COLOR_ORANGE_5,
+    backgroundColor: COLORS.ORANGE_5,
     borderRadius: 15,
     elevation: 5,
     justifyContent: 'center',
     padding: 3,
     paddingHorizontal: 8,
-    shadowColor: COLOR_BLACK_1,
+    shadowColor: COLORS.BLACK_1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -64,7 +49,7 @@ const styles = StyleSheet.create({
   },
 
   boxType: {
-    backgroundColor: COLOR_GREEN_4,
+    backgroundColor: COLORS.GREEN_4,
     borderRadius: 10,
     marginBottom: 8,
     marginRight: 10,
@@ -72,7 +57,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   boxTypeHouse: {
-    backgroundColor: COLOR_PURPLE_2,
+    backgroundColor: COLORS.PURPLE_2,
     borderRadius: 10,
     marginBottom: 8,
     marginLeft: 10,
@@ -102,7 +87,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   location: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontSize: 14,
     lineHeight: 20,
     marginLeft: 5,
@@ -111,19 +96,19 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   monopoly: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 12,
     lineHeight: 15,
   },
   price: {
-    color: COLOR_RED_1,
+    color: COLORS.RED_1,
     fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 24,
   },
 
   rankName: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 13,
     lineHeight: 15,
   },
@@ -132,13 +117,13 @@ const styles = StyleSheet.create({
   },
 
   type: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 12,
     lineHeight: 15,
     textAlign: 'center',
   },
   typeHouse: {
-    color: COLOR_PURPLE_1,
+    color: COLORS.PURPLE_1,
     fontSize: 12,
     lineHeight: 15,
     textAlign: 'center',
@@ -149,7 +134,7 @@ const styles = StyleSheet.create({
   boxStatus: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLOR_GREEN_5,
+    backgroundColor: COLORS.GREEN_5,
     paddingHorizontal: 6,
     paddingVertical: 3,
     borderBottomRightRadius: 3,
@@ -157,18 +142,18 @@ const styles = StyleSheet.create({
   },
   boxStatusText: {
     fontSize: 13,
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontWeight: '400',
     marginLeft: 5,
   },
   boxVirtualText: {
     fontSize: 13,
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontWeight: '400',
   },
 
   boxVirtualNews: {
-    backgroundColor: COLOR_RED_1,
+    backgroundColor: COLORS.RED_1,
     borderBottomLeftRadius: 3,
     borderTopLeftRadius: 3,
     padding: 3,
@@ -189,23 +174,23 @@ const styles = StyleSheet.create({
   boxBreadcrumbText: {
     fontSize: 12,
     lineHeight: 24,
-    color: COLOR_BLUE_6,
+    color: COLORS.BLUE_6,
     textDecorationLine: 'underline',
   },
   boxBreadcrumbIcon: {
     fontSize: 12,
     lineHeight: 24,
-    color: COLOR_BLUE_6,
+    color: COLORS.BLUE_6,
     marginHorizontal: 3,
   },
   content: {
     padding: 10,
   },
   freeNews: {
-    backgroundColor: COLOR_ORANGE_5,
+    backgroundColor: COLORS.ORANGE_5,
     paddingHorizontal: 8,
     borderRadius: 100,
-    shadowColor: COLOR_BLACK_1,
+    shadowColor: COLORS.BLACK_1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -215,7 +200,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   freeNewsText: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 12,
   },
   title: {
@@ -231,45 +216,45 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   nameWarehouse: {
-    backgroundColor: COLOR_GREEN_4,
+    backgroundColor: COLORS.GREEN_4,
     paddingHorizontal: 6,
     borderRadius: 74,
   },
   nameWarehouseText: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontSize: 12,
   },
   codeTitle: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontSize: 14,
   },
   codeText: {
     fontWeight: '700',
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontSize: 14,
   },
   dateTime: {
-    color: COLOR_GRAY_3,
+    color: COLORS.GRAY_3,
     fontSize: 12,
   },
   actionButton: {
-    backgroundColor: COLOR_GRAY_7,
+    backgroundColor: COLORS.GRAY_7,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: COLOR_GRAY_7,
+    borderColor: COLORS.GRAY_7,
     paddingHorizontal: 10,
     paddingVertical: 4,
     flexDirection: 'row',
   },
-  action: { color: COLOR_WHITE, fontSize: 16, marginRight: 5, marginTop: -4 },
-  actionText: { color: COLOR_WHITE, fontSize: 16, fontWeight: '700' },
+  action: { color: COLORS.WHITE, fontSize: 16, marginRight: 5, marginTop: -4 },
+  actionText: { color: COLORS.WHITE, fontSize: 16, fontWeight: '700' },
   time: {
     marginLeft: 10,
   },
   buttonPushNews: {
     marginHorizontal: 10,
     marginBottom: 18,
-    backgroundColor: COLOR_ORANGE_6,
+    backgroundColor: COLORS.ORANGE_6,
     borderWidth: 0,
   },
   titleButton: {

@@ -19,14 +19,7 @@ import {
 } from 'react-native';
 
 import { Button, Input, Select, Text } from '../../../../components';
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_GRAY_2,
-  COLOR_GRAY_7,
-  COLOR_GRAY_8,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import TypeHousing from './components/TypeHousing';
 import { SliderComponent } from './components/SliderComponent';
 import { SelectComponent } from './components/SelectComponent';
@@ -102,53 +95,58 @@ const Filter = forwardRef((props: any, ref) => {
 
   const [tabSelected, setTabSelected] = useState(1);
 
-  const { basicInformation, realEstateType, information, demands } = useSelector(selectPosts);
+  const { basicInformation, realEstateType, information, demands } =
+    useSelector(selectPosts);
   const { provinces, districts, wards } = useSelector(selectCommon);
 
   const optionsData = useMemo(() => {
-    let compassOptions:TOptions[] = [];
-    let legalDocumentOptions:TOptions[] = [];
-    let locationOptions:TOptions[] = [];
+    let compassOptions: TOptions[] = [];
+    let legalDocumentOptions: TOptions[] = [];
+    let locationOptions: TOptions[] = [];
 
     information.forEach((item: any) => {
       if (item?.value === REAL_ESTATE.COMPASS) {
         compassOptions = item?.children?.map((compassItem: any) => ({
           title: compassItem?.value,
-          value: compassItem?.id
-        }))
+          value: compassItem?.id,
+        }));
       } else if (item?.value === REAL_ESTATE.LEGAL_DOCUMENT) {
         legalDocumentOptions = item?.children?.map((compassItem: any) => ({
           title: compassItem?.value,
-          value: compassItem?.id
-        }))
+          value: compassItem?.id,
+        }));
       } else if (item?.value === REAL_ESTATE.LOCATION) {
         locationOptions = item?.children?.map((compassItem: any) => ({
           title: compassItem?.value,
-          value: compassItem?.id
-        }))
+          value: compassItem?.id,
+        }));
       }
     });
 
     return {
       compassOptions,
       legalDocumentOptions,
-      locationOptions
-    }
+      locationOptions,
+    };
   }, [information]);
 
   const emptyDistrictOption = {
     label: t('select.district'),
     value: null,
   };
-   const emptyWardOption = {
+  const emptyWardOption = {
     label: t('select.ward'),
-    value: null
-  }
+    value: null,
+  };
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
 
-  const typeHousingOptions = realEstateType.map((type: {value: string, id: string | number}) => ({title: type.value, value: type.id}));
-
+  const typeHousingOptions = realEstateType.map(
+    (type: { value: string; id: string | number }) => ({
+      title: type.value,
+      value: type.id,
+    })
+  );
 
   const onSelect = (value: any) => {
     console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
@@ -163,7 +161,8 @@ const Filter = forwardRef((props: any, ref) => {
       ([key, value]: any) => value && setValue(key, value)
     );
     setValue('address', '');
-    props?.onSubmit && props?.onSubmit({...initValues, priceRange: [], acreage: []});
+    props?.onSubmit &&
+      props?.onSubmit({ ...initValues, priceRange: [], acreage: [] });
   };
 
   const onOpen = () => setShowFilter(true);
@@ -172,9 +171,9 @@ const Filter = forwardRef((props: any, ref) => {
 
   useImperativeHandle(ref, () => ({ onOpen, onClose }));
 
-  const fetchDistricts = (params: any, callback?: () => void) =>{
+  const fetchDistricts = (params: any, callback?: () => void) => {
     dispatchThunk(dispatch, getDistricts(params), callback);
-  }
+  };
 
   const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
 
@@ -193,7 +192,7 @@ const Filter = forwardRef((props: any, ref) => {
 
   const refresh = async () => {
     const { district_id } = basicInformation;
-    const province_id = "HNI";
+    const province_id = 'HNI';
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
@@ -215,7 +214,7 @@ const Filter = forwardRef((props: any, ref) => {
   }, []);
 
   useEffect(() => {
-    setValue("demand_id", tabSelected);
+    setValue('demand_id', tabSelected);
   }, [tabSelected]);
 
   useEffect(() => {
@@ -236,7 +235,7 @@ const Filter = forwardRef((props: any, ref) => {
             >
               <Icon
                 name="close"
-                color={COLOR_WHITE}
+                color={COLORS.WHITE}
                 size={20}
               />
             </TouchableOpacity>
@@ -244,7 +243,7 @@ const Filter = forwardRef((props: any, ref) => {
           <Text style={styles.txtFilter}>{t('select.type')}</Text>
 
           <View style={styles.wrapButton}>
-            {demands.map((demandItem: {value: string, id: any}) =>
+            {demands.map((demandItem: { value: string; id: any }) => (
               <Button
                 buttonStyle={styles.btnSelect}
                 titleStyle={styles.txtSelect}
@@ -253,7 +252,7 @@ const Filter = forwardRef((props: any, ref) => {
                 radius={4}
                 outline={tabSelected !== demandItem?.id}
               />
-            )}
+            ))}
           </View>
 
           <View style={styles.wrapArea}>
@@ -268,7 +267,7 @@ const Filter = forwardRef((props: any, ref) => {
                     rowTextStyle={styles.rowTextStyle}
                     control={control}
                     data={districtOptions}
-                    defaultButtonText={t('select.district') || ""}
+                    defaultButtonText={t('select.district') || ''}
                     name="district_id"
                     onSelect={handleSelectDistrict}
                   />
@@ -281,7 +280,7 @@ const Filter = forwardRef((props: any, ref) => {
                     rowTextStyle={styles.rowTextStyle}
                     control={control}
                     data={wardOptions}
-                    defaultButtonText={t('select.ward') || ""}
+                    defaultButtonText={t('select.ward') || ''}
                     name="ward_id"
                     onSelect={handleSubmit(onSelect)}
                   />
@@ -293,7 +292,7 @@ const Filter = forwardRef((props: any, ref) => {
                   control={control}
                   name="address"
                   required
-                  placeholder={t('input.addressPlaceHolder') || ""}
+                  placeholder={t('input.addressPlaceHolder') || ''}
                 />
               </View>
             </View>
@@ -310,7 +309,7 @@ const Filter = forwardRef((props: any, ref) => {
           </View>
 
           <SliderComponent
-            title={t('common.priceRange') || ""}
+            title={t('common.priceRange') || ''}
             options={optionsPriceRange}
             defaultValues={initValues.priceRange}
             minimumValue={0}
@@ -325,7 +324,7 @@ const Filter = forwardRef((props: any, ref) => {
           />
 
           <SliderComponent
-            title={t('common.acreage') || ""}
+            title={t('common.acreage') || ''}
             options={optionsAcreage}
             defaultValues={initValues.acreage}
             minimumValue={0}
@@ -385,10 +384,10 @@ const Filter = forwardRef((props: any, ref) => {
             <Button
               buttonStyle={{
                 width: width * 0.45,
-                borderColor: COLOR_GRAY_2,
+                borderColor: COLORS.GRAY_2,
               }}
               titleStyle={{
-                color: COLOR_BLACK_1,
+                color: COLORS.BLACK_1,
                 fontSize: 14,
                 lineHeight: 22,
               }}
@@ -405,8 +404,8 @@ const Filter = forwardRef((props: any, ref) => {
             <Button
               buttonStyle={{
                 width: width * 0.45,
-                backgroundColor: COLOR_BLUE_1,
-                borderColor: COLOR_BLUE_1,
+                backgroundColor: COLORS.BLUE_1,
+                borderColor: COLORS.BLUE_1,
               }}
               titleStyle={{ fontSize: 14, lineHeight: 22 }}
               radius={5}

@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { COLOR_GRAY_5, COLOR_RED_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
@@ -106,7 +106,7 @@ const Input = ({
             <View style={styles.boxLabel}>
               <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
                 {label}
-                {required && <Text style={{ color: COLOR_RED_1 }}> *</Text>}
+                {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
               </Text>
               {rightLabel}
             </View>
@@ -116,7 +116,7 @@ const Input = ({
         onChangeText={handleChange}
         onFocus={handleFocus}
         placeholder={placeholder || label}
-        placeholderTextColor={COLOR_GRAY_5}
+        placeholderTextColor={COLORS.GRAY_5}
         renderErrorMessage={
           renderErrorMessage != undefined
             ? renderErrorMessage

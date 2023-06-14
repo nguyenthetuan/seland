@@ -1,14 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_7,
-  COLOR_ORANGE_1,
-  COLOR_ORANGE_4,
-  COLOR_WHITE,
-} from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   accountRank: {
@@ -30,7 +22,7 @@ const styles = StyleSheet.create({
   },
   boxAvatar: {
     alignSelf: 'center',
-    backgroundColor: COLOR_ORANGE_4,
+    backgroundColor: COLORS.ORANGE_4,
   },
   button: {
     marginBottom: 48,
@@ -43,14 +35,14 @@ const styles = StyleSheet.create({
     top: 4,
   },
   container: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
   },
   form: {
     marginHorizontal: 8,
   },
   iamButton: selected => ({
-    borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
+    borderColor: selected ? COLORS.BLUE_2 : COLORS.GRAY_5,
     borderWidth: 2,
   }),
   iamButtonContainer: {
@@ -59,10 +51,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   iamButtonTitle: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
   },
   inputLabel: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontWeight: 'bold',
   },
   label: {
@@ -70,7 +62,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   labelStyleDate: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontWeight: 'bold',
     marginVertical: 16,
   },
@@ -85,13 +77,13 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   text: {
-    color: COLOR_ORANGE_1,
+    color: COLORS.ORANGE_1,
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 28,
   },
   viewMoreAccountPackages: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     fontSize: 14,
     lineHeight: 22,
     textAlign: 'right',

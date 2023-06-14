@@ -17,7 +17,7 @@ import {
   Screen,
   Select,
 } from '../../../components';
-import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 import {
   getListRealEstatesUser,
   selectUserRealEstates,
@@ -203,7 +203,7 @@ const UserPostsScreen = () => {
   return (
     <>
       <Loading
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textContent={t('common.loading')}
         textStyle={styles.loadingText}
         visible={loading}
@@ -282,7 +282,7 @@ const UserPostsScreen = () => {
                   buttonStyle={styles.filterButton}
                   icon={
                     <Icon
-                      color={COLOR_WHITE}
+                      color={COLORS.WHITE}
                       name="filter-alt"
                       size={16}
                     />

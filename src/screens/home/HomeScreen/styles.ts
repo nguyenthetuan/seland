@@ -1,24 +1,19 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_3,
-  COLOR_GRAY_2,
-  COLOR_ORANGE_6,
-  COLOR_WHITE,
-} from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   boxItem: {
     alignItems: 'center',
-    borderColor: COLOR_BLACK_3,
+    borderColor: COLORS.BLACK_3,
     borderRadius: 10,
     borderWidth: 1,
     marginHorizontal: 5,
     width: 150,
   },
   boxLocation: {
-    backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 5,
     borderWidth: 1,
     padding: 6,
@@ -66,8 +61,8 @@ const styles = StyleSheet.create({
     width: '87%',
   },
   inputSearch: {
-    backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 8,
     borderWidth: 1,
     fontSize: 16,
@@ -79,7 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   scroll: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
   },
   txtProject: {
     marginLeft: 5,
@@ -87,7 +82,7 @@ const styles = StyleSheet.create({
   },
   viewSearch: {
     alignItems: 'center',
-    backgroundColor: COLOR_ORANGE_6,
+    backgroundColor: COLORS.ORANGE_6,
     flexDirection: 'row',
     padding: 8,
   },

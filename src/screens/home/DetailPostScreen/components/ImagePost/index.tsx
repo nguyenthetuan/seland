@@ -11,7 +11,7 @@ import {
   IconHeartWhite,
   IconPhoneWhite,
 } from '../../../../../assets';
-import { COLOR_WHITE } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import IconMapWhite from '../../../../../assets/icons/mapWhite';
 
 interface Iprops {}
@@ -28,7 +28,7 @@ const ImagePost: FC<Iprops> = props => {
       icon: <IconPhoneWhite />,
     },
     {
-      icon: <IconMapWhite color={COLOR_WHITE} />,
+      icon: <IconMapWhite color={COLORS.WHITE} />,
     },
     {
       icon: <IconDotWhite />,

@@ -1,17 +1,12 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLUE_1,
-  COLOR_GRAY_5,
-  COLOR_ORANGE_6,
-  COLOR_WHITE,
-} from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   boxCode: {
-    borderColor: COLOR_ORANGE_6,
+    borderColor: COLORS.ORANGE_6,
     borderRadius: 4,
     borderStyle: 'dotted',
     borderWidth: 1,
@@ -27,7 +22,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   boxInformation: {
-    borderColor: COLOR_ORANGE_6,
+    borderColor: COLORS.ORANGE_6,
     borderRadius: 5,
     borderStyle: 'dotted',
     borderWidth: 1,
@@ -41,13 +36,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   boxPopup: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     borderRadius: 8,
     padding: 20,
     width: width * 0.96,
   },
   boxRank: {
-    borderColor: COLOR_BLUE_1,
+    borderColor: COLORS.BLUE_1,
     borderRadius: 5,
     borderWidth: 2,
     flex: 1,
@@ -61,22 +56,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   boxTitleRank: {
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 5,
     borderStyle: 'dashed',
     borderWidth: 1,
     padding: 8,
   },
   btnContinue: {
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     marginHorizontal: 10,
     marginVertical: 24,
   },
   code: {
-    color: COLOR_ORANGE_6,
+    color: COLORS.ORANGE_6,
   },
   container: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
   },
   createPostNews: {
@@ -130,13 +125,13 @@ const styles = StyleSheet.create({
   },
 
   selectTimePost: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontWeight: 500,
     marginLeft: 10,
     marginVertical: 16,
   },
   spinnerTextStyle: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 16,
     lineHeight: 24,
   },

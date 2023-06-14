@@ -5,7 +5,7 @@ import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { NoResults } from '../../../components';
-import { COLOR_BLUE_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import { loadRealEstateWarehouses, selectWareHouses } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { IModalFilterWarehouse } from '../../../utils/interface/common';
@@ -43,7 +43,7 @@ const WarehouseLandScreen = () => {
       <Loading
         visible={loadingRealEstateWarehouses}
         textContent={`${t('common.loading')}`}
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <View>

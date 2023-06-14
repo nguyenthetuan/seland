@@ -4,11 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, TouchableNativeFeedback, View } from 'react-native';
 
 import { Button, Input, Select, Text } from '../../../../components';
-import {
-  COLOR_BLUE_1,
-  COLOR_GRAY_4,
-  COLOR_GRAY_7,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 const PlotLand = forwardRef((props, ref) => {
@@ -80,8 +76,8 @@ const PlotLand = forwardRef((props, ref) => {
 
             <View style={styles.boxButton}>
               <Button
-                buttonStyle={[styles.btnPopup, { borderColor: COLOR_GRAY_4 }]}
-                titleStyle={{ color: COLOR_GRAY_7 }}
+                buttonStyle={[styles.btnPopup, { borderColor: COLORS.GRAY_4 }]}
+                titleStyle={{ color: COLORS.GRAY_7 }}
                 title="Huỷ bỏ"
                 outline
                 onPress={closePlotLand}
@@ -89,7 +85,7 @@ const PlotLand = forwardRef((props, ref) => {
               <Button
                 buttonStyle={[
                   styles.btnPopup,
-                  { backgroundColor: COLOR_BLUE_1 },
+                  { backgroundColor: COLORS.BLUE_1 },
                 ]}
                 title="Tìm kiếm"
                 onPress={closePlotLand}

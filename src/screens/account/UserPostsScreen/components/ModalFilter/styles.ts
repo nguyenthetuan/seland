@@ -1,24 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLUE_1,
-  COLOR_GRAY_2,
-  COLOR_GRAY_8,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   buttonClose: {
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     borderRadius: 5,
     padding: 6,
   },
   buttonSelect: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     height: 36,
   },
   filterPost: {
-    color: COLOR_GRAY_8,
+    color: COLORS.GRAY_8,
     fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 24,
@@ -31,7 +27,7 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    borderBottomColor: COLOR_GRAY_2,
+    borderBottomColor: COLORS.GRAY_2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',

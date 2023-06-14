@@ -5,7 +5,7 @@ import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { NoResults } from '../../../components';
-import { COLOR_BLUE_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import { getListProjects, selectHome } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import HeaderFilterPosts from '../components/HeaderFilterPosts';
@@ -40,7 +40,7 @@ const ListProjectScreen = () => {
       <Loading
         visible={loading}
         textContent={`${t('common.loading')}`}
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.boxListPost}>

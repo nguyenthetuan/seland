@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_3 } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   btnDashed: {
-    borderColor: COLOR_BLUE_3,
+    borderColor: COLORS.BLUE_3,
     borderRadius: 4,
     borderStyle: 'dashed',
     borderWidth: 1,
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   btnLabel: {
-    color: COLOR_BLUE_3,
+    color: COLORS.BLUE_3,
     fontSize: 14,
     lineHeight: 22,
   },

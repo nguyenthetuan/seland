@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
 import { Text } from '../../../../components';
-import { COLOR_BLUE_2 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 const Category = ({ children, label, isSeeAll, onSeeAll }) => {
@@ -25,7 +25,7 @@ const Category = ({ children, label, isSeeAll, onSeeAll }) => {
             </Text>
             <Icon
               name="navigate-next"
-              color={COLOR_BLUE_2}
+              color={COLORS.BLUE_2}
             />
           </View>
         ) : null}

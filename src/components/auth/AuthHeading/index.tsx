@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
-import { COLOR_BLUE_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../../common/Text';
 import styles from './styles';
 
@@ -29,7 +29,7 @@ const AuthHeading = ({
         {hasBack && (
           <>
             <Icon
-              color={COLOR_BLUE_1}
+              color={COLORS.BLUE_1}
               name="arrow-back"
               onPress={goBack}
               size={28}

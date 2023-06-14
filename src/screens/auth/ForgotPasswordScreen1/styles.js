@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_2, COLOR_RED_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   blueUnderlineText: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     textDecorationLine: 'underline',
   },
   button: {
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     marginVertical: 24,
   },
   error: {
-    color: COLOR_RED_1,
+    color: COLORS.RED_1,
     marginLeft: 8,
   },
   hadAccount: {

@@ -6,7 +6,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2, SCREENS } from '../../../constants';
+import { COLORS, SCREENS } from '../../../constants';
 import {
   getListNews,
   getListProjects,
@@ -55,7 +55,7 @@ const HomeScreen = () => {
         <SliderBox
           autoplay
           circleLoop
-          dotColor={COLOR_BLUE_1}
+          dotColor={COLORS.BLUE_1}
           dotStyle={styles.dot}
           images={[
             'https://source.unsplash.com/1024x768/?nature',
@@ -65,7 +65,7 @@ const HomeScreen = () => {
           ]}
           resizeMethod="resize"
           resizeMode="cover"
-          inactiveDotColor={COLOR_GRAY_2}
+          inactiveDotColor={COLORS.GRAY_2}
         />
         <View style={styles.viewSearch}>
           <Input

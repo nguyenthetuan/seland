@@ -6,7 +6,7 @@ import { SafeAreaView, View } from 'react-native';
 
 import { LogoZoning } from '../../../../assets';
 import { Text } from '../../../../components';
-import { COLOR_WHITE } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 const HeaderListPosts = () => {
@@ -14,7 +14,7 @@ const HeaderListPosts = () => {
   const { goBack } = useNavigation();
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLOR_WHITE }}>
+    <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
       <View style={styles.headerListPosts}>
         <Icon
           name="arrow-back"

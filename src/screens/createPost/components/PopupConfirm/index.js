@@ -3,11 +3,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal, View } from 'react-native';
 
 import { Button, Text } from '../../../../components';
-import {
-  COLOR_BLUE_1,
-  COLOR_GRAY_4,
-  COLOR_GRAY_7,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 const PopupConfirmPost = forwardRef(
@@ -54,8 +50,8 @@ const PopupConfirmPost = forwardRef(
             {content && content}
             <View style={styles.boxButton}>
               <Button
-                buttonStyle={[styles.btnPopup, { borderColor: COLOR_GRAY_4 }]}
-                titleStyle={{ color: COLOR_GRAY_7 }}
+                buttonStyle={[styles.btnPopup, { borderColor: COLORS.GRAY_4 }]}
+                titleStyle={{ color: COLORS.GRAY_7 }}
                 title={titleButtonLeft}
                 outline
                 onPress={handleButtonLeft}
@@ -63,7 +59,7 @@ const PopupConfirmPost = forwardRef(
               <Button
                 buttonStyle={[
                   styles.btnPopup,
-                  { backgroundColor: COLOR_BLUE_1 },
+                  { backgroundColor: COLORS.BLUE_1 },
                 ]}
                 title={titleButtonRight}
                 onPress={handleButtonRight}

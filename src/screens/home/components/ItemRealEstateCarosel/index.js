@@ -22,7 +22,7 @@ import {
 } from '../../../../assets';
 import { IconSvg } from '../../../../assets/icons/IconSvg';
 import { Text } from '../../../../components';
-import { COLOR_GRAY_7, COLOR_WHITE, SCREENS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import styles from './styles';
 
@@ -110,7 +110,7 @@ const ItemHottestRealEstate = ({ item, type }) => {
               <Icon
                 name="phone"
                 size={23}
-                color={COLOR_WHITE}
+                color={COLORS.WHITE}
               />
             </TouchableOpacity>
           )}

@@ -1,10 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_2,
-  COLOR_GREEN_1,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -14,7 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   boxPopup: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     borderRadius: 8,
     padding: 20,
     width: width * 0.96,
@@ -24,13 +20,13 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: COLOR_BLACK_2,
+    backgroundColor: COLORS.BLACK_2,
     flexDirection: 'row',
     height: '100%',
     justifyContent: 'center',
   },
   posting: {
-    color: COLOR_GREEN_1,
+    color: COLORS.GREEN_1,
     fontSize: 24,
     lineHeight: 32,
     marginBottom: 10,

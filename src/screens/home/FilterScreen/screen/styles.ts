@@ -1,11 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const {
-  COLOR_BLUE_1,
-  COLOR_GRAY_2,
-  COLOR_GRAY_8,
-  COLOR_WHITE,
-} = require('../../../../constants');
+const { COLORS } = require('../../../../constants');
 
 const styles = StyleSheet.create({
   boxRealEstate: {
@@ -20,17 +15,17 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   buttonClose: {
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     borderRadius: 5,
     padding: 6,
   },
   buttonSelect: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     height: 36,
   },
   container: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
   },
   district: {
@@ -38,7 +33,7 @@ const styles = StyleSheet.create({
     width: '33%',
   },
   filterPost: {
-    color: COLOR_GRAY_8,
+    color: COLORS.GRAY_8,
     fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 24,
@@ -59,7 +54,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
   },
   scroll: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     paddingHorizontal: 10,
   },
   textButtonSelect: {

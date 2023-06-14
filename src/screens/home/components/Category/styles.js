@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_2 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxLabelCategory: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   seeAll: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
   },
 });
 

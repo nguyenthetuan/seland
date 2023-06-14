@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   flex: {
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   loadingText: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 16,
     lineHeight: 24,
   },
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 
   whiteBackground: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
   },
 });
 

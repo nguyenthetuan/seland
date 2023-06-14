@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_BLUE_2 } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   button: {
@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   forgotPassword: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     marginRight: 8,
     textAlign: 'right',
     textDecorationLine: 'underline',
   },
   nonmember: {
-    color: COLOR_BLACK_2,
+    color: COLORS.BLACK_2,
     marginVertical: 32,
     textAlign: 'center',
   },
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   signup: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     textDecorationLine: 'underline',
   },
 });

@@ -13,7 +13,7 @@ import {
   Love,
 } from '../../../../assets';
 import { Text } from '../../../../components';
-import { COLOR_GRAY_7, COLOR_WHITE } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 const ItemInfo = ({ value, icon }) => (
@@ -82,7 +82,7 @@ const ItemRealEstatesMaps = ({ item }) => {
             <Icon
               name="phone"
               size={23}
-              color={COLOR_WHITE}
+              color={COLORS.WHITE}
             />
           </TouchableOpacity>
         </View>
@@ -129,7 +129,7 @@ const ItemRealEstatesMaps = ({ item }) => {
       <View style={styles.boxLocation}>
         <Icon
           name="location-on"
-          color={COLOR_GRAY_7}
+          color={COLORS.GRAY_7}
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>

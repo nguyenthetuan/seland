@@ -1,11 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_10,
-  COLOR_GRAY_11,
-  COLOR_GREEN_6,
-  COLOR_WHITE,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   posotionInfoPost: {
@@ -19,7 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: COLOR_GRAY_10,
+    backgroundColor: COLORS.GRAY_10,
     paddingTop: 5,
     paddingBottom: 10,
     paddingHorizontal: 15,
@@ -34,13 +28,13 @@ const styles = StyleSheet.create({
     width: '10%',
     height: 4,
     borderLeftWidth: 1,
-    borderLeftColor: COLOR_WHITE,
+    borderLeftColor: COLORS.WHITE,
   },
   positionFirst: {
     width: '10%',
     height: 4,
     borderLeftWidth: 1,
-    borderLeftColor: COLOR_WHITE,
+    borderLeftColor: COLORS.WHITE,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
   },
@@ -48,7 +42,7 @@ const styles = StyleSheet.create({
     width: '10%',
     height: 4,
     borderLeftWidth: 1,
-    borderLeftColor: COLOR_WHITE,
+    borderLeftColor: COLORS.WHITE,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
   },
@@ -65,8 +59,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   tooltip: {
-    backgroundColor: COLOR_WHITE,
-    shadowColor: COLOR_BLACK_1,
+    backgroundColor: COLORS.WHITE,
+    shadowColor: COLORS.BLACK_1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -83,12 +77,12 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   popupPage: {
-    color: COLOR_GREEN_6,
+    color: COLORS.GREEN_6,
     fontSize: 12,
     marginBottom: -6,
   },
   popupPosition: {
-    color: COLOR_GRAY_11,
+    color: COLORS.GRAY_11,
     fontSize: 10,
   },
   positionFlex: {
@@ -104,12 +98,12 @@ const styles = StyleSheet.create({
     width: 10,
     height: 4,
     left: 10,
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
   },
   infoPost: {
     marginRight: 2,
     width: '33.33%',
-    backgroundColor: COLOR_GRAY_10,
+    backgroundColor: COLORS.GRAY_10,
     paddingVertical: 8,
     paddingHorizontal: 10,
   },
@@ -127,7 +121,7 @@ const styles = StyleSheet.create({
   },
   infoPostLast: {
     width: '33.33%',
-    backgroundColor: COLOR_GRAY_10,
+    backgroundColor: COLORS.GRAY_10,
     paddingVertical: 8,
     paddingHorizontal: 10,
   },

@@ -1,13 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLUE_1,
-  COLOR_GRAY_1,
-  COLOR_GRAY_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_7,
-  COLOR_GRAY_10,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -27,7 +20,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   boxImage: {
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 5,
     borderWidth: 1,
     margin: 5,
@@ -40,8 +33,8 @@ const styles = StyleSheet.create({
   },
   boxUpload: {
     alignItems: 'center',
-    backgroundColor: COLOR_GRAY_10,
-    borderColor: COLOR_GRAY_5,
+    backgroundColor: COLORS.GRAY_10,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 2,
     borderWidth: 1,
     marginHorizontal: 10,
@@ -49,7 +42,7 @@ const styles = StyleSheet.create({
   },
   btnAddImage: {
     alignItems: 'center',
-    borderColor: COLOR_GRAY_5,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 5,
     borderStyle: 'dashed',
     borderWidth: 1.5,
@@ -74,7 +67,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   content: {
-    color: COLOR_GRAY_1,
+    color: COLORS.GRAY_1,
     fontSize: 12,
   },
   errorPhoto: {
@@ -89,7 +82,7 @@ const styles = StyleSheet.create({
     width: width * 0.2,
   },
   inputContainer: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 2,
     borderWidth: 1,
     fontSize: 16,
@@ -99,17 +92,13 @@ const styles = StyleSheet.create({
   },
   inputContainerContent: {
     height: 64,
-    marginHorizontal: 10,
   },
   inputContainerStyle: {
     marginHorizontal: 10,
   },
-  inputContainerTitle: {
-    marginHorizontal: 10,
-  },
+  inputContainerTitle: {},
   inputLabel: {
-    color: COLOR_GRAY_7,
-    marginLeft: 10,
+    color: COLORS.GRAY_7,
   },
   itemDate: {
     alignItems: 'center',
@@ -117,13 +106,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     marginBottom: 10,
     marginLeft: 10,
   },
   line: {
     alignSelf: 'center',
-    backgroundColor: COLOR_GRAY_5,
+    backgroundColor: COLORS.GRAY_5,
     height: 1,
     marginBottom: 16,
     width: '95%',

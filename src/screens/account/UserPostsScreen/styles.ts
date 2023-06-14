@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   dateRangePicker: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     borderRadius: 8,
     padding: 16,
   },
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   loadingText: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 16,
     lineHeight: 24,
   },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   searchInput: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 4,
     borderWidth: 1,
     height: 40,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   selectButton: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 4,
     height: 40,
   },
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   whiteBackground: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
   },
 });
 

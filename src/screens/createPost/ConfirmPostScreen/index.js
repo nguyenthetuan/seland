@@ -9,7 +9,7 @@ import Toast from 'react-native-simple-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DateTimePicker, Input, Text } from '../../../components';
-import { COLOR_BLUE_1, SCREENS } from '../../../constants';
+import { COLORS } from '../../../constants';
 import { createPayment, getListRank, selectPosts } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ItemConfirm from '../components/ItemConfirm';
@@ -85,7 +85,7 @@ const ConfirmPostScreen = () => {
       <Loading
         visible={createRealEstate?.loading || loading}
         textContent={t('common.loading')}
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <SafeAreaView style={styles.container}>
@@ -133,7 +133,7 @@ const ConfirmPostScreen = () => {
                       <View
                         style={[
                           styles.line2,
-                          { backgroundColor: COLOR_BLUE_1 },
+                          { backgroundColor: COLORS.BLUE_1 },
                         ]}
                       />
                     </View>
@@ -196,7 +196,7 @@ const ConfirmPostScreen = () => {
               title={
                 <Text>
                   Tôi đồng ý với{' '}
-                  <Text style={{ color: COLOR_BLUE_1 }}>
+                  <Text style={{ color: COLORS.BLUE_1 }}>
                     điều khoản sử dụng
                   </Text>
                 </Text>

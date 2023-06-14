@@ -14,15 +14,7 @@ import {
   Love,
 } from '../../../../assets';
 import { Text } from '../../../../components';
-import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_7,
-  COLOR_GREEN_3,
-  COLOR_ORANGE_5,
-  COLOR_RED_1,
-  COLOR_WHITE,
-  SCREENS,
-} from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import styles from './styles';
 
 const ItemInfo = ({ value, icon }) => (
@@ -67,13 +59,13 @@ const ItemRealEstates = ({ item }) => {
   const backgroundRank = () => {
     switch (item?.rank_id) {
       case 1:
-        return COLOR_BLACK_1;
+        return COLORS.BLACK_1;
       case 2:
-        return COLOR_GREEN_3;
+        return COLORS.GREEN_3;
       case 3:
-        return COLOR_ORANGE_5;
+        return COLORS.ORANGE_5;
       default:
-        return COLOR_RED_1;
+        return COLORS.RED_1;
     }
   };
 
@@ -121,7 +113,7 @@ const ItemRealEstates = ({ item }) => {
             <Icon
               name="phone"
               size={23}
-              color={COLOR_WHITE}
+              color={COLORS.WHITE}
             />
           </TouchableOpacity>
         </View>
@@ -168,7 +160,7 @@ const ItemRealEstates = ({ item }) => {
       <View style={styles.boxLocation}>
         <Icon
           name="location-on"
-          color={COLOR_GRAY_7}
+          color={COLORS.GRAY_7}
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>

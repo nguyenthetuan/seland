@@ -1,14 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_7,
-  COLOR_ORANGE_6,
-  COLOR_WHITE,
-} from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const { width } = Dimensions.get('screen');
 
@@ -51,20 +43,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   btnBack: {
-    backgroundColor: COLOR_ORANGE_6,
+    backgroundColor: COLORS.ORANGE_6,
     width: width * 0.45,
   },
   btnContinue: {
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     marginHorizontal: 10,
     marginVertical: 24,
   },
   btnContinue1: {
-    backgroundColor: COLOR_BLUE_1,
+    backgroundColor: COLORS.BLUE_1,
     width: width * 0.45,
   },
   btnYouWant: {
-    borderColor: COLOR_BLUE_1,
+    borderColor: COLORS.BLUE_1,
     height: 40,
     marginRight: 10,
     width: width * 0.4,
@@ -80,14 +72,14 @@ const styles = StyleSheet.create({
     top: 4,
   },
   container: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
   },
   createPostNews: {
     fontWeight: 500,
   },
   dot: select => ({
-    backgroundColor: select ? COLOR_ORANGE_6 : COLOR_GRAY_5,
+    backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
     borderRadius: 7,
     height: 10,
     width: 10,
@@ -99,29 +91,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   inputLabel: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     marginTop: 16,
   },
   isBuy: selected => ({
-    borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
+    borderColor: selected ? COLORS.BLUE_2 : COLORS.GRAY_5,
     borderWidth: 2,
     borderRadius: 5,
     padding: 0,
     height: 40,
   }),
   labelTab: select => ({
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 14,
     fontWeight: select ? 'bold' : 400,
   }),
   line: {
-    backgroundColor: COLOR_GRAY_5,
+    backgroundColor: COLORS.GRAY_5,
     height: 1,
     marginVertical: 10,
     width: '100%',
   },
   line1: select => ({
-    backgroundColor: select ? COLOR_ORANGE_6 : COLOR_GRAY_5,
+    backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
     height: 2,
     marginHorizontal: 5,
     width: '30%',
@@ -137,18 +129,18 @@ const styles = StyleSheet.create({
     width: width * 0.45,
   },
   spinnerTextStyle: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 16,
     lineHeight: 24,
   },
   txtCheck: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 14,
     lineHeight: 22,
     marginLeft: 10,
   },
   txtType: select => ({
-    color: select ? COLOR_BLUE_1 : COLOR_GRAY_7,
+    color: select ? COLORS.BLUE_1 : COLORS.GRAY_7,
     fontWeight: 'bold',
   }),
   youWant: {

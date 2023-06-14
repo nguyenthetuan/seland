@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
-import { COLOR_BLACK_2 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import {
   createArticleDetails,
   selectPosts,
@@ -345,7 +345,7 @@ const ArticleDetails = forwardRef((props, ref) => {
                 t(typeUpload.isPhoto ? 'common.image' : 'common.video')
               )}
             </Text>
-            <Text style={{ color: COLOR_BLACK_2 }}>
+            <Text style={{ color: COLORS.BLACK_2 }}>
               {t(
                 typeUpload.isPhoto
                   ? 'common.supportSingleOrBulkUpload'
@@ -355,29 +355,31 @@ const ArticleDetails = forwardRef((props, ref) => {
           </TouchableOpacity>
         )}
         <Text style={styles.errorPhoto}>{errors?.photo}</Text>
-        <Input
-          control={control}
-          label={t('input.title')}
-          labelStyle={styles.inputLabel}
-          name="title"
-          required
-          onFocus={onFocusTitle}
-          inputContainerStyle={styles.inputContainerTitle}
-          errorMessage={errors?.title}
-          renderErrorMessage={false}
-        />
-        <Input
-          control={control}
-          label={t('input.content')}
-          labelStyle={styles.inputLabel}
-          name="content"
-          multiline
-          required
-          onFocus={onFocusContent}
-          errorMessage={errors?.content}
-          inputContainerStyle={styles.inputContainerContent}
-          renderErrorMessage={false}
-        />
+        <View style={{ marginHorizontal: 10 }}>
+          <Input
+            control={control}
+            label={t('input.title')}
+            labelStyle={styles.inputLabel}
+            name="title"
+            required
+            onFocus={onFocusTitle}
+            inputContainerStyle={styles.inputContainerTitle}
+            errorMessage={errors?.title}
+            renderErrorMessage={false}
+          />
+          <Input
+            control={control}
+            label={t('input.content')}
+            labelStyle={styles.inputLabel}
+            name="content"
+            multiline
+            required
+            onFocus={onFocusContent}
+            errorMessage={errors?.content}
+            inputContainerStyle={styles.inputContainerContent}
+            renderErrorMessage={false}
+          />
+        </View>
         <Category label="Thông tin liên hệ">
           <Text>{t('Hiển thị công khai')}</Text>
           <Text
@@ -402,7 +404,7 @@ const ArticleDetails = forwardRef((props, ref) => {
               <Text>{t('Hiển thị riêng tư')}</Text>
               <Text style={styles.content}>
                 Đây là thông tin bảo mật của riêng bạn, thông tin này sẽ hiển
-                thị với riêng tư bạn, không hiển thị với người xem bài đăng.
+                thị với riêng bạn, không hiển thị với người xem bài đăng.
               </Text>
               <Text style={styles.content}>
                 Bạn vui lòng điền các thông tin sau để giúp bạn quản lý nguồn
@@ -465,7 +467,7 @@ const ArticleDetails = forwardRef((props, ref) => {
         <TouchableOpacity style={styles.boxUpload}>
           <ImageUpload />
           <Text style={{ marginTop: 20 }}>Chọn ảnh để tải lên</Text>
-          <Text style={{ color: COLOR_BLACK_2 }}>
+          <Text style={{ color: COLORS.BLACK_2 }}>
             Hỗ trợ tải lên một lần hoặc hàng loạt.
           </Text>
         </TouchableOpacity>

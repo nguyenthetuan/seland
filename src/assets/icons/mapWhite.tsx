@@ -1,8 +1,8 @@
 import React from 'react';
 import { Svg, Path, SvgProps } from 'react-native-svg';
-import { COLOR_WHITE } from '../../constants';
+import { COLORS } from '../../constants';
 
-const IconMapWhite: React.FC<SvgProps> = ({ color = COLOR_WHITE }) => {
+const IconMapWhite: React.FC<SvgProps> = ({ color = COLORS.WHITE }) => {
   return (
     <Svg
       width="14"

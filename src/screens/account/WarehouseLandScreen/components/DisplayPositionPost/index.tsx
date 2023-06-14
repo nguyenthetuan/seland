@@ -4,34 +4,23 @@ import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 import { IconNote } from '../../../../../assets';
 import { Text } from '../../../../../components';
-import {
-  COLOR_GREEN_6,
-  COLOR_GREEN_7,
-  COLOR_GREEN_8,
-  COLOR_GREEN_9,
-  COLOR_YELLOW_1,
-  COLOR_YELLOW_3,
-  COLOR_YELLOW_4,
-  COLOR_YELLOW_5,
-  COLOR_YELLOW_6,
-  COLOR_YELLOW_7,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import styles from './styles';
 
 const DisplayPositionPost = () => {
   const { t } = useTranslation();
 
   const listPositionColor = [
-    COLOR_GREEN_6,
-    COLOR_GREEN_7,
-    COLOR_GREEN_8,
-    COLOR_GREEN_9,
-    COLOR_YELLOW_1,
-    COLOR_YELLOW_3,
-    COLOR_YELLOW_4,
-    COLOR_YELLOW_5,
-    COLOR_YELLOW_6,
-    COLOR_YELLOW_7,
+    COLORS.GREEN_6,
+    COLORS.GREEN_7,
+    COLORS.GREEN_8,
+    COLORS.GREEN_9,
+    COLORS.YELLOW_1,
+    COLORS.YELLOW_3,
+    COLORS.YELLOW_4,
+    COLORS.YELLOW_5,
+    COLORS.YELLOW_6,
+    COLORS.YELLOW_7,
   ];
   const infoViewPost = [
     {

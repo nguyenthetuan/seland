@@ -1,4 +1,4 @@
-import { Icon, Image } from '@rneui/themed';
+import { Image } from '@rneui/themed';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';

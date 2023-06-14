@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 import { Text } from '../../../../components';
-import { COLOR_BLUE_1 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 const Category = ({ children, label }) => {
@@ -22,7 +22,7 @@ const Category = ({ children, label }) => {
         <Text style={styles.label}>{label}</Text>
         <Icon
           name={show ? 'indeterminate-check-box' : 'add-box'}
-          color={COLOR_BLUE_1}
+          color={COLORS.BLUE_1}
         />
       </TouchableOpacity>
       {show ? (

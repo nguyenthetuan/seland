@@ -4,7 +4,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
 
 import { Text } from '../../../../components';
-import { COLOR_WHITE, SCREENS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import styles from './styles';
 
 const DrawerMenuHome = forwardRef((props, ref) => {
@@ -85,7 +85,7 @@ const DrawerMenuHome = forwardRef((props, ref) => {
         </View>
         <View style={styles.boxClose}>
           <Icon
-            color={COLOR_WHITE}
+            color={COLORS.WHITE}
             name="close"
             onPress={closeDrawerMenu}
           />

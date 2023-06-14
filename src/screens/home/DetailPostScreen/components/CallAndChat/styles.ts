@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { deviceWidth } from '../../../../../configs/theme/common';
-import { COLOR_BLUE_2, COLOR_WHITE } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   flex: {
@@ -15,16 +15,16 @@ const styles = StyleSheet.create({
   },
   zaloButton: {
     width: deviceWidth / 2,
-    backgroundColor: COLOR_BLUE_2,
+    backgroundColor: COLORS.BLUE_2,
     borderWidth: 0,
     height: 50,
   },
   callText: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     marginLeft: 12,
   },
   zaloText: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     marginLeft: 12,
   },
 });
