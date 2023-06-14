@@ -23,6 +23,7 @@ const SCREENS = {
   WAREHOUSELAND: 'WareHouseLand',
   FILTER_SCREEN: 'FilterScreen',
   DEPOSIT_SCREEN: 'DepositScreen',
+  DETAIL_POST: 'DetailPost',
 };
 
 export default SCREENS;

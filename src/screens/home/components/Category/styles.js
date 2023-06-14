@@ -4,6 +4,7 @@ import { COLOR_BLUE_2 } from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxLabelCategory: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 10,

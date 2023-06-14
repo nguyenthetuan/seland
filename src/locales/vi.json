@@ -170,7 +170,8 @@
     "positionPost": "Vị trí tin đăng",
     "display": "Hiển thị",
     "seePost": "Xem tin",
-    "care": "Quan tâm"
+    "care": "Quan tâm",
+    "about": "Giới thiệu"
   },
   "error": {
     "network": "Không thể kết nối với máy chủ",
@@ -315,5 +316,28 @@
     "agency": "Môi giới: {{agency}}",
     "realEstatesSelect": "Kho BĐS",
     "agencySelect": "Môi giới"
+  },
+  "detailPost": {
+    "seeMap": "Xem trên bản đồ",
+    "installment": "Tính trả góp",
+    "detailPost": "Chi tiết nhà đất",
+    "nearbyUtilities": "Tiện ích lân cận",
+    "roadToRealEstate": "Đường vào BĐS",
+    "evaluate": "Đánh giá",
+    "follow": "Theo dõi",
+    "book": "Đặt lịch xem BĐS",
+    "quickPost": "Đăng nhanh",
+    "call": "Gọi điện",
+    "zalo": "Chat Zalo",
+    "advise": "Yêu cầu tư vấn",
+    "reportMistake": "Báo cáo sai phạm?",
+    "cooperation": "Hợp tác môi giới",
+    "customer": "Đầu khách",
+    "allFee": "Tổng phí môi giới",
+    "masterHead": "Đầu chủ",
+    "technology": "Công nghệ",
+    "realEstateNear": "Bất động sản cùng khu vực",
+    "realEstateSeen": "Bất động đã xem",
+    "neighbor": "Hàng xóm"
   }
 }

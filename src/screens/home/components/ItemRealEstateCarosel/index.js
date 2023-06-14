@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -19,8 +20,9 @@ import {
   LocationMapsSmall,
   LoveSmall,
 } from '../../../../assets';
+import { IconSvg } from '../../../../assets/icons/IconSvg';
 import { Text } from '../../../../components';
-import { COLOR_GRAY_7, COLOR_WHITE } from '../../../../constants';
+import { COLOR_GRAY_7, COLOR_WHITE, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import styles from './styles';
 
@@ -42,6 +44,7 @@ ItemInfo.propTypes = {
 
 const ItemHottestRealEstate = ({ item, type }) => {
   const { t } = useTranslation();
+  const { navigate } = useNavigation();
 
   const onPressCall = () => {
     let phoneNumber = item?.phone_number;
@@ -61,9 +64,17 @@ const ItemHottestRealEstate = ({ item, type }) => {
   };
 
   const onToLocation = () => {};
+  const onGoDetail = () => {
+    if (type !== REAL_ESTATE.PROJECT) {
+      navigate(SCREENS.DETAIL_POST);
+    }
+  };
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onGoDetail}
+    >
       <View style={styles.boxImage}>
         <Image
           style={styles.image}
@@ -146,7 +157,10 @@ const ItemHottestRealEstate = ({ item, type }) => {
               </Text>
             </View>
             <View style={styles.boxTypeHouse}>
-              <Text style={styles.typeHouse}>
+              <Text
+                style={styles.typeHouse}
+                numberOfLines={1}
+              >
                 {item?.real_estate_type_name}
               </Text>
             </View>
@@ -177,11 +191,7 @@ const ItemHottestRealEstate = ({ item, type }) => {
           </>
         )}
         <View style={styles.boxLocation}>
-          <Icon
-            color={COLOR_GRAY_7}
-            name="location-on"
-            size={18}
-          />
+          <IconSvg name="location" />
           <Text
             style={styles.location}
             numberOfLines={1}
