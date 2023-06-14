@@ -18,7 +18,7 @@ import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
-const ListPostsScreen = (props) => {
+const ListPostsScreen = props => {
   const { control, handleSubmit, setValue, getValues } = useForm({
     defaultValues: {
       district_id: '',
@@ -46,9 +46,9 @@ const ListPostsScreen = (props) => {
     }
 
     if (data?.priceRange?.length > 0 && data?.priceRange[1] !== 1) {
-      res.price_range_id = `${Number(data?.priceRange[0])}-${
-        Number(data?.priceRange[1])
-      }`;
+      res.price_range_id = `${Number(data?.priceRange[0])}-${Number(
+        data?.priceRange[1]
+      )}`;
     }
     if (data?.acreage?.length > 0 && data?.acreage[1] !== 1) {
       res.area_range_id = `${Number(data?.acreage[0])}-${Number(
@@ -57,7 +57,10 @@ const ListPostsScreen = (props) => {
     }
     if (data?.typeHousing?.length > 0) {
       res.real_estate_type = data?.typeHousing;
-    } else if (data?.typeHousing && ['number', 'string'].includes(typeof (data?.typeHousing))) {
+    } else if (
+      data?.typeHousing &&
+      ['number', 'string'].includes(typeof data?.typeHousing)
+    ) {
       res.real_estate_type = [data?.typeHousing];
     }
 

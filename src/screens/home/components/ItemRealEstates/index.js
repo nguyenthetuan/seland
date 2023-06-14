@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -20,6 +21,7 @@ import {
   COLOR_ORANGE_5,
   COLOR_RED_1,
   COLOR_WHITE,
+  SCREENS,
 } from '../../../../constants';
 import styles from './styles';
 
@@ -41,6 +43,7 @@ ItemInfo.propTypes = {
 
 const ItemRealEstates = ({ item }) => {
   const { t } = useTranslation();
+  const { navigate } = useNavigation();
 
   const onPressCall = () => {
     let phoneNumber = item?.phone_number;
@@ -84,9 +87,15 @@ const ItemRealEstates = ({ item }) => {
         return 'common.vipDiamond';
     }
   };
+  const onGoDetail = () => {
+    navigate(SCREENS.DETAIL_POST);
+  };
 
   return (
-    <TouchableOpacity style={styles.boxItem}>
+    <TouchableOpacity
+      style={styles.boxItem}
+      onPress={onGoDetail}
+    >
       <View style={styles.boxImage}>
         <Image
           style={styles.image}

@@ -8,10 +8,11 @@ import {
   UserDraftPostsScreen,
   UserPostsScreen,
 } from '../screens';
-import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
-import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
-import FilterScreen from '../screens/home/FilterScreen/screen/index';
 import DepositScreen from '../screens/account/DepositScreen/index';
+import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
+import DetailPostScreen from '../screens/home/DetailPostScreen';
+import FilterScreen from '../screens/home/FilterScreen/screen/index';
+import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 
 const routes = [
   {
@@ -57,6 +58,10 @@ const routes = [
   {
     component: DepositScreen,
     name: SCREENS.DEPOSIT_SCREEN,
+  },
+  {
+    component: DetailPostScreen,
+    name: SCREENS.DETAIL_POST,
   },
 ];
 
