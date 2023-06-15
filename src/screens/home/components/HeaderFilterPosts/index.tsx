@@ -4,7 +4,7 @@ import styles from './styles';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/base';
 import { Select, Text } from '../../../../components';
-import { Control } from 'react-hook-form';
+import { Control, useForm } from 'react-hook-form';
 import Filter from '../FilterModal';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '../../../../constants';
@@ -38,26 +38,41 @@ const projectOptions = [{
   value: 1
 }];
 
+const initValues = {
+  district: '',
+  ward: '',
+  address: '',
+  typeHousing: [],
+  priceRange: [0, 1],
+  acreage: [0, 1],
+  compass: [],
+  legalDocuments: [],
+  location: [],
+  bedroom: [],
+  bathroom: [],
+  numberFloors: [],
+  province_id: 'HNI',
+  ward_id: null,
+  district_id: null,
+  demand_id: 1,
+};
+
 const HeaderFilterPosts: FC<Iprops> = props => {
   const {
-    control,
-    handleSubmit,
     onSelect,
     onFilter,
     route,
-    setValue,
-    getValues,
-    reset,
   } = props;
+
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
   const params = route?.params;
-  const district_id = params?.district_id;
-  const typeHousing = params?.typeHousing;
-  const demand_id = params?.demand_id;
-
   const dataFilters = params?.dataFilters;
+
+  const { control, handleSubmit, setValue, getValues } = useForm({
+    defaultValues: dataFilters ? Object.assign(initValues, dataFilters) : initValues,
+  });
 
   useEffect(() => {
     if (dataFilters) {
@@ -66,30 +81,6 @@ const HeaderFilterPosts: FC<Iprops> = props => {
       );
     }
   }, [dataFilters]);
-
-  useEffect(() => {
-    if (district_id) {
-      setValue('district_id', district_id);
-      const paramsFilter = { ...getValues(), district_id };
-      handleSubmit(paramsFilter);
-    }
-  }, [district_id]);
-
-  useEffect(() => {
-    if (typeHousing && typeHousing.length > 0) {
-      setValue('typeHousing', typeHousing?.[0]);
-      const paramsFilter = { ...getValues(), typeHousing: [typeHousing?.[0]] };
-      handleSubmit(paramsFilter);
-    }
-  }, [typeHousing]);
-
-  useEffect(() => {
-    if (demand_id) {
-      setValue('demand_id', demand_id);
-      const paramsFilter = { ...getValues(), demand_id };
-      handleSubmit(paramsFilter);
-    }
-  }, [demand_id]);
 
   const { provinces, districts, wards } = useSelector(selectCommon);
 
@@ -221,13 +212,13 @@ const HeaderFilterPosts: FC<Iprops> = props => {
     val: { label: string; value: string | number },
     fieldName: string
   ) => {
-    const paramsFilter = { ...getValues(), [fieldName]: val.value };
-    handleSubmit(onSelect(paramsFilter));
+    const paramsFilter: any = { ...getValues(), [fieldName]: val.value };
+    handleSubmit(onSelect(paramsFilter) as any);
   };
 
   const onSelectTypeHousing = (val: any) => {
     const paramsFilter = { ...getValues(), typeHousing: val };
-    handleSubmit(onSelect(paramsFilter));
+    handleSubmit(onSelect(paramsFilter) as any);
   }
 
   return (
@@ -357,7 +348,6 @@ const HeaderFilterPosts: FC<Iprops> = props => {
           </View>
         </View>
       </View>
-      <Filter onSubmit={onSubmit} />
     </>
   );
 };
