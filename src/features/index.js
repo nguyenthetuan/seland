@@ -1,6 +1,7 @@
 export * from './auth';
 export * from './common';
 export * from './createPosts';
+export * from './detailRealEstates';
 export * from './home';
 export * from './payment';
 export * from './realEstates';

@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
   detailPostWrapper: {
     backgroundColor: COLORS.WHITE,
   },
+  spinnerTextStyle: {
+    color: COLORS.BLUE_1,
+    fontSize: 16,
+    lineHeight: 24,
+  },
 });
 
 export default styles;

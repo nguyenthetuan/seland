@@ -20,7 +20,7 @@ export { default as IconCopy } from './copy.svg';
 export { default as IconDelete } from './delete.svg';
 export { default as IconDotWhite } from './dotWhite.svg';
 export { default as IconDownload } from './download.svg';
-export { default as IconEdit } from './Edit.svg';
+export { default as IconEdit } from './edit.svg';
 export { default as IconEyes } from './eyes.svg';
 export { default as IconHeartWhite } from './heartWhite.svg';
 export { default as IconHistory } from './history.svg';

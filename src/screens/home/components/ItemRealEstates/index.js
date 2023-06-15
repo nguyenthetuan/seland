@@ -36,7 +36,6 @@ ItemInfo.propTypes = {
 const ItemRealEstates = ({ item }) => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
-
   const onPressCall = () => {
     let phoneNumber = item?.phone_number;
     if (Platform.OS !== 'android') {
@@ -80,7 +79,9 @@ const ItemRealEstates = ({ item }) => {
     }
   };
   const onGoDetail = () => {
-    navigate(SCREENS.DETAIL_POST);
+    navigate(SCREENS.DETAIL_POST, {
+      id: item?.id,
+    });
   };
 
   return (

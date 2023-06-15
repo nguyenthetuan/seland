@@ -4,6 +4,7 @@ import {
   GET_ALL_FILTER,
   GET_ALL_INFORMATION,
   GET_ALL_WAREHOUSES,
+  GET_DETAIL_REAL_ESTATE,
   GET_LIST_RANK,
   GET_LIST_REAL_ESTATES_ROUTE,
   GET_REAL_ESTATEWAREHOUSES,
@@ -30,3 +31,6 @@ export const requestGetAllWareHouse = () => get(GET_ALL_WAREHOUSES);
 export const requestGetAgency = () => get(GET_AGENCY);
 export const requestGetRealEstateWarehouses = params =>
   get(GET_REAL_ESTATEWAREHOUSES, params);
+
+export const requestGetDetailRealEstates = id =>
+  get(`${GET_DETAIL_REAL_ESTATE}/${id}`);
