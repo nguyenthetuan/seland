@@ -1,21 +1,13 @@
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Container, Input, Select, Text } from '../../../../../components';
-import {
-  COLOR_BLUE_1,
-  COLOR_BLUE_2,
-  COLOR_GRAY_5,
-  COLOR_GRAY_7,
-  COLOR_ORANGE_1,
-  COLOR_ORANGE_4,
-  COLOR_WHITE,
-} from '../../../../../constants';
 import { Avatar, Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearDistricts, clearWards, getDistricts, getProvinces, getWards, selectCommon } from '../../../../../features';
 import { dispatchThunk } from '../../../../../utils';
+import { COLORS } from '../../../../../constants';
 
 
 const GeneralInformationScreen = () => {
@@ -262,7 +254,7 @@ const styles = StyleSheet.create({
   },
   boxAvatar: {
     alignSelf: 'center',
-    backgroundColor: COLOR_ORANGE_4,
+    backgroundColor: COLORS.ORANGE_4,
   },
   button: {
     marginBottom: 48,
@@ -280,7 +272,7 @@ const styles = StyleSheet.create({
     top: 4,
   },
   container: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
   },
   errorStyle: {
@@ -290,7 +282,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   iamButton: (selected: boolean) => ({
-    borderColor: selected ? COLOR_BLUE_2 : COLOR_GRAY_5,
+    borderColor: selected ? COLORS.BLUE_2 : COLORS.GRAY_5,
     borderWidth: 2,
   }),
   iamButtonContainer: {
@@ -299,10 +291,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   iamButtonTitle: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
   },
   inputLabel: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontWeight: 'bold',
   },
   label: {
@@ -310,7 +302,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   labelStyleDate: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     fontWeight: 'bold',
     marginVertical: 16,
   },
@@ -325,13 +317,13 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   text: {
-    color: COLOR_ORANGE_1,
+    color: COLORS.ORANGE_1,
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 28,
   },
   viewMoreAccountPackages: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     fontSize: 14,
     lineHeight: 22,
     textAlign: 'right',

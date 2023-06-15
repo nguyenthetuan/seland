@@ -16,7 +16,7 @@ import {
   Screen,
   Text,
 } from '../../../components';
-import { COLORS } from '../../../constants/colors';
+import { COLORS } from '../../../constants';
 import { login, selectAuth } from '../../../features';
 import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';

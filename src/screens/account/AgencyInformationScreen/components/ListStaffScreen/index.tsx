@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from '../../../../../components';
-import { COLOR_BLACK_1, COLOR_BLACK_3, COLOR_GRAY_10, COLOR_GRAY_2, COLOR_GRAY_7, COLOR_GRAY_9, COLOR_ORANGE_1, COLOR_WHITE } from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import { Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
   },
   container: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
     paddingTop: 24,
     paddingBottom: 24,
@@ -233,8 +233,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   inputSearch: {
-    backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 8,
     borderWidth: 1,
     fontSize: 16,
@@ -253,12 +253,12 @@ const styles = StyleSheet.create({
   rowContent: {
     flexDirection: 'row',
     paddingVertical: 8,
-    borderBottomColor: COLOR_GRAY_2,
+    borderBottomColor: COLORS.GRAY_2,
     borderBottomWidth: 1,
   },
   wrapHeader: {
-    backgroundColor: COLOR_GRAY_10,
-    borderBottomColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.GRAY_10,
+    borderBottomColor: COLORS.GRAY_2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     padding: 8
