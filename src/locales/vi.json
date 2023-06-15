@@ -358,7 +358,8 @@
     "backIdCard": "Hình ảnh mặt sau CMT/CCCD",
     "jobCert": "Ảnh giấy phép hành nghề",
     "uploadTitle": "Nhấp hoặc kéo tệp vào khu vực này để tải lên",
-    "uploadDesc": "Hỗ trợ tải lên một hoặc hàng loạt"
+    "uploadDesc": "Hỗ trợ tải lên một hoặc hàng loạt",
+    "businessLicenseCard": "Hình ảnh giấy phép kinh doanh"
   },
   "placeholder": {
     "name": "Họ và tên",
@@ -369,5 +370,32 @@
     "yoe": "Số năm kinh nghiệm môi giới BĐS",
     "workZone": "Khu vực đăng ký làm môi giới BĐS",
     "workingYear": "Năm hoạt động"
+  },
+  "addAccount": {
+    "header": "Thêm mới tài khoản",
+    "name": "Tên người dùng",
+    "phoneNumber": "Số điện thoại",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "addNew": "Thêm mới",
+    "cancel": "Huỷ bỏ"
+  },
+  "changeStatus": {
+    "header": "Thay đổi trạng thái",
+    "status": "Trạng thái",
+    "verify": "Xác thực",
+    "save": "Lưu",
+    "cancel": "Huỷ bỏ"
+  },
+  "staffInformation": {
+    "header": "Thông tin các nhân",
+    "name": "Họ và tên:",
+    "sex": "Giới tính:",
+    "dob": "Ngày sinh:",
+    "subHeader": "Thông tin liên hệ",
+    "phoneNumber": "Số điện thoại:",
+    "email": "Email:",
+    "address": "Địa chỉ:",
+    "save": "Lưu"
   }
 }

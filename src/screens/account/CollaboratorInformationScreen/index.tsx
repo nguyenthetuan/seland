@@ -35,6 +35,7 @@ const CollaboratorInformationScreen = () => {
     formState: { errors },
     handleSubmit,
     reset,
+    setValue,
   } = useForm({
     defaultValues: {
       name: '',
@@ -177,12 +178,14 @@ const CollaboratorInformationScreen = () => {
             required={true}
             control={control}
             name="frontIdCard"
+            setValue={setValue}
           />
           <UploadImage
             label={t('collaboratorInformation.backIdCard')}
             required={true}
             control={control}
             name="backIdCard"
+            setValue={setValue}
           />
         </View>
       </ScrollView>

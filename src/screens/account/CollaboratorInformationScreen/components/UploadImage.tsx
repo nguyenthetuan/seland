@@ -12,10 +12,11 @@ type TProps = {
   required?: boolean;
   control: any;
   name: string;
+  setValue: () => void;
 };
 
 const UploadImage = (props: TProps) => {
-  const { label, required, control, name } = props;
+  const { label, required, control, name, setValue } = props;
 
   const [typeUpload, setTypeUpload] = useState();
 
@@ -23,10 +24,6 @@ const UploadImage = (props: TProps) => {
 
   const handleUploadImage = () => {
     try {
-      // if (errors?.photo) delete errors.photo;
-      // setErrors({
-      //   ...errors,
-      // });
       launchImageLibrary({
         mediaType: 'photo',
         includeBase64: true,
@@ -36,8 +33,10 @@ const UploadImage = (props: TProps) => {
             Toast.show({
               text1: 'Không thể upload ảnh, vui lòng chọn ảnh khác!',
             });
+          } else {
+            setTypeUpload(result?.assets);
+            setValue(name, result?.assets[0]?.uri);
           }
-          setTypeUpload(result?.assets);
         })
         .catch(() =>
           Toast.show({
@@ -64,7 +63,7 @@ const UploadImage = (props: TProps) => {
         {required && <Text style={styles.required}>*</Text>}
       </View>
 
-      {file ? (
+      {file && file[0]?.height !== 0 ? (
         file?.map((item: any) => {
           return (
             <>
