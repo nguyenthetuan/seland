@@ -3,6 +3,7 @@ import IconFloor from './floor';
 import IconBathroom from './iconBathroom';
 import IconBedroom from './iconBedroom';
 import IconCompass from './IconCompass';
+import IconEdit from './iconEdit';
 import IconLength from './iconLength';
 import IconLocation from './IconLocation';
 import IconNext from './iconNext';
@@ -110,6 +111,13 @@ const IconSvg: React.FC<IconSvgProps> = ({ name, color, width, height }) => {
             width={width}
             height={height}
             color={color}
+          />
+        );
+      case 'edit':
+        return (
+          <IconEdit
+            width={width}
+            height={height}
           />
         );
 

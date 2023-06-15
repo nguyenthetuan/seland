@@ -5,7 +5,6 @@ import { TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/base';
 import { Control } from 'react-hook-form';
 import { Select } from '../../../../../components';
-import Filter from '../../../../home/components/FilterModal';
 import { dispatchThunk } from '../../../../../utils';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -14,20 +13,22 @@ import {
   selectWareHouses,
 } from '../../../../../features';
 import { formatSelect } from '../../../../../utils/format';
-import { IModalFilterWarehouse } from '../../../../../utils/interface/common';
+import ModalFilter from '../../../UserPostsScreen/components/ModalFilter';
 
 interface Iprops {
   control: Control<any>;
   handleSubmit?: any;
   onSelect: (value: any) => void;
   onFilter?: (value?: any) => void;
+  setValue?: Function;
 }
 
 const FilterWarehouse: FC<Iprops> = props => {
-  const { control, handleSubmit, onSelect, onFilter } = props;
+  const { control, handleSubmit, onSelect, onFilter, setValue } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const filterRef: any = useRef();
+
   const sortBy = [
     {
       label: 'newest',
@@ -69,11 +70,8 @@ const FilterWarehouse: FC<Iprops> = props => {
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
+  const submit = handleSubmit(onFilter);
 
-  const onSubmit = (value: IModalFilterWarehouse) => {
-    onFilter && onFilter(value);
-    filterRef.current.onClose();
-  };
   useEffect(() => {
     dispatchThunk(dispatch, loadListAllWareHouses());
     dispatchThunk(dispatch, loadListAgency());
@@ -132,11 +130,11 @@ const FilterWarehouse: FC<Iprops> = props => {
           onSelect={handleSubmit(onSelect)}
         />
       </View>
-      <Filter
+      <ModalFilter
         ref={filterRef}
-        onSubmit={onSubmit}
         control={control}
-        handleSubmit={handleSubmit}
+        onPressConfirm={submit}
+        setValueHookForm={setValue}
       />
     </>
   );

@@ -15,4 +15,5 @@ export type IconSvgType =
   | 'phone'
   | 'next'
   | 'length'
-  | 'width';
+  | 'width'
+  | 'edit';

@@ -14,6 +14,7 @@ import {
   IconUpload,
   Reload,
 } from '../../../../../assets';
+import { IconSvg } from '../../../../../assets/icons/IconSvg';
 import { Text } from '../../../../../components';
 import styles from './styles';
 
@@ -31,7 +32,7 @@ const ActionWarehouseLand = () => {
       label: t('common.pushNews'),
     },
     {
-      icon: <IconEdit />,
+      icon: <IconSvg name="edit" />,
       label: t('common.editNews'),
     },
     {

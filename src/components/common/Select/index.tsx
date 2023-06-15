@@ -27,7 +27,7 @@ interface SelectProps {
   rowStyle?: any;
   containerSelect?: any;
   rowTextStyle?: any;
-  defaultButtonText?: string | null;
+  defaultButtonText?: string | null | any;
   title?: string;
 }
 
