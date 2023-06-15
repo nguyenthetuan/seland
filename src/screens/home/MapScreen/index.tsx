@@ -10,6 +10,10 @@ import styles from './styles';
 
 const MapScreen = () => {
   const { navigate, goBack } = useNavigation();
+  const runFirst = `
+      window.document.getElementsByTagName("header")[0].style.display = "none";
+      true; // note: this is required, or you'll sometimes get silent failures
+    `;
 
   return (
     <View style={{ flex: 1 }}>
@@ -22,7 +26,9 @@ const MapScreen = () => {
         </View>
       </SafeAreaView>
       <WebView
+        startInLoadingState={true}
         source={{ uri: 'https://tamthanh.vnextglobal.com/checkLandPlaning' }}
+        injectedJavaScript={runFirst}
         style={{ flex: 1 }}
       />
     </View>
