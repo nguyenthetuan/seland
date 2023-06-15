@@ -15,27 +15,34 @@ import ItemWarehouseLand from './components/ItemWarehouseLand';
 import styles from './styles';
 
 const WarehouseLandScreen = () => {
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues, setValue } = useForm({
     defaultValues: {
       real_estate_warehouse_id: null,
       area_range_id: null,
       sort_order: 'createdAt',
+      real_estate_type_id: null,
+      province_id: null,
+      district_id: null,
+      status: null,
+      title: null,
     },
   });
   const { t } = useTranslation();
-  const [filter, setFilter]: any = useState();
   const dispatch = useDispatch();
-  const onSelect = (value: any) => {
-    setFilter(getValues());
+  const onSelect = () => {
+    dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
   };
   const { listRealEstateWarehouses, loadingRealEstateWarehouses } =
     useSelector(selectWareHouses);
 
   useEffect(() => {
-    dispatchThunk(dispatch, loadRealEstateWarehouses(filter));
-  }, [dispatch, filter]);
+    dispatchThunk(dispatch, loadRealEstateWarehouses());
+  }, [dispatch]);
   const onFilterModal = (value: IModalFilterWarehouse) => {
-    console.log('value', value);
+    dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
+  };
+  const onChangeSearch = (value: string) => {
+    dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
   };
 
   return (
@@ -46,8 +53,12 @@ const WarehouseLandScreen = () => {
         color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
-      <View>
-        <HeaderListPosts />
+      <View style={styles.itemWarehouseLand}>
+        <HeaderListPosts
+          control={control}
+          handleSubmit={handleSubmit}
+          onChangeSearch={onChangeSearch}
+        />
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
@@ -63,6 +74,7 @@ const WarehouseLandScreen = () => {
               handleSubmit={handleSubmit}
               onSelect={onSelect}
               onFilter={onFilterModal}
+              setValue={setValue}
             />
           }
         />

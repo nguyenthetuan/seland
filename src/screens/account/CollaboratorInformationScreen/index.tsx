@@ -3,13 +3,13 @@ import React from 'react';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { ArrowLeft } from '../../../assets/icons';
 import { DateTimePicker, Input, Text } from '../../../components';
-import COLORS from '../../../constants/colors';
 import styles from './styles';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 import yup from '../../../utils/yup';
 import UploadImage from './components/UploadImage';
+import { COLORS } from '../../../constants';
 
 const CollaboratorInformationScreen = () => {
   const { goBack } = useNavigation();

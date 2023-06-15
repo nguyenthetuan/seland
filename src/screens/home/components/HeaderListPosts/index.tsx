@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Input } from '@rneui/themed';
-import React from 'react';
+import React, { FC, useState } from 'react';
+import { Control, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, View } from 'react-native';
 
@@ -9,9 +10,19 @@ import { Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import styles from './styles';
 
-const HeaderListPosts = () => {
+interface Iprops {
+  control: Control<any>;
+  handleSubmit?: any;
+  onChangeSearch?: Function;
+}
+
+const HeaderListPosts: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { goBack } = useNavigation();
+  const { control, handleSubmit, onChangeSearch } = props;
+  const {
+    field: { onChange },
+  } = useController({ control, name: 'title' });
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
@@ -23,7 +34,13 @@ const HeaderListPosts = () => {
         <Input
           containerStyle={styles.inputContainer}
           inputContainerStyle={styles.inputSearch}
-          rightIcon={<Icon name="search" />}
+          onChangeText={value => onChange(value)}
+          rightIcon={
+            <Icon
+              name="search"
+              onPress={handleSubmit(onChangeSearch)}
+            />
+          }
         />
         <Icon name="my-location" />
         <View style={styles.boxZoning}>

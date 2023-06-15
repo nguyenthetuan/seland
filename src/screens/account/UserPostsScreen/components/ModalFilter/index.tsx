@@ -39,14 +39,14 @@ interface ModalFilter {
   setValueHookForm?: Function;
   onPressConfirm?: Function;
 }
-const ModalFilter: FC<ModalFilter> = forwardRef(
+interface PopUpRef {}
+
+const ModalFilter = forwardRef<PopUpRef, ModalFilter>(
   ({ control, setValueHookForm, onPressConfirm }, ref) => {
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [errors, setErrors] = useState<any>();
-    const [activeTab, setActiveTab] = useState<number>(1);
-
     const { provinces, districts } = useSelector(selectCommon);
     const { realEstateType } = useSelector(selectPosts);
     const {
@@ -75,15 +75,15 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
     const tabs = [
       {
         label: 'all',
-        value: 1,
+        value: null,
       },
       {
         label: 'buy',
-        value: 2,
+        value: 1,
       },
       {
         label: 'lease',
-        value: 3,
+        value: 2,
       },
     ];
 
@@ -125,13 +125,13 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
     };
 
     useEffect(() => {
-      setValueHookForm && setValueHookForm('status', 1);
+      setValueHookForm && setValueHookForm('status', null);
       refresh();
     }, []);
 
     const handleReset = () => {
-      setValueHookForm && setValueHookForm('status', 1);
-      setValueHookForm && setValueHookForm('type', null);
+      setValueHookForm && setValueHookForm('status', null);
+      setValueHookForm && setValueHookForm('real_estate_type_id', null);
       setValueHookForm && setValueHookForm('province_id', null);
       setValueHookForm && setValueHookForm('district_id', null);
     };
@@ -177,7 +177,7 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
             </View>
             <Select
               control={control}
-              name="type"
+              name="real_estate_type_id"
               label={t('select.typeHousing')}
               data={realEstateTypeOptions}
               defaultButtonText={t('select.typeHousing')}
