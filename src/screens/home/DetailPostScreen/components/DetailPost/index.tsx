@@ -8,23 +8,27 @@ import IconInterior from '../../../../../assets/icons/interior';
 import IconRoad from '../../../../../assets/icons/road';
 import IconStructure from '../../../../../assets/icons/structure';
 import { Text } from '../../../../../components';
+import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
 import styles from './styles';
 
-interface Iprops {}
+interface Iprops {
+  infoDetail: IRealEstateDetails;
+}
 
 const DetailPost: FC<Iprops> = props => {
   const { t } = useTranslation();
+  const { infoDetail } = props;
   const listInfo = [
     [
       {
         label: t('common.acreage'),
         icon: <Acreage />,
-        value: '1.433 m²',
+        value: infoDetail?.area,
       },
       {
         label: t('input.length'),
         icon: <IconSvg name="length" />,
-        value: '30m',
+        value: infoDetail?.length,
       },
     ],
     [
@@ -37,12 +41,12 @@ const DetailPost: FC<Iprops> = props => {
             height={20}
           />
         ),
-        value: '3',
+        value: infoDetail?.bedroom,
       },
       {
         label: t('input.width'),
         icon: <IconSvg name="width" />,
-        value: '20m',
+        value: infoDetail?.width,
       },
     ],
     [
@@ -55,24 +59,24 @@ const DetailPost: FC<Iprops> = props => {
             height={15}
           />
         ),
-        value: '3',
+        value: infoDetail?.bathroom,
       },
       {
         label: t('common.currentStatusHouse'),
         icon: <IconInterior />,
-        value: 'Đầy đủ nội thất',
+        value: infoDetail?.house_status,
       },
     ],
     [
       {
         label: t('common.legalDocuments'),
         icon: <IconHistory />,
-        value: 'Sổ hồng',
+        value: infoDetail?.document_legal,
       },
       {
         label: t('common.usageStatus'),
         icon: <IconNote />,
-        value: 'Đã qua sử dụng',
+        value: infoDetail?.usage_status,
       },
     ],
     [
@@ -85,48 +89,45 @@ const DetailPost: FC<Iprops> = props => {
             height={14}
           />
         ),
-        value: 'Mặt tiền',
+        value: infoDetail?.location,
       },
       {
         label: t('input.laneWidth'),
         icon: <IconRoad />,
-        value: '6 m',
+        value: infoDetail?.lane_width,
       },
     ],
     [
       {
         label: t('common.numberFloors'),
         icon: <IconFloor />,
-        value: '2',
+        value: infoDetail?.floor,
       },
       {
         label: t('select.structure'),
         icon: <IconStructure />,
-        value: 'Nhà cấp 3',
+        value: infoDetail?.structure,
       },
     ],
   ];
   const listUtilities = [
     {
       title: t('detailPost.nearbyUtilities'),
-      list: [
-        'Siêu thị mini',
-        'Gần sông',
-        'Trung tâm thương mại',
-        'Công viên',
-        'Siêu thị mini',
-        'Gần sông',
-        'Trung tâm thương mại',
-        'Công viên',
-      ],
+      list:
+        (infoDetail?.nearby_amenities &&
+          Object.values(infoDetail?.nearby_amenities)) ||
+        [],
     },
     {
       title: t('detailPost.neighbor'),
-      list: ['Thân thiện', 'Trí thức'],
+      list: ['Thân thiện'],
     },
     {
       title: t('detailPost.roadToRealEstate'),
-      list: ['Đường trải nhựa'],
+      list:
+        (infoDetail?.real_estate_entrance &&
+          Object.values(infoDetail?.real_estate_entrance)) ||
+        [],
     },
   ];
 
@@ -170,7 +171,7 @@ const DetailPost: FC<Iprops> = props => {
             >
               <Text style={styles.title}>{info.title}</Text>
               <View style={styles.listContent}>
-                {info.list.map(i => {
+                {info.list.map((i: string) => {
                   return (
                     <View
                       style={styles.itemContent}

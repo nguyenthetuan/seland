@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
 import { COLORS } from '../../../../constants';
-import { selectHome, selectWareHouses } from '../../../../features';
+import { selectWareHouses } from '../../../../features';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 

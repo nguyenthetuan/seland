@@ -12,19 +12,29 @@ import Category from '../../../components/Category';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '../../../../../constants';
 import SameAreaRealEstate from '../../../components/SameAreaRealEstate';
+import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
 
-interface Iprops {}
+interface Iprops {
+  infoDetail: IRealEstateDetails;
+}
 
 const RealEstate: FC<Iprops> = props => {
   const { t } = useTranslation();
+  const { infoDetail } = props;
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
-  const { listRealEstateWarehouses, loadingRealEstateWarehouses } =
-    useSelector(selectWareHouses);
+  const { listRealEstateWarehouses } = useSelector(selectWareHouses);
 
   const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
   useEffect(() => {
-    dispatchThunk(dispatch, loadRealEstateWarehouses());
+    const params = {
+      province_id: infoDetail?.province_id,
+      district_id: infoDetail?.district_id,
+      ward_id: infoDetail?.ward_id,
+    };
+    if (infoDetail.news_id) {
+      dispatchThunk(dispatch, loadRealEstateWarehouses(params));
+    }
   }, [dispatch]);
 
   return (

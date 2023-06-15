@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 import styles from './styles';
 import {
   Acreage,
@@ -13,17 +13,22 @@ import { Button, Text } from '../../../../../components';
 import IconMapWhite from '../../../../../assets/icons/mapWhite';
 import IconLocation from '../../../../../assets/icons/IconLocation';
 import { IconSvg } from '../../../../../assets/icons/IconSvg';
+import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-interface Iprops {}
+interface Iprops {
+  infoDetail: IRealEstateDetails;
+}
 
 const AboutPost: FC<Iprops> = props => {
   const { t } = useTranslation();
+  const { infoDetail } = props;
 
   const listInfoItem = [
     {
       label: t('common.acreage'),
       icon: <Acreage />,
-      value: '1.433 m²',
+      value: infoDetail?.area,
     },
     {
       label: t('input.length'),
@@ -34,7 +39,7 @@ const AboutPost: FC<Iprops> = props => {
           height={21}
         />
       ),
-      value: '30m',
+      value: infoDetail?.length,
     },
     {
       label: t('input.width'),
@@ -45,7 +50,7 @@ const AboutPost: FC<Iprops> = props => {
           height={12}
         />
       ),
-      value: '20m',
+      value: infoDetail?.width,
     },
     {
       label: t('common.compass'),
@@ -56,7 +61,7 @@ const AboutPost: FC<Iprops> = props => {
           height={24}
         />
       ),
-      value: 'Tây',
+      value: infoDetail?.direction,
     },
     {
       label: t('common.bedroom'),
@@ -67,7 +72,7 @@ const AboutPost: FC<Iprops> = props => {
           height={24}
         />
       ),
-      value: '3',
+      value: infoDetail?.bedroom,
     },
     {
       label: t('common.bathroom'),
@@ -78,9 +83,12 @@ const AboutPost: FC<Iprops> = props => {
           height={24}
         />
       ),
-      value: '3',
+      value: infoDetail?.bathroom,
     },
   ];
+  const goToYoutube = () => {
+    Linking.openURL(infoDetail?.youtube_video_link);
+  };
 
   return (
     <View style={styles.aboutPost}>
@@ -90,13 +98,16 @@ const AboutPost: FC<Iprops> = props => {
         <View style={styles.icon}>
           <Icon360 />
         </View>
-        <View style={styles.icon}>
-          <IconYoutube />
-        </View>
+        {infoDetail?.youtube_video_link && (
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={goToYoutube}
+          >
+            <IconYoutube />
+          </TouchableOpacity>
+        )}
       </View>
-      <Text style={styles.aboutPostTitle}>
-        Bán nhà 219 Trung Kính, 3 tầng 200m2. Mặt đường, ô tô đi lại dễ dàng
-      </Text>
+      <Text style={styles.aboutPostTitle}>{infoDetail?.title}</Text>
       <View style={styles.boxBuy}>
         <View style={styles.buy}>
           <Text style={styles.buyText}>{t('button.buy')}</Text>
@@ -108,13 +119,15 @@ const AboutPost: FC<Iprops> = props => {
           width={12}
           height={17}
         />
-        <Text style={styles.textAddress}>
-          Số 04 Đào Trí, Phường Phú Mỹ, Quận 7, Hồ Chí Minh
-        </Text>
+        <Text style={styles.textAddress}>{infoDetail.address}</Text>
       </View>
       <View style={styles.BoxPrice}>
-        <Text style={styles.BoxPriceRed}>1.36 tỷ</Text>
-        <Text style={styles.BoxPriceGray}>20.92 triệu/m²</Text>
+        <Text
+          style={styles.BoxPriceRed}
+        >{`${infoDetail?.price} ${infoDetail?.price_unit}`}</Text>
+        <Text style={styles.BoxPriceGray}>
+          {`${infoDetail?.price_per_square_meter} ${t('common.millionPerM2')}`}
+        </Text>
         <View style={styles.calculator}>
           <IconCalculator />
           <Text style={styles.calculatorText}>
@@ -144,10 +157,7 @@ const AboutPost: FC<Iprops> = props => {
       </View>
       <View style={styles.BoxAbout}>
         <Text style={styles.aboutTitle}>{t('common.about')}</Text>
-        <Text style={styles.aboutText}>
-          SIÊU PHẨM TẠI HUYỆN KIM BÔI. BÁM SÔNG - BÁM ĐƯỜNG . NGHỈ DƯỠNG TUYỆT
-          VỜI Vị trí tại: xã Kim Lập - Huyện Kim Bôi- tỉnh Hòa Bình
-        </Text>
+        <Text style={styles.aboutText}>{infoDetail?.introduction_content}</Text>
         <Button
           buttonStyle={styles.aboutButton}
           title={t('button.seeAll')}

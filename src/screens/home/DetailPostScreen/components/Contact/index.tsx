@@ -4,12 +4,17 @@ import { View } from 'react-native';
 import { IconWebchat, IconZalo } from '../../../../../assets';
 import { IconSvg } from '../../../../../assets/icons/IconSvg';
 import { Button, Text } from '../../../../../components';
+import { onPressCall } from '../../../../../utils/hook';
+import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
 import styles from './styles';
 
-interface Iprops {}
+interface Iprops {
+  infoDetail: IRealEstateDetails;
+}
 
 const Contact: FC<Iprops> = props => {
   const { t } = useTranslation();
+  const { infoDetail } = props;
   const listAction = [
     {
       label: t('detailPost.evaluate'),
@@ -42,17 +47,29 @@ const Contact: FC<Iprops> = props => {
       value: '45% = 9 triệu',
     },
   ];
+  const onCallPhone = () => {
+    if (infoDetail?.contacts?.phone_owner) {
+      onPressCall(infoDetail?.contacts?.phone_owner);
+    }
+  };
 
   return (
     <View style={styles.contactWrapper}>
       <View style={styles.contact}>
         <View style={styles.infoContact}>
           <View style={styles.avatar}>
-            <Text style={styles.textAvatar}>A</Text>
+            <Text style={styles.textAvatar}>
+              {infoDetail?.contacts?.name_owner &&
+                infoDetail.contacts.name_owner.charAt(0)}
+            </Text>
           </View>
           <View style={styles.contactName}>
-            <Text style={styles.contactNameText}>Mr.Abc</Text>
-            <Text style={styles.contactNameTextSdt}>SĐT: 0973xxx888</Text>
+            <Text style={styles.contactNameText}>
+              {infoDetail?.contacts?.name_owner}
+            </Text>
+            <Text style={styles.contactNameTextSdt}>
+              SĐT: {infoDetail?.contacts?.phone_owner}
+            </Text>
             <Text style={styles.contactSee}>Xem tất cả tin đăng</Text>
           </View>
         </View>
@@ -63,6 +80,7 @@ const Contact: FC<Iprops> = props => {
             radius={5}
             titleStyle={styles.callText}
             buttonStyle={styles.callButton}
+            onPress={onCallPhone}
             icon={
               <IconSvg
                 name="phone"
