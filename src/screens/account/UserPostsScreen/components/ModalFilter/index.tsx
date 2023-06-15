@@ -175,17 +175,19 @@ const ModalFilter = forwardRef<PopUpRef, ModalFilter>(
                 />
               ))}
             </View>
-            <Select
-              control={control}
-              name="real_estate_type_id"
-              label={t('select.typeHousing')}
-              data={realEstateTypeOptions}
-              defaultButtonText={t('select.typeHousing')}
-              buttonStyle={styles.buttonSelect}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-            />
+            {[1, 2].includes(value) && (
+              <Select
+                control={control}
+                name="real_estate_type_id"
+                label={t('select.typeHousing')}
+                data={realEstateTypeOptions}
+                defaultButtonText={t('select.typeHousing')}
+                buttonStyle={styles.buttonSelect}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+              />
+            )}
             <Select
               control={control}
               name="province_id"
