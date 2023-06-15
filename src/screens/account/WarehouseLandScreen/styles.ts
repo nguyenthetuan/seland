@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   list: {
     backgroundColor: COLORS.WHITE,
     paddingHorizontal: 10,
+    flex: 1,
   },
 
   spinnerTextStyle: {
@@ -17,6 +18,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   itemWarehouseLand: {
+    flex: 1,
     backgroundColor: COLORS.WHITE,
   },
 });
