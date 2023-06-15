@@ -27,16 +27,18 @@ interface Iprops {
   control: Control<any>;
   handleSubmit?: any;
   onSelect: (value: any) => void;
-  onFilter: (value?: any) => void;
+  onFilter?: (value?: any) => void;
   route?: any;
   setValue?: any;
   getValues?: any;
 }
 
-const projectOptions = [{
-  label: "Dự án 1",
-  value: 1
-}];
+const projectOptions = [
+  {
+    label: 'Dự án 1',
+    value: 1,
+  },
+];
 
 const initValues = {
   district: '',
@@ -58,11 +60,7 @@ const initValues = {
 };
 
 const HeaderFilterPosts: FC<Iprops> = props => {
-  const {
-    onSelect,
-    onFilter,
-    route,
-  } = props;
+  const { onSelect, onFilter, route } = props;
 
   const { t } = useTranslation();
   const { navigate } = useNavigation();
@@ -71,7 +69,9 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   const dataFilters = params?.dataFilters;
 
   const { control, handleSubmit, setValue, getValues } = useForm({
-    defaultValues: dataFilters ? Object.assign(initValues, dataFilters) : initValues,
+    defaultValues: dataFilters
+      ? Object.assign(initValues, dataFilters)
+      : initValues,
   });
 
   useEffect(() => {
@@ -96,19 +96,22 @@ const HeaderFilterPosts: FC<Iprops> = props => {
     label: t('select.district'),
     value: null,
   };
-   const emptyWardOption = {
+  const emptyWardOption = {
     label: t('select.ward'),
-    value: null
-  }
+    value: null,
+  };
 
   const provinceOptions = [emptyProvinceOption, ...provinces];
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
 
-  const fetchDistricts = (params: { province_code: string; }, callback: undefined) =>
-    dispatchThunk(dispatch, getDistricts(params), callback);
+  const fetchDistricts = (
+    params: { province_code: string },
+    callback: undefined
+  ) => dispatchThunk(dispatch, getDistricts(params), callback);
 
-  const fetchWards = (params: { province_code: any; district_code: any; }) => dispatchThunk(dispatch, getWards(params));
+  const fetchWards = (params: { province_code: any; district_code: any }) =>
+    dispatchThunk(dispatch, getWards(params));
 
   const handleSelectProvince = (selectedItem: any) => {
     setValue('district_id', null);
@@ -140,9 +143,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   };
 
   const refresh = async () => {
-    await Promise.all([
-      dispatchThunk(dispatch, getProvinces()),
-    ]);
+    await Promise.all([dispatchThunk(dispatch, getProvinces())]);
   };
 
   useEffect(() => {
@@ -219,7 +220,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   const onSelectTypeHousing = (val: any) => {
     const paramsFilter = { ...getValues(), typeHousing: val };
     handleSubmit(onSelect(paramsFilter) as any);
-  }
+  };
 
   return (
     <>
@@ -230,7 +231,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
             onPress={() => {
               navigate(SCREENS.FILTER_SCREEN, {
                 onSubmit,
-                dataFilters
+                dataFilters,
               });
             }}
           >
@@ -285,7 +286,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
             />
           </View>
         </View>
-        
+
         <View style={styles.row}>
           <View style={styles.address}>
             <Select
@@ -299,7 +300,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               name="province_id"
               onSelect={(val: any) => {
                 handleSelectProvince(val);
-                submitFilter(val, 'province_id')
+                submitFilter(val, 'province_id');
               }}
             />
           </View>
@@ -315,7 +316,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               name="district_id"
               onSelect={(val: any) => {
                 handleSelectDistrict(val);
-                submitFilter(val, 'district_id')
+                submitFilter(val, 'district_id');
               }}
             />
           </View>
@@ -336,7 +337,9 @@ const HeaderFilterPosts: FC<Iprops> = props => {
 
         <View style={styles.row}>
           <View style={styles.wrapTypeHousing}>
-            <Text style={styles.textTypeHousing}>{t('select.typeHousing')}</Text>
+            <Text style={styles.textTypeHousing}>
+              {t('select.typeHousing')}
+            </Text>
             <TypeHousing
               options={typeHousingOptions}
               type={'typeHousing'}

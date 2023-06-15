@@ -11,7 +11,7 @@ import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 interface Iprops {
-  control: Control<any>;
+  control?: Control<any>;
   handleSubmit?: any;
   onChangeSearch?: Function;
 }
@@ -19,10 +19,14 @@ interface Iprops {
 const HeaderListPosts: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { goBack } = useNavigation();
-  const { control, handleSubmit, onChangeSearch } = props;
+  const { handleSubmit, onChangeSearch } = props;
+  const control = props?.control;
   const {
     field: { onChange },
   } = useController({ control, name: 'title' });
+  const submit = () => {
+    onChangeSearch && handleSubmit(onChangeSearch);
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
@@ -38,7 +42,7 @@ const HeaderListPosts: FC<Iprops> = props => {
           rightIcon={
             <Icon
               name="search"
-              onPress={handleSubmit(onChangeSearch)}
+              onPress={submit}
             />
           }
         />

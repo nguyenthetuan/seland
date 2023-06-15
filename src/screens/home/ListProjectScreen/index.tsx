@@ -44,7 +44,7 @@ const ListProjectScreen = () => {
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.boxListPost}>
-        <HeaderListPosts />
+        <HeaderListPosts control={control} />
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}

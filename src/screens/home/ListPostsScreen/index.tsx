@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +23,9 @@ const ListPostsScreen = props => {
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
     useSelector(selectRealEstates);
+  const { control } = useForm({
+    defaultValues: {},
+  });
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstates());
@@ -102,12 +104,12 @@ const ListPostsScreen = props => {
     <>
       <Loading
         visible={loadingListPost}
-        textContent={t('common.loading') || ""}
+        textContent={t('common.loading') || ''}
         color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.boxListPost}>
-        <HeaderListPosts />
+        <HeaderListPosts control={control} />
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
