@@ -15,6 +15,9 @@ import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigato
 import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 import DetailPostScreen from '../screens/home/DetailPostScreen';
 import FilterScreen from '../screens/home/FilterScreen/screen/index';
+import AddAccountScreen from '../screens/account/AgencyInformationScreen/components/AddAccountScreen';
+import ChangeStatusScreen from '../screens/account/AgencyInformationScreen/components/ChangeStatusScreen';
+import StaffInformationScreen from '../screens/account/AgencyInformationScreen/components/StaffInformationScreen';
 
 const routes = [
   {
@@ -72,6 +75,18 @@ const routes = [
   {
     component: CollaboratorInformationScreen,
     name: SCREENS.COLLABORATOR_SCREEN,
+  },
+  {
+    component: AddAccountScreen,
+    name: SCREENS.ADD_ACCOUNT_SCREEN,
+  },
+  {
+    component: ChangeStatusScreen,
+    name: SCREENS.CHANGE_STATUS_SCREEN,
+  },
+  {
+    component: StaffInformationScreen,
+    name: SCREENS.STAFF_INFORMATION_SCREEN,
   },
 ];
 
