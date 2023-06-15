@@ -61,9 +61,9 @@ const HeaderFilterPosts: FC<Iprops> = props => {
 
   useEffect(() => {
     if (dataFilters) {
-      Object.keys(dataFilters).map((key) => {
-        setValue(key, dataFilters[key]);
-      })
+      Object.entries(dataFilters).forEach(
+        ([key, value]) => value && setValue(key, value)
+      );
     }
   }, [dataFilters]);
 

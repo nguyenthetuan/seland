@@ -35,7 +35,7 @@ const ListStaffScreen = () => {
           <Input
             inputContainerStyle={styles.inputSearch}
             rightIcon={<Icon name="search" />}
-            placeholder={t('input.projectSunriseCity') || ""}
+            placeholder={""}
             control={control}
             name='ward_id'
           />
