@@ -18,29 +18,7 @@ import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
-const initValues = {
-  district: '',
-  ward: '',
-  address: '',
-  typeHousing: [],
-  priceRange: [0, 1],
-  acreage: [0, 1],
-  compass: [],
-  legalDocuments: [],
-  location: [],
-  bedroom: [],
-  bathroom: [],
-  numberFloors: [],
-  province_id: 'HNI',
-  ward_id: null,
-  district_id: null,
-  demand_id: 1,
-};
-
 const ListPostsScreen = props => {
-  const { control, handleSubmit, setValue, getValues, reset } = useForm({
-    defaultValues: initValues,
-  });
   const filterRef = useRef();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -124,7 +102,7 @@ const ListPostsScreen = props => {
     <>
       <Loading
         visible={loadingListPost}
-        textContent={t('common.loading')}
+        textContent={t('common.loading') || ""}
         color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
@@ -139,13 +117,8 @@ const ListPostsScreen = props => {
           ListEmptyComponent={loadingListPost ? null : <NoResults />}
           ListHeaderComponent={
             <HeaderFilterPosts
-              control={control}
-              getValues={getValues}
-              handleSubmit={handleSubmit}
               onSelect={onSelect}
               onFilter={onFilter}
-              setValue={setValue}
-              reset={reset}
               {...props}
             />
           }

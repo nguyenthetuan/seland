@@ -134,7 +134,7 @@ const FilterScreen = (props: any) => {
 
   const dataFilters = params?.dataFilters;
 
-  const defaultVal: any = Object.assign(initValues, {...dataFilters, typeHousing: Array.isArray(dataFilters?.typeHousing) ? dataFilters?.typeHousing : (dataFilters?.typeHousing?.length > 0 ? [dataFilters?.typeHousing] : [])})
+  const defaultVal: any = Object.assign(initValues, dataFilters);
 
   const { control, handleSubmit, setValue, getValues } = useForm({
     defaultValues: defaultVal,
@@ -208,11 +208,7 @@ const FilterScreen = (props: any) => {
     setValue('address', '');
     params?.onSubmit &&
       params?.onSubmit({ ...initValues, priceRange: [], acreage: [] });
-    navigate(SCREENS.LIST_POST, {
-      district_id: '',
-      typeHousing: '',
-      demand_id: '',
-    });
+    navigate(SCREENS.LIST_POST, initValues);
   };
 
   const fetchDistricts = (params: any, callback?: () => void) => {
