@@ -228,27 +228,29 @@ const UserPostsScreen = () => {
       </Modal>
       <View style={[styles.flex, styles.whiteBackground]}>
         <Header title={t('header.userPosts')} />
-        <FlatList
-          style={styles.listButton}
-          data={statuses}
-          horizontal
-          renderItem={({ item: { label, value } }) => (
-            <Button
-              buttonStyle={[styles.marginHorizontal, styles.postButton]}
-              onPress={() => handleSelectStatus(value)}
-              outline={value !== status}
-              title={t(`button.${label}`)}
-            />
-          )}
-          showsHorizontalScrollIndicator={false}
-        />
+        <View>
+          <FlatList
+            style={styles.listButton}
+            data={statuses}
+            horizontal
+            renderItem={({ item: { label, value } }) => (
+              <Button
+                buttonStyle={[styles.marginHorizontal, styles.postButton]}
+                onPress={() => handleSelectStatus(value)}
+                outline={value !== status}
+                title={t(`button.${label}`)}
+              />
+            )}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
         <FlatList
           style={styles.list}
           data={userRealEstates}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <UserPost item={item} />}
           ListHeaderComponent={
-            <>
+            <View>
               <View style={styles.searchFilter}>
                 <View style={styles.search}>
                   <Input
@@ -305,9 +307,9 @@ const UserPostsScreen = () => {
                   rowStyle={styles.selectButton}
                 />
               </View>
-            </>
+            </View>
           }
-          ListEmptyComponent={<>{!loading && <NoResults />}</>}
+          ListEmptyComponent={<View>{!loading && <NoResults />}</View>}
         />
       </View>
       <ModalFilter

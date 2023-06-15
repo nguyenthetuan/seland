@@ -15,11 +15,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
+    flex: 1,
     paddingHorizontal: 8,
   },
   listButton: {
     height: 50,
-    marginBottom: 16,
+    // marginBottom: 8,
   },
   loadingText: {
     color: COLORS.BLUE_1,
