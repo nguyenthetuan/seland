@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking, View } from 'react-native';
+import { Linking, useWindowDimensions, View } from 'react-native';
 import styles from './styles';
 import {
   Acreage,
@@ -15,6 +15,7 @@ import IconLocation from '../../../../../assets/icons/IconLocation';
 import { IconSvg } from '../../../../../assets/icons/IconSvg';
 import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+// import RenderHtml from 'react-native-render-html';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
@@ -23,6 +24,7 @@ interface Iprops {
 const AboutPost: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { infoDetail } = props;
+  // const { width } = useWindowDimensions();
 
   const listInfoItem = [
     {
@@ -86,6 +88,10 @@ const AboutPost: FC<Iprops> = props => {
       value: infoDetail?.bathroom,
     },
   ];
+  // const source = {
+  //   html: infoDetail?.introduction_content,
+  // };
+
   const goToYoutube = () => {
     Linking.openURL(infoDetail?.youtube_video_link);
   };
@@ -157,6 +163,12 @@ const AboutPost: FC<Iprops> = props => {
       </View>
       <View style={styles.BoxAbout}>
         <Text style={styles.aboutTitle}>{t('common.about')}</Text>
+        {/* <View>
+          <RenderHtml
+            contentWidth={width}
+            source={source}
+          />
+        </View> */}
         <Text style={styles.aboutText}>{infoDetail?.introduction_content}</Text>
         <Button
           buttonStyle={styles.aboutButton}

@@ -56,7 +56,7 @@ const initValues = {
   province_id: 'HNI',
   ward_id: null,
   district_id: null,
-  demand_id: 1,
+  demand_id: null,
 };
 
 const HeaderFilterPosts: FC<Iprops> = props => {

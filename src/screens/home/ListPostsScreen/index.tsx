@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +18,13 @@ import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 
-const ListPostsScreen = props => {
+const ListPostsScreen = (props: any) => {
   const filterRef = useRef();
   const { t } = useTranslation();
+  const route: any = useRoute();
+  const demand_id = route?.params?.demandType;
+  const is_hot = route?.params?.is_hot;
+  const for_you = route?.params?.for_you;
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
     useSelector(selectRealEstates);
@@ -28,12 +33,18 @@ const ListPostsScreen = props => {
   });
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListRealEstates());
+    const params = {
+      demand_id: demand_id,
+      is_hot: is_hot ? is_hot : null,
+      for_you: for_you ? for_you : null,
+    };
+    dispatchThunk(dispatch, getListRealEstates(params));
   }, [dispatch]);
 
   const convertDataFilter = (data: any) => {
     const res: any = {};
     res.sort_by = 'asc';
+    res.demand_id = '1';
 
     if (data?.sort_by) {
       res.sort_by = data?.sort_by;
@@ -95,8 +106,9 @@ const ListPostsScreen = props => {
   };
 
   const onSelect = (value: any) => {
-    console.log('🚀 ~ file: index.js:51 ~ onSelect ~ value:', value);
     const dataFilter = convertDataFilter(value);
+    console.log('🚀 dataFilter', dataFilter);
+
     dispatchThunk(dispatch, getListRealEstates(dataFilter));
   };
 

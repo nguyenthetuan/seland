@@ -66,7 +66,7 @@ export const getListRealEstatesForYou = createAsyncThunk(
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
       const params = {
-        is_hot: 1,
+        for_you: 1,
       };
       const { data } = await requestGetListRealEstates(params);
       return fulfillWithValue(data);

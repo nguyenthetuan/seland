@@ -66,7 +66,9 @@ const ItemHottestRealEstate = ({ item, type }) => {
   const onToLocation = () => {};
   const onGoDetail = () => {
     if (type !== REAL_ESTATE.PROJECT) {
-      navigate(SCREENS.DETAIL_POST);
+      navigate(SCREENS.DETAIL_POST, {
+        id: item?.id,
+      });
     }
   };
 

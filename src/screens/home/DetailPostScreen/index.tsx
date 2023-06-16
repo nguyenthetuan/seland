@@ -15,8 +15,8 @@ import {
 } from '../../../features';
 import { useRoute } from '@react-navigation/native';
 import Loading from 'react-native-loading-spinner-overlay';
-import { COLOR_BLUE_1 } from '../../../constants';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../../constants';
 
 const DetailPostScreen = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const DetailPostScreen = () => {
       <Loading
         visible={loading}
         textContent={t('common.loading') || ''}
-        color={COLOR_BLUE_1}
+        color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.detailPostWrapper}>

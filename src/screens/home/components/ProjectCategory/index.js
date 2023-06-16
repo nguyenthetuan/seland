@@ -19,7 +19,7 @@ const ProjectCategory = () => {
     setIsBuy(value);
   };
 
-  const listHottestRealEstate = useMemo(() => {
+  const listProjectRealEstate = useMemo(() => {
     let results = [];
 
     if (isBuy) {
@@ -64,9 +64,9 @@ const ProjectCategory = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map((item, index) => (
+        {listProjectRealEstate.map(item => (
           <ItemHottestRealEstate
-            key={`ProjectCategory${index}`}
+            key={`ProjectCategory${item?.id}`}
             item={item}
             type={REAL_ESTATE.PROJECT}
           />

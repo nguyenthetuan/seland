@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import { selectHome } from '../../../../features';
+import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
@@ -22,9 +23,13 @@ const HottestRealEstateCategory = () => {
     let results = [];
 
     if (isBuy) {
-      results = listRealEstatesHots?.data;
+      results = listRealEstatesHots?.data
+        ?.filter(item => item.demand_id === IDemandId.BUY)
+        ?.slice(0, 3);
     } else {
-      results = listRealEstatesHots?.data?.slice(0, 3);
+      results = listRealEstatesHots?.data
+        ?.filter(item => item.demand_id === IDemandId.LEASE)
+        ?.slice(0, 3);
     }
     return results;
   }, [isBuy, listRealEstatesHots?.data]);
@@ -63,9 +68,9 @@ const HottestRealEstateCategory = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map((item, index) => (
+        {listHottestRealEstate.map(item => (
           <ItemHottestRealEstate
-            key={`ItemHottestRealEstate${index}`}
+            key={`ItemHottestRealEstate${item?.id}`}
             item={item}
           />
         ))}
