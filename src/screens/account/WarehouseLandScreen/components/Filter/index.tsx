@@ -64,9 +64,22 @@ const FilterWarehouse: FC<Iprops> = props => {
     },
   ];
   const { listAllWareHouses, listAgency } = useSelector(selectWareHouses);
-  const listAllWareHousesConvert =
-    listAllWareHouses && formatSelect(listAllWareHouses);
-  const listAgencyConvert = listAgency && formatSelect(listAgency);
+  const listAllWareHousesConvert = (listAllWareHouses &&
+    Array.isArray(listAllWareHouses) &&
+    formatSelect(listAllWareHouses)) || [
+    {
+      label: `${t('button.all')}`,
+      value: null,
+    },
+  ];
+  const listAgencyConvert = (listAgency &&
+    Array.isArray(listAgency) &&
+    formatSelect(listAgency)) || [
+    {
+      label: `${t('button.all')}`,
+      value: null,
+    },
+  ];
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
@@ -76,6 +89,8 @@ const FilterWarehouse: FC<Iprops> = props => {
     dispatchThunk(dispatch, loadListAllWareHouses());
     dispatchThunk(dispatch, loadListAgency());
   }, [dispatch]);
+
+  console.log('listAllWareHousesConvert', listAllWareHousesConvert);
 
   return (
     <>
@@ -98,7 +113,7 @@ const FilterWarehouse: FC<Iprops> = props => {
               data={listAllWareHousesConvert}
               name="real_estate_warehouse_id"
               onSelect={handleSubmit(onSelect)}
-              title={t('upgradeAccount.realEstatesSelect') || ''}
+              title={`${t('upgradeAccount.realEstatesSelect')}` || ''}
             />
           </View>
           <View style={styles.areaRange}>
@@ -111,7 +126,7 @@ const FilterWarehouse: FC<Iprops> = props => {
               data={listAgencyConvert}
               name="area_range_id"
               onSelect={handleSubmit(onSelect)}
-              title={t('upgradeAccount.agencySelect') || ''}
+              title={`${t('upgradeAccount.agencySelect')}` || ''}
             />
           </View>
         </View>
@@ -125,7 +140,7 @@ const FilterWarehouse: FC<Iprops> = props => {
             ...item,
             label: t(`select.${item?.label}`),
           }))}
-          title={t('select.sortBySelect') || ''}
+          title={`${t('select.sortBySelect')}` || ''}
           name="sort_order"
           onSelect={handleSubmit(onSelect)}
         />
