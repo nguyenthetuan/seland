@@ -1,16 +1,12 @@
-import { useTranslation } from 'react-i18next';
-
 interface IFormatSelect {
   name: string;
   id: string | number | null;
 }
 
 export const formatSelect = (data: IFormatSelect[]) => {
-  const { t } = useTranslation();
-
   const selectAll = [
     {
-      label: `${t('button.all')}`,
+      label: 'Tất cả',
       value: null,
     },
   ];
