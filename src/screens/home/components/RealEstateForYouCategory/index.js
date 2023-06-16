@@ -7,6 +7,7 @@ import { Button } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
+import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
@@ -18,14 +19,17 @@ const RealEstateForYouCategory = () => {
   const handleSelectOptions = value => {
     setIsBuy(value);
   };
-
   const listHottestRealEstate = useMemo(() => {
     let results = [];
 
     if (isBuy) {
-      results = listRealEstatesForYou?.data;
+      results = listRealEstatesForYou?.data
+        ?.filter(item => item.demand_id === IDemandId.BUY)
+        ?.slice(0, 3);
     } else {
-      results = listRealEstatesForYou?.data?.slice(0, 3);
+      results = listRealEstatesForYou?.data
+        ?.filter(item => item.demand_id === IDemandId.LEASE)
+        ?.slice(0, 3);
     }
     return results;
   }, [isBuy, listRealEstatesForYou?.data]);
@@ -64,9 +68,9 @@ const RealEstateForYouCategory = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map((item, index) => (
+        {listHottestRealEstate.map(item => (
           <ItemHottestRealEstate
-            key={`RealEstateForYouCategory${index}`}
+            key={`RealEstateForYouCategory${item?.id}`}
             item={item}
             type={REAL_ESTATE.REAL_ESTATE_FOR_YOU}
           />

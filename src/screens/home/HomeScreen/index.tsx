@@ -41,7 +41,15 @@ const HomeScreen = () => {
     dispatchThunk(dispatch, getListNews());
   }, [dispatch]);
 
-  const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
+  const navigateToListPostsHot = () =>
+    navigate(SCREENS.LIST_POST, {
+      is_hot: 1,
+    });
+  const navigateToListPostsForYou = () =>
+    navigate(SCREENS.LIST_POST, {
+      for_you: 1,
+    });
+  const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
 
   const navigateToMaps = () => navigate(SCREENS.MAPS);
 
@@ -72,7 +80,7 @@ const HomeScreen = () => {
             containerStyle={styles.inputContainer}
             inputContainerStyle={styles.inputSearch}
             rightIcon={<Icon name="search" />}
-            placeholder={t('input.projectSunriseCity')}
+            placeholder={t('input.projectSunriseCity') || ''}
           />
           <Pressable
             style={styles.boxLocation}
@@ -85,7 +93,7 @@ const HomeScreen = () => {
         {listRealEstatesHots?.data?.length ? (
           <Category
             label={t('common.hottestRealEstate')}
-            onSeeAll={navigateToListPosts}
+            onSeeAll={navigateToListPostsHot}
           >
             <HottestRealEstateCategory />
           </Category>
@@ -93,7 +101,7 @@ const HomeScreen = () => {
         {listRealEstatesForYou?.data?.length ? (
           <Category
             label={t('common.realEstateForYou')}
-            onSeeAll={navigateToListPosts}
+            onSeeAll={navigateToListPostsForYou}
           >
             <RealEstateForYouCategory />
           </Category>
@@ -101,7 +109,7 @@ const HomeScreen = () => {
         {listProject?.data?.length ? (
           <Category
             label={t('common.project')}
-            onSeeAll={navigateToListPosts}
+            onSeeAll={navigateToListProject}
           >
             <ProjectCategory />
           </Category>
