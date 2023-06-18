@@ -39,6 +39,9 @@ const AccountScreen = () => {
   const navigateToCollaboratorInformation = () =>
     navigate(SCREENS.COLLABORATOR_SCREEN);
 
+  const navigateToPersonalPage = () =>
+    navigate(SCREENS.PERSONAL_PAGE_SCREEN);
+
   const activityHistory = [
     {
       name: 'viewedPosts',
@@ -191,7 +194,7 @@ const AccountScreen = () => {
           </View>
           <Text
             style={styles.myPage}
-            onPress={navigateToPersonalInformation}
+            onPress={navigateToPersonalPage}
           >
             {t('button.personalPage')}
           </Text>

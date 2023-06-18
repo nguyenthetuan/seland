@@ -1,6 +1,6 @@
 import { Button as RNEButton } from '@rneui/themed';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { COLORS } from '../../../constants';
 import Text from '../Text';
@@ -25,6 +25,7 @@ const Button = ({
   outline = false,
   title = '',
   titleStyle,
+  icon,
   ...props
 }: ButtonProps) => (
   <RNEButton
@@ -35,11 +36,17 @@ const Button = ({
     loading={loading}
     radius={props?.radius}
     title={
-      <Text
-        style={StyleSheet.flatten([styles.title(color, outline), titleStyle])}
-      >
-        {title}
-      </Text>
+      <View style={styles.wrap}>
+        {icon && <View style={styles.wrapIcon}>
+          {icon}
+        </View>}
+        
+        <Text
+          style={StyleSheet.flatten([styles.title(color, outline), titleStyle])}
+        >
+          {title}
+        </Text>
+      </View>
     }
     {...props}
   />
