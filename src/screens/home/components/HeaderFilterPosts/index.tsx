@@ -53,7 +53,7 @@ const initValues = {
   bedroom: [],
   bathroom: [],
   numberFloors: [],
-  province_id: 'HNI',
+  province_id: null,
   ward_id: null,
   district_id: null,
   demand_id: null,

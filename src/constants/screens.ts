@@ -23,6 +23,7 @@ const SCREENS = {
   WAREHOUSELAND: 'WareHouseLand',
   FILTER_SCREEN: 'FilterScreen',
   DEPOSIT_SCREEN: 'DepositScreen',
+  PERSONAL_PAGE_SCREEN: 'PersonalPageScreen',
   DETAIL_POST: 'DetailPost',
   COLLABORATOR_SCREEN: 'CollaboratorInformationScreen',
   ADD_ACCOUNT_SCREEN: 'AddAccountScreen',

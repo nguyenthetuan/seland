@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
   wrap: {
     flexDirection: 'row',
   },
+  wrapIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 4
+  }
 });
 
 export default styles;

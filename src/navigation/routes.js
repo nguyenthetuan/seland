@@ -18,6 +18,7 @@ import FilterScreen from '../screens/home/FilterScreen/screen/index';
 import AddAccountScreen from '../screens/account/AgencyInformationScreen/components/AddAccountScreen';
 import ChangeStatusScreen from '../screens/account/AgencyInformationScreen/components/ChangeStatusScreen';
 import StaffInformationScreen from '../screens/account/AgencyInformationScreen/components/StaffInformationScreen';
+import PersonalPageScreen from '../screens/account/PersonalPageScreen';
 
 const routes = [
   {
@@ -75,6 +76,10 @@ const routes = [
   {
     component: CollaboratorInformationScreen,
     name: SCREENS.COLLABORATOR_SCREEN,
+  },
+  {
+    component: PersonalPageScreen,
+    name: SCREENS.PERSONAL_PAGE_SCREEN,
   },
   {
     component: AddAccountScreen,
