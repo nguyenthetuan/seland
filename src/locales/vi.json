@@ -172,7 +172,9 @@
     "display": "Hiển thị",
     "seePost": "Xem tin",
     "care": "Quan tâm",
-    "about": "Giới thiệu"
+    "about": "Giới thiệu",
+    "deleteSuccess": "Hạ tin thành công",
+    "deleteFail": "Hạ tin thất bại"
   },
   "error": {
     "network": "Không thể kết nối với máy chủ",

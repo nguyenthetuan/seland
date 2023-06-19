@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetListRealEstatesUser } from '../api';
+import {
+  requestDeleteRealEstates,
+  requestGetListRealEstatesUser,
+} from '../api';
 
 export const selectUserRealEstates = state => state.userRealEstates;
 
@@ -16,10 +19,23 @@ export const getListRealEstatesUser = createAsyncThunk(
   }
 );
 
+export const deleteRealEstatesUser = createAsyncThunk(
+  'deleteRealEstatesUser',
+  async (id, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestDeleteRealEstates(id);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error?.errors);
+    }
+  }
+);
+
 const slice = createSlice({
   name: 'userRealEstates',
   initialState: {
     loading: false,
+    loadingDelete: false,
     data: [],
     page: 1,
     limit: 10,
@@ -38,6 +54,17 @@ const slice = createSlice({
     builder.addCase(getListRealEstatesUser.rejected, (state, action) => {
       state.loading = false;
       state.data = [];
+      state.error = action.payload;
+    });
+    builder.addCase(deleteRealEstatesUser.pending, state => {
+      state.loadingDelete = true;
+    });
+    builder.addCase(deleteRealEstatesUser.fulfilled, state => {
+      state.loadingDelete = false;
+      state.error = '';
+    });
+    builder.addCase(deleteRealEstatesUser.rejected, (state, action) => {
+      state.loadingDelete = false;
       state.error = action.payload;
     });
   },

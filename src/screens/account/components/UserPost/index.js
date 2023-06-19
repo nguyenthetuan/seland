@@ -5,11 +5,16 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
-import { yup } from '../../../../utils';
+import {
+  deleteRealEstatesUser,
+  selectUserRealEstates,
+} from '../../../../features';
+import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
 
 const Info = ({ value, icon }) => (
@@ -37,14 +42,10 @@ const schema = yup.object({
 
 const UserPost = ({ item }) => {
   const { t } = useTranslation();
-  const {
-    clearErrors,
-    control,
-    getValues,
-    formState: { errors },
-    handleSubmit,
-    setValue,
-  } = useForm({
+  const dispatch = useDispatch();
+  const { loadingDelete } = useSelector(selectUserRealEstates);
+
+  const { control, getValues, setValue } = useForm({
     defaultValues: {
       code: '',
       validity: '',
@@ -96,6 +97,16 @@ const UserPost = ({ item }) => {
         return 'common.vipGold';
       default:
         return 'common.vipDiamond';
+    }
+  };
+  const onDeletePost = async () => {
+    try {
+      if (item?.id) {
+        await dispatchThunk(dispatch, deleteRealEstatesUser(item?.id));
+        Alert.alert(t('common.deleteSuccess'));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -222,6 +233,8 @@ const UserPost = ({ item }) => {
           <Button
             color={COLORS.RED_2}
             title={t('button.hidePost')}
+            onPress={onDeletePost}
+            loading={loadingDelete}
           />
         </View>
         <View style={[styles.flex, styles.buttonRight]}>
