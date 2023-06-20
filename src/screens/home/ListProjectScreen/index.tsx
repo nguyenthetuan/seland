@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { NoResults } from '../../../components';
@@ -31,8 +31,14 @@ const ListProjectScreen = () => {
   const { data } = listProject;
   const { loading } = listProject;
 
-  useEffect(() => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onGetListProjects = () => {
     dispatchThunk(dispatch, getListProjects());
+  };
+
+  useEffect(() => {
+    onGetListProjects();
   }, [dispatch]);
 
   return (
@@ -45,21 +51,27 @@ const ListProjectScreen = () => {
       />
       <View style={styles.boxListPost}>
         <HeaderListPosts control={control} />
-        <FlatList
-          style={styles.list}
-          contentContainerStyle={styles.contentContainer}
-          data={data}
-          renderItem={({ item }) => <ItemProject item={item} />}
-          keyExtractor={(_, index) => `itemProject${index}`}
-          ListEmptyComponent={loading ? null : <NoResults />}
-          ListHeaderComponent={
-            <HeaderFilterPosts
-              control={control}
-              handleSubmit={handleSubmit}
-              onSelect={onSelect}
-            />
-          }
-        />
+        {isLoading ? (
+          <ActivityIndicator size={'small'} />
+        ) : (
+          <FlatList
+            style={styles.list}
+            contentContainerStyle={styles.contentContainer}
+            data={data}
+            renderItem={({ item }) => <ItemProject item={item} />}
+            keyExtractor={(_, index) => `itemProject${index}`}
+            ListEmptyComponent={loading ? null : <NoResults />}
+            ListHeaderComponent={
+              <HeaderFilterPosts
+                control={control}
+                handleSubmit={handleSubmit}
+                onSelect={onSelect}
+              />
+            }
+            refreshing={isLoading}
+            onRefresh={onGetListProjects}
+          />
+        )}
       </View>
     </>
   );
