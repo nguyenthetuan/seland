@@ -1,8 +1,8 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -32,14 +32,7 @@ const ListPostsScreen = (props: any) => {
     defaultValues: {},
   });
 
-  useEffect(() => {
-    const params = {
-      demand_id: demand_id,
-      is_hot: is_hot ? is_hot : null,
-      for_you: for_you ? for_you : null,
-    };
-    dispatchThunk(dispatch, getListRealEstates(params));
-  }, [dispatch]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const convertDataFilter = (data: any) => {
     const res: any = {};
@@ -112,6 +105,19 @@ const ListPostsScreen = (props: any) => {
     dispatchThunk(dispatch, getListRealEstates(dataFilter));
   };
 
+  const onGetListRealEstates = () => {
+    const params = {
+      demand_id: demand_id,
+      is_hot: is_hot ? is_hot : null,
+      for_you: for_you ? for_you : null,
+    };
+    dispatchThunk(dispatch, getListRealEstates(params));
+  };
+
+  useEffect(() => {
+    onGetListRealEstates();
+  }, [dispatch]);
+
   return (
     <>
       <Loading
@@ -122,21 +128,27 @@ const ListPostsScreen = (props: any) => {
       />
       <View style={styles.boxListPost}>
         <HeaderListPosts control={control} />
-        <FlatList
-          style={styles.list}
-          contentContainerStyle={styles.contentContainer}
-          data={listPosts}
-          renderItem={({ item }) => <ItemRealEstates item={item} />}
-          keyExtractor={(_, index) => `itemPost${index}`}
-          ListEmptyComponent={loadingListPost ? null : <NoResults />}
-          ListHeaderComponent={
-            <HeaderFilterPosts
-              onSelect={onSelect}
-              onFilter={onFilter}
-              {...props}
-            />
-          }
-        />
+        {isLoading ? (
+          <ActivityIndicator size={'small'} />
+        ) : (
+          <FlatList
+            style={styles.list}
+            contentContainerStyle={styles.contentContainer}
+            data={listPosts}
+            renderItem={({ item }) => <ItemRealEstates item={item} />}
+            keyExtractor={(_, index) => `itemPost${index}`}
+            ListEmptyComponent={loadingListPost ? null : <NoResults />}
+            ListHeaderComponent={
+              <HeaderFilterPosts
+                onSelect={onSelect}
+                onFilter={onFilter}
+                {...props}
+              />
+            }
+            refreshing={isLoading}
+            onRefresh={onGetListRealEstates}
+          />
+        )}
       </View>
     </>
   );

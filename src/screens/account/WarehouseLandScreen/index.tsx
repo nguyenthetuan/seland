@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { NoResults } from '../../../components';
@@ -29,21 +29,29 @@ const WarehouseLandScreen = () => {
   });
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSelect = () => {
     dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
   };
   const { listRealEstateWarehouses, loadingRealEstateWarehouses } =
     useSelector(selectWareHouses);
 
-  useEffect(() => {
-    dispatchThunk(dispatch, loadRealEstateWarehouses());
-  }, [dispatch]);
   const onFilterModal = (value: IModalFilterWarehouse) => {
     dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
   };
   const onChangeSearch = (value: string) => {
     dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
   };
+
+  const onLoadRealEstateWarehouses = () => {
+    dispatchThunk(dispatch, loadRealEstateWarehouses());
+  };
+
+  useEffect(() => {
+    onLoadRealEstateWarehouses();
+  }, [dispatch]);
 
   return (
     <>
@@ -59,25 +67,31 @@ const WarehouseLandScreen = () => {
           handleSubmit={handleSubmit}
           onChangeSearch={onChangeSearch}
         />
-        <FlatList
-          style={styles.list}
-          contentContainerStyle={styles.contentContainer}
-          data={listRealEstateWarehouses}
-          renderItem={({ item }) => <ItemWarehouseLand item={item} />}
-          keyExtractor={(_, index) => `itemWarehouseLand${index}`}
-          ListEmptyComponent={
-            loadingRealEstateWarehouses ? null : <NoResults />
-          }
-          ListHeaderComponent={
-            <FilterWarehouse
-              control={control}
-              handleSubmit={handleSubmit}
-              onSelect={onSelect}
-              onFilter={onFilterModal}
-              setValue={setValue}
-            />
-          }
-        />
+        {isLoading ? (
+          <ActivityIndicator size={'small'} />
+        ) : (
+          <FlatList
+            style={styles.list}
+            contentContainerStyle={styles.contentContainer}
+            data={listRealEstateWarehouses}
+            renderItem={({ item }) => <ItemWarehouseLand item={item} />}
+            keyExtractor={(_, index) => `itemWarehouseLand${index}`}
+            ListEmptyComponent={
+              loadingRealEstateWarehouses ? null : <NoResults />
+            }
+            ListHeaderComponent={
+              <FilterWarehouse
+                control={control}
+                handleSubmit={handleSubmit}
+                onSelect={onSelect}
+                onFilter={onFilterModal}
+                setValue={setValue}
+              />
+            }
+            refreshing={isLoading}
+            onRefresh={onLoadRealEstateWarehouses}
+          />
+        )}
       </View>
     </>
   );

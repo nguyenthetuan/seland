@@ -1,7 +1,7 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,12 +21,18 @@ const UserDraftPostsScreen = () => {
   const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
 
-  useEffect(() => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onGetListRealEstatesUser = () => {
     const params = {
       status: YOUR_WANT.SAVE_DRAFTS,
       sort_by: 'createdAt',
     };
     dispatchThunk(dispatch, getListRealEstatesUser(params));
+  };
+
+  useEffect(() => {
+    onGetListRealEstatesUser();
   }, [dispatch]);
 
   return (
@@ -40,13 +46,19 @@ const UserDraftPostsScreen = () => {
 
       <View style={[styles.flex, styles.whiteBackground]}>
         <Header title={t('header.listDraft')} />
-        <FlatList
-          style={[styles.list, styles.marginHorizontal]}
-          data={userRealEstates}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <UserPost item={item} />}
-          ListEmptyComponent={(!loading && <NoResults />) || null}
-        />
+        {isLoading ? (
+          <ActivityIndicator size={'small'} />
+        ) : (
+          <FlatList
+            style={[styles.list, styles.marginHorizontal]}
+            data={userRealEstates}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <UserPost item={item} />}
+            ListEmptyComponent={(!loading && <NoResults />) || null}
+            refreshing={isLoading}
+            onRefresh={onGetListRealEstatesUser}
+          />
+        )}
       </View>
     </>
   );
