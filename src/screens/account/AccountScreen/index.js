@@ -34,6 +34,8 @@ const AccountScreen = () => {
 
   const navigateToChangePassword = () => navigate(SCREENS.CHANGE_PASSWORD);
 
+  const navigateToRequestContact = () => navigate(SCREENS.REQUEST_CONTACT_SCREEN);
+
   const navigateToDepositScreen = () => navigate(SCREENS.DEPOSIT_SCREEN);
 
   const navigateToCollaboratorInformation = () =>
@@ -148,6 +150,10 @@ const AccountScreen = () => {
     {
       name: 'changePassword',
       onPress: navigateToChangePassword,
+    },
+    {
+      name: 'requestContact',
+      onPress: navigateToRequestContact,
     },
     {
       name: 'notification',

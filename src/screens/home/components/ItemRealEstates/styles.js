@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   boxLocation: {
     flexDirection: 'row',
-    marginHorizontal: 5,
+    paddingHorizontal: 6,
   },
   boxMonopoly: {
     backgroundColor: COLORS.ORANGE_5,
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   },
   location: {
     color: COLORS.GRAY_7,
+    flexWrap: 'wrap',
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 8,

@@ -61,9 +61,13 @@ const convertValuePriceToTitle = (priceItem: { value: string }) => {
   const arrVal = priceItem?.value?.split('-');
 
   if (Number(arrVal[0]) < 1) {
-    stringVal = `${Number(arrVal[0]) * 1000} triệu`;
-  } else if (Number(arrVal[0]) >= 1) {
-    stringVal = `${Number(arrVal[0])} tỷ`;
+    if (Number(arrVal[1]) < 1) {
+      stringVal = `${Number(arrVal[0]) * 1000}`;
+    } else {
+      stringVal = `${Number(arrVal[0]) * 1000} triệu`;
+    }
+  } else {
+    stringVal = `${Number(arrVal[0])}`;
   }
 
   if (Number(arrVal[1]) < 1) {
@@ -92,7 +96,7 @@ const convertValueAreaToTitle = (priceItem: { value: string }) => {
   } else if (Number(arrVal[1]) === 0) {
     stringVal = `Trên ${Number(arrVal[0])}m²`;
   } else {
-    stringVal = `${Number(arrVal[0])}m²-${Number(arrVal[1])}m²`;
+    stringVal = `${Number(arrVal[0])} - ${Number(arrVal[1])}m²`;
   }
 
   return {
