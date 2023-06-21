@@ -403,14 +403,14 @@ const FilterScreen = (props: any) => {
           )}
           defaultValues={initValues.priceRange}
           minimumValue={0}
-          maximumValue={100}
-          step={1}
+          maximumValue={50}
+          step={0.1}
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
-            (Number(val) * 10 ** 9 || '0')
+            (Number(val).toFixed(1) || '0')
               .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
+              + ' tỷ VND'
           }
         />
 
@@ -421,7 +421,7 @@ const FilterScreen = (props: any) => {
           )}
           defaultValues={initValues.acreage}
           minimumValue={0}
-          maximumValue={100}
+          maximumValue={500}
           step={5}
           control={control}
           name="acreage"

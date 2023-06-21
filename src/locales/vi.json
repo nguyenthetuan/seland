@@ -369,7 +369,8 @@
     "job": "Công việc hiện tại",
     "yoe": "Số năm kinh nghiệm môi giới BĐS",
     "workZone": "Khu vực đăng ký làm môi giới BĐS",
-    "workingYear": "Năm hoạt động"
+    "workingYear": "Năm hoạt động",
+    "searchTitle": "Tìm kiếm tiêu đề, khu vực..."
   },
   "addAccount": {
     "header": "Thêm mới tài khoản",

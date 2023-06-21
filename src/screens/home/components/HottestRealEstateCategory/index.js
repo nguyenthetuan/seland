@@ -9,6 +9,7 @@ import { selectHome } from '../../../../features';
 import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
+import REAL_ESTATE from '../../../../constants/realEstate';
 
 const HottestRealEstateCategory = () => {
   const { t } = useTranslation();
@@ -72,6 +73,7 @@ const HottestRealEstateCategory = () => {
           <ItemHottestRealEstate
             key={`ItemHottestRealEstate${item?.id}`}
             item={item}
+            type={REAL_ESTATE.REAL_ESTATE_HOSTEST}
           />
         ))}
       </ScrollView>

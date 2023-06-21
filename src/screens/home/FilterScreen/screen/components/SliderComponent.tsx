@@ -130,7 +130,7 @@ export const SliderComponent = ({
           maximumValue={maximumValue}
           step={step}
           minimumTrackTintColor={COLORS.SLIDER_1}
-          maximumTrackTintColor={COLORS.SLIDER_1}
+          maximumTrackTintColor={COLORS.GRAY_5}
           thumbTintColor={COLORS.SLIDER_1}
           thumbImage={ThumbSlider}
           onSlidingComplete={val => onChange(val)}
@@ -166,7 +166,7 @@ export const SliderComponent = ({
       </ScrollView>
       {renderSlider()}
       <Text style={styles.txtValue}>
-        {(convertDisplay ? convertDisplay(value?.[0]) : value?.[0]) || ''}
+        {String(value?.[0]).slice(0,4) || ''}
         {(convertDisplay
           ? ' - ' + convertDisplay(value?.[1])
           : ' - ' + value?.[1]) || ''}
