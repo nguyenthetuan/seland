@@ -141,6 +141,7 @@ const FilterScreen = (props: any) => {
   });
 
   const [tabSelected, setTabSelected] = useState(dataFilters?.demand_id || 1);
+  const [enableScroll, setEnableScroll] = useState(true);
 
   const { basicInformation, demands } = useSelector(selectPosts);
 
@@ -152,10 +153,12 @@ const FilterScreen = (props: any) => {
     title: directionItem?.value,
   }));
 
-  const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
-    value: legalDocumentItem?.id,
-    title: legalDocumentItem?.value
-  }))
+  const legalDocumentOptions = more?.[2]?.children?.map(
+    (legalDocumentItem: any) => ({
+      value: legalDocumentItem?.id,
+      title: legalDocumentItem?.value,
+    })
+  );
 
   const locationOptions = more?.[5]?.children?.map((locationItem: any) => ({
     value: locationItem?.id,
@@ -196,7 +199,7 @@ const FilterScreen = (props: any) => {
       district_id: data?.district_id,
       typeHousing: data?.typeHousing,
       demand_id: tabSelected,
-      dataFilters: data
+      dataFilters: data,
     });
     params?.onSubmit && params?.onSubmit(data);
   };
@@ -265,6 +268,14 @@ const FilterScreen = (props: any) => {
     ]);
   };
 
+  const onShowTypeHousing = (data: boolean) => {
+    if (data) {
+      setEnableScroll(false);
+    } else {
+      setEnableScroll(true);
+    }
+  };
+
   useEffect(() => {
     refresh();
   }, []);
@@ -285,7 +296,10 @@ const FilterScreen = (props: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scroll}>
+      <ScrollView
+        style={styles.scroll}
+        scrollEnabled={enableScroll}
+      >
         <View style={styles.header}>
           <Text style={styles.filterPost}>{t('heading.filterPost')}</Text>
           <TouchableOpacity
@@ -378,6 +392,7 @@ const FilterScreen = (props: any) => {
             control={control}
             name="typeHousing"
             multipleChoice
+            onShowTypeHousing={onShowTypeHousing}
           />
         </View>
 
@@ -420,6 +435,7 @@ const FilterScreen = (props: any) => {
             type={'compass'}
             control={control}
             name="compass"
+            onShowTypeHousing={onShowTypeHousing}
           />
         </View>
 
