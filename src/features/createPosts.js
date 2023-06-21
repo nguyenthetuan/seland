@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   requestCreateRealEstates,
   requestGetAllInformation,
+  requestGetDetailRealEstates,
   requestGetListRank,
 } from '../api';
 
@@ -55,21 +56,35 @@ export const getListRank = createAsyncThunk(
   }
 );
 
+export const editPost = createAsyncThunk(
+  'editPost',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    console.log('params', params)
+    try {
+      const response = await requestGetDetailRealEstates(params)
+      return fulfillWithValue(response?.data);
+    } catch (error) {
+      return rejectWithValue(error?.message);
+    }
+  }
+);
 export const createRealEstates = createAsyncThunk(
   'createRealEstates',
   async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestCreateRealEstates(params);
+      console.log('data1111', data);
+
       return fulfillWithValue({ ...data });
     } catch (error) {
       const { data } = error;
+      console.log('data', data);
       let errorString = 'Lỗi hệ thống';
       if (data) {
-        errorString = ` ${
-          Object.keys(data)[Object.keys(data).length - 1]
-        }: ${data?.[
-          Object.keys(data)[Object.keys(data).length - 1]
-        ].toString()}`;
+        errorString = ` ${Object.keys(data)[Object.keys(data).length - 1]
+          }: ${data?.[
+            Object.keys(data)[Object.keys(data).length - 1]
+          ].toString()}`;
       }
 
       return rejectWithValue(errorString);
@@ -196,6 +211,30 @@ const slice = createSlice({
     builder.addCase(getListRank.fulfilled, (state, action) => {
       state.loading = false;
       state.rank = action.payload;
+    });
+    builder.addCase(editPost.pending, state => {
+      // state.createRealEstate.loading = true;
+    });
+    builder.addCase(editPost.fulfilled, (state, action) => {
+      console.log('payload', action.payload);
+      state.basicInformation = {
+        demand_id: action.payload.demand_id,
+        real_estate_type_id: action.payload.real_estate_type_id,
+        project_id: action.payload.project_id,
+        address_detail: action.payload.address,
+        province_id: action.payload.province_id,
+        district_id: action.payload.district_id,
+        ward_id: action.payload.ward_id,
+        street_id: action.payload.street_id,
+        lat_long: action.payload.lat_long,
+      }
+      // state.createRealEstate.loading = false;
+      // state.createRealEstate.data = action.payload;
+      // state.createRealEstate.error = '';
+    });
+    builder.addCase(editPost.rejected, (state, action) => {
+      // state.createRealEstate.loading = false;
+      // state.createRealEstate.error = action.payload;
     });
   },
 });

@@ -117,6 +117,7 @@ const BasicInformation = forwardRef((props, ref) => {
     refresh();
   }, []);
 
+  console.log('basicInformation', basicInformation);
   useEffect(() => {
     Object.entries(basicInformation).forEach(
       ([key, value]) => value && setValue(key, value)

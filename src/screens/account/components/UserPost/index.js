@@ -1,16 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
-import { yup } from '../../../../utils';
+import { COLORS, SCREENS } from '../../../../constants';
+import {
+  editPost
+} from '../../../../features';
+import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
+
 
 const Info = ({ value, icon }) => (
   <View style={[styles.info, styles.row]}>
@@ -36,6 +42,8 @@ const schema = yup.object({
 });
 
 const UserPost = ({ item }) => {
+  const { navigate } = useNavigation();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const {
     clearErrors,
@@ -63,9 +71,8 @@ const UserPost = ({ item }) => {
   });
 
   const handleCall = () => {
-    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${
-      item?.phone_number
-    }`;
+    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${item?.phone_number
+      }`;
     Linking.canOpenURL(callUrl).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
@@ -98,6 +105,10 @@ const UserPost = ({ item }) => {
         return 'common.vipDiamond';
     }
   };
+
+  const navigateToEdit = () => {
+    dispatchThunk(dispatch, editPost(item.id), () => navigate('CreatePostNavigator', { edit: true }));
+  }
 
   return (
     <TouchableOpacity style={styles.item}>
@@ -216,6 +227,7 @@ const UserPost = ({ item }) => {
           <Button
             color={COLORS.GREEN_1}
             title={t('button.editPost')}
+            onPress={navigateToEdit}
           />
         </View>
         <View style={[styles.flex, styles.buttonMiddle]}>
