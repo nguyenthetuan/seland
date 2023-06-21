@@ -20,7 +20,7 @@ interface IProps {
   control?: any;
   multipleChoice?: boolean;
   onSelectTypeHousing?: any;
-  onShowTypeHousing: () => void;
+  onShowTypeHousing?: () => void;
 }
 
 interface ITypeHousingItem {
@@ -48,7 +48,7 @@ const TypeHousing = ({
 
   const onShowListTypeHousing = () => {
     setShowTypeHousing(!showTypeHousing);
-    onShowTypeHousing(!showTypeHousing);
+    onShowTypeHousing && onShowTypeHousing(!showTypeHousing);
   };
 
   const onSelectTypeHousing = (item: string | number) => {
