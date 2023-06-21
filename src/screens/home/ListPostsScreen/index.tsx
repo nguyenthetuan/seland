@@ -33,6 +33,7 @@ const ListPostsScreen = (props: any) => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [enableScroll, setEnableScroll] = useState(true);
 
   const convertDataFilter = (data: any) => {
     const res: any = {};
@@ -114,6 +115,14 @@ const ListPostsScreen = (props: any) => {
     dispatchThunk(dispatch, getListRealEstates(params));
   };
 
+  const onShowTypeHousing = (data: boolean) => {
+    if (data) {
+      setEnableScroll(false);
+    } else {
+      setEnableScroll(true);
+    }
+  };
+
   useEffect(() => {
     onGetListRealEstates();
   }, [dispatch]);
@@ -142,11 +151,13 @@ const ListPostsScreen = (props: any) => {
               <HeaderFilterPosts
                 onSelect={onSelect}
                 onFilter={onFilter}
+                onShowTypeHousing={onShowTypeHousing}
                 {...props}
               />
             }
             refreshing={isLoading}
             onRefresh={onGetListRealEstates}
+            scrollEnabled={enableScroll}
           />
         )}
       </View>
