@@ -29,11 +29,6 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
   },
-  wrapIconContainer: {
-    height: 24,
-    width: 24,
-    justifyContent: 'center',
-  },
   headerTitle: {
     color: COLORS.BLACK_1,
     fontWeight: '500',
@@ -55,6 +50,11 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     paddingHorizontal: 16,
     paddingVertical: 4,
+  },
+  wrapIconContainer: {
+    height: 30,
+    justifyContent: 'center',
+    width: 30,
   },
 });
 

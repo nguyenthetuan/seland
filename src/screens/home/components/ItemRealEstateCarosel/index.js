@@ -88,7 +88,7 @@ const ItemHottestRealEstate = ({ item, type }) => {
         />
         <View style={styles.boxRank}>
           <View>
-            {[REAL_ESTATE.PROJECT, REAL_ESTATE.REAL_ESTATE_FOR_YOU].includes(
+            {[REAL_ESTATE.REAL_ESTATE_HOSTEST].includes(
               type
             ) && (
               <View style={styles.boxMonopoly}>

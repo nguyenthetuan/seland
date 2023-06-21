@@ -39,6 +39,7 @@ const HeaderListPosts: FC<Iprops> = props => {
           containerStyle={styles.inputContainer}
           inputContainerStyle={styles.inputSearch}
           onChangeText={value => onChange(value)}
+          placeholder={t('placeholder.searchTitle') || ""}
           rightIcon={
             <Icon
               name="search"
