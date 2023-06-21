@@ -10,6 +10,7 @@ import {
   Bathroom,
   Bedroom,
   Compass,
+  IconPreImage,
   LocationMaps,
   Love,
 } from '../../../../assets';
@@ -34,6 +35,7 @@ ItemInfo.propTypes = {
 };
 
 const ItemRealEstates = ({ item }) => {
+  console.log('item: ', item);
   const { t } = useTranslation();
   const { navigate } = useNavigation();
   const onPressCall = () => {
@@ -118,10 +120,16 @@ const ItemRealEstates = ({ item }) => {
             />
           </TouchableOpacity>
         </View>
+        <View style={styles.boxTotalImage}>
+          <View style={styles.boxTotalIcon}>
+            <IconPreImage />
+          </View>
+          <Text style={styles.boxTotalText}>{item?.images?.total}</Text>
+        </View>
       </View>
       <View style={styles.boxPrice}>
         <Text style={styles.price}>
-          {`${item?.price} ${item?.price_unit_name}`} {' '}
+          {`${item?.price} ${item?.price_unit_name}`}{' '}
           <Text style={styles.acreage}>{item?.price_per_m}</Text>
         </Text>
       </View>

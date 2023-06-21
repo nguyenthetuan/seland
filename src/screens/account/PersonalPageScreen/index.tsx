@@ -1,11 +1,40 @@
 import React, { useEffect } from 'react';
-import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { COLORS, SCREENS } from '../../../constants';
 // import styles from './styles';
 import { Text } from '@rneui/base';
 import { useNavigation } from '@react-navigation/native';
-import { ArrowLeft, IconDropdown, IconMapView, IconMessage, IconPhone, IconPhoneGreen, IconShare, IconStar, StatusSuccess } from '../../../assets';
-import { clearDistricts, clearWards, getAllFilter, getDistricts, getProvinces, getWards, selectCommon, selectPosts, selectRealEstates, selectUser } from '../../../features';
+import {
+  ArrowLeft,
+  IconDropdown,
+  IconMapView,
+  IconMessage,
+  IconPhone,
+  IconPhoneGreen,
+  IconShare,
+  IconStar,
+  StatusSuccess,
+} from '../../../assets';
+import {
+  clearDistricts,
+  clearWards,
+  getAllFilter,
+  getDistricts,
+  getProvinces,
+  getWards,
+  selectCommon,
+  selectPosts,
+  selectRealEstates,
+  selectUser,
+} from '../../../features';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
@@ -58,7 +87,7 @@ const typeTrade = [
     label: 'Bán',
     value: 'sell',
   },
-]
+];
 
 const initValues = {
   district: '',
@@ -91,16 +120,17 @@ const PersonalPageScreen = () => {
 
   const { data: user } = useSelector(selectUser);
 
-  console.log("user===", user);
-
   const { t } = useTranslation();
 
   const { control, handleSubmit, setValue, getValues } = useForm({
     defaultValues: initValues,
   });
 
-  const { data: listPosts, loading: loadingListPost, real_estate_type } =
-    useSelector(selectRealEstates);
+  const {
+    data: listPosts,
+    loading: loadingListPost,
+    real_estate_type,
+  } = useSelector(selectRealEstates);
 
   const onSelect = (value: any) => {
     console.log('🚀 dataFilter', value);
@@ -135,10 +165,8 @@ const PersonalPageScreen = () => {
   const districtOptions = [emptyDistrictOption, ...districts];
   const wardOptions = [emptyWardOption, ...wards];
 
-  const fetchDistricts = (
-    params: any,
-    callback?: undefined
-  ) => dispatchThunk(dispatch, getDistricts(params), callback);
+  const fetchDistricts = (params: any, callback?: undefined) =>
+    dispatchThunk(dispatch, getDistricts(params), callback);
 
   const fetchWards = (params: { province_code: any; district_code: any }) =>
     dispatchThunk(dispatch, getWards(params));
@@ -190,8 +218,7 @@ const PersonalPageScreen = () => {
   );
 
   const onSubmit = (params: any) => {
-    console.log("paramss====", params);
-    
+    console.log('paramss====', params);
   };
 
   const typeHousingOptions = real_estate_type.map(
@@ -231,14 +258,19 @@ const PersonalPageScreen = () => {
           <Text style={styles.title}>Trang cá nhân</Text>
         </View>
 
-        <Image style={styles.image} source={{uri: 'https://images.autofun.vn/file1/23a87a09c5fa4ea0be9f85e2ccaade5c_560x372.jpg'}} />
+        <Image
+          style={styles.image}
+          source={{
+            uri: 'https://images.autofun.vn/file1/23a87a09c5fa4ea0be9f85e2ccaade5c_560x372.jpg',
+          }}
+        />
 
         <View style={styles.header}>
           <View style={styles.boxHeaderLeft}>
             <Avatar
               containerStyle={styles.boxAvatar}
               renderPlaceholderContent={
-                <Text style={styles.text}>{user?.name?.charAt(0) || "Q"}</Text>
+                <Text style={styles.text}>{user?.name?.charAt(0) || 'Q'}</Text>
               }
               rounded
               size={112}
@@ -267,7 +299,10 @@ const PersonalPageScreen = () => {
             <View style={styles.boxVerify}>
               <Text style={styles.verify}>Đã xác thực</Text>
               <View style={styles.wrapVerifyIcon}>
-                <StatusSuccess width={14} height={14} />
+                <StatusSuccess
+                  width={14}
+                  height={14}
+                />
               </View>
             </View>
 
@@ -300,11 +335,13 @@ const PersonalPageScreen = () => {
         <View style={styles.row}>
           <View style={styles.wrapFollow}>
             <Select
-              data={[{
-                label: 'Test',
-                value: '1',
-              }]}
-              name='follow'
+              data={[
+                {
+                  label: 'Test',
+                  value: '1',
+                },
+              ]}
+              name="follow"
               control={control}
               buttonStyle={styles.select}
               buttonTextStyle={styles.selectText}
@@ -314,21 +351,27 @@ const PersonalPageScreen = () => {
           </View>
 
           <View style={styles.wrapStar}>
-              <IconStar />
-              <IconStar />
-              <IconStar />
-              <IconStar />
-              <IconStar />
+            <IconStar />
+            <IconStar />
+            <IconStar />
+            <IconStar />
+            <IconStar />
           </View>
         </View>
 
         <View style={[styles.row, styles.justifyBetween, styles.mb10]}>
-          <Text>Có <Text style={styles.boldText}>1000</Text> người theo dõi</Text>
-          <Text><Text style={styles.boldText}>4.4</Text>/1200 đánh giá</Text>
+          <Text>
+            Có <Text style={styles.boldText}>1000</Text> người theo dõi
+          </Text>
+          <Text>
+            <Text style={styles.boldText}>4.4</Text>/1200 đánh giá
+          </Text>
         </View>
 
         <View style={[styles.row, styles.mb10]}>
-          <Text>Hiện có <Text style={styles.boldText}>100</Text> tin đăng</Text>
+          <Text>
+            Hiện có <Text style={styles.boldText}>100</Text> tin đăng
+          </Text>
         </View>
 
         <View style={styles.row}>
@@ -361,107 +404,107 @@ const PersonalPageScreen = () => {
         </View>
 
         <View>
-        <View style={styles.filter}>
-          <TouchableOpacity
-            style={styles.btnFilter}
-            onPress={() => {
-              navigate(SCREENS.FILTER_SCREEN);
-            }}
-          >
-            <Icon name="filter-list" />
-          </TouchableOpacity>
-
-          <View style={styles.boxRealEstate}>
-            <Select
-              buttonStyle={[styles.buttonSelect]}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={typeTrade}
-              defaultButtonText={'Loại giao dịch'}
-              name="typeTrade"
-              onSelect={(val: any) => submitFilter(val, 'typeTrade')}
-            />
-          </View>
-
-          <View style={styles.areaRange}>
-            <Select
-              buttonStyle={[styles.buttonSelect]}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={projectOptions}
-              defaultButtonText={t('common.project') || ''}
-              name="project_id"
-              onSelect={(val: any) => submitFilter(val, 'project_id')}
-            />
-          </View>
-          <View style={styles.boxStatus}>
-            <Select
-              buttonStyle={styles.buttonSelect}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={demansOption}
-              defaultButtonText={t('select.type') || ''}
-              name="demand_id"
-              onSelect={(val: any) => submitFilter(val, 'demand_id')}
-            />
-          </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.address}>
-            <Select
-              buttonStyle={styles.buttonAddress}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={provinceOptions}
-              defaultButtonText={t('select.province') || ''}
-              name="province_id"
-              onSelect={(val: any) => {
-                handleSelectProvince(val);
-                submitFilter(val, 'province_id');
+          <View style={styles.filter}>
+            <TouchableOpacity
+              style={styles.btnFilter}
+              onPress={() => {
+                navigate(SCREENS.FILTER_SCREEN);
               }}
-            />
-          </View>
-          <View style={styles.address}>
-            <Select
-              buttonStyle={styles.buttonAddress}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={districtOptions}
-              defaultButtonText={t('select.province') || ''}
-              name="district_id"
-              onSelect={(val: any) => {
-                handleSelectDistrict(val);
-                submitFilter(val, 'district_id');
-              }}
-            />
-          </View>
-          <View style={styles.address}>
-            <Select
-              buttonStyle={styles.buttonAddress}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={wardOptions}
-              defaultButtonText={t('select.ward')}
-              name="ward_id"
-              onSelect={(val: any) => submitFilter(val, 'ward_id')}
-            />
-          </View>
-        </View>
+            >
+              <Icon name="filter-list" />
+            </TouchableOpacity>
 
-        {/* <View style={styles.row}>
+            <View style={styles.boxRealEstate}>
+              <Select
+                buttonStyle={[styles.buttonSelect]}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+                control={control}
+                data={typeTrade}
+                defaultButtonText={'Loại giao dịch'}
+                name="typeTrade"
+                onSelect={(val: any) => submitFilter(val, 'typeTrade')}
+              />
+            </View>
+
+            <View style={styles.areaRange}>
+              <Select
+                buttonStyle={[styles.buttonSelect]}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+                control={control}
+                data={projectOptions}
+                defaultButtonText={t('common.project') || ''}
+                name="project_id"
+                onSelect={(val: any) => submitFilter(val, 'project_id')}
+              />
+            </View>
+            <View style={styles.boxStatus}>
+              <Select
+                buttonStyle={styles.buttonSelect}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+                control={control}
+                data={demansOption}
+                defaultButtonText={t('select.type') || ''}
+                name="demand_id"
+                onSelect={(val: any) => submitFilter(val, 'demand_id')}
+              />
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            <View style={styles.address}>
+              <Select
+                buttonStyle={styles.buttonAddress}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+                control={control}
+                data={provinceOptions}
+                defaultButtonText={t('select.province') || ''}
+                name="province_id"
+                onSelect={(val: any) => {
+                  handleSelectProvince(val);
+                  submitFilter(val, 'province_id');
+                }}
+              />
+            </View>
+            <View style={styles.address}>
+              <Select
+                buttonStyle={styles.buttonAddress}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+                control={control}
+                data={districtOptions}
+                defaultButtonText={t('select.province') || ''}
+                name="district_id"
+                onSelect={(val: any) => {
+                  handleSelectDistrict(val);
+                  submitFilter(val, 'district_id');
+                }}
+              />
+            </View>
+            <View style={styles.address}>
+              <Select
+                buttonStyle={styles.buttonAddress}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+                control={control}
+                data={wardOptions}
+                defaultButtonText={t('select.ward')}
+                name="ward_id"
+                onSelect={(val: any) => submitFilter(val, 'ward_id')}
+              />
+            </View>
+          </View>
+
+          {/* <View style={styles.row}>
           <View style={styles.wrapTypeHousing}>
             <Text style={styles.textTypeHousing}>
               {t('select.typeHousing')}
@@ -476,17 +519,16 @@ const PersonalPageScreen = () => {
             />
           </View>
         </View> */}
-      </View>
+        </View>
 
-      <FlatList
-        style={styles.list}
-        contentContainerStyle={styles.contentContainer}
-        data={listPosts}
-        renderItem={({ item }) => <ItemRealEstatesAccount item={item} />}
-        keyExtractor={(_, index) => `itemPost${index}`}
-        ListEmptyComponent={loadingListPost ? null : <NoResults />}
-      />
-
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.contentContainer}
+          data={listPosts}
+          renderItem={({ item }) => <ItemRealEstatesAccount item={item} />}
+          keyExtractor={(_, index) => `itemPost${index}`}
+          ListEmptyComponent={loadingListPost ? null : <NoResults />}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -496,7 +538,7 @@ export default PersonalPageScreen;
 
 const styles = StyleSheet.create({
   boldText: {
-    fontWeight: '700'
+    fontWeight: '700',
   },
   boxAvatar: {
     backgroundColor: COLORS.ORANGE_4,
@@ -536,10 +578,10 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: COLORS.WHITE,
-  }, 
+  },
   container: {
     paddingHorizontal: 10,
-    paddingTop: 10
+    paddingTop: 10,
   },
   image: {
     width: '100%',
@@ -551,7 +593,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   mb10: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   phone: {
     color: COLORS.GRAY_3,
@@ -608,7 +650,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   wrapButton: {
-    flex: 1
+    flex: 1,
   },
   buttonCall: {
     marginRight: 8,
@@ -618,7 +660,7 @@ const styles = StyleSheet.create({
   },
   wrapBoxName: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   camera: {
     right: 12,
@@ -627,35 +669,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   wrapFollow: {
-    flex: 1
+    flex: 1,
   },
   select: {
     backgroundColor: COLORS.BLUE_6,
     color: COLORS.WHITE,
-    borderRadius: 4
+    borderRadius: 4,
   },
   selectText: {
-    color: COLORS.WHITE
+    color: COLORS.WHITE,
   },
   wrapStar: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   justifyBetween: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   sortByWrap: {
     flex: 1,
-    paddingRight: 6
+    paddingRight: 6,
   },
   viewInMapWrap: {
     flex: 1,
-    paddingLeft: 6
+    paddingLeft: 6,
   },
   address: {
     width: '33%',
-    marginRight: 4
+    marginRight: 4,
   },
   areaRange: {
     marginHorizontal: 5,
@@ -684,7 +726,7 @@ const styles = StyleSheet.create({
   buttonAddress: {
     // width: '80%',
     justifyContent: 'center',
-    height: 36
+    height: 36,
   },
 
   filter: {
@@ -693,10 +735,10 @@ const styles = StyleSheet.create({
   },
   wrapTypeHousing: {
     marginBottom: 12,
-    width: '100%'
+    width: '100%',
   },
   textTypeHousing: {
-    fontSize: 12
+    fontSize: 12,
   },
   contentContainer: {
     paddingBottom: 50,
@@ -705,4 +747,4 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
     // paddingHorizontal: 10,
   },
-})
+});

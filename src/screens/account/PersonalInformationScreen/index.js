@@ -375,7 +375,7 @@ const PersonalInformationScreen = () => {
           <Input
             autoComplete="tel"
             control={control}
-            disabled
+            // disabled
             errorMessage={errors.phone_number?.message}
             inputMode="numeric"
             isNumeric

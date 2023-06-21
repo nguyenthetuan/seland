@@ -69,3 +69,4 @@ export { default as IconWebchat } from './wechat.svg';
 export { default as IconYoutube } from './youtube.svg';
 export { default as IconZalo } from './zalo.svg';
 export { default as IconZaloBlue } from './zaloBlue.svg';
+export { default as IconPreImage } from './icon-pre-image.svg';

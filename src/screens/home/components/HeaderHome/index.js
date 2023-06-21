@@ -9,15 +9,21 @@ import {
   MenuThreeLine,
 } from '../../../../assets';
 import { Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import DrawerMenuHome from '../DrawerMenu';
 import styles from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 const HeaderHome = () => {
   const { t } = useTranslation();
   const drawerRef = useRef();
+  const { navigate } = useNavigation();
 
   const openDrawer = () => drawerRef.current?.openDrawerMenu();
+
+  const navigateMapScreen = () => {
+    navigate(SCREENS.MAPS);
+  };
 
   return (
     <View>
@@ -36,12 +42,15 @@ const HeaderHome = () => {
             </View>
           </View>
           <View style={styles.headerRight}>
-            <View style={styles.boxZoning}>
+            <TouchableOpacity
+              style={styles.boxZoning}
+              onPress={navigateMapScreen}
+            >
               <LogoZoning />
               <Text style={styles.checkZoning}>
                 {t('common.lookUpPlanning')}
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.line} />
             <IconBell />
           </View>
