@@ -19,6 +19,7 @@ import AddAccountScreen from '../screens/account/AgencyInformationScreen/compone
 import ChangeStatusScreen from '../screens/account/AgencyInformationScreen/components/ChangeStatusScreen';
 import StaffInformationScreen from '../screens/account/AgencyInformationScreen/components/StaffInformationScreen';
 import PersonalPageScreen from '../screens/account/PersonalPageScreen';
+import RequestContactScreen from '../screens/account/RequestContactScreen';
 
 const routes = [
   {
@@ -52,6 +53,10 @@ const routes = [
   {
     component: AgencyInformationTab,
     name: SCREENS.AGENCY_INFORMATION_TAB,
+  },
+  {
+    component: RequestContactScreen,
+    name: SCREENS.REQUEST_CONTACT_SCREEN,
   },
   {
     component: UpgradeAccountTab,
