@@ -31,6 +31,7 @@ interface Iprops {
   route?: any;
   setValue?: any;
   getValues?: any;
+  onShowTypeHousing?: () => void;
 }
 
 const projectOptions = [
@@ -60,7 +61,7 @@ const initValues = {
 };
 
 const HeaderFilterPosts: FC<Iprops> = props => {
-  const { onSelect, onFilter, route } = props;
+  const { onSelect, onFilter, route, onShowTypeHousing } = props;
 
   const { t } = useTranslation();
   const { navigate } = useNavigation();
@@ -347,6 +348,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               name="typeHousing"
               multipleChoice
               onSelectTypeHousing={onSelectTypeHousing}
+              onShowTypeHousing={onShowTypeHousing}
             />
           </View>
         </View>

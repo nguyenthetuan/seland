@@ -50,6 +50,27 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
   },
+  boxTotalImage: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
+    flexDirection: 'row',
+    height: 18,
+    width: 30,
+    borderRadius: 4,
+    backgroundColor: COLORS.WHITE_2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxTotalIcon: {
+    marginRight: 2,
+  },
+  boxTotalText: {
+    fontWeight: '400',
+    fontSize: 12,
+    color: COLORS.WHITE,
+    paddingBottom: 22,
+  },
   boxType: {
     backgroundColor: COLORS.GREEN_4,
     borderRadius: 10,
