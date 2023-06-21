@@ -20,6 +20,7 @@ interface IProps {
   control?: any;
   multipleChoice?: boolean;
   onSelectTypeHousing?: any;
+  onShowTypeHousing: () => void;
 }
 
 interface ITypeHousingItem {
@@ -27,7 +28,15 @@ interface ITypeHousingItem {
   item: string;
 }
 
-const TypeHousing = ({ options = [], type, name, control, multipleChoice = false, onSelectTypeHousing: onSelectType }: IProps) => {
+const TypeHousing = ({
+  options = [],
+  type,
+  name,
+  control,
+  multipleChoice = false,
+  onSelectTypeHousing: onSelectType,
+  onShowTypeHousing,
+}: IProps) => {
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
 
@@ -39,6 +48,7 @@ const TypeHousing = ({ options = [], type, name, control, multipleChoice = false
 
   const onShowListTypeHousing = () => {
     setShowTypeHousing(!showTypeHousing);
+    onShowTypeHousing(!showTypeHousing);
   };
 
   const onSelectTypeHousing = (item: string | number) => {
