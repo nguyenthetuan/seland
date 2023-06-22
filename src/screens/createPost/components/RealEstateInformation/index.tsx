@@ -51,10 +51,6 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     furniture: false,
   });
 
-  const emptyUnitPrices = {
-    label: t('select.structure'),
-    value: null,
-  };
   const emptyStructure = {
     label: t('select.structure'),
     value: null,
@@ -64,7 +60,6 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     value: null,
   };
 
-  const unitPricesOptions = [emptyUnitPrices, ...formatDataValueId(unitPrices)];
   const compassOptions = [
     emptyCompass,
     ...formatDataValueId(information[0]?.children),
@@ -187,7 +182,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={unitPricesOptions}
+            data={[...formatDataValueId(unitPrices)]}
             rules={{ required: 'Vui lòng chọn Đơn vị' }}
             defaultButtonText="Please Select"
             label={t('select.unit')}
