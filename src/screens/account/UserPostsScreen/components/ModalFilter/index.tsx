@@ -41,7 +41,7 @@ interface ModalFilter {
 }
 interface PopUpRef {}
 
-const ModalFilter = forwardRef<PopUpRef, ModalFilter>(
+const ModalFilterScreen = forwardRef<PopUpRef, ModalFilter>(
   ({ control, setValueHookForm, onPressConfirm }, ref) => {
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const { t } = useTranslation();
@@ -246,6 +246,6 @@ const ModalFilter = forwardRef<PopUpRef, ModalFilter>(
     );
   }
 );
-ModalFilter.displayName = 'Filter';
+ModalFilterScreen.displayName = 'Filter';
 
-export default ModalFilter;
+export default ModalFilterScreen;

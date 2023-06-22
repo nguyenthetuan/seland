@@ -24,8 +24,8 @@ import {
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
-import ModalFilter from './components/ModalFilter';
 import styles from './styles';
+import ModalFilterScreen from './components/ModalFilter';
 
 const UserPostsScreen = () => {
   const route = useRoute();
@@ -166,7 +166,8 @@ const UserPostsScreen = () => {
   });
 
   const onSubmit = (data: any) => {
-    dispatchThunk(dispatch, getListRealEstatesUser(data));
+    const parmas = { ...data, title: data?.title?.trim() };
+    dispatchThunk(dispatch, getListRealEstatesUser(parmas));
   };
 
   const submit = handleSubmit(onSubmit);
@@ -199,15 +200,18 @@ const UserPostsScreen = () => {
       dateEnd: selectedDateRange.secondDate,
     });
   };
-
+  // if (loading) {
+  //   return (
+  //     <Loading
+  //       color={COLORS.BLUE_1}
+  //       textContent={t('common.loading') || ''}
+  //       textStyle={styles.loadingText}
+  //       visible={loading}
+  //     />
+  //   );
+  // }
   return (
     <>
-      <Loading
-        color={COLORS.BLUE_1}
-        textContent={t('common.loading')}
-        textStyle={styles.loadingText}
-        visible={loading}
-      />
       <Modal
         isVisible={modalVisible}
         onBackButtonPress={hideDateRangePicker}
@@ -246,7 +250,7 @@ const UserPostsScreen = () => {
         </View>
         <FlatList
           style={styles.list}
-          data={userRealEstates}
+          data={!loading && userRealEstates}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <UserPost item={item} />}
           ListHeaderComponent={
@@ -259,7 +263,7 @@ const UserPostsScreen = () => {
                     name="title"
                     onSubmitEditing={submit}
                     returnKeyType="search"
-                    placeholder={t('input.searchByCodeTitle')}
+                    placeholder={t('input.searchByCodeTitle') || ''}
                     rightIcon={
                       <Pressable onPress={submit}>
                         <Icon name="search" />
@@ -309,10 +313,14 @@ const UserPostsScreen = () => {
               </View>
             </View>
           }
-          ListEmptyComponent={<View>{!loading && <NoResults />}</View>}
+          ListEmptyComponent={
+            <View>
+              {!loading && userRealEstates?.length === 0 && <NoResults />}
+            </View>
+          }
         />
       </View>
-      <ModalFilter
+      <ModalFilterScreen
         ref={filterRef}
         control={control}
         setValueHookForm={setValue}
