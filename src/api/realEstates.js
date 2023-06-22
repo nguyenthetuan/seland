@@ -1,6 +1,7 @@
 import {
   CREATE_REAL_ESTATE,
   DELETE_REAL_ESTATE,
+  EDIT_REAL_STATE,
   GET_AGENCY,
   GET_ALL_FILTER,
   GET_ALL_INFORMATION,
@@ -38,3 +39,5 @@ export const requestGetDetailRealEstates = id =>
 
 export const requestDeleteRealEstates = id =>
   deleteBase(`${DELETE_REAL_ESTATE}/${id}`);
+
+export const editRealStates = params => post(`${EDIT_REAL_STATE}/params.id`, params.formData)

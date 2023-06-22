@@ -7,19 +7,20 @@ import {
   PersonalInformationScreen,
   UserDraftPostsScreen,
   UserPostsScreen,
+  CreatePostScreen
 } from '../screens';
-import CollaboratorInformationScreen from '../screens/account/CollaboratorInformationScreen';
-import DepositScreen from '../screens/account/DepositScreen/index';
-import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
-import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
-import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
-import DetailPostScreen from '../screens/home/DetailPostScreen';
-import FilterScreen from '../screens/home/FilterScreen/screen/index';
 import AddAccountScreen from '../screens/account/AgencyInformationScreen/components/AddAccountScreen';
 import ChangeStatusScreen from '../screens/account/AgencyInformationScreen/components/ChangeStatusScreen';
 import StaffInformationScreen from '../screens/account/AgencyInformationScreen/components/StaffInformationScreen';
+import CollaboratorInformationScreen from '../screens/account/CollaboratorInformationScreen';
+import DepositScreen from '../screens/account/DepositScreen/index';
 import PersonalPageScreen from '../screens/account/PersonalPageScreen';
 import RequestContactScreen from '../screens/account/RequestContactScreen';
+import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
+import DetailPostScreen from '../screens/home/DetailPostScreen';
+import FilterScreen from '../screens/home/FilterScreen/screen/index';
+import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
+import UpgradeAccountTab from './BottomTabNavigator/UpgradeAccountNavigator';
 
 const routes = [
   {
@@ -97,6 +98,10 @@ const routes = [
   {
     component: StaffInformationScreen,
     name: SCREENS.STAFF_INFORMATION_SCREEN,
+  },
+  {
+    component: CreatePostScreen,
+    name: SCREENS.CREATE_POST,
   },
 ];
 

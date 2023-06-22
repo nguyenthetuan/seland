@@ -26,3 +26,4 @@ export const GET_AGENCY = '/auth/getBrokersBasedOnCurrentUserAgency';
 export const GET_REAL_ESTATEWAREHOUSES = '/auth/getRealEstateWarehouses';
 export const GET_DETAIL_REAL_ESTATE = '/getRealEstateDetails';
 export const DELETE_REAL_ESTATE = '/auth/delete/realEstate';
+export const EDIT_REAL_STATE = '/auth/realEstate';

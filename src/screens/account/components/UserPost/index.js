@@ -18,6 +18,7 @@ import {
 } from '../../../../features'
 import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
+import { SCREENS } from '../../../../constants'
 
 
 const Info = ({ value, icon }) => (
@@ -43,8 +44,9 @@ const schema = yup.object({
   end_date: yup.string(),
 });
 
-const UserPost = ({ item }) => {
-  const { navigate } = useNavigation();
+const UserPost = (props) => {
+  const { item, refreshData } = props
+  const { navigate, goBack } = useNavigation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { loadingDelete } = useSelector(selectUserRealEstates);
@@ -105,16 +107,20 @@ const UserPost = ({ item }) => {
   const onDeletePost = async () => {
     try {
       if (item?.id) {
-        await dispatchThunk(dispatch, deleteRealEstatesUser(item?.id));
+        dispatchThunk(dispatch, deleteRealEstatesUser(item?.id), () => {
+          goBack()
+        });
+        refreshData()
         Alert.alert(t('common.deleteSuccess'));
       }
     } catch (error) {
+      f
       console.log(error);
     }
   };
 
   const navigateToEdit = () => {
-    dispatchThunk(dispatch, editPost(item.id), () => navigate('CreatePostNavigator', { edit: true }));
+    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id })
   }
 
   return (

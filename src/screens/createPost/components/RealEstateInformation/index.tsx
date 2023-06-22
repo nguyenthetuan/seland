@@ -27,21 +27,31 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   const { realEstateInformation, information, unitPrices, utilities } =
     useSelector(selectPosts);
   const [average, setAverage] = useState(0);
-  const [utilitiesId, setUtilitiesId] = useState([]);
-  const [furnitureId, setFurnitureId] = useState([]);
-  const [securityId, setSecurityId] = useState([]);
-  const [roadTypeId, setRoadTypeId] = useState([]);
+  const [utilitiesId, setUtilitiesId] = useState(
+    (getValues && getValues().utilities_id.split(',').map(Number)) || []
+  );
+  const [furnitureId, setFurnitureId] = useState<any[]>(
+    (getValues && getValues().furniture_id.split(',').map(Number)) || []
+  );
+  const [securityId, setSecurityId] = useState<any[]>(
+    (getValues && getValues().security_id.split(',').map(Number)) || []
+  );
+  const [roadTypeId, setRoadTypeId] = useState<any[]>(
+    (getValues && getValues().road_type_id.split(',').map(Number)) || []
+  );
   const [state, setState] = useState({
     legalDocumentsId:
-      realEstateInformation?.legal_documents_id ||
+      (getValues && getValues().legal_documents_id) ||
       information[2]?.children[0].id,
     houseStatusId:
-      realEstateInformation?.house_status_id || information[3]?.children[0].id,
+      (getValues && getValues().house_status_id) ||
+      information[3]?.children[0].id,
     usageConditionId:
-      realEstateInformation?.usage_condition_id ||
+      (getValues && getValues().usage_condition_id) ||
       information[4]?.children[0].id,
     location:
-      realEstateInformation?.location_type_id || information[5]?.children[0].id,
+      (getValues && getValues().location_type_id) ||
+      information[5]?.children[0].id,
   });
   const [show, setShow] = useState<{
     nearbyAmenities: boolean;
@@ -90,8 +100,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     if (utilitiesId.includes(value)) {
       const array = utilitiesId?.filter((item: any) => item !== value);
       setUtilitiesId(array);
+      setValue && setValue('utilities_id', array.toString());
     } else {
       setUtilitiesId([...utilitiesId, value]);
+      setValue && setValue('utilities_id', [...utilitiesId, value].toString());
     }
   };
 
@@ -99,8 +111,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     if (furnitureId.includes(value)) {
       const array = furnitureId?.filter((item: any) => item !== value);
       setFurnitureId(array);
+      setValue && setValue('furniture_id', array.toString());
     } else {
       setFurnitureId([...furnitureId, value]);
+      setValue && setValue('furniture_id', [...furnitureId, value].toString());
     }
   };
 
@@ -108,8 +122,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     if (securityId.includes(value)) {
       const array = securityId?.filter((item: any) => item !== value);
       setSecurityId(array);
+      setValue && setValue('security_id', array.toString());
     } else {
       setSecurityId([...securityId, value]);
+      setValue && setValue('security_id', [...securityId, value].toString());
     }
   };
 
@@ -117,8 +133,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     if (roadTypeId.includes(value)) {
       const array = roadTypeId?.filter((item: any) => item !== value);
       setRoadTypeId(array);
+      setValue && setValue('road_type_id', array.toString());
     } else {
       setRoadTypeId([...roadTypeId, value]);
+      setValue && setValue('road_type_id', [...roadTypeId, value].toString());
     }
   };
 
@@ -299,9 +317,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
                 buttonStyle={styles.btnTypeRealEstate(
                   item.id === state.legalDocumentsId
                 )}
-                onPress={() =>
-                  setState({ ...state, legalDocumentsId: item.id })
-                }
+                onPress={() => {
+                  setValue('legal_documents_id', item.id);
+                  setState({ ...state, legalDocumentsId: item.id });
+                }}
                 title={item.value}
                 titleStyle={styles.txtType(item.id === state.legalDocumentsId)}
                 outline
@@ -328,9 +347,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
                 >
                   <Button
                     buttonStyle={styles.isBuy(item.id === state.houseStatusId)}
-                    onPress={() =>
-                      setState({ ...state, houseStatusId: item.id })
-                    }
+                    onPress={() => {
+                      setValue('house_status_id', item.id);
+                      setState({ ...state, houseStatusId: item.id });
+                    }}
                     title={item.value}
                     titleStyle={styles.txtType(item.id === state.houseStatusId)}
                     outline
@@ -355,9 +375,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
               >
                 <Button
                   buttonStyle={styles.isBuy(item.id === state.usageConditionId)}
-                  onPress={() =>
-                    setState({ ...state, usageConditionId: item.id })
-                  }
+                  onPress={() => {
+                    setValue('usage_condition_id', item.id);
+                    setState({ ...state, usageConditionId: item.id });
+                  }}
                   title={item.value}
                   titleStyle={styles.txtType(
                     item.id === state.usageConditionId
@@ -383,7 +404,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
               >
                 <Button
                   buttonStyle={styles.isBuy(item.id === state.location)}
-                  onPress={() => setState({ ...state, location: item.id })}
+                  onPress={() => {
+                    setValue('location_type_id', item.id);
+                    setState({ ...state, location: item.id });
+                  }}
                   title={item.value}
                   titleStyle={styles.txtType(item.id === state.location)}
                   outline

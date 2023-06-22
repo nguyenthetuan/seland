@@ -200,6 +200,69 @@ const UserPostsScreen = () => {
     });
   };
 
+  const renderHeader = () => {
+    return (
+      <View>
+        <View style={styles.searchFilter}>
+          <View style={styles.search}>
+            <Input
+              control={control}
+              inputContainerStyle={styles.searchInput}
+              name="title"
+              onSubmitEditing={submit}
+              returnKeyType="search"
+              placeholder={t('input.searchByCodeTitle')}
+              rightIcon={
+                <Pressable onPress={submit}>
+                  <Icon name="search" />
+                </Pressable>
+              }
+            />
+          </View>
+          <View style={styles.flex}>
+            <Select
+              buttonStyle={styles.selectButton}
+              control={control}
+              data={calendar.map(item => ({
+                ...item,
+                label: t(`select.${item?.label}`),
+              }))}
+              name="date"
+              onSelect={handleSelectDate}
+              rowStyle={styles.selectButton}
+            />
+          </View>
+          <Button
+            buttonStyle={styles.filterButton}
+            icon={
+              <Icon
+                color={COLORS.WHITE}
+                name="filter-alt"
+                size={16}
+              />
+            }
+            title={t('button.filter')}
+            onPress={onOpenFilter}
+          />
+        </View>
+        <View style={styles.sort}>
+          <Select
+            buttonStyle={styles.selectButton}
+            control={control}
+            data={sortBy.map(item => ({
+              ...item,
+              label: t(`select.${item?.label}`),
+            }))}
+            defaultButtonText={t('select.newest')}
+            name="sort_by"
+            onSelect={handleSubmit(onSubmit)}
+            rowStyle={styles.selectButton}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
     <>
       <Loading
@@ -249,66 +312,7 @@ const UserPostsScreen = () => {
           data={userRealEstates}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <UserPost item={item} />}
-          ListHeaderComponent={
-            <View>
-              <View style={styles.searchFilter}>
-                <View style={styles.search}>
-                  <Input
-                    control={control}
-                    inputContainerStyle={styles.searchInput}
-                    name="title"
-                    onSubmitEditing={submit}
-                    returnKeyType="search"
-                    placeholder={t('input.searchByCodeTitle')}
-                    rightIcon={
-                      <Pressable onPress={submit}>
-                        <Icon name="search" />
-                      </Pressable>
-                    }
-                  />
-                </View>
-                <View style={styles.flex}>
-                  <Select
-                    buttonStyle={styles.selectButton}
-                    control={control}
-                    data={calendar.map(item => ({
-                      ...item,
-                      label: t(`select.${item?.label}`),
-                    }))}
-                    name="date"
-                    onSelect={handleSelectDate}
-                    rowStyle={styles.selectButton}
-                  />
-                </View>
-                <Button
-                  buttonStyle={styles.filterButton}
-                  icon={
-                    <Icon
-                      color={COLORS.WHITE}
-                      name="filter-alt"
-                      size={16}
-                    />
-                  }
-                  title={t('button.filter')}
-                  onPress={onOpenFilter}
-                />
-              </View>
-              <View style={styles.sort}>
-                <Select
-                  buttonStyle={styles.selectButton}
-                  control={control}
-                  data={sortBy.map(item => ({
-                    ...item,
-                    label: t(`select.${item?.label}`),
-                  }))}
-                  defaultButtonText={t('select.newest')}
-                  name="sort_by"
-                  onSelect={handleSubmit(onSubmit)}
-                  rowStyle={styles.selectButton}
-                />
-              </View>
-            </View>
-          }
+          ListHeaderComponent={renderHeader}
           ListEmptyComponent={<View>{!loading && <NoResults />}</View>}
         />
       </View>

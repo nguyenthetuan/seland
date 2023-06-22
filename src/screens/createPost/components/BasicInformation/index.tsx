@@ -81,7 +81,6 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     refresh();
   }, []);
 
-  console.log('basicInformation', basicInformation);
   useEffect(() => {
     Object.entries(basicInformation).forEach(
       ([key, value]) => value && setValue && setValue(key, value)
