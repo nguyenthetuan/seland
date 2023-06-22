@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Avatar, Icon } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -61,6 +61,9 @@ const PersonalInformationScreen = () => {
   const { loading, data: user } = useSelector(selectUser);
   const { t } = useTranslation();
   const [Iam, setIam] = useState(user.user_type_id || 1);
+
+  const route = useRoute();
+  const { params } = route;
 
   const {
     provinces,
@@ -292,7 +295,7 @@ const PersonalInformationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header title={t('header.personalInformation')} />
+      <Header title={t('header.personalInformation')} hasGoBack={params.hasGoBack} />
       <Screen>
         <Container>
           <Avatar
@@ -351,6 +354,7 @@ const PersonalInformationScreen = () => {
             name="name"
             onFocus={() => clearErrors('name')}
             required
+            renderErrorMessage={false}
           />
           <Select
             buttonStyle={styles.select}
@@ -384,6 +388,7 @@ const PersonalInformationScreen = () => {
             name="phone_number"
             onFocus={() => clearErrors('phone_number')}
             required
+            renderErrorMessage={false}
           />
           <Input
             autoComplete="email"
@@ -396,6 +401,7 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="email"
             onFocus={() => clearErrors('email')}
+            renderErrorMessage={false}
           />
           <Input
             control={control}
@@ -405,6 +411,7 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="address"
             onFocus={() => clearErrors('address')}
+            renderErrorMessage={false}
           />
           <View style={styles.address}>
             <View style={styles.addressItem}>
@@ -452,6 +459,7 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="name_company"
             onFocus={() => clearErrors('name_company')}
+            renderErrorMessage={false}
           />
           <Input
             control={control}
@@ -461,6 +469,7 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="company_address"
             onFocus={() => clearErrors('company_address')}
+            renderErrorMessage={false}
           />
           <View style={styles.address}>
             <View style={styles.addressItem}>
@@ -509,6 +518,7 @@ const PersonalInformationScreen = () => {
               labelStyle={styles.inputLabel}
               name="tax_code"
               onFocus={() => clearErrors('tax_code')}
+              renderErrorMessage={false}
             />
           </View>
           <Input
@@ -520,6 +530,7 @@ const PersonalInformationScreen = () => {
             labelStyle={styles.inputLabel}
             name="website"
             onFocus={() => clearErrors('website')}
+            renderErrorMessage={false}
           />
         </View>
         <Button

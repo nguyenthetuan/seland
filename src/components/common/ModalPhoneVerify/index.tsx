@@ -36,7 +36,7 @@ const OtpModal = ({isOpen, phoneNumber, onCloseModal}: IProps) => {
     dispatchThunk(
       dispatch,
       generateOtp({
-        phoneNumber,
+        phone_number: phoneNumber,
       })
     );
   }, [dispatch, phoneNumber]);
@@ -53,7 +53,7 @@ const OtpModal = ({isOpen, phoneNumber, onCloseModal}: IProps) => {
     dispatchThunk(
       dispatch,
       verifyOtp({
-        phoneNumber,
+        phone_number: phoneNumber,
         otp,
       }),
       onCloseModal
