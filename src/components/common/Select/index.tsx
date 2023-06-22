@@ -1,6 +1,6 @@
 import { Icon } from '@rneui/themed';
 import React, { useCallback } from 'react';
-import { useController } from 'react-hook-form';
+import { useController, RegisterOptions } from 'react-hook-form';
 import { StyleSheet, TextStyle, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -29,6 +29,7 @@ interface SelectProps {
   rowTextStyle?: any;
   defaultButtonText?: string | null | any;
   title?: string;
+  rules?: RegisterOptions;
 }
 
 const Select = ({
@@ -41,17 +42,18 @@ const Select = ({
   name,
   onSelect,
   required,
-  errors,
   rowStyle,
   containerSelect,
   rowTextStyle,
   defaultButtonText,
   title,
+  rules,
   ...props
 }: SelectProps) => {
   const {
     field: { onChange, value },
-  } = useController({ control, name });
+    fieldState: { error },
+  } = useController({ control, name, rules });
 
   const handleChange = (selectedItem: any) => {
     if (onSelect) onSelect(selectedItem);
@@ -76,26 +78,31 @@ const Select = ({
           {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
         </Text>
       )}
-      <SelectDropdown
-        buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
-        buttonTextAfterSelection={selectedItem =>
-          title ? `${title}: ${selectedItem.label}` : selectedItem.label
-        }
-        buttonTextStyle={StyleSheet.flatten([
-          styles.text(data.findIndex(item => item.value === value)),
-          buttonTextStyle,
-        ])}
-        defaultButtonText={defaultButtonText}
-        data={data}
-        defaultValueByIndex={data.findIndex(item => item.value === value)}
-        onSelect={handleChange}
-        renderDropdownIcon={renderDropdownIcon}
-        rowStyle={StyleSheet.flatten([rowStyle])}
-        rowTextForSelection={item => item.label}
-        rowTextStyle={StyleSheet.flatten(styles.rowTextStyle, rowTextStyle)}
-        {...props}
-      />
-      <Text style={{ fontSize: 12, color: 'red' }}>{errors}</Text>
+      <View>
+        <SelectDropdown
+          buttonStyle={StyleSheet.flatten([styles.button, buttonStyle])}
+          buttonTextAfterSelection={selectedItem =>
+            title ? `${title}: ${selectedItem.label}` : selectedItem.label
+          }
+          buttonTextStyle={StyleSheet.flatten([
+            styles.text(data.findIndex(item => item.value === value)),
+            buttonTextStyle,
+          ])}
+          defaultButtonText={defaultButtonText}
+          data={data}
+          defaultValueByIndex={data.findIndex(item => item.value === value)}
+          onSelect={handleChange}
+          renderDropdownIcon={renderDropdownIcon}
+          rowStyle={StyleSheet.flatten([rowStyle])}
+          rowTextForSelection={item => item.label}
+          rowTextStyle={StyleSheet.flatten(styles.rowTextStyle, rowTextStyle)}
+          {...props}
+        />
+      </View>
+
+      {error && (
+        <Text style={{ fontSize: 12, color: 'red' }}>{error.message}</Text>
+      )}
     </View>
   );
 };

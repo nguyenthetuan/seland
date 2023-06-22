@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
   errorPhoto: {
     color: 'red',
     fontSize: 12,
-    marginBottom: 20,
     marginLeft: 16,
   },
   image: {

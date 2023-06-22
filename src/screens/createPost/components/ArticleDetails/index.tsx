@@ -1,27 +1,16 @@
 import { CheckBox, Icon } from '@rneui/themed';
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Image, Pressable, TouchableOpacity, View } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ImageUpload } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
-import {
-  createArticleDetails,
-  selectPosts,
-  selectUser,
-} from '../../../../features';
-import { dispatchThunk } from '../../../../utils';
+import { selectUser } from '../../../../features';
 import Category from '../Category';
 import styles from './styles';
 
@@ -69,43 +58,53 @@ const IAm1 = [
 //   },
 // ];
 
-interface errorsProps {
-  photo?: string | undefined;
-  content?: string | undefined;
-  title?: string | undefined;
+interface ArticleDetailsProps {
+  control?: Control;
+  setValue?: Function;
+  getValues?: Function;
+  setError?: Function;
+  clearErrors?: Function;
+  errors?: {
+    photo?: any;
+  };
 }
 
-const ArticleDetails = forwardRef((props, ref) => {
+const ArticleDetails: React.FC<ArticleDetailsProps> = ({
+  control,
+  setValue,
+  getValues,
+  setError,
+  clearErrors,
+  errors,
+}) => {
+  const value = getValues && getValues();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { articleDetails } = useSelector(selectPosts);
   const { data: user } = useSelector(selectUser);
   const [typeUpload, setTypeUpload] = useState({
-    photo: articleDetails?.photo || [],
-    video: articleDetails?.video || [],
-    isPhoto: articleDetails?.isPhoto || true,
+    photo: [],
+    video: [],
+    isPhoto: true,
   });
   const [iam, setIam] = React.useState(1);
   const [typeBroker, setTypeBroker] = React.useState(1);
   // const [listStoreBDS, setListStoreBDS] = useState(StoreBDS);
   // const [listShareBroker, setListShareBroker] = useState(StoreBDS);
-  const [errors, setErrors] = useState<errorsProps>();
-
-  const { control, setValue, getValues, reset } = useForm({
-    defaultValues: {
-      title: '',
-      content: '',
-      name: '',
-      urlVideo: '',
-      phone_number: '',
-    },
-  });
 
   useEffect(() => {
-    Object.entries(articleDetails).forEach(
-      ([key, value]) => value && setValue(key, value)
-    );
-  }, [articleDetails, setValue]);
+    if (typeUpload.photo.length >= 3) {
+      clearErrors && clearErrors();
+    }
+  }, [typeUpload.photo]);
+
+  useEffect(() => {
+    if (value?.photo || value?.video) {
+      setTypeUpload({
+        ...typeUpload,
+        photo: value?.photo,
+        video: value?.video,
+      });
+    }
+  }, []);
 
   const toggleCheck = (value: any) => {
     setIam(value);
@@ -143,10 +142,6 @@ const ArticleDetails = forwardRef((props, ref) => {
 
   const handleSelectFile = () => {
     try {
-      if (errors?.photo) delete errors.photo;
-      setErrors({
-        ...errors,
-      });
       launchImageLibrary({
         mediaType: typeUpload.isPhoto ? 'photo' : 'video',
         selectionLimit: typeUpload.isPhoto ? 12 : 1,
@@ -154,8 +149,15 @@ const ArticleDetails = forwardRef((props, ref) => {
         .then(result => {
           if (result?.assets) {
             if (!typeUpload.isPhoto) {
-              setValue('urlVideo', '');
+              setValue && setValue('urlVideo', '');
             }
+            if (typeUpload.isPhoto) {
+              setValue &&
+                setValue('photo', [...value?.photo, ...result?.assets]);
+            } else {
+              setValue && setValue('video', [...result?.assets]);
+            }
+
             setTypeUpload({
               ...typeUpload,
               photo: typeUpload.isPhoto
@@ -183,11 +185,13 @@ const ArticleDetails = forwardRef((props, ref) => {
         (item: any) => item?.fileName !== value
       );
       setTypeUpload({ ...typeUpload, photo: newPhoto });
+      setValue && setValue('photo', newPhoto);
     } else {
       const newVideo = typeUpload.video.filter(
         (item: any) => item?.fileName !== value
       );
       setTypeUpload({ ...typeUpload, video: newVideo });
+      setValue && setValue('video', newVideo);
     }
   };
 
@@ -201,70 +205,10 @@ const ArticleDetails = forwardRef((props, ref) => {
     return array;
   }, [typeUpload]);
 
-  const handleNext = () => {
-    const value = getValues();
-    dispatchThunk(
-      dispatch,
-      createArticleDetails({
-        ...value,
-        type: typeBroker,
-        isPhoto: typeUpload?.isPhoto,
-        photo: typeUpload.photo,
-        video: typeUpload.video,
-      })
-    );
-    if (
-      !value.title ||
-      !value.content ||
-      typeUpload?.photo?.length === 0 ||
-      typeUpload?.photo?.length <= 2
-    ) {
-      setErrors({
-        title: !value.title ? 'Vui lòng nhập tiêu đề bài viết' : undefined,
-        content: !value.content ? 'Vui lòng nhập nội dung' : undefined,
-        photo:
-          typeUpload?.photo?.length <= 2 || typeUpload?.photo?.length === 0
-            ? 'Vui lòng chọn ít nhất 03 ảnh'
-            : undefined,
-      });
-      return {
-        error: true,
-      };
-    }
-    setErrors({});
-
-    return {
-      ...value,
-      type: typeBroker,
-      isPhoto: typeUpload?.isPhoto,
-      photo: typeUpload.photo,
-      video: typeUpload.video,
-    };
-  };
-
-  const onFocusTitle = () => {
-    if (errors?.title) delete errors.title;
-    setErrors({
-      ...errors,
-    });
-  };
-
-  const onFocusContent = () => {
-    if (errors?.content) delete errors.content;
-    setErrors({
-      ...errors,
-    });
-  };
-
   const handleRemoveVideo = (e: any) => {
     if (e.nativeEvent.text) setTypeUpload({ ...typeUpload, video: [] });
   };
 
-  const clearForm = () => {
-    reset();
-  };
-
-  useImperativeHandle(ref, () => ({ handleNext, clearForm }));
   return (
     <View>
       <KeyboardAwareScrollView>
@@ -287,7 +231,7 @@ const ArticleDetails = forwardRef((props, ref) => {
             control={control}
             label="Dán link video của bạn tại đây."
             placeholder="VD: https://www.youtube.com/watch?v=bymBAF8d_sc"
-            labelStyle={styles.inputLabel}
+            labelStyle={[styles.inputLabel, { marginLeft: 10 }]}
             inputContainerStyle={styles.inputContainerStyle}
             name="urlVideo"
             renderErrorMessage={false}
@@ -354,17 +298,18 @@ const ArticleDetails = forwardRef((props, ref) => {
             </Text>
           </TouchableOpacity>
         )}
-        <Text style={styles.errorPhoto}>{errors?.photo}</Text>
-        <View style={{ marginHorizontal: 10 }}>
+        {errors?.photo && (
+          <Text style={styles.errorPhoto}>{errors?.photo?.message || ''}</Text>
+        )}
+        <View style={{ marginHorizontal: 10, marginTop: 16 }}>
           <Input
             control={control}
             label={t('input.title')}
             labelStyle={styles.inputLabel}
             name="title"
             required
-            onFocus={onFocusTitle}
             inputContainerStyle={styles.inputContainerTitle}
-            errorMessage={errors?.title}
+            rules={{ required: 'Vui lòng nhập tiêu đề bài viết' }}
             renderErrorMessage={false}
           />
           <Input
@@ -374,8 +319,7 @@ const ArticleDetails = forwardRef((props, ref) => {
             name="content"
             multiline
             required
-            onFocus={onFocusContent}
-            errorMessage={errors?.content}
+            rules={{ required: 'Vui lòng nhập nội dung' }}
             inputContainerStyle={styles.inputContainerContent}
             renderErrorMessage={false}
           />
@@ -565,8 +509,6 @@ const ArticleDetails = forwardRef((props, ref) => {
       </KeyboardAwareScrollView>
     </View>
   );
-});
-
-ArticleDetails.displayName = 'ArticleDetails';
+};
 
 export default ArticleDetails;
