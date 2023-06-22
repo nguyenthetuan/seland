@@ -13,6 +13,7 @@ import { COLORS } from '../../../../constants';
 import { selectUser } from '../../../../features';
 import Category from '../Category';
 import styles from './styles';
+import { validatePhone } from '../../../../utils/validates';
 
 const IAm = [
   {
@@ -380,6 +381,9 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                 control={control}
                 inputMode="numeric"
                 isNumeric
+                rules={{
+                  validate: validatePhone,
+                }}
                 label={t('input.phoneNumber')}
                 labelStyle={styles.inputLabel}
                 name="phone_number"
