@@ -51,7 +51,7 @@ const ModalFilterScreen = forwardRef<PopUpRef, ModalFilter>(
     const { realEstateType } = useSelector(selectPosts);
     const {
       field: { onChange, value },
-    } = useController({ control, name: 'status' });
+    } = useController({ control, name: 'demand_id' });
 
     const emptyProvinceOption = {
       label: t('select.province'),
@@ -125,12 +125,12 @@ const ModalFilterScreen = forwardRef<PopUpRef, ModalFilter>(
     };
 
     useEffect(() => {
-      setValueHookForm && setValueHookForm('status', null);
+      setValueHookForm && setValueHookForm('demand_id', null);
       refresh();
     }, []);
 
     const handleReset = () => {
-      setValueHookForm && setValueHookForm('status', null);
+      setValueHookForm && setValueHookForm('demand_id', null);
       setValueHookForm && setValueHookForm('real_estate_type_id', null);
       setValueHookForm && setValueHookForm('province_id', null);
       setValueHookForm && setValueHookForm('district_id', null);

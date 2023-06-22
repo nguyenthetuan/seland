@@ -1,19 +1,21 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
-import { TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/base';
-import { Control } from 'react-hook-form';
-import { Select } from '../../../../../components';
+import { Control, useController } from 'react-hook-form';
+import { Button, Select } from '../../../../../components';
 import { dispatchThunk } from '../../../../../utils';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   loadListAllWareHouses,
   loadListAgency,
   selectWareHouses,
+  loadRealEstateWarehouses,
 } from '../../../../../features';
 import { formatSelect } from '../../../../../utils/format';
 import ModalFilter from '../../../UserPostsScreen/components/ModalFilter';
+import { YOUR_WANT } from '../../../../../constants';
 
 interface Iprops {
   control: Control<any>;
@@ -21,12 +23,18 @@ interface Iprops {
   onSelect: (value: any) => void;
   onFilter?: (value?: any) => void;
   setValue?: Function;
+  getValues?: any;
 }
 
 const FilterWarehouse: FC<Iprops> = props => {
-  const { control, handleSubmit, onSelect, onFilter, setValue } = props;
+  const { control, handleSubmit, onSelect, onFilter, setValue, getValues } =
+    props;
+  const {
+    field: { onChange, value },
+  } = useController({ control, name: 'status' });
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const filterRef: any = useRef();
 
   const sortBy = [
@@ -63,6 +71,36 @@ const FilterWarehouse: FC<Iprops> = props => {
       value: 'price_per_m_desc',
     },
   ];
+  const statuses = [
+    {
+      label: 'all',
+      value: null,
+    },
+    {
+      label: 'pendingReview',
+      value: YOUR_WANT.PENDING,
+    },
+    {
+      label: 'publicPosts',
+      value: YOUR_WANT.POST_PUBLIC,
+    },
+    {
+      label: 'hidden',
+      value: YOUR_WANT.DOWN,
+    },
+    {
+      label: 'rejected',
+      value: YOUR_WANT.REJECT,
+    },
+    {
+      label: 'expired',
+      value: YOUR_WANT.INACTIVE,
+    },
+    {
+      label: 'privatePosts',
+      value: YOUR_WANT.SAVE_PRIVATE,
+    },
+  ];
   const { listAllWareHouses, listAgency } = useSelector(selectWareHouses);
   const listAllWareHousesConvert = (listAllWareHouses &&
     Array.isArray(listAllWareHouses) &&
@@ -83,6 +121,10 @@ const FilterWarehouse: FC<Iprops> = props => {
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
+  const handleSelectStatus = (value: number | null) => {
+    onChange(value);
+    dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
+  };
   const submit = handleSubmit(onFilter);
 
   useEffect(() => {
@@ -90,11 +132,23 @@ const FilterWarehouse: FC<Iprops> = props => {
     dispatchThunk(dispatch, loadListAgency());
   }, [dispatch]);
 
-  console.log('listAllWareHousesConvert', listAllWareHousesConvert);
-
   return (
     <>
       <View>
+        <FlatList
+          style={styles.listButton}
+          data={statuses}
+          horizontal
+          renderItem={({ item }) => (
+            <Button
+              buttonStyle={[styles.marginHorizontal, styles.postButton]}
+              onPress={() => handleSelectStatus(item?.value)}
+              outline={item?.value !== value}
+              title={t(`button.${item?.label}`)}
+            />
+          )}
+          showsHorizontalScrollIndicator={false}
+        />
         <View style={styles.filter}>
           <TouchableOpacity
             style={styles.btnFilter}
@@ -141,7 +195,7 @@ const FilterWarehouse: FC<Iprops> = props => {
             label: t(`select.${item?.label}`),
           }))}
           title={`${t('select.sortBySelect')}` || ''}
-          name="sort_order"
+          name="sort_by"
           onSelect={handleSubmit(onSelect)}
         />
       </View>

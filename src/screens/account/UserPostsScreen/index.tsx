@@ -9,14 +9,7 @@ import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import DateRangePicker from 'rn-select-date-range';
 
-import {
-  Button,
-  Header,
-  Input,
-  NoResults,
-  Screen,
-  Select,
-} from '../../../components';
+import { Button, Header, Input, NoResults, Select } from '../../../components';
 import { COLORS } from '../../../constants';
 import {
   getListRealEstatesUser,
@@ -162,6 +155,7 @@ const UserPostsScreen = () => {
       province_id: null,
       type: null,
       status: '',
+      demand_id: null,
     },
   });
 
@@ -200,16 +194,16 @@ const UserPostsScreen = () => {
       dateEnd: selectedDateRange.secondDate,
     });
   };
-  // if (loading) {
-  //   return (
-  //     <Loading
-  //       color={COLORS.BLUE_1}
-  //       textContent={t('common.loading') || ''}
-  //       textStyle={styles.loadingText}
-  //       visible={loading}
-  //     />
-  //   );
-  // }
+  if (loading) {
+    return (
+      <Loading
+        color={COLORS.BLUE_1}
+        textContent={t('common.loading') || ''}
+        textStyle={styles.loadingText}
+        visible={loading}
+      />
+    );
+  }
   return (
     <>
       <Modal
