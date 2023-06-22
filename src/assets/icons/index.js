@@ -27,6 +27,7 @@ export { default as IconHistory } from './history.svg';
 export { default as Icon360 } from './icon-360.svg';
 export { default as IconBoxUp } from './icon-box-up.svg';
 export { default as IconDropdown } from './icon-dropdown.svg';
+export { default as IconFilter } from './icon-filter.svg';
 export { default as IconI } from './icon-i.svg';
 export { default as IconMapView } from './icon-map-view.svg';
 export { default as IconMaps } from './icon-maps.svg';
