@@ -257,7 +257,6 @@ const CreatePostScreen = () => {
   };
 
   const handleContinue = async (value: { photo: string | any[] }) => {
-    console.log('🚀 ~ file: index.js:258 ~ handleContinue ~ value:', value);
     switch (tab) {
       case TAB.BASIC_INFORMATION:
         scrollViewRef.current?.scrollTo();
@@ -294,7 +293,7 @@ const CreatePostScreen = () => {
         if (errors.title || errors.content) {
           break;
         } else {
-          // createPosts(value);
+          createPosts(value);
           break;
         }
       default:
