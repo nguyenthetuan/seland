@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     width: width * 0.96,
   },
   boxRank: {
-    borderColor: COLORS.BLUE_1,
     borderRadius: 5,
     borderWidth: 2,
     flex: 1,
