@@ -20,6 +20,7 @@ interface IProps {
   control?: any;
   multipleChoice?: boolean;
   onSelectTypeHousing?: any;
+  onShowTypeHousing?: () => void;
 }
 
 interface ITypeHousingItem {
@@ -27,7 +28,15 @@ interface ITypeHousingItem {
   item: string;
 }
 
-const TypeHousing = ({ options = [], type, name, control, multipleChoice = false, onSelectTypeHousing: onSelectType }: IProps) => {
+const TypeHousing = ({
+  options = [],
+  type,
+  name,
+  control,
+  multipleChoice = false,
+  onSelectTypeHousing: onSelectType,
+  onShowTypeHousing,
+}: IProps) => {
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
 
@@ -39,6 +48,7 @@ const TypeHousing = ({ options = [], type, name, control, multipleChoice = false
 
   const onShowListTypeHousing = () => {
     setShowTypeHousing(!showTypeHousing);
+    onShowTypeHousing && onShowTypeHousing(!showTypeHousing);
   };
 
   const onSelectTypeHousing = (item: string | number) => {
@@ -156,7 +166,7 @@ const styles = StyleSheet.create({
   typeHousingContainer: {
     borderWidth: 1,
     borderColor: COLORS.GRAY_4,
-    minHeight: 32,
+    minHeight: 46,
     borderRadius: 5,
     padding: 4,
     flexDirection: 'row',
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 4,
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 8,
+    marginVertical: 2,
   },
   wrapIcon: {
     position: 'absolute',

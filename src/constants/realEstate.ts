@@ -1,6 +1,7 @@
 const REAL_ESTATE = {
   PROJECT: 'project',
   REAL_ESTATE_FOR_YOU: 'real-estate-for-you',
+  REAL_ESTATE_HOSTEST: 'real-estate-hostest',
   COMPASS: 'Hướng',
   LEGAL_DOCUMENT: "Giấy tờ pháp lý",
   LOCATION: "Vị trí"

@@ -61,9 +61,13 @@ const convertValuePriceToTitle = (priceItem: { value: string }) => {
   const arrVal = priceItem?.value?.split('-');
 
   if (Number(arrVal[0]) < 1) {
-    stringVal = `${Number(arrVal[0]) * 1000} triệu`;
-  } else if (Number(arrVal[0]) >= 1) {
-    stringVal = `${Number(arrVal[0])} tỷ`;
+    if (Number(arrVal[1]) < 1) {
+      stringVal = `${Number(arrVal[0]) * 1000}`;
+    } else {
+      stringVal = `${Number(arrVal[0]) * 1000} triệu`;
+    }
+  } else {
+    stringVal = `${Number(arrVal[0])}`;
   }
 
   if (Number(arrVal[1]) < 1) {
@@ -92,7 +96,7 @@ const convertValueAreaToTitle = (priceItem: { value: string }) => {
   } else if (Number(arrVal[1]) === 0) {
     stringVal = `Trên ${Number(arrVal[0])}m²`;
   } else {
-    stringVal = `${Number(arrVal[0])}m²-${Number(arrVal[1])}m²`;
+    stringVal = `${Number(arrVal[0])} - ${Number(arrVal[1])}m²`;
   }
 
   return {
@@ -141,6 +145,7 @@ const FilterScreen = (props: any) => {
   });
 
   const [tabSelected, setTabSelected] = useState(dataFilters?.demand_id || 1);
+  const [enableScroll, setEnableScroll] = useState(true);
 
   const { basicInformation, demands } = useSelector(selectPosts);
 
@@ -152,10 +157,12 @@ const FilterScreen = (props: any) => {
     title: directionItem?.value,
   }));
 
-  const legalDocumentOptions = more?.[2]?.children?.map((legalDocumentItem: any)=> ({
-    value: legalDocumentItem?.id,
-    title: legalDocumentItem?.value
-  }))
+  const legalDocumentOptions = more?.[2]?.children?.map(
+    (legalDocumentItem: any) => ({
+      value: legalDocumentItem?.id,
+      title: legalDocumentItem?.value,
+    })
+  );
 
   const locationOptions = more?.[5]?.children?.map((locationItem: any) => ({
     value: locationItem?.id,
@@ -196,7 +203,7 @@ const FilterScreen = (props: any) => {
       district_id: data?.district_id,
       typeHousing: data?.typeHousing,
       demand_id: tabSelected,
-      dataFilters: data
+      dataFilters: data,
     });
     params?.onSubmit && params?.onSubmit(data);
   };
@@ -265,6 +272,14 @@ const FilterScreen = (props: any) => {
     ]);
   };
 
+  const onShowTypeHousing = (data: boolean) => {
+    if (data) {
+      setEnableScroll(false);
+    } else {
+      setEnableScroll(true);
+    }
+  };
+
   useEffect(() => {
     refresh();
   }, []);
@@ -285,7 +300,10 @@ const FilterScreen = (props: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scroll}>
+      <ScrollView
+        style={styles.scroll}
+        scrollEnabled={enableScroll}
+      >
         <View style={styles.header}>
           <Text style={styles.filterPost}>{t('heading.filterPost')}</Text>
           <TouchableOpacity
@@ -378,6 +396,7 @@ const FilterScreen = (props: any) => {
             control={control}
             name="typeHousing"
             multipleChoice
+            onShowTypeHousing={onShowTypeHousing}
           />
         </View>
 
@@ -388,14 +407,14 @@ const FilterScreen = (props: any) => {
           )}
           defaultValues={initValues.priceRange}
           minimumValue={0}
-          maximumValue={100}
-          step={1}
+          maximumValue={50}
+          step={0.1}
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
-            (Number(val) * 10 ** 9 || '0')
+            (Number(val).toFixed(1) || '0')
               .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
+              + ' tỷ VND'
           }
         />
 
@@ -406,7 +425,7 @@ const FilterScreen = (props: any) => {
           )}
           defaultValues={initValues.acreage}
           minimumValue={0}
-          maximumValue={100}
+          maximumValue={500}
           step={5}
           control={control}
           name="acreage"
@@ -420,6 +439,7 @@ const FilterScreen = (props: any) => {
             type={'compass'}
             control={control}
             name="compass"
+            onShowTypeHousing={onShowTypeHousing}
           />
         </View>
 

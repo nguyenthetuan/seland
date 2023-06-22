@@ -29,6 +29,7 @@ const SCREENS = {
   ADD_ACCOUNT_SCREEN: 'AddAccountScreen',
   CHANGE_STATUS_SCREEN: 'ChangeStatusScreen',
   STAFF_INFORMATION_SCREEN: 'StaffInformationScreen',
+  REQUEST_CONTACT_SCREEN: 'RequestContactScreen',
 };
 
 export default SCREENS;
