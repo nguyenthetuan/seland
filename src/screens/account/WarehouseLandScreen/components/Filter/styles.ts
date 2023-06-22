@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     justifyContent: 'space-between',
+    marginBottom: 10,
   },
   rowTextStyle: {
     fontSize: 12,
@@ -42,6 +43,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 15,
     marginHorizontal: 2,
+  },
+  listButton: {
+    height: 50,
+    marginTop: 5,
+  },
+  marginHorizontal: {
+    marginHorizontal: 8,
+  },
+  postButton: {
+    height: 40,
+    padding: 0,
+    paddingVertical: 0,
+    width: 150,
   },
 });
 
