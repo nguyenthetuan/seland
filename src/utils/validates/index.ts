@@ -65,3 +65,21 @@ export const validateName = (value: string) => {
   }
   return undefined;
 };
+
+export const validateTitle = (value: string) => {
+  if (value) {
+    if (value.length < 5 || value.length > 128) {
+      return 'Độ dài tiêu đề: 40-128 kí tự';
+    }
+  }
+  return undefined;
+};
+
+export const validateContent = (value: string) => {
+  if (value) {
+    if (value.length < 100 || value.length > 1024) {
+      return 'Độ dài nội dung: 100-1024 kí tự';
+    }
+  }
+  return undefined;
+};

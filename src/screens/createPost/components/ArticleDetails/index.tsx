@@ -13,7 +13,12 @@ import { COLORS } from '../../../../constants';
 import { selectUser } from '../../../../features';
 import Category from '../Category';
 import styles from './styles';
-import { validateName, validatePhone } from '../../../../utils/validates';
+import {
+  validateContent,
+  validateName,
+  validatePhone,
+  validateTitle,
+} from '../../../../utils/validates';
 
 const IAm = [
   {
@@ -310,7 +315,10 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             name="title"
             required
             inputContainerStyle={styles.inputContainerTitle}
-            rules={{ required: 'Vui lòng nhập tiêu đề bài viết' }}
+            rules={{
+              required: 'Vui lòng nhập tiêu đề bài viết',
+              validate: validateTitle,
+            }}
             renderErrorMessage={false}
           />
           <Input
@@ -320,7 +328,10 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             name="content"
             multiline
             required
-            rules={{ required: 'Vui lòng nhập nội dung' }}
+            rules={{
+              required: 'Vui lòng nhập nội dung',
+              validate: validateContent,
+            }}
             inputContainerStyle={styles.inputContainerContent}
             renderErrorMessage={false}
           />
