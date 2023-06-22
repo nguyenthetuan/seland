@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Icon } from '@rneui/themed';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,12 +11,15 @@ import { logout, selectUser } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { AccountMenu } from '../components';
 import styles from './styles';
+import OtpModal from '../../../components/common/ModalPhoneVerify';
 
 const AccountScreen = () => {
   const dispatch = useDispatch();
   const { data: user } = useSelector(selectUser);
   const { navigate } = useNavigation();
   const { t } = useTranslation();
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleLogout = () => dispatchThunk(dispatch, logout());
 
@@ -43,6 +46,8 @@ const AccountScreen = () => {
 
   const navigateToPersonalPage = () =>
     navigate(SCREENS.PERSONAL_PAGE_SCREEN);
+
+  const onCloseModal = () => setIsOpenModal(false);
 
   const activityHistory = [
     {
@@ -164,6 +169,13 @@ const AccountScreen = () => {
       onPress: () => {},
     },
   ];
+
+  useEffect(() => {
+    if (user?.is_phone_verified === 0 && !isOpenModal) {
+      setIsOpenModal(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -287,6 +299,12 @@ const AccountScreen = () => {
           radius={5}
         />
       </ScrollView>
+
+      <OtpModal
+        isOpen={isOpenModal}
+        phoneNumber={user?.phone_number}
+        onCloseModal={onCloseModal}
+      />
     </SafeAreaView>
   );
 };
