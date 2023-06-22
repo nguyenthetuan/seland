@@ -33,17 +33,23 @@ const UserPostsScreen = () => {
     dateStart: '',
     dateEnd: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
 
-  useEffect(() => {
+  const onGetListRealEstatesUser = () => {
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
         sort_by: 'createdAt',
       })
     );
+  };
+
+  useEffect(() => {
+    onGetListRealEstatesUser();
   }, [dispatch]);
 
   const handleSelectStatus = (value: number) => {
@@ -247,6 +253,8 @@ const UserPostsScreen = () => {
           data={!loading && userRealEstates}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <UserPost item={item} />}
+          onRefresh={onGetListRealEstatesUser}
+          refreshing={isLoading}
           ListHeaderComponent={
             <View>
               <View style={styles.searchFilter}>
