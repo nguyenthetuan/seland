@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -56,6 +56,7 @@ export const formatDataNameId = data =>
 
 const CreatePostScreen = () => {
   const { navigate, goBack } = useNavigation();
+  const router = useRoute();
   const { t } = useTranslation();
   const scrollViewRef = useRef();
   const basicInfoRef = useRef();

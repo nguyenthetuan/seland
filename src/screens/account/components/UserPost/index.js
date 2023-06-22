@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
@@ -12,10 +13,12 @@ import { Button, Input, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import {
   deleteRealEstatesUser,
+  editPost,
   selectUserRealEstates,
-} from '../../../../features';
+} from '../../../../features'
 import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
+
 
 const Info = ({ value, icon }) => (
   <View style={[styles.info, styles.row]}>
@@ -41,8 +44,9 @@ const schema = yup.object({
 });
 
 const UserPost = ({ item }) => {
-  const { t } = useTranslation();
+  const { navigate } = useNavigation();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { loadingDelete } = useSelector(selectUserRealEstates);
 
   const { control, getValues, setValue } = useForm({
@@ -64,9 +68,8 @@ const UserPost = ({ item }) => {
   });
 
   const handleCall = () => {
-    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${
-      item?.phone_number
-    }`;
+    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${item?.phone_number
+      }`;
     Linking.canOpenURL(callUrl).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
@@ -109,6 +112,10 @@ const UserPost = ({ item }) => {
       console.log(error);
     }
   };
+
+  const navigateToEdit = () => {
+    dispatchThunk(dispatch, editPost(item.id), () => navigate('CreatePostNavigator', { edit: true }));
+  }
 
   return (
     <TouchableOpacity style={styles.item}>
@@ -227,6 +234,7 @@ const UserPost = ({ item }) => {
           <Button
             color={COLORS.GREEN_1}
             title={t('button.editPost')}
+            onPress={navigateToEdit}
           />
         </View>
         <View style={[styles.flex, styles.buttonMiddle]}>

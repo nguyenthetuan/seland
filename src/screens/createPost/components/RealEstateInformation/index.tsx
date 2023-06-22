@@ -81,7 +81,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
       structure_id: null,
     },
   });
-
+  console.log('value', getValues());
   const emptyUnitPrices = {
     label: t('select.structure'),
     value: null,
@@ -106,9 +106,10 @@ const RealEstateInformation = forwardRef((props, ref) => {
   ];
 
   useEffect(() => {
-    Object.entries(realEstateInformation).forEach(
-      ([key, value]) => value && setValue(key, value)
-    );
+    Object.entries(realEstateInformation).forEach(([key, value]) => {
+      console.log('key', key, value);
+      return value && setValue(key, value);
+    });
   }, [realEstateInformation, setValue]);
 
   const handleNext = () => {

@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   requestCreateRealEstates,
   requestGetAllInformation,
+  requestGetDetailRealEstates,
   requestGetListRank,
 } from '../api';
 
@@ -55,14 +56,29 @@ export const getListRank = createAsyncThunk(
   }
 );
 
+export const editPost = createAsyncThunk(
+  'editPost',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    console.log('params', params);
+    try {
+      const response = await requestGetDetailRealEstates(params);
+      return fulfillWithValue(response?.data);
+    } catch (error) {
+      return rejectWithValue(error?.message);
+    }
+  }
+);
 export const createRealEstates = createAsyncThunk(
   'createRealEstates',
   async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestCreateRealEstates(params);
+      console.log('data1111', data);
+
       return fulfillWithValue({ ...data });
     } catch (error) {
       const { data } = error;
+      console.log('data', data);
       let errorString = 'Lỗi hệ thống';
       if (data) {
         errorString = ` ${
@@ -196,6 +212,79 @@ const slice = createSlice({
     builder.addCase(getListRank.fulfilled, (state, action) => {
       state.loading = false;
       state.rank = action.payload;
+    });
+    builder.addCase(editPost.pending, state => {
+      // state.createRealEstate.loading = true;
+    });
+    builder.addCase(editPost.fulfilled, (state, action) => {
+      state.basicInformation = {
+        demand_id: action.payload.demand_id,
+        real_estate_type_id: action.payload.real_estate_type_id,
+        project_id: action.payload.project_id,
+        address_detail: action.payload.address,
+        province_id: action.payload.province_id,
+        district_id: action.payload.district_id.toString(),
+        ward_id: action.payload.ward_id.toString(),
+        street_id: action.payload.street_id,
+        lat_long: action.payload.lat_long,
+      };
+      console.log(
+        'action.payload111',
+        typeof action.payload?.utilities_id === 'undefined'
+      );
+
+      state.realEstateInformation = {
+        ...initialRealEstateInformation,
+        area: action.payload.area.toString(),
+        price: action.payload.price.toString(),
+        price_unit: action.payload.price_unit,
+        width: action.payload.width,
+        length: action.payload.length,
+        lane_width: action.payload.lane_width,
+        bathroom: action.payload.bathroom,
+        bedroom: action.payload.bedroom,
+        main_door_direction_id: action.payload.main_door_direction_id,
+        structure_id: action.payload.structure_id,
+        legal_documents_id: action.payload.legal_documents_id,
+        house_status_id: action.payload.house_status_id,
+        usage_condition_id: action.payload?.usage_condition_id,
+        location_type_id: action.payload?.location_type_id,
+        utilities_id:
+          typeof action.payload?.utilities_id === 'undefined'
+            ? ''
+            : action.payload?.utilities_id.toString(),
+        furniture_id:
+          typeof action.payload.furniture_id === 'undefined'
+            ? ''
+            : action.payload.furniture_id.toString(),
+        security_id:
+          typeof action.payload.security_id === 'undefined'
+            ? ''
+            : action.payload.security_id.toString(),
+        road_type_id:
+          typeof action.payload.road_type_id === 'undefined'
+            ? ''
+            : action.payload.road_type_id.toString(),
+      };
+
+      state.articleDetails = {
+        title: action.payload.title || '',
+        content: action.payload.content || '',
+        name: action.payload.name || '',
+        phone_number: action.payload.phone_number || '',
+        type: action.payload.type || null,
+        urlVideo: action.payload.urlVideo || '',
+        isPhoto: action.payload.isPhoto || true,
+        photo: [],
+        video: [],
+      };
+      // state.createRealEstate.loading = false;
+      // state.createRealEstate.data = action.payload;
+      // state.createRealEstate.error = '';
+    });
+    builder.addCase(editPost.rejected, (state, action) => {
+      // state.createRealEstate.loading = false;
+      // state.createRealEstate.error = action.payload;
     });
   },
 });

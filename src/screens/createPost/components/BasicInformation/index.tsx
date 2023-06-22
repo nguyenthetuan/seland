@@ -117,10 +117,13 @@ const BasicInformation = forwardRef((props, ref) => {
     refresh();
   }, []);
 
+  console.log('basicInformation', basicInformation);
   useEffect(() => {
-    Object.entries(basicInformation).forEach(
-      ([key, value]) => value && setValue(key, value)
-    );
+    Object.entries(basicInformation).forEach(([key, value]) => {
+      console.log('key', key, value);
+
+      return value && setValue(key, value);
+    });
   }, [basicInformation, setValue]);
 
   const handleSelectRealEstateType = (value: { value?: number }) => {
