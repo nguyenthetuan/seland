@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
@@ -42,14 +43,56 @@ const TAB = {
   ARTICLE_DETAILS: 2,
 };
 
-export const formatDataValueId = data =>
-  data?.map(item => ({
+const initInfo = {
+  real_estate_type_id: null,
+  project_id: 0,
+  address_detail: '',
+  province_id: null,
+  district_id: null,
+  ward_id: null,
+  street_id: null,
+  lat_long: `${21.0227523}, ${105.9530334}`,
+  demand_id: 0,
+  // real estate info
+  area: '',
+  price: '',
+  price_unit: 1,
+  width: '',
+  length: '',
+  floor: '',
+  lane_width: '',
+  bathroom: null,
+  bedroom: null,
+  main_door_direction_id: null,
+  structure_id: null,
+  legal_documents_id: null,
+  house_status_id: null,
+  usage_condition_id: null,
+  location_type_id: null,
+  utilities_id: '',
+  furniture_id: '',
+  security_id: '',
+  road_type_id: '',
+  // article detail
+  title: '',
+  content: '',
+  name: '',
+  urlVideo: '',
+  phone_number: '',
+  type: null,
+  isPhoto: true,
+  photo: [],
+  video: [],
+};
+
+export const formatDataValueId = (data: any) =>
+  data?.map((item: { value?: string; id?: number }) => ({
     label: item.value,
     value: item.id,
   }));
 
-export const formatDataNameId = data =>
-  data?.map(item => ({
+export const formatDataNameId = (data: any) =>
+  data?.map((item: { name?: string; id?: number }) => ({
     label: item.name,
     value: item.id,
   }));
@@ -59,11 +102,8 @@ const CreatePostScreen = () => {
   const router = useRoute();
   const { t } = useTranslation();
   const scrollViewRef = useRef();
-  const basicInfoRef = useRef();
-  const realEstateRef = useRef();
-  const articleDetailRef = useRef();
   const confirmPostRef = useRef();
-  const currentTab = useRef();
+  const currentTab = useRef<any>();
 
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
@@ -71,25 +111,32 @@ const CreatePostScreen = () => {
   const { loading, basicInformation, realEstateInformation, createRealEstate } =
     useSelector(selectPosts);
 
-  useEffect(() => {
-    currentTab.current = TAB.BASIC_INFORMATION;
-  }, []);
+  const {
+    control,
+    setValue,
+    getValues,
+    setError,
+    clearErrors,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: initInfo,
+  });
 
   const handleClosePost = () => {
     dispatch(clearCreatePosts());
-    basicInfoRef.current && basicInfoRef.current.clearForm();
-    currentTab.current = TAB.BASIC_INFORMATION;
+    reset();
     setTab(TAB.BASIC_INFORMATION);
     goBack();
   };
-  const handleTab = value => {
+  const handleTab = (value: number) => {
     setTab(value);
     if (
       currentTab.current === TAB.BASIC_INFORMATION &&
       value === TAB.REAL_ESTATE_INFORMATION &&
       tab === TAB.BASIC_INFORMATION
     ) {
-      basicInfoRef.current.handleNext();
       currentTab.current = value;
       return;
     }
@@ -98,7 +145,6 @@ const CreatePostScreen = () => {
       value === TAB.ARTICLE_DETAILS &&
       tab === TAB.BASIC_INFORMATION
     ) {
-      basicInfoRef.current.handleNext();
       currentTab.current = value;
       return;
     }
@@ -108,7 +154,6 @@ const CreatePostScreen = () => {
       value === TAB.ARTICLE_DETAILS &&
       tab === TAB.REAL_ESTATE_INFORMATION
     ) {
-      realEstateRef.current.handleNext();
       currentTab.current = value;
       return;
     }
@@ -118,7 +163,6 @@ const CreatePostScreen = () => {
       value === TAB.REAL_ESTATE_INFORMATION &&
       tab === TAB.ARTICLE_DETAILS
     ) {
-      articleDetailRef.current.handleNext();
       currentTab.current = value;
       return;
     }
@@ -127,16 +171,15 @@ const CreatePostScreen = () => {
       value === TAB.BASIC_INFORMATION &&
       tab === TAB.ARTICLE_DETAILS
     ) {
-      articleDetailRef.current.handleNext();
       currentTab.current = value;
     }
   };
 
-  const handleSelect = value => {
+  const handleSelect = (value: number) => {
     setSaveType(value);
   };
 
-  const createSuccess = value => {
+  const createSuccess = (value: any) => {
     if (value?.real_estate_id) {
       if (saveType === YOUR_WANT.POST_PUBLIC) {
         navigate(SCREENS.CONFIRM_POST_SCREEN, {
@@ -147,11 +190,10 @@ const CreatePostScreen = () => {
         confirmPostRef.current.openPopup();
       }
       dispatch(clearCreatePosts());
-      basicInfoRef.current && basicInfoRef.current.clearForm();
     }
   };
 
-  const createPosts = value => {
+  const createPosts = (value: any) => {
     const params = {
       ...basicInformation,
       ...realEstateInformation,
@@ -185,18 +227,20 @@ const CreatePostScreen = () => {
 
     // append image to form
     if (params?.photo?.length) {
-      params?.photo.forEach((item, index) => {
-        const file = {
-          uri: item.uri,
-          name: item.fileName,
-          type: item.type,
-        };
-        formData.append(`images[${index}]`, file);
-      });
+      params?.photo.forEach(
+        (item: { uri: any; fileName: any; type: any }, index: any) => {
+          const file = {
+            uri: item.uri,
+            name: item.fileName,
+            type: item.type,
+          };
+          formData.append(`images[${index}]`, file);
+        }
+      );
     }
     // append video to form
     if (params?.video?.length) {
-      params?.photo.forEach((item, index) => {
+      params?.photo.forEach((item: { uri: any; fileName: any; type: any }) => {
         const file = {
           uri: item.uri,
           name: item.fileName,
@@ -213,12 +257,18 @@ const CreatePostScreen = () => {
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
-  const handleContinue = () => {
+  const handleContinue = async (value: { photo: string | any[] }) => {
+    console.log('🚀 ~ file: index.js:258 ~ handleContinue ~ value:', value);
     switch (tab) {
       case TAB.BASIC_INFORMATION:
         scrollViewRef.current?.scrollTo();
-        const errors = basicInfoRef.current.handleNext();
-        if (errors) {
+        if (
+          errors.address_detail ||
+          errors.district_id ||
+          errors.province_id ||
+          errors.ward_id ||
+          errors.real_estate_type_id
+        ) {
           break;
         } else {
           setTab(tab + 1);
@@ -226,9 +276,8 @@ const CreatePostScreen = () => {
           break;
         }
       case TAB.REAL_ESTATE_INFORMATION:
-        const errorsRealEstates = realEstateRef.current.handleNext();
         scrollViewRef.current?.scrollTo();
-        if (errorsRealEstates) {
+        if (errors.area || errors.price || errors.price_unit) {
           break;
         } else {
           setTab(tab + 1);
@@ -236,11 +285,17 @@ const CreatePostScreen = () => {
           break;
         }
       case TAB.ARTICLE_DETAILS:
-        const response = articleDetailRef.current.handleNext();
-        if (response?.error) {
+        if (value?.photo.length <= 2) {
+          setError('photo', {
+            type: 'manual',
+            message: 'Mayf phai nhap it nhat 3 cai anh',
+          });
+          break;
+        }
+        if (errors.title || errors.content) {
           break;
         } else {
-          createPosts(response);
+          // createPosts(value);
           break;
         }
       default:
@@ -248,14 +303,7 @@ const CreatePostScreen = () => {
         break;
     }
   };
-
   const handleBack = () => {
-    if (tab === 2) {
-      articleDetailRef.current.handleNext();
-    }
-    if (tab === 1) {
-      realEstateRef.current.handleNext();
-    }
     scrollViewRef.current?.scrollTo();
     setTab(tab - 1);
   };
@@ -278,13 +326,40 @@ const CreatePostScreen = () => {
   const renderTab = () => {
     switch (tab) {
       case TAB.BASIC_INFORMATION:
-        return <BasicInformation ref={basicInfoRef} />;
+        return (
+          <BasicInformation
+            control={control}
+            setValue={setValue}
+            getValues={getValues}
+          />
+        );
       case TAB.REAL_ESTATE_INFORMATION:
-        return <RealEstateInformation ref={realEstateRef} />;
+        return (
+          <RealEstateInformation
+            control={control}
+            setValue={setValue}
+            getValues={getValues}
+          />
+        );
       case TAB.ARTICLE_DETAILS:
-        return <ArticleDetails ref={articleDetailRef} />;
+        return (
+          <ArticleDetails
+            control={control}
+            setValue={setValue}
+            setError={setError}
+            clearErrors={clearErrors}
+            getValues={getValues}
+            errors={errors}
+          />
+        );
       default:
-        return <BasicInformation />;
+        return (
+          <BasicInformation
+            control={control}
+            setValue={setValue}
+            getValues={getValues}
+          />
+        );
     }
   };
 
@@ -395,7 +470,7 @@ const CreatePostScreen = () => {
           <Button
             title={t('button.continue')}
             buttonStyle={styles.btnContinue}
-            onPress={handleContinue}
+            onPress={handleSubmit(handleContinue)}
           />
         ) : (
           <View style={styles.boxButton}>
@@ -407,7 +482,7 @@ const CreatePostScreen = () => {
             <Button
               title={t('button.continue')}
               buttonStyle={styles.btnContinue1}
-              onPress={handleContinue}
+              onPress={handleSubmit(handleContinue)}
             />
           </View>
         )}

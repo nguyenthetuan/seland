@@ -1,11 +1,6 @@
 import { Icon } from '@rneui/themed';
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -28,35 +23,23 @@ import {
 import { dispatchThunk } from '../../../../utils';
 import { formatDataNameId, formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
+import { validateAddress } from '../../../../utils/validates';
 
-const initInfo = {
-  real_estate_type_id: 0,
-  project_id: 0,
-  address_detail: '',
-  province_id: null,
-  district_id: null,
-  ward_id: null,
-  street_id: null,
-  lat_long: `${21.0227523}, ${105.9530334}`,
-};
-
-interface errorsProps {
-  realEstateType?: string | undefined;
-  addressDetail?: string | undefined;
-  ward?: string | undefined;
-  district?: string | undefined;
-  province?: string | undefined;
+interface BasicInformationProps {
+  control?: Control;
+  setValue?: Function;
+  getValues?: Function;
 }
-const BasicInformation = forwardRef((props, ref) => {
+
+const BasicInformation: React.FC<BasicInformationProps> = ({
+  control,
+  setValue,
+  getValues,
+}) => {
   const { t } = useTranslation();
   const { basicInformation, realEstateType, projects, demands } =
     useSelector(selectPosts);
-  console.log(
-    '🚀 ~ file: index.tsx:53 ~ BasicInformation ~ basicInformation:',
-    basicInformation
-  );
   const [isBuy, setIsBuy] = useState(basicInformation?.demand_id || 1);
-  const [errors, setErrors] = useState<errorsProps>();
   const [showInfoApartmentBuilding, setShowInfoApartmentBuilding] =
     useState<boolean>(
       basicInformation?.real_estate_type_id === 3 ? true : false
@@ -64,31 +47,12 @@ const BasicInformation = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const { provinces, districts, wards } = useSelector(selectCommon);
 
-  const emptyProvinceOption = {
-    label: t('select.province'),
-    value: null,
-  };
-  const emptyDistrictOption = {
-    label: t('select.district'),
-    value: null,
-  };
-  const emptyWardOption = {
-    label: t('select.ward'),
-    value: null,
-  };
   const emptyProject = {
     label: t('select.nameProject'),
     value: null,
   };
 
-  const provinceOptions = [emptyProvinceOption, ...provinces];
-  const districtOptions = [emptyDistrictOption, ...districts];
-  const wardOptions = [emptyWardOption, ...wards];
   const projectOptions = [emptyProject, ...formatDataNameId(projects)];
-
-  const { control, setValue, getValues, reset } = useForm({
-    defaultValues: initInfo,
-  });
 
   const fetchDistricts = (params: any, callback?: Function) =>
     dispatchThunk(dispatch, getDistricts(params), callback);
@@ -119,11 +83,9 @@ const BasicInformation = forwardRef((props, ref) => {
 
   console.log('basicInformation', basicInformation);
   useEffect(() => {
-    Object.entries(basicInformation).forEach(([key, value]) => {
-      console.log('key', key, value);
-
-      return value && setValue(key, value);
-    });
+    Object.entries(basicInformation).forEach(
+      ([key, value]) => value && setValue && setValue(key, value)
+    );
   }, [basicInformation, setValue]);
 
   const handleSelectRealEstateType = (value: { value?: number }) => {
@@ -132,36 +94,15 @@ const BasicInformation = forwardRef((props, ref) => {
     } else {
       setShowInfoApartmentBuilding(false);
     }
-    if (errors?.realEstateType) delete errors.realEstateType;
-    setErrors({
-      ...errors,
-    });
-  };
-
-  const handleOnblurAddress = () => {
-    if (errors?.addressDetail) delete errors.addressDetail;
-    setErrors({
-      ...errors,
-    });
-  };
-  const handleSelectWard = () => {
-    if (errors?.ward) delete errors.ward;
-    setErrors({
-      ...errors,
-    });
   };
 
   const handleSelectProvince = (selectedItem: { value: number }) => {
-    setValue('district_id', null);
-    setValue('ward_id', null);
+    setValue && setValue('district_id', null);
+    setValue && setValue('ward_id', null);
 
     const { value } = selectedItem;
 
     if (value) {
-      if (errors?.province) delete errors.province;
-      setErrors({
-        ...errors,
-      });
       fetchDistricts({
         province_code: value,
       });
@@ -172,15 +113,11 @@ const BasicInformation = forwardRef((props, ref) => {
   };
 
   const handleSelectDistrict = (selectedItem: { value: number }) => {
-    setValue('ward_id', null);
+    setValue && setValue('ward_id', null);
 
     const { value } = selectedItem;
 
     if (value) {
-      if (errors?.district) delete errors.district;
-      setErrors({
-        ...errors,
-      });
       fetchWards({
         province_code: getValues().province_id,
         district_code: value,
@@ -194,15 +131,14 @@ const BasicInformation = forwardRef((props, ref) => {
     latitude: number | string;
     longitude: number | string;
   }) => {
-    setValue('lat_long', `${value?.latitude}, ${value?.longitude}`);
+    setValue && setValue('lat_long', `${value?.latitude}, ${value?.longitude}`);
   };
 
   const handleReset = () => {
-    setValue('lat_long', `${21.0227523}, ${105.9530334}`);
+    setValue && setValue('lat_long', `${21.0227523}, ${105.9530334}`);
   };
 
-  const handleNext = () => {
-    const value = getValues();
+  const onSubmit = (value: any) => {
     dispatchThunk(
       dispatch,
       createBasicInformation({
@@ -210,37 +146,8 @@ const BasicInformation = forwardRef((props, ref) => {
         demand_id: isBuy,
       })
     );
-    if (
-      !value.real_estate_type_id ||
-      !value.province_id ||
-      !value.district_id ||
-      !value.ward_id ||
-      !value.address_detail.trim()
-    ) {
-      setErrors({
-        realEstateType: !value.real_estate_type_id
-          ? 'Vui lòng chọn loại BĐS'
-          : undefined,
-        province: !value.province_id ? 'Vui lòng chọn Thành phố' : undefined,
-        district: !value.district_id ? 'Vui lòng chọn Quận/huyện' : undefined,
-        ward: !value.ward_id ? 'Vui lòng chọn Phường/xã' : undefined,
-        addressDetail: !value.address_detail.trim()
-          ? 'Vui lòng nhập địa chỉ hiển thị trên tin đăng'
-          : undefined,
-      });
-
-      return true;
-    }
-    setErrors({});
     return false;
   };
-
-  const clearForm = () => {
-    reset();
-    setErrors({});
-  };
-
-  useImperativeHandle(ref, () => ({ handleNext, clearForm }));
 
   return (
     <View style={styles.container}>
@@ -273,13 +180,13 @@ const BasicInformation = forwardRef((props, ref) => {
         <Select
           buttonStyle={styles.select}
           control={control}
-          errors={errors?.realEstateType}
           data={[...formatDataValueId(realEstateType)]}
           defaultButtonText={t('select.realEstateType')}
           label={t('select.realEstateType')}
           labelStyle={styles.inputLabel}
           name="real_estate_type_id"
           required
+          rules={{ required: 'Vui lòng chọn loại BĐS' }}
           onSelect={handleSelectRealEstateType}
         />
         {showInfoApartmentBuilding && (
@@ -295,7 +202,10 @@ const BasicInformation = forwardRef((props, ref) => {
               name="apartment_code"
             />
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
             >
               <Input
                 control={control}
@@ -330,10 +240,10 @@ const BasicInformation = forwardRef((props, ref) => {
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={provinceOptions}
-            defaultButtonText="Please Select"
+            data={provinces}
+            defaultButtonText={t('select.province')}
+            rules={{ required: 'Vui lòng chọn Thành phố' }}
             label={t('select.province')}
-            errors={errors?.province}
             labelStyle={styles.inputLabel}
             name="province_id"
             required
@@ -342,10 +252,10 @@ const BasicInformation = forwardRef((props, ref) => {
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={districtOptions}
-            defaultButtonText="Please Select"
+            data={districts}
+            rules={{ required: 'Vui lòng chọn Quận/huyện' }}
+            defaultButtonText={t('select.district')}
             label={t('select.district')}
-            errors={errors?.district}
             labelStyle={styles.inputLabel}
             name="district_id"
             required
@@ -355,14 +265,13 @@ const BasicInformation = forwardRef((props, ref) => {
         <Select
           buttonStyle={styles.select1}
           control={control}
-          data={wardOptions}
-          errors={errors?.ward}
-          defaultButtonText="Please Select"
+          data={wards}
+          defaultButtonText={t('select.ward')}
           label={t('select.ward')}
+          rules={{ required: 'Vui lòng chọn Phường/xã' }}
           labelStyle={styles.inputLabel}
           name="ward_id"
           required
-          onSelect={handleSelectWard}
         />
         <Select
           buttonStyle={styles.select}
@@ -375,12 +284,14 @@ const BasicInformation = forwardRef((props, ref) => {
         />
         <Input
           control={control}
-          errorMessage={errors?.addressDetail}
           label={t('input.specificAddress')}
           labelStyle={styles.inputLabel}
           name="address_detail"
           required
-          onBlur={handleOnblurAddress}
+          rules={{
+            required: 'Vui lòng nhập địa chỉ hiển thị trên tin đăng',
+            validate: validateAddress,
+          }}
           renderErrorMessage={false}
         />
         <Input
@@ -411,8 +322,6 @@ const BasicInformation = forwardRef((props, ref) => {
       </KeyboardAwareScrollView>
     </View>
   );
-});
-
-BasicInformation.displayName = 'BasicInformation';
+};
 
 export default BasicInformation;

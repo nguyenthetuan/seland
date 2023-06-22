@@ -1,51 +1,36 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
-import { createRealEstateInformation, selectPosts } from '../../../../features';
-import { dispatchThunk } from '../../../../utils';
+import { selectPosts } from '../../../../features';
 import { formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
 import { Icon } from '@rneui/base';
 
-interface errorsProps {
-  area?: string | undefined;
-  price?: string | undefined;
-  priceUnit?: string | undefined;
-  district?: string | undefined;
-  province?: string | undefined;
+interface RealEstateInformationProps {
+  control?: Control;
+  setValue?: Function;
+  getValues?: Function;
 }
 
-const RealEstateInformation = forwardRef((props, ref) => {
+const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
+  control,
+  setValue,
+  getValues,
+}) => {
   const { t } = useTranslation();
   const { realEstateInformation, information, unitPrices, utilities } =
     useSelector(selectPosts);
-  const dispatch = useDispatch();
   const [average, setAverage] = useState(0);
-  const [errors, setErrors] = useState<errorsProps>();
-  const [utilitiesId, setUtilitiesId] = useState(
-    realEstateInformation?.utilities_id.split(',').map(Number) || []
-  );
-  const [furnitureId, setFurnitureId] = useState(
-    realEstateInformation?.furniture_id.split(',').map(Number) || []
-  );
-  const [securityId, setSecurityId] = useState(
-    realEstateInformation?.security_id.split(',').map(Number) || []
-  );
-  const [roadTypeId, setRoadTypeId] = useState(
-    realEstateInformation?.road_type_id.split(',').map(Number) || []
-  );
+  const [utilitiesId, setUtilitiesId] = useState([]);
+  const [furnitureId, setFurnitureId] = useState([]);
+  const [securityId, setSecurityId] = useState([]);
+  const [roadTypeId, setRoadTypeId] = useState([]);
   const [state, setState] = useState({
     legalDocumentsId:
       realEstateInformation?.legal_documents_id ||
@@ -66,22 +51,6 @@ const RealEstateInformation = forwardRef((props, ref) => {
     furniture: false,
   });
 
-  const { control, getValues, reset, setValue } = useForm({
-    defaultValues: {
-      area: '',
-      price: '',
-      price_unit: 1,
-      width: '',
-      length: '',
-      floor: '',
-      lane_width: '',
-      bathroom: null,
-      bedroom: null,
-      main_door_direction_id: null,
-      structure_id: null,
-    },
-  });
-  console.log('value', getValues());
   const emptyUnitPrices = {
     label: t('select.structure'),
     value: null,
@@ -106,68 +75,17 @@ const RealEstateInformation = forwardRef((props, ref) => {
   ];
 
   useEffect(() => {
-    Object.entries(realEstateInformation).forEach(([key, value]) => {
-      console.log('key', key, value);
-      return value && setValue(key, value);
-    });
+    Object.entries(realEstateInformation).forEach(
+      ([key, value]) => value && setValue && setValue(key, value)
+    );
   }, [realEstateInformation, setValue]);
 
-  const handleNext = () => {
-    const value = getValues();
-    dispatchThunk(
-      dispatch,
-      createRealEstateInformation({
-        ...value,
-        legal_documents_id: state.legalDocumentsId,
-        house_status_id: state.houseStatusId,
-        usage_condition_id: state.usageConditionId,
-        location_type_id: state.location,
-        utilities_id: utilitiesId.toString(),
-        furniture_id: furnitureId.toString(),
-        security_id: securityId.toString(),
-        road_type_id: roadTypeId.toString(),
-      })
-    );
-    if (!value.area || !value.price || !value.price_unit) {
-      setErrors({
-        area: !value.area ? 'Vui lòng nhập Diện tích' : undefined,
-        price: !value.price ? 'Vui lòng nhập giá' : undefined,
-        priceUnit: !value.price_unit ? 'Vui lòng chọn Đơn vị' : undefined,
-      });
-      return true;
-    }
-    setErrors({});
-  };
-
-  const clearForm = () => {
-    reset();
-  };
-
-  const onFocusAcreage = () => {
-    if (errors?.area) delete errors.area;
-    setErrors({
-      ...errors,
-    });
-  };
-
-  const onFocusPrice = () => {
-    if (errors?.area) delete errors.area;
-    setErrors({
-      ...errors,
-    });
-  };
-
   const onBlurPrice = () => {
-    if (errors?.price) delete errors.price;
-    setErrors({
-      ...errors,
-    });
-    const value = getValues();
+    const value = getValues && getValues();
     if (value?.area && value?.price) {
       setAverage(Number(value?.price) / Number(value?.area));
     }
   };
-
   const handleSelectUtils = (value: any) => {
     if (utilitiesId.includes(value)) {
       const array = utilitiesId?.filter((item: any) => item !== value);
@@ -224,8 +142,6 @@ const RealEstateInformation = forwardRef((props, ref) => {
     return array;
   }, [show]);
 
-  useImperativeHandle(ref, () => ({ handleNext, clearForm }));
-
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView>
@@ -237,12 +153,11 @@ const RealEstateInformation = forwardRef((props, ref) => {
             control={control}
             inputMode="numeric"
             isNumeric
-            errorMessage={errors?.area}
+            rules={{ required: 'Vui lòng nhập Diện tích' }}
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.acreage')}
             labelStyle={styles.inputLabel}
             name="area"
-            onFocus={onFocusAcreage}
             required
             rightIcon={<Text>m²</Text>}
             renderErrorMessage={false}
@@ -252,13 +167,12 @@ const RealEstateInformation = forwardRef((props, ref) => {
               control={control}
               inputMode="numeric"
               isNumeric
-              errorMessage={errors?.price}
+              rules={{ required: 'Vui lòng nhập giá' }}
               inputContainerStyle={styles.inputContainerStyle}
               label={t('input.price')}
               labelStyle={styles.inputLabel}
               name="price"
               required
-              onFocus={onFocusPrice}
               onBlur={onBlurPrice}
               renderErrorMessage={false}
             />
@@ -274,7 +188,7 @@ const RealEstateInformation = forwardRef((props, ref) => {
             buttonStyle={styles.select1}
             control={control}
             data={unitPricesOptions}
-            errors={errors?.priceUnit}
+            rules={{ required: 'Vui lòng chọn Đơn vị' }}
             defaultButtonText="Please Select"
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
@@ -629,8 +543,6 @@ const RealEstateInformation = forwardRef((props, ref) => {
       </KeyboardAwareScrollView>
     </View>
   );
-});
-
-RealEstateInformation.displayName = 'RealEstateInformation';
+};
 
 export default RealEstateInformation;

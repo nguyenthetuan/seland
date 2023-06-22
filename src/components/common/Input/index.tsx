@@ -1,6 +1,6 @@
 import { Icon, Input as RNEInput, InputProps } from '@rneui/themed';
 import React, { ReactNode, useState } from 'react';
-import { useController } from 'react-hook-form';
+import { useController, RegisterOptions } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
   InputModeOptions,
@@ -35,6 +35,8 @@ interface InputCustomProps extends InputProps {
   disabled?: boolean;
   inputMode?: InputModeOptions;
   renderErrorMessage?: any;
+  rules?: RegisterOptions;
+  errorMessage?: string;
 }
 
 const Input = ({
@@ -54,12 +56,15 @@ const Input = ({
   required = false,
   rightLabel,
   showPasswordPolicy = false,
-  errorStyle={},
+  errorStyle = {},
+  rules,
+  errorMessage,
   ...props
 }: InputCustomProps) => {
   const {
     field: { onBlur, onChange, value },
-  } = useController({ control, name });
+    fieldState: { error },
+  } = useController({ control, name, rules, defaultValue: '' });
   const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -122,6 +127,7 @@ const Input = ({
             ? renderErrorMessage
             : !passwordPolicyVisible
         }
+        errorMessage={errorMessage || error?.message}
         rightIcon={
           isPassword && (
             <Icon
