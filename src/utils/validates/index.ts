@@ -56,3 +56,12 @@ export const validatePhone = (value: string) => {
   }
   return undefined;
 };
+
+export const validateName = (value: string) => {
+  if (value) {
+    if (value.length < 5 || value.length > 128) {
+      return 'Độ dài họ và tên: 5-128 kí tự';
+    }
+  }
+  return undefined;
+};

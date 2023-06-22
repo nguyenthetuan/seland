@@ -13,7 +13,7 @@ import { COLORS } from '../../../../constants';
 import { selectUser } from '../../../../features';
 import Category from '../Category';
 import styles from './styles';
-import { validatePhone } from '../../../../utils/validates';
+import { validateName, validatePhone } from '../../../../utils/validates';
 
 const IAm = [
   {
@@ -374,6 +374,9 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                 control={control}
                 label={t('input.name')}
                 labelStyle={styles.inputLabel}
+                rules={{
+                  validate: validateName,
+                }}
                 name="name"
               />
               <Input
