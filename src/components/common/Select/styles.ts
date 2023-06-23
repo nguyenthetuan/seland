@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'left',
   },
-  text: (value: any) => ({
-    color: value ? COLORS.BLACK_1 : COLORS.GRAY_5,
+  text: {
+    color: COLORS.BLACK_1,
     fontSize: 16,
     lineHeight: 24,
     textAlign: 'left',
-  }),
+  },
 });
 
 export default styles;

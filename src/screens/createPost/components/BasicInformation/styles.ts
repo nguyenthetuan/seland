@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   },
   locationRealEstate: {
     fontWeight: '700',
+    marginTop: 16,
   },
   boxDotLine: {
     alignItems: 'center',

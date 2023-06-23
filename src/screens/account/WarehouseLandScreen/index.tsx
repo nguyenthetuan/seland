@@ -19,12 +19,13 @@ const WarehouseLandScreen = () => {
     defaultValues: {
       real_estate_warehouse_id: null,
       area_range_id: null,
-      sort_order: 'createdAt',
+      sort_by: 'createdAt',
       real_estate_type_id: null,
       province_id: null,
       district_id: null,
-      status: null,
+      demand_id: null,
       title: null,
+      status: null,
     },
   });
   const { t } = useTranslation();
@@ -52,46 +53,48 @@ const WarehouseLandScreen = () => {
   useEffect(() => {
     onLoadRealEstateWarehouses();
   }, [dispatch]);
-
-  return (
-    <>
+  if (loadingRealEstateWarehouses) {
+    return (
       <Loading
         visible={loadingRealEstateWarehouses}
         textContent={`${t('common.loading')}`}
         color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
+    );
+  }
+  return (
+    <>
       <View style={styles.itemWarehouseLand}>
         <HeaderListPosts
           control={control}
           handleSubmit={handleSubmit}
           onChangeSearch={onChangeSearch}
+          getValues={getValues}
         />
-        {isLoading ? (
-          <ActivityIndicator size={'small'} />
-        ) : (
-          <FlatList
-            style={styles.list}
-            contentContainerStyle={styles.contentContainer}
-            data={listRealEstateWarehouses}
-            renderItem={({ item }) => <ItemWarehouseLand item={item} />}
-            keyExtractor={(_, index) => `itemWarehouseLand${index}`}
-            ListEmptyComponent={
-              loadingRealEstateWarehouses ? null : <NoResults />
-            }
-            ListHeaderComponent={
-              <FilterWarehouse
-                control={control}
-                handleSubmit={handleSubmit}
-                onSelect={onSelect}
-                onFilter={onFilterModal}
-                setValue={setValue}
-              />
-            }
-            refreshing={isLoading}
-            onRefresh={onLoadRealEstateWarehouses}
-          />
-        )}
+
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.contentContainer}
+          data={listRealEstateWarehouses}
+          renderItem={({ item }) => <ItemWarehouseLand item={item} />}
+          keyExtractor={(_, index) => `itemWarehouseLand${index}`}
+          ListEmptyComponent={
+            loadingRealEstateWarehouses ? null : <NoResults />
+          }
+          ListHeaderComponent={
+            <FilterWarehouse
+              control={control}
+              handleSubmit={handleSubmit}
+              onSelect={onSelect}
+              onFilter={onFilterModal}
+              setValue={setValue}
+              getValues={getValues}
+            />
+          }
+          refreshing={isLoading}
+          onRefresh={onLoadRealEstateWarehouses}
+        />
       </View>
     </>
   );

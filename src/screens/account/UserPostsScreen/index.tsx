@@ -9,14 +9,7 @@ import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import DateRangePicker from 'rn-select-date-range';
 
-import {
-  Button,
-  Header,
-  Input,
-  NoResults,
-  Screen,
-  Select,
-} from '../../../components';
+import { Button, Header, Input, NoResults, Select } from '../../../components';
 import { COLORS } from '../../../constants';
 import {
   getListRealEstatesUser,
@@ -24,8 +17,8 @@ import {
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
-import ModalFilter from './components/ModalFilter';
 import styles from './styles';
+import ModalFilterScreen from './components/ModalFilter';
 
 const UserPostsScreen = () => {
   const route = useRoute();
@@ -162,11 +155,13 @@ const UserPostsScreen = () => {
       province_id: null,
       type: null,
       status: '',
+      demand_id: null,
     },
   });
 
   const onSubmit = (data: any) => {
-    dispatchThunk(dispatch, getListRealEstatesUser(data));
+    const parmas = { ...data, title: data?.title?.trim() };
+    dispatchThunk(dispatch, getListRealEstatesUser(parmas));
   };
 
   const submit = handleSubmit(onSubmit);
@@ -263,14 +258,19 @@ const UserPostsScreen = () => {
     );
   };
 
-  return (
-    <>
+  if (loading) {
+    return (
       <Loading
         color={COLORS.BLUE_1}
-        textContent={t('common.loading')}
+        textContent={t('common.loading') || ''}
         textStyle={styles.loadingText}
         visible={loading}
       />
+    );
+  }
+
+  return (
+    <>
       <Modal
         isVisible={modalVisible}
         onBackButtonPress={hideDateRangePicker}
@@ -309,14 +309,14 @@ const UserPostsScreen = () => {
         </View>
         <FlatList
           style={styles.list}
-          data={userRealEstates}
+          data={!loading && userRealEstates}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <UserPost item={item} />}
           ListHeaderComponent={renderHeader}
           ListEmptyComponent={<View>{!loading && <NoResults />}</View>}
         />
       </View>
-      <ModalFilter
+      <ModalFilterScreen
         ref={filterRef}
         control={control}
         setValueHookForm={setValue}

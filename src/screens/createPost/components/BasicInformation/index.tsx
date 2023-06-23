@@ -23,7 +23,12 @@ import {
 import { dispatchThunk } from '../../../../utils';
 import { formatDataNameId, formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
-import { validateAddress } from '../../../../utils/validates';
+import {
+  isYear,
+  validateAddress,
+  validateApartmentCode,
+  validateFormatYear,
+} from '../../../../utils/validates';
 
 interface BasicInformationProps {
   control?: Control;
@@ -118,7 +123,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
 
     if (value) {
       fetchWards({
-        province_code: getValues().province_id,
+        province_code: getValues && getValues().province_id,
         district_code: value,
       });
     } else {
@@ -137,15 +142,17 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     setValue && setValue('lat_long', `${21.0227523}, ${105.9530334}`);
   };
 
-  const onSubmit = (value: any) => {
-    dispatchThunk(
-      dispatch,
-      createBasicInformation({
-        ...value,
-        demand_id: isBuy,
-      })
-    );
-    return false;
+  const validateFormatHandorverYear = (value: string) => {
+    const { year_built } = getValues && getValues();
+    if (value) {
+      if (!isYear(value)) {
+        return 'Sai định dạng năm';
+      }
+      if (value < year_built) {
+        return 'Năm bàn giao không thể xảy ra trước năm xây dựng';
+      }
+    }
+    return undefined;
   };
 
   return (
@@ -198,6 +205,9 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
               label={t('input.apartmentCode')}
               labelStyle={styles.inputLabel}
               renderErrorMessage={false}
+              rules={{
+                validate: validateApartmentCode,
+              }}
               name="apartment_code"
             />
             <View
@@ -213,6 +223,9 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
                 labelStyle={styles.inputLabel}
                 inputContainerStyle={styles.inputContainerStyle}
                 renderErrorMessage={false}
+                rules={{
+                  validate: validateFormatYear,
+                }}
                 name="year_built"
               />
               <Input
@@ -222,6 +235,9 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
                 labelStyle={styles.inputLabel}
                 inputContainerStyle={styles.inputContainerStyle}
                 renderErrorMessage={false}
+                rules={{
+                  validate: validateFormatHandorverYear,
+                }}
                 name="handover_year"
               />
             </View>

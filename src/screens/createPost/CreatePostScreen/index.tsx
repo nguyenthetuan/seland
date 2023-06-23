@@ -10,14 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
 import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
-import {
-  clearCreatePosts,
-  createRealEstates,
-  selectPosts,
-  detailRealEstates,
-  editRealEstates,
-} from '../../../features';
-import { dispatchThunk } from '../../../utils';
+import { clearCreatePosts, selectPosts } from '../../../features';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import PopupConfirmPost from '../components/PopupConfirm';
@@ -46,6 +39,9 @@ const TAB = {
 };
 
 const initInfo = {
+  status: null,
+
+  // base infor
   real_estate_type_id: null,
   project_id: 0,
   address_detail: '',
@@ -268,6 +264,7 @@ const CreatePostScreen = (props: any) => {
   };
 
   const handleSelect = (value: number) => {
+    setValue('status', value);
     setSaveType(value);
   };
 
@@ -287,10 +284,7 @@ const CreatePostScreen = (props: any) => {
 
   const createPosts = (value: any) => {
     const params = {
-      ...basicInformation,
-      ...realEstateInformation,
       ...value,
-      status: saveType,
     };
     const formData = new FormData();
     Object.keys(params).forEach((key, value) => {
@@ -415,7 +409,6 @@ const CreatePostScreen = (props: any) => {
   };
 
   const handleContinue = async (value: { photo: string | any[] }) => {
-    console.log('tab', tab);
     switch (tab) {
       case TAB.BASIC_INFORMATION:
         scrollViewRef.current?.scrollTo();
@@ -452,12 +445,7 @@ const CreatePostScreen = (props: any) => {
         if (errors.title || errors.content) {
           break;
         } else {
-          if (router.params?.edit) {
-            editPosts(value);
-          } else {
-            console.log('dmdmddmm');
-            createPosts(value);
-          }
+          createPosts(value);
           break;
         }
       default:
