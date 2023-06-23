@@ -16,6 +16,7 @@ import {
   selectPosts,
   createRealEstates,
   editRealEstates,
+  getListRealEstatesUser,
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ArticleDetails from '../components/ArticleDetails';
@@ -346,6 +347,15 @@ const CreatePostScreen = (props: any) => {
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
+  const editSucess = () => {
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        sort_by: 'createdAt',
+      })
+    );
+  };
+
   const editPosts = async (value: any) => {
     const params = {
       ...basicInformation,
@@ -408,7 +418,7 @@ const CreatePostScreen = (props: any) => {
     dispatchThunk(
       dispatch,
       editRealEstates({ id: router.params.id, formData }),
-      (response: any) => console.log('response1111', response)
+      editSucess
     );
   };
 
@@ -449,7 +459,11 @@ const CreatePostScreen = (props: any) => {
         if (errors.title || errors.content) {
           break;
         } else {
-          createPosts(value);
+          if (router.params.edit) {
+            editPosts(value);
+          } else {
+            createPosts(value);
+          }
           break;
         }
       default:
