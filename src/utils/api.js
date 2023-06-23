@@ -60,4 +60,9 @@ const post = async (url, data, customHeaders) => {
   return api.post(url, data, { headers });
 };
 
-export { get, post };
+const deleteBase = async (url, customHeaders) => {
+  const headers = getHeaders(customHeaders);
+  return api.delete(url, { headers });
+};
+
+export { deleteBase, get, post };

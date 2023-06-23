@@ -1,16 +1,25 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
-import { yup } from '../../../../utils';
+import {
+  deleteRealEstatesUser,
+  editPost,
+  selectUserRealEstates,
+} from '../../../../features'
+import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
+import { SCREENS } from '../../../../constants'
+
 
 const Info = ({ value, icon }) => (
   <View style={[styles.info, styles.row]}>
@@ -35,16 +44,14 @@ const schema = yup.object({
   end_date: yup.string(),
 });
 
-const UserPost = ({ item }) => {
+const UserPost = (props) => {
+  const { item, refreshData } = props
+  const { navigate, goBack } = useNavigation();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const {
-    clearErrors,
-    control,
-    getValues,
-    formState: { errors },
-    handleSubmit,
-    setValue,
-  } = useForm({
+  const { loadingDelete } = useSelector(selectUserRealEstates);
+
+  const { control, getValues, setValue } = useForm({
     defaultValues: {
       code: '',
       validity: '',
@@ -63,9 +70,8 @@ const UserPost = ({ item }) => {
   });
 
   const handleCall = () => {
-    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${
-      item?.phone_number
-    }`;
+    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${item?.phone_number
+      }`;
     Linking.canOpenURL(callUrl).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
@@ -98,6 +104,24 @@ const UserPost = ({ item }) => {
         return 'common.vipDiamond';
     }
   };
+  const onDeletePost = async () => {
+    try {
+      if (item?.id) {
+        dispatchThunk(dispatch, deleteRealEstatesUser(item?.id), () => {
+          goBack()
+        });
+        refreshData()
+        Alert.alert(t('common.deleteSuccess'));
+      }
+    } catch (error) {
+      f
+      console.log(error);
+    }
+  };
+
+  const navigateToEdit = () => {
+    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id })
+  }
 
   return (
     <TouchableOpacity style={styles.item}>
@@ -216,12 +240,15 @@ const UserPost = ({ item }) => {
           <Button
             color={COLORS.GREEN_1}
             title={t('button.editPost')}
+            onPress={navigateToEdit}
           />
         </View>
         <View style={[styles.flex, styles.buttonMiddle]}>
           <Button
             color={COLORS.RED_2}
             title={t('button.hidePost')}
+            onPress={onDeletePost}
+            loading={loadingDelete}
           />
         </View>
         <View style={[styles.flex, styles.buttonRight]}>

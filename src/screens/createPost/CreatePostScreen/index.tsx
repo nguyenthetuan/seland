@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
@@ -10,7 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
 import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
-import { clearCreatePosts, selectPosts } from '../../../features';
+import {
+  clearCreatePosts,
+  detailRealEstates,
+  selectPosts,
+  createRealEstates,
+  editRealEstates,
+} from '../../../features';
+import { dispatchThunk } from '../../../utils';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import PopupConfirmPost from '../components/PopupConfirm';
@@ -31,7 +38,6 @@ const SaveType = [
     key: YOUR_WANT.SAVE_DRAFTS,
   },
 ];
-
 const TAB = {
   BASIC_INFORMATION: 0,
   REAL_ESTATE_INFORMATION: 1,
@@ -95,8 +101,9 @@ export const formatDataNameId = (data: any) =>
     value: item.id,
   }));
 
-const CreatePostScreen = () => {
+const CreatePostScreen = (props: any) => {
   const { navigate, goBack } = useNavigation();
+  const router: any = useRoute();
   const { t } = useTranslation();
   const scrollViewRef = useRef();
   const confirmPostRef = useRef();
@@ -105,8 +112,19 @@ const CreatePostScreen = () => {
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
   const dispatch = useDispatch();
-  const { loading, basicInformation, realEstateInformation, createRealEstate } =
-    useSelector(selectPosts);
+  const {
+    loading,
+    basicInformation,
+    realEstateInformation,
+    createRealEstate,
+    unitPrices,
+    information,
+  } = useSelector(selectPosts);
+  const emptyUnitPrices = {
+    label: t('select.structure'),
+    value: null,
+  };
+  const unitPricesOptions = [emptyUnitPrices, ...formatDataValueId(unitPrices)];
 
   const {
     control,
@@ -121,6 +139,83 @@ const CreatePostScreen = () => {
     defaultValues: initInfo,
   });
 
+  const getDetailPost = useCallback(async (response: any) => {
+    Object.entries(response).forEach(([key, value]) => {
+      if (
+        key === 'district_id' ||
+        key === 'ward_id' ||
+        key === 'area' ||
+        key === 'price'
+      ) {
+        value && setValue(key, `${value}`);
+      } else {
+        switch (key) {
+          case 'price_unit':
+            setValue(
+              key,
+              unitPricesOptions.find(elm => elm.label === value).value
+            );
+            break;
+          case 'document_legal':
+            setValue(
+              'legal_documents_id',
+              information[2].children.find((elm: any) => elm.value === value).id
+            );
+            break;
+          case 'house_status':
+            setValue(
+              'house_status_id',
+              information[3].children.find((elm: any) => elm.value === value).id
+            );
+            break;
+          case 'usage_status':
+            setValue(
+              'usage_condition_id',
+              information[4].children.find((elm: any) => elm.value === value).id
+            );
+            break;
+          case 'location':
+            setValue(
+              'location_type_id',
+              information[5].children.find((elm: any) => elm.value === value).id
+            );
+            break;
+          case 'introduction_content':
+            setValue('content', `${value}`);
+            break;
+          case 'contacts':
+            setValue('name', `${value}`);
+            setValue('phone_number', `${value}`);
+            break;
+          case 'real_estate_images':
+            const arrayImages = Object.values(value).map(item => {
+              return {
+                uri: item,
+                name: item.substring(item.lastIndexOf('/') + 1),
+                type: 'image',
+              };
+            });
+            setValue('photo', arrayImages);
+            break;
+          case 'address':
+            setValue('address_detail', value);
+            break;
+          default:
+            value && setValue(key, value);
+            break;
+        }
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    !!router.params?.edit &&
+      dispatchThunk(
+        dispatch,
+        detailRealEstates(router.params.id),
+        (response: any) => getDetailPost(response)
+      );
+  }, []);
   const handleClosePost = () => {
     dispatch(clearCreatePosts());
     reset();
@@ -196,7 +291,6 @@ const CreatePostScreen = () => {
       ...value,
     };
     const formData = new FormData();
-
     Object.keys(params).forEach((key, value) => {
       if (
         key === 'isPhoto' ||
@@ -252,6 +346,72 @@ const CreatePostScreen = () => {
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
+  const editPosts = async (value: any) => {
+    const params = {
+      ...basicInformation,
+      ...realEstateInformation,
+      ...value,
+      status: saveType,
+    };
+    const formData = new FormData();
+    Object.keys(params).forEach((key, value) => {
+      if (
+        key === 'isPhoto' ||
+        key === 'photo' ||
+        key === 'video' ||
+        key === 'urlVideo'
+      )
+        return;
+      const information = [
+        'legal_documents_id',
+        'house_status_id',
+        'usage_condition_id',
+        'location_type_id',
+      ];
+      if (params[key]) {
+        if (information.includes(key)) {
+          formData.append(`information[${key}]`, params[key]);
+        } else {
+          formData.append(key, params[key]);
+        }
+      }
+    });
+
+    // append image to form
+    if (params?.photo?.length) {
+      params?.photo.forEach(
+        (item: { uri: any; fileName: any; type: any }, index: any) => {
+          const file = {
+            uri: item.uri,
+            name: item.fileName,
+            type: item.type,
+          };
+          formData.append(`images[${index}]`, file);
+        }
+      );
+    }
+    // append video to form
+    if (params?.video?.length) {
+      params?.photo.forEach((item: { uri: any; fileName: any; type: any }) => {
+        const file = {
+          uri: item.uri,
+          name: item.fileName,
+          type: item.type,
+        };
+        formData.append(`video`, file);
+      });
+    }
+
+    if (params?.urlVideo) {
+      formData.append(`video`, params?.urlVideo);
+    }
+    dispatchThunk(
+      dispatch,
+      editRealEstates({ id: router.params.id, formData }),
+      (response: any) => console.log('response1111', response)
+    );
+  };
+
   const handleContinue = async (value: { photo: string | any[] }) => {
     switch (tab) {
       case TAB.BASIC_INFORMATION:
@@ -282,7 +442,7 @@ const CreatePostScreen = () => {
         if (value?.photo.length <= 2) {
           setError('photo', {
             type: 'manual',
-            message: 'Mayf phai nhap it nhat 3 cai anh',
+            message: 'Bạn phải nhập ít nhất 3 ảnh',
           });
           break;
         }

@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -33,7 +33,6 @@ const UserPostsScreen = () => {
     dateStart: '',
     dateEnd: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   const onOpenFilter = () => {
     filterRef.current.onOpen();
@@ -200,6 +199,70 @@ const UserPostsScreen = () => {
       dateEnd: selectedDateRange.secondDate,
     });
   };
+
+  const renderHeader = () => {
+    return (
+      <View>
+        <View style={styles.searchFilter}>
+          <View style={styles.search}>
+            <Input
+              control={control}
+              inputContainerStyle={styles.searchInput}
+              name="title"
+              onSubmitEditing={submit}
+              returnKeyType="search"
+              placeholder={t('input.searchByCodeTitle')}
+              rightIcon={
+                <Pressable onPress={submit}>
+                  <Icon name="search" />
+                </Pressable>
+              }
+            />
+          </View>
+          <View style={styles.flex}>
+            <Select
+              buttonStyle={styles.selectButton}
+              control={control}
+              data={calendar.map(item => ({
+                ...item,
+                label: t(`select.${item?.label}`),
+              }))}
+              name="date"
+              onSelect={handleSelectDate}
+              rowStyle={styles.selectButton}
+            />
+          </View>
+          <Button
+            buttonStyle={styles.filterButton}
+            icon={
+              <Icon
+                color={COLORS.WHITE}
+                name="filter-alt"
+                size={16}
+              />
+            }
+            title={t('button.filter')}
+            onPress={onOpenFilter}
+          />
+        </View>
+        <View style={styles.sort}>
+          <Select
+            buttonStyle={styles.selectButton}
+            control={control}
+            data={sortBy.map(item => ({
+              ...item,
+              label: t(`select.${item?.label}`),
+            }))}
+            defaultButtonText={t('select.newest')}
+            name="sort_by"
+            onSelect={handleSubmit(onSubmit)}
+            rowStyle={styles.selectButton}
+          />
+        </View>
+      </View>
+    );
+  };
+
   if (loading) {
     return (
       <Loading
@@ -210,6 +273,7 @@ const UserPostsScreen = () => {
       />
     );
   }
+
   return (
     <>
       <Modal
@@ -253,73 +317,8 @@ const UserPostsScreen = () => {
           data={!loading && userRealEstates}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <UserPost item={item} />}
-          onRefresh={onGetListRealEstatesUser}
-          refreshing={isLoading}
-          ListHeaderComponent={
-            <View>
-              <View style={styles.searchFilter}>
-                <View style={styles.search}>
-                  <Input
-                    control={control}
-                    inputContainerStyle={styles.searchInput}
-                    name="title"
-                    onSubmitEditing={submit}
-                    returnKeyType="search"
-                    placeholder={t('input.searchByCodeTitle') || ''}
-                    rightIcon={
-                      <Pressable onPress={submit}>
-                        <Icon name="search" />
-                      </Pressable>
-                    }
-                  />
-                </View>
-                <View style={styles.flex}>
-                  <Select
-                    buttonStyle={styles.selectButton}
-                    control={control}
-                    data={calendar.map(item => ({
-                      ...item,
-                      label: t(`select.${item?.label}`),
-                    }))}
-                    name="date"
-                    onSelect={handleSelectDate}
-                    rowStyle={styles.selectButton}
-                  />
-                </View>
-                <Button
-                  buttonStyle={styles.filterButton}
-                  icon={
-                    <Icon
-                      color={COLORS.WHITE}
-                      name="filter-alt"
-                      size={16}
-                    />
-                  }
-                  title={t('button.filter')}
-                  onPress={onOpenFilter}
-                />
-              </View>
-              <View style={styles.sort}>
-                <Select
-                  buttonStyle={styles.selectButton}
-                  control={control}
-                  data={sortBy.map(item => ({
-                    ...item,
-                    label: t(`select.${item?.label}`),
-                  }))}
-                  defaultButtonText={t('select.newest')}
-                  name="sort_by"
-                  onSelect={handleSubmit(onSubmit)}
-                  rowStyle={styles.selectButton}
-                />
-              </View>
-            </View>
-          }
-          ListEmptyComponent={
-            <View>
-              {!loading && userRealEstates?.length === 0 && <NoResults />}
-            </View>
-          }
+          ListHeaderComponent={renderHeader}
+          ListEmptyComponent={<View>{!loading && <NoResults />}</View>}
         />
       </View>
       <ModalFilterScreen

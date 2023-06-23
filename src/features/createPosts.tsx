@@ -3,7 +3,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   requestCreateRealEstates,
   requestGetAllInformation,
+  requestGetDetailRealEstates,
   requestGetListRank,
+  editRealStates,
 } from '../api';
 
 export const selectPosts = state => state.post;
@@ -71,8 +73,31 @@ export const createRealEstates = createAsyncThunk(
           Object.keys(data)[Object.keys(data).length - 1]
         ].toString()}`;
       }
-
       return rejectWithValue(errorString);
+    }
+  }
+);
+
+export const detailRealEstates = createAsyncThunk(
+  'detailPost',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await requestGetDetailRealEstates(params);
+      return fulfillWithValue(response?.data);
+    } catch (error) {
+      return rejectWithValue(error?.message);
+    }
+  }
+);
+
+export const editRealEstates = createAsyncThunk(
+  'editRealEstaates',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await editRealStates(params);
+      return fulfillWithValue(response?.data);
+    } catch (error) {
+      return rejectWithValue('dđ');
     }
   }
 );

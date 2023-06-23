@@ -103,7 +103,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
   }, [typeUpload.photo]);
 
   useEffect(() => {
-    if (value?.photo || value?.video) {
+    if (value?.photo.length > 0 || value?.video.length > 0) {
       setTypeUpload({
         ...typeUpload,
         photo: value?.photo,

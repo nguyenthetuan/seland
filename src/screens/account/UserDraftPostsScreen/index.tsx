@@ -53,7 +53,12 @@ const UserDraftPostsScreen = () => {
             style={[styles.list, styles.marginHorizontal]}
             data={userRealEstates}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => <UserPost item={item} />}
+            renderItem={({ item }) => (
+              <UserPost
+                item={item}
+                refreshData={onGetListRealEstatesUser}
+              />
+            )}
             ListEmptyComponent={(!loading && <NoResults />) || null}
             refreshing={isLoading}
             onRefresh={onGetListRealEstatesUser}

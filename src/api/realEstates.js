@@ -1,5 +1,7 @@
 import {
   CREATE_REAL_ESTATE,
+  DELETE_REAL_ESTATE,
+  EDIT_REAL_STATE,
   GET_AGENCY,
   GET_ALL_FILTER,
   GET_ALL_INFORMATION,
@@ -10,7 +12,7 @@ import {
   GET_REAL_ESTATEWAREHOUSES,
   POST_PAYMENT,
 } from '../constants';
-import { get, post } from '../utils';
+import { deleteBase, get, post } from '../utils';
 
 export const requestGetListRealEstates = params =>
   get(GET_LIST_REAL_ESTATES_ROUTE, params);
@@ -34,3 +36,8 @@ export const requestGetRealEstateWarehouses = params =>
 
 export const requestGetDetailRealEstates = id =>
   get(`${GET_DETAIL_REAL_ESTATE}/${id}`);
+
+export const requestDeleteRealEstates = id =>
+  deleteBase(`${DELETE_REAL_ESTATE}/${id}`);
+
+export const editRealStates = params => post(`${EDIT_REAL_STATE}/params.id`, params.formData)
