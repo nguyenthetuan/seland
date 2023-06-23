@@ -178,7 +178,9 @@
     "care": "Quan tâm",
     "about": "Giới thiệu",
     "deleteSuccess": "Hạ tin thành công",
-    "deleteFail": "Hạ tin thất bại"
+    "deleteFail": "Hạ tin thất bại",
+    "compact": "Thu gọn",
+    "noValue": "Không có dữ liệu"
   },
   "error": {
     "network": "Không thể kết nối với máy chủ",

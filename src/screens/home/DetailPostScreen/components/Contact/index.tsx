@@ -1,12 +1,14 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { IconWebchat, IconZalo } from '../../../../../assets';
 import { IconSvg } from '../../../../../assets/icons/IconSvg';
 import { Button, Text } from '../../../../../components';
 import { onPressCall } from '../../../../../utils/hook';
 import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
 import styles from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { SCREENS } from '../../../../../constants';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
@@ -15,6 +17,8 @@ interface Iprops {
 const Contact: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { infoDetail } = props;
+  const { navigate } = useNavigation();
+
   const listAction = [
     {
       label: t('detailPost.evaluate'),
@@ -52,17 +56,23 @@ const Contact: FC<Iprops> = props => {
       onPressCall(infoDetail?.contacts?.phone_owner);
     }
   };
+  const goToContact = () => {
+    navigate(SCREENS.PERSONAL_PAGE_SCREEN);
+  };
 
   return (
     <View style={styles.contactWrapper}>
       <View style={styles.contact}>
         <View style={styles.infoContact}>
-          <View style={styles.avatar}>
+          <TouchableOpacity
+            style={styles.avatar}
+            onPress={goToContact}
+          >
             <Text style={styles.textAvatar}>
               {infoDetail?.contacts?.name_owner &&
                 infoDetail.contacts.name_owner.charAt(0)}
             </Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.contactName}>
             <Text style={styles.contactNameText}>
               {infoDetail?.contacts?.name_owner}
@@ -70,7 +80,9 @@ const Contact: FC<Iprops> = props => {
             <Text style={styles.contactNameTextSdt}>
               SĐT: {infoDetail?.contacts?.phone_owner}
             </Text>
-            <Text style={styles.contactSee}>Xem tất cả tin đăng</Text>
+            <TouchableOpacity onPress={goToContact}>
+              <Text style={styles.contactSee}>Xem tất cả tin đăng</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.flex}>
