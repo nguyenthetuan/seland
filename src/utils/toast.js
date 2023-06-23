@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
   },
   text1: {
     color: COLORS.BLACK_1,
-    fontSize: 16,
+    flexWrap: 'wrap',
+    fontSize: 12,
     lineHeight: 24,
   },
 });
