@@ -295,7 +295,7 @@ const PersonalInformationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header title={t('header.personalInformation')} hasGoBack={params.hasGoBack} />
+      <Header title={t('header.personalInformation')} hasGoBack={params?.hasGoBack} />
       <Screen>
         <Container>
           <Avatar
