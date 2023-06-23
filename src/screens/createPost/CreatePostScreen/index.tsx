@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
@@ -10,14 +10,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Save } from '../../../assets';
 import { Button, Text } from '../../../components';
 import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
-import { clearCreatePosts, selectPosts } from '../../../features';
+import {
+  clearCreatePosts,
+  detailRealEstates,
+  selectPosts,
+  createRealEstates,
+  editRealEstates,
+} from '../../../features';
+import { dispatchThunk } from '../../../utils';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import PopupConfirmPost from '../components/PopupConfirm';
 import RealEstateInformation from '../components/RealEstateInformation';
 import styles from './styles';
-import { log } from 'react-native-reanimated';
-import { requestGetDetailRealEstates, updateRealStates } from '../../../api';
+
 const SaveType = [
   {
     name: 'savePrivate',
@@ -134,8 +140,6 @@ const CreatePostScreen = (props: any) => {
   });
 
   const getDetailPost = useCallback(async (response: any) => {
-    console.log('response', response);
-
     Object.entries(response).forEach(([key, value]) => {
       if (
         key === 'district_id' ||
