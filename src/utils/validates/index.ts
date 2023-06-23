@@ -42,7 +42,7 @@ export const validateFormatYear = (value: string) => {
 export const validateNumberBedroom = (value: string) => {
   if (value) {
     if (!check1To99(value)) {
-      return 'Chỉ được phép nhập từ 1 đến 99';
+      return 'Vui lòng nhập giá trị từ 1-99';
     }
   }
   return undefined;

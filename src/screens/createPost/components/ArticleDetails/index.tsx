@@ -316,7 +316,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             required
             inputContainerStyle={styles.inputContainerTitle}
             rules={{
-              required: 'Vui lòng nhập tiêu đề bài viết',
+              required: 'Vui lòng nhập tiêu đề',
               validate: validateTitle,
             }}
             renderErrorMessage={false}
