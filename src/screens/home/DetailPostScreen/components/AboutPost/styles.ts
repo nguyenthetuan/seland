@@ -141,9 +141,30 @@ const styles = StyleSheet.create({
   aboutButton: {
     width: 109,
     borderRadius: 5,
+    marginTop: 10,
   },
   aboutOpacity: {},
   aboutOpacityText: {},
+  showMoreContent: {
+    height: 'auto',
+  },
+  showContent: {
+    maxHeight: 100,
+    overflow: 'hidden',
+    marginBottom: 10,
+    zIndex: 1,
+  },
+  viewOpacity: {
+    marginTop: -40,
+    opacity: 0.7,
+    zIndex: 2,
+    height: 30,
+    flex: 1,
+  },
+  flex: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

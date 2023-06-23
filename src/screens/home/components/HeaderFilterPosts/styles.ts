@@ -4,7 +4,7 @@ import { COLORS } from '../../../../constants';
 const styles = StyleSheet.create({
   address: {
     width: '33%',
-    marginRight: 4
+    marginRight: 4,
   },
   areaRange: {
     marginHorizontal: 5,
@@ -38,12 +38,13 @@ const styles = StyleSheet.create({
   buttonAddress: {
     // width: '80%',
     justifyContent: 'center',
-    height: 36
+    height: 36,
   },
 
   filter: {
     flexDirection: 'row',
     marginTop: 10,
+    marginBottom: 10,
   },
   rowTextStyle: {
     fontSize: 12,
@@ -59,11 +60,11 @@ const styles = StyleSheet.create({
   },
   wrapTypeHousing: {
     marginBottom: 12,
-    width: '100%'
+    width: '100%',
   },
   textTypeHousing: {
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });
 
 export default styles;

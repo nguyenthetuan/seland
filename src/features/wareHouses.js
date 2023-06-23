@@ -38,7 +38,9 @@ export const loadRealEstateWarehouses = createAsyncThunk(
     try {
       const { data } = params
         ? await requestGetRealEstateWarehouses(params)
-        : await requestGetRealEstateWarehouses();
+        : await requestGetRealEstateWarehouses({
+            sort_by: 'createdAt',
+          });
 
       return fulfillWithValue(data);
     } catch (error) {

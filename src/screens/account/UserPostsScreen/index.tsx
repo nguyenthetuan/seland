@@ -23,9 +23,10 @@ import ModalFilterScreen from './components/ModalFilter';
 const UserPostsScreen = () => {
   const route = useRoute();
   const filterRef = useRef<any>();
+  const [loadingList, setLoadingList] = useState(false);
 
   const dispatch = useDispatch();
-  const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
+  const { data: userRealEstates } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
@@ -164,9 +165,16 @@ const UserPostsScreen = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const parmas = { ...data, title: data?.title?.trim() };
-    dispatchThunk(dispatch, getListRealEstatesUser(parmas));
+    setLoadingList(true);
+
+    try {
+      await dispatchThunk(dispatch, getListRealEstatesUser(parmas));
+      setLoadingList(false);
+    } catch (error) {
+      setLoadingList(false);
+    }
   };
 
   const submit = handleSubmit(onSubmit);
@@ -263,37 +271,18 @@ const UserPostsScreen = () => {
     );
   };
 
-  if (loading) {
+  if (loadingList) {
     return (
       <Loading
         color={COLORS.BLUE_1}
         textContent={t('common.loading') || ''}
         textStyle={styles.loadingText}
-        visible={loading}
+        visible={loadingList}
       />
     );
   }
-
   return (
     <>
-      <Modal
-        isVisible={modalVisible}
-        onBackButtonPress={hideDateRangePicker}
-        onBackdropPress={hideDateRangePicker}
-      >
-        <View style={styles.dateRangePicker}>
-          <DateRangePicker
-            blockSingleDateSelection
-            clearBtnTitle={t('button.cancel')}
-            confirmBtnTitle={t('button.confirm')}
-            ld="vi"
-            onClear={hideDateRangePicker}
-            onConfirm={handleConfirmDateRange}
-            onSelectDateRange={handleSelectDateRange}
-            responseFormat="YYYY-MM-DD"
-          />
-        </View>
-      </Modal>
       <View style={[styles.flex, styles.whiteBackground]}>
         <Header title={t('header.userPosts')} />
         <View>
@@ -310,23 +299,44 @@ const UserPostsScreen = () => {
               />
             )}
             showsHorizontalScrollIndicator={false}
+            keyExtractor={(_, index) => `listButton-${index}`}
           />
         </View>
         <FlatList
           style={styles.list}
-          data={!loading && userRealEstates}
-          keyExtractor={item => item.id}
+          data={userRealEstates}
+          keyExtractor={(_, index) => `itemPost${index}`}
           renderItem={({ item }) => <UserPost item={item} />}
-          ListHeaderComponent={renderHeader}
-          ListEmptyComponent={<View>{!loading && <NoResults />}</View>}
+          ListHeaderComponent={renderHeader()}
+          ListEmptyComponent={loadingList ? null : <NoResults />}
         />
       </View>
-      <ModalFilterScreen
-        ref={filterRef}
-        control={control}
-        setValueHookForm={setValue}
-        onPressConfirm={submit}
-      />
+      <View>
+        <Modal
+          isVisible={modalVisible}
+          onBackButtonPress={hideDateRangePicker}
+          onBackdropPress={hideDateRangePicker}
+        >
+          <View style={styles.dateRangePicker}>
+            <DateRangePicker
+              blockSingleDateSelection
+              clearBtnTitle={t('button.cancel')}
+              confirmBtnTitle={t('button.confirm')}
+              ld="vi"
+              onClear={hideDateRangePicker}
+              onConfirm={handleConfirmDateRange}
+              onSelectDateRange={handleSelectDateRange}
+              responseFormat="YYYY-MM-DD"
+            />
+          </View>
+        </Modal>
+        <ModalFilterScreen
+          ref={filterRef}
+          control={control}
+          setValueHookForm={setValue}
+          onPressConfirm={submit}
+        />
+      </View>
     </>
   );
 };

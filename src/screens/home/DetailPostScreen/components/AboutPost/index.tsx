@@ -1,6 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking, useWindowDimensions, View } from 'react-native';
+import {
+  Linking,
+  useWindowDimensions,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import styles from './styles';
 import {
   Acreage,
@@ -8,14 +13,15 @@ import {
   IconCalculator,
   IconYoutube,
 } from '../../../../../assets';
-import { COLORS } from '../../../../../constants';
+import { COLORS, SCREENS } from '../../../../../constants';
 import { Button, Text } from '../../../../../components';
 import IconMapWhite from '../../../../../assets/icons/mapWhite';
 import IconLocation from '../../../../../assets/icons/IconLocation';
 import { IconSvg } from '../../../../../assets/icons/IconSvg';
 import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-// import RenderHtml from 'react-native-render-html';
+import RenderHtml from 'react-native-render-html';
+import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
@@ -24,7 +30,11 @@ interface Iprops {
 const AboutPost: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { infoDetail } = props;
-  // const { width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
+  const [showMoreContent, setShowMoreContent] = useState(false);
+  const [isShowMore, setIsShowMore] = useState(false);
+  const [styleShowMore, setStyleShowMore] = useState({});
+  const { navigate } = useNavigation();
 
   const listInfoItem = [
     {
@@ -88,19 +98,46 @@ const AboutPost: FC<Iprops> = props => {
       value: infoDetail?.bathroom,
     },
   ];
-  // const source = {
-  //   html: infoDetail?.introduction_content,
-  // };
+  const source = {
+    html: infoDetail?.introduction_content,
+  };
+  const onLayout = (event: any) => {
+    const { height } = event.nativeEvent.layout;
+    if (height > 90) {
+      setIsShowMore(true);
+      setStyleShowMore(styles.showContent);
+    }
+  };
 
   const goToYoutube = () => {
-    Linking.openURL(infoDetail?.youtube_video_link);
+    if (Array.isArray(infoDetail?.youtube_video_link)) {
+      Linking.openURL(infoDetail?.youtube_video_link?.[0]);
+    } else {
+      Linking.openURL(infoDetail?.youtube_video_link);
+    }
+  };
+  const goToMapScreen = () => {
+    navigate(SCREENS.MAPS, {
+      realtyID: infoDetail?.news_id,
+      latLng: infoDetail?.lat_long,
+    });
   };
 
   return (
     <View style={styles.aboutPost}>
       <View style={styles.seeMore}>
-        <IconMapWhite color={COLORS.BLUE_2} />
-        <Text style={styles.textViewMap}>{t('detailPost.seeMap') || ''}</Text>
+        {infoDetail?.news_id && infoDetail?.lat_long && (
+          <TouchableOpacity
+            onPress={goToMapScreen}
+            style={styles.flex}
+          >
+            <IconMapWhite color={COLORS.BLUE_2} />
+            <Text style={styles.textViewMap}>
+              {t('detailPost.seeMap') || ''}
+            </Text>
+          </TouchableOpacity>
+        )}
+
         <View style={styles.icon}>
           <Icon360 />
         </View>
@@ -163,18 +200,32 @@ const AboutPost: FC<Iprops> = props => {
       </View>
       <View style={styles.BoxAbout}>
         <Text style={styles.aboutTitle}>{t('common.about')}</Text>
-        {/* <View>
+        <View
+          style={showMoreContent ? styles.showMoreContent : styleShowMore}
+          onLayout={event => onLayout(event)}
+        >
           <RenderHtml
             contentWidth={width}
             source={source}
           />
-        </View> */}
-        <Text style={styles.aboutText}>{infoDetail?.introduction_content}</Text>
-        <Button
-          buttonStyle={styles.aboutButton}
-          title={t('button.seeAll')}
-          outline
-        />
+        </View>
+        {!showMoreContent && isShowMore && (
+          <LinearGradient
+            start={{ x: 1, y: 1 }}
+            end={{ x: 1, y: 0 }}
+            colors={['#ffffff', '#ffffff00']}
+            style={styles.viewOpacity}
+          />
+        )}
+
+        {isShowMore && (
+          <Button
+            buttonStyle={styles.aboutButton}
+            title={showMoreContent ? t('common.compact') : t('button.seeAll')}
+            outline
+            onPress={() => setShowMoreContent(!showMoreContent)}
+          />
+        )}
       </View>
     </View>
   );
