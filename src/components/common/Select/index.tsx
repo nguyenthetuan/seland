@@ -84,10 +84,7 @@ const Select = ({
           buttonTextAfterSelection={selectedItem =>
             title ? `${title}: ${selectedItem.label}` : selectedItem.label
           }
-          buttonTextStyle={StyleSheet.flatten([
-            styles.text(data.findIndex(item => item.value === value)),
-            buttonTextStyle,
-          ])}
+          buttonTextStyle={StyleSheet.flatten([styles.text, buttonTextStyle])}
           defaultButtonText={defaultButtonText}
           data={data}
           defaultValueByIndex={data.findIndex(item => item.value === value)}

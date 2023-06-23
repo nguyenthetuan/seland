@@ -11,6 +11,7 @@ import { selectPosts } from '../../../../features';
 import { formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
 import { Icon } from '@rneui/base';
+import { validateNumberBedroom } from '../../../../utils/validates';
 
 interface RealEstateInformationProps {
   control?: Control;
@@ -51,10 +52,6 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     furniture: false,
   });
 
-  const emptyUnitPrices = {
-    label: t('select.structure'),
-    value: null,
-  };
   const emptyStructure = {
     label: t('select.structure'),
     value: null,
@@ -64,7 +61,6 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     value: null,
   };
 
-  const unitPricesOptions = [emptyUnitPrices, ...formatDataValueId(unitPrices)];
   const compassOptions = [
     emptyCompass,
     ...formatDataValueId(information[0]?.children),
@@ -187,7 +183,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={unitPricesOptions}
+            data={[...formatDataValueId(unitPrices)]}
             rules={{ required: 'Vui lòng chọn Đơn vị' }}
             defaultButtonText="Please Select"
             label={t('select.unit')}
@@ -199,9 +195,15 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             control={control}
             inputMode="numeric"
             isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
+            inputContainerStyle={[
+              styles.inputContainerStyle,
+              { marginLeft: 10 },
+            ]}
             label={t('input.numberBathrooms')}
             labelStyle={styles.inputLabel}
+            rules={{
+              validate: validateNumberBedroom,
+            }}
             name="bathroom"
             renderErrorMessage={false}
           />
@@ -214,6 +216,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.numberBedrooms')}
             labelStyle={styles.inputLabel}
+            rules={{
+              validate: validateNumberBedroom,
+            }}
             name="bedroom"
             renderErrorMessage={false}
           />
@@ -221,16 +226,22 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             control={control}
             inputMode="numeric"
             isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
+            inputContainerStyle={[
+              styles.inputContainerStyle,
+              { marginLeft: 6 },
+            ]}
             label={t('input.floor')}
             labelStyle={styles.inputLabel}
+            rules={{
+              validate: validateNumberBedroom,
+            }}
             name="floor"
             renderErrorMessage={false}
           />
         </View>
         <View style={{ marginLeft: 10, flex: 1 }}>
           <Select
-            buttonStyle={styles.select}
+            buttonStyle={[styles.select, { marginBottom: 16 }]}
             control={control}
             data={compassOptions}
             defaultButtonText="Please Select"
@@ -255,7 +266,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             control={control}
             inputMode="numeric"
             isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
+            inputContainerStyle={[
+              styles.inputContainerStyle,
+              { marginLeft: 12 },
+            ]}
             label={t('input.length')}
             labelStyle={styles.inputLabel}
             name="length"
@@ -280,7 +294,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             control={control}
             inputMode="numeric"
             isNumeric
-            inputContainerStyle={styles.inputContainerStyle}
+            inputContainerStyle={[
+              styles.inputContainerStyle,
+              { marginLeft: 6 },
+            ]}
             label={t('input.laneWidth')}
             labelStyle={styles.inputLabel}
             name="lane_width"
