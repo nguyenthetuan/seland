@@ -173,6 +173,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             labelStyle={styles.inputLabel}
             name="area"
             required
+            maxLength={32}
             rightIcon={<Text>m²</Text>}
             renderErrorMessage={false}
           />
@@ -187,6 +188,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
               labelStyle={styles.inputLabel}
               name="price"
               required
+              maxLength={64}
               onBlur={onBlurPrice}
               renderErrorMessage={false}
             />
@@ -291,6 +293,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             label={t('input.length')}
             labelStyle={styles.inputLabel}
             name="length"
+            maxLength={12}
             renderErrorMessage={false}
             rightIcon={<Text>m</Text>}
           />
@@ -304,6 +307,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             label={t('input.width')}
             labelStyle={styles.inputLabel}
             name="width"
+            maxLength={12}
             renderErrorMessage={false}
             rightIcon={<Text>m</Text>}
           />
@@ -319,6 +323,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             label={t('input.laneWidth')}
             labelStyle={styles.inputLabel}
             name="lane_width"
+            maxLength={12}
             renderErrorMessage={false}
             rightIcon={<Text>m</Text>}
           />

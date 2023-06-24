@@ -449,10 +449,17 @@ const CreatePostScreen = (props: any) => {
           break;
         }
       case TAB.ARTICLE_DETAILS:
+        if (value?.photo.length === 0) {
+          setError('photo', {
+            type: 'manual',
+            message: 'Vui lòng chọn hình ảnh BĐS',
+          });
+          break;
+        }
         if (value?.photo.length <= 2) {
           setError('photo', {
             type: 'manual',
-            message: 'Bạn phải nhập ít nhất 3 ảnh',
+            message: 'Đăng từ 3 tới 12 hình ảnh khác nhau của bất động sản',
           });
           break;
         }
