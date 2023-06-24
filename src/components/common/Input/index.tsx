@@ -1,6 +1,6 @@
-import { Icon, Input as RNEInput } from '@rneui/themed';
-import React, { useState } from 'react';
-import { useController } from 'react-hook-form';
+import { Icon, Input as RNEInput, InputProps } from '@rneui/themed';
+import React, { ReactNode, useState } from 'react';
+import { useController, RegisterOptions } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
   InputModeOptions,
@@ -10,30 +10,33 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { COLOR_GRAY_5, COLOR_RED_1 } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-interface InputProps {
-  autoComplete: TextInputAndroidProps['autoComplete'];
+interface InputCustomProps extends InputProps {
+  autoComplete?: TextInputAndroidProps['autoComplete'];
   control: any;
   isEmail?: boolean;
   isNumeric?: boolean;
   isPassword?: boolean;
   isWebsite?: boolean;
   inputContainerStyle?: ViewStyle;
-  label: string;
+  // label?: string | undefined;
   labelStyle?: Object | [];
+  errorStyle?: Object | [];
   name: string;
   onChangeText?: (v: string) => void;
-  onFocus: () => void;
+  onFocus?: () => void;
   placeholder?: string;
   required?: boolean;
-  rightLabel?: string;
+  rightLabel?: string | ReactNode;
   showPasswordPolicy?: boolean;
-  disabled: boolean;
-  errorMessage?: string;
+  disabled?: boolean;
   inputMode?: InputModeOptions;
+  renderErrorMessage?: any;
+  rules?: RegisterOptions;
+  errorMessage?: string;
 }
 
 const Input = ({
@@ -46,17 +49,22 @@ const Input = ({
   label = '',
   labelStyle = {},
   name,
+  renderErrorMessage,
   onChangeText = () => {},
   onFocus = () => {},
   placeholder = '',
   required = false,
-  rightLabel = '',
+  rightLabel,
   showPasswordPolicy = false,
+  errorStyle = {},
+  rules,
+  errorMessage,
   ...props
-}: InputProps) => {
+}: InputCustomProps) => {
   const {
     field: { onBlur, onChange, value },
-  } = useController({ control, name });
+    fieldState: { error },
+  } = useController({ control, name, rules, defaultValue: '' });
   const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -89,10 +97,10 @@ const Input = ({
   const togglePasswordVisible = () => setPasswordVisible(pv => !pv);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <RNEInput
         style={styles.text}
-        errorStyle={styles.error}
+        errorStyle={StyleSheet.flatten([styles.error, errorStyle])}
         containerStyle={styles.containerInput}
         inputContainerStyle={StyleSheet.flatten([
           styles.input(isFocused),
@@ -103,7 +111,7 @@ const Input = ({
             <View style={styles.boxLabel}>
               <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
                 {label}
-                {required && <Text style={{ color: COLOR_RED_1 }}> *</Text>}
+                {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
               </Text>
               {rightLabel}
             </View>
@@ -113,8 +121,13 @@ const Input = ({
         onChangeText={handleChange}
         onFocus={handleFocus}
         placeholder={placeholder || label}
-        placeholderTextColor={COLOR_GRAY_5}
-        renderErrorMessage={!passwordPolicyVisible}
+        placeholderTextColor={COLORS.GRAY_5}
+        renderErrorMessage={
+          renderErrorMessage != undefined
+            ? renderErrorMessage
+            : !passwordPolicyVisible
+        }
+        errorMessage={errorMessage || error?.message}
         rightIcon={
           isPassword && (
             <Icon

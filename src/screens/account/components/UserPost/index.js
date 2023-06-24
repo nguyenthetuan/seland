@@ -1,25 +1,25 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
+import { COLORS } from '../../../../constants';
 import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_7,
-  COLOR_GREEN_1,
-  COLOR_GREEN_3,
-  COLOR_ORANGE_5,
-  COLOR_RED_1,
-  COLOR_RED_2,
-  COLOR_WHITE,
-} from '../../../../constants';
-import { yup } from '../../../../utils';
+  deleteRealEstatesUser,
+  editPost,
+  selectUserRealEstates,
+} from '../../../../features'
+import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
+import { SCREENS } from '../../../../constants'
+
 
 const Info = ({ value, icon }) => (
   <View style={[styles.info, styles.row]}>
@@ -44,16 +44,14 @@ const schema = yup.object({
   end_date: yup.string(),
 });
 
-const UserPost = ({ item }) => {
+const UserPost = (props) => {
+  const { item, refreshData } = props
+  const { navigate, goBack } = useNavigation();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const {
-    clearErrors,
-    control,
-    getValues,
-    formState: { errors },
-    handleSubmit,
-    setValue,
-  } = useForm({
+  const { loadingDelete } = useSelector(selectUserRealEstates);
+
+  const { control, getValues, setValue } = useForm({
     defaultValues: {
       code: '',
       validity: '',
@@ -72,9 +70,8 @@ const UserPost = ({ item }) => {
   });
 
   const handleCall = () => {
-    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${
-      item?.phone_number
-    }`;
+    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${item?.phone_number
+      }`;
     Linking.canOpenURL(callUrl).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
@@ -87,13 +84,13 @@ const UserPost = ({ item }) => {
   const rankBackground = () => {
     switch (item?.rank_id) {
       case 1:
-        return COLOR_BLACK_1;
+        return COLORS.BLACK_1;
       case 2:
-        return COLOR_GREEN_3;
+        return COLORS.GREEN_3;
       case 3:
-        return COLOR_ORANGE_5;
+        return COLORS.ORANGE_5;
       default:
-        return COLOR_RED_1;
+        return COLORS.RED_1;
     }
   };
 
@@ -107,6 +104,24 @@ const UserPost = ({ item }) => {
         return 'common.vipDiamond';
     }
   };
+  const onDeletePost = async () => {
+    try {
+      if (item?.id) {
+        dispatchThunk(dispatch, deleteRealEstatesUser(item?.id), () => {
+          goBack()
+        });
+        refreshData()
+        Alert.alert(t('common.deleteSuccess'));
+      }
+    } catch (error) {
+      f
+      console.log(error);
+    }
+  };
+
+  const navigateToEdit = () => {
+    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id })
+  }
 
   return (
     <TouchableOpacity style={styles.item}>
@@ -134,7 +149,7 @@ const UserPost = ({ item }) => {
           <Icon
             name="phone"
             size={23}
-            color={COLOR_WHITE}
+            color={COLORS.WHITE}
           />
         </TouchableOpacity>
       </View>
@@ -179,7 +194,7 @@ const UserPost = ({ item }) => {
       <View style={[styles.locationContainer, styles.row]}>
         <Icon
           name="location-on"
-          color={COLOR_GRAY_7}
+          color={COLORS.GRAY_7}
         />
         <Text style={styles.location}>{item?.location}</Text>
       </View>
@@ -223,14 +238,17 @@ const UserPost = ({ item }) => {
       <View style={[styles.buttons, styles.row]}>
         <View style={[styles.buttonLeft, styles.flex]}>
           <Button
-            color={COLOR_GREEN_1}
+            color={COLORS.GREEN_1}
             title={t('button.editPost')}
+            onPress={navigateToEdit}
           />
         </View>
         <View style={[styles.flex, styles.buttonMiddle]}>
           <Button
-            color={COLOR_RED_2}
+            color={COLORS.RED_2}
             title={t('button.hidePost')}
+            onPress={onDeletePost}
+            loading={loadingDelete}
           />
         </View>
         <View style={[styles.flex, styles.buttonRight]}>

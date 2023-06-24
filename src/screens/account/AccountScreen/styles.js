@@ -1,20 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_3,
-  COLOR_GRAY_3,
-  COLOR_GRAY_4,
-  COLOR_GREEN_1,
-  COLOR_ORANGE_1,
-  COLOR_ORANGE_2,
-  COLOR_ORANGE_4,
-  COLOR_WHITE,
-} from '../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   boxAvatar: {
-    backgroundColor: COLOR_ORANGE_4,
+    backgroundColor: COLORS.ORANGE_4,
   },
   boxHeaderLeft: {
     flexDirection: 'row',
@@ -24,7 +14,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   boxItem: {
-    borderColor: COLOR_GRAY_4,
+    borderColor: COLORS.GRAY_4,
     borderRadius: 8,
     borderWidth: 1,
     marginTop: 15,
@@ -43,12 +33,12 @@ const styles = StyleSheet.create({
   },
   btnLabel: {
     alignItems: 'center',
-    color: COLOR_BLUE_3,
+    color: COLORS.BLUE_3,
     fontSize: 14,
     lineHeight: 22,
   },
   btnRank: {
-    borderColor: COLOR_BLUE_3,
+    borderColor: COLORS.BLUE_3,
     borderRadius: 4,
     borderStyle: 'dashed',
     borderWidth: 1,
@@ -85,17 +75,17 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   line: {
-    backgroundColor: COLOR_GRAY_4,
+    backgroundColor: COLORS.GRAY_4,
     height: 1,
     marginHorizontal: 10,
     width: '95%',
   },
   myPage: {
-    color: COLOR_BLUE_3,
+    color: COLORS.BLUE_3,
     textDecorationLine: 'underline',
   },
   name: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 28,
@@ -104,7 +94,7 @@ const styles = StyleSheet.create({
   },
   payment: {
     alignItems: 'center',
-    backgroundColor: COLOR_GREEN_1,
+    backgroundColor: COLORS.GREEN_1,
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
     flexDirection: 'row',
@@ -112,29 +102,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   phone: {
-    color: COLOR_GRAY_3,
+    color: COLORS.GRAY_3,
     fontSize: 14,
   },
   safe: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
   },
   text: {
-    color: COLOR_ORANGE_1,
+    color: COLORS.ORANGE_1,
     fontSize: 20,
     fontWeight: 'bold',
     lineHeight: 28,
   },
   txtPayment: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontWeight: 'bold',
     marginLeft: 8,
   },
   valuePromotion: {
-    color: COLOR_GREEN_1,
+    color: COLORS.GREEN_1,
     fontWeight: 'bold',
   },
   valueSurplus: {
-    color: COLOR_ORANGE_2,
+    color: COLORS.ORANGE_2,
     fontWeight: 'bold',
   },
 });

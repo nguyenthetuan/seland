@@ -4,10 +4,12 @@ import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
-import { COLOR_BLUE_1 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import { selectHome } from '../../../../features';
+import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
+import REAL_ESTATE from '../../../../constants/realEstate';
 
 const HottestRealEstateCategory = () => {
   const { t } = useTranslation();
@@ -22,9 +24,13 @@ const HottestRealEstateCategory = () => {
     let results = [];
 
     if (isBuy) {
-      results = listRealEstatesHots?.data;
+      results = listRealEstatesHots?.data
+        ?.filter(item => item.demand_id === IDemandId.BUY)
+        ?.slice(0, 3);
     } else {
-      results = listRealEstatesHots?.data?.slice(0, 3);
+      results = listRealEstatesHots?.data
+        ?.filter(item => item.demand_id === IDemandId.LEASE)
+        ?.slice(0, 3);
     }
     return results;
   }, [isBuy, listRealEstatesHots?.data]);
@@ -34,7 +40,7 @@ const HottestRealEstateCategory = () => {
       <View>
         <ActivityIndicator
           size="small"
-          color={COLOR_BLUE_1}
+          color={COLORS.BLUE_1}
         />
       </View>
     );
@@ -63,10 +69,11 @@ const HottestRealEstateCategory = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map((item, index) => (
+        {listHottestRealEstate.map(item => (
           <ItemHottestRealEstate
-            key={`ItemHottestRealEstate${index}`}
+            key={`ItemHottestRealEstate${item?.id}`}
             item={item}
+            type={REAL_ESTATE.REAL_ESTATE_HOSTEST}
           />
         ))}
       </ScrollView>

@@ -4,7 +4,7 @@ import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
-import { COLOR_BLUE_1 } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
@@ -19,7 +19,7 @@ const ProjectCategory = () => {
     setIsBuy(value);
   };
 
-  const listHottestRealEstate = useMemo(() => {
+  const listProjectRealEstate = useMemo(() => {
     let results = [];
 
     if (isBuy) {
@@ -35,7 +35,7 @@ const ProjectCategory = () => {
       <View>
         <ActivityIndicator
           size="small"
-          color={COLOR_BLUE_1}
+          color={COLORS.BLUE_1}
         />
       </View>
     );
@@ -64,9 +64,9 @@ const ProjectCategory = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map((item, index) => (
+        {listProjectRealEstate.map(item => (
           <ItemHottestRealEstate
-            key={`ProjectCategory${index}`}
+            key={`ProjectCategory${item?.id}`}
             item={item}
             type={REAL_ESTATE.PROJECT}
           />

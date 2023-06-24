@@ -14,12 +14,14 @@ import {
 import {
   authReducer,
   commonReducer,
+  detailRealEstatesReducer,
   homeReducer,
   paymentReducer,
   postReducer,
   realEstatesReducer,
   userRealEstatesReducer,
   userReducer,
+  wareHousesReducer,
 } from '../features';
 
 const persistConfig = {
@@ -37,6 +39,8 @@ const rootReducer = combineReducers({
   userRealEstates: userRealEstatesReducer,
   post: postReducer,
   payment: paymentReducer,
+  wareHouses: wareHousesReducer,
+  detailRealEstates: detailRealEstatesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

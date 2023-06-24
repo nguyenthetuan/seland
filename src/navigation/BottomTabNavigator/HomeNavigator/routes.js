@@ -1,5 +1,7 @@
 import { SCREENS } from '../../../constants';
 import { HomeScreen, ListPostsScreen, MapScreen } from '../../../screens';
+import ListProjectScreen from '../../../screens/home/ ListProjectScreen';
+import DetailPostScreen from '../../../screens/home/DetailPostScreen';
 
 const routes = [
   {
@@ -13,6 +15,14 @@ const routes = [
   {
     component: MapScreen,
     name: SCREENS.MAPS,
+  },
+  {
+    component: ListProjectScreen,
+    name: SCREENS.LIST_PROJECT,
+  },
+  {
+    component: DetailPostScreen,
+    name: SCREENS.DETAIL_POST,
   },
 ];
 

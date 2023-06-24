@@ -3,8 +3,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectAuth } from '../features';
+import { getScreens } from '../utils';
 import AuthNavigator from './AuthNavigator';
 import BottomTabNavigator from './BottomTabNavigator';
+import routes from './routes';
 
 const { Group, Navigator, Screen } = createNativeStackNavigator();
 
@@ -26,13 +28,12 @@ const RootNavigator = () => {
           />
         </Group>
       ) : (
-        <Group>
-          <Screen
-            name="AuthNavigator"
-            component={AuthNavigator}
-          />
-        </Group>
+        <Screen
+          name="AuthNavigator"
+          component={AuthNavigator}
+        />
       )}
+      {getScreens(Screen, routes)}
     </Navigator>
   );
 };

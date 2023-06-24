@@ -20,6 +20,7 @@ import {
 } from '../../../../assets';
 import { Text } from '../../../../components';
 import { SCREENS } from '../../../../constants';
+import { IDemandId } from '../../../../utils/interface/home';
 import styles from './styles';
 
 const ItemCategory = ({ icon, content, onPress }) => (
@@ -48,7 +49,17 @@ const SuggestMenu = () => {
   const { navigate } = useNavigation();
   const { t } = useTranslation();
 
-  const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
+  const navigateToListPosts = () =>
+    navigate(SCREENS.LIST_POST, {
+      demandType: IDemandId.BUY,
+    });
+  const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
+
+  const navigateToLease = () => {
+    navigate(SCREENS.LIST_POST, {
+      demandType: IDemandId.LEASE,
+    });
+  };
 
   const listCategory = [
     {
@@ -59,10 +70,12 @@ const SuggestMenu = () => {
     {
       name: 'Cho thuê',
       icon: <LeaseHome />,
+      onPress: navigateToLease,
     },
     {
       name: 'Dự án',
       icon: <ProjectHome />,
+      onPress: navigateToListProject,
     },
     {
       name: 'Đất CN',
@@ -115,9 +128,9 @@ const SuggestMenu = () => {
   return (
     <View>
       <View style={styles.listSuggest}>
-        {listSuggest?.map((item, index) => (
+        {listSuggest?.map(item => (
           <ItemCategory
-            key={`category${index}`}
+            key={`category${item.name}`}
             icon={item?.icon}
             content={item?.name}
             onPress={item?.onPress}

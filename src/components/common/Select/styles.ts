@@ -1,15 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_GRAY_5,
-  COLOR_WHITE,
-} from '../../../constants/colors';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_GRAY_5,
+    backgroundColor: COLORS.WHITE,
+    borderColor: COLORS.GRAY_5,
     borderRadius: 2,
     borderWidth: 1,
     flex: 1,
@@ -20,17 +16,17 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   rowTextStyle: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 16,
     lineHeight: 24,
     textAlign: 'left',
   },
-  text: (value: number) => ({
-    color: value ? COLOR_BLACK_1 : COLOR_GRAY_5,
+  text: {
+    color: COLORS.BLACK_1,
     fontSize: 16,
     lineHeight: 24,
     textAlign: 'left',
-  }),
+  },
 });
 
 export default styles;

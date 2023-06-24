@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { getScreens } from '../../../utils';
-import routes from './routes';
+import { SCREENS } from '../../../constants';
+import { CreatePostScreen } from '../../../screens';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -13,7 +13,10 @@ const CreatePostNavigator = () => (
       headerShown: false,
     }}
   >
-    {getScreens(Screen, routes)}
+    <Screen
+      name={SCREENS.CREATE_POST}
+      component={CreatePostScreen}
+    />
   </Navigator>
 );
 

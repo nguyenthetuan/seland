@@ -1,21 +1,12 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLACK_3,
-  COLOR_GRAY_7,
-  COLOR_GREEN_5,
-  COLOR_PURPLE_1,
-  COLOR_PURPLE_2,
-  COLOR_RED_1,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   acreage: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 15,
     lineHeight: 24,
     paddingLeft: 8,
@@ -35,7 +26,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   call: {
-    backgroundColor: COLOR_GREEN_5,
+    backgroundColor: COLORS.GREEN_5,
     borderRadius: 40,
     margin: 5,
     padding: 8,
@@ -70,13 +61,14 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   item: {
-    borderColor: COLOR_BLACK_3,
+    borderColor: COLORS.BLACK_3,
     borderRadius: 5,
     borderWidth: 1,
     marginVertical: 10,
   },
   location: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
+    flex: 1,
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 8,
@@ -86,7 +78,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   price: {
-    color: COLOR_RED_1,
+    color: COLORS.RED_1,
     fontSize: 18,
     fontWeight: 'bold',
     lineHeight: 27,
@@ -110,7 +102,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   rankName: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 13,
     lineHeight: 15,
   },
@@ -128,13 +120,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }),
   type: {
-    color: COLOR_PURPLE_1,
+    color: COLORS.PURPLE_1,
     fontSize: 12,
     lineHeight: 15,
     textAlign: 'center',
   },
   typeContainer: {
-    backgroundColor: COLOR_PURPLE_2,
+    backgroundColor: COLORS.PURPLE_2,
     borderRadius: 10,
     marginBottom: 8,
     marginLeft: 10,

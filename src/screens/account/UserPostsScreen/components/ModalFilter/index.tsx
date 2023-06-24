@@ -19,12 +19,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Select } from '../../../../../components';
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_1,
-  COLOR_GRAY_7,
-  COLOR_WHITE,
-} from '../../../../../constants';
+import { COLORS } from '../../../../../constants';
 import {
   clearDistricts,
   getDistricts,
@@ -44,19 +39,19 @@ interface ModalFilter {
   setValueHookForm?: Function;
   onPressConfirm?: Function;
 }
-const ModalFilter: FC<ModalFilter> = forwardRef(
+interface PopUpRef {}
+
+const ModalFilterScreen = forwardRef<PopUpRef, ModalFilter>(
   ({ control, setValueHookForm, onPressConfirm }, ref) => {
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [errors, setErrors] = useState<any>();
-    const [activeTab, setActiveTab] = useState<number>(1);
-
     const { provinces, districts } = useSelector(selectCommon);
     const { realEstateType } = useSelector(selectPosts);
     const {
       field: { onChange, value },
-    } = useController({ control, name: 'status' });
+    } = useController({ control, name: 'demand_id' });
 
     const emptyProvinceOption = {
       label: t('select.province'),
@@ -80,15 +75,15 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
     const tabs = [
       {
         label: 'all',
-        value: 1,
+        value: null,
       },
       {
         label: 'buy',
-        value: 2,
+        value: 1,
       },
       {
         label: 'lease',
-        value: 3,
+        value: 2,
       },
     ];
 
@@ -130,13 +125,13 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
     };
 
     useEffect(() => {
-      setValueHookForm && setValueHookForm('status', 1);
+      setValueHookForm && setValueHookForm('demand_id', null);
       refresh();
     }, []);
 
     const handleReset = () => {
-      setValueHookForm && setValueHookForm('status', 1);
-      setValueHookForm && setValueHookForm('type', null);
+      setValueHookForm && setValueHookForm('demand_id', null);
+      setValueHookForm && setValueHookForm('real_estate_type_id', null);
       setValueHookForm && setValueHookForm('province_id', null);
       setValueHookForm && setValueHookForm('district_id', null);
     };
@@ -164,7 +159,7 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
               >
                 <Icon
                   name="close"
-                  color={COLOR_WHITE}
+                  color={COLORS.WHITE}
                   size={20}
                 />
               </TouchableOpacity>
@@ -180,17 +175,19 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
                 />
               ))}
             </View>
-            <Select
-              control={control}
-              name="type"
-              label={t('select.typeHousing')}
-              data={realEstateTypeOptions}
-              defaultButtonText={t('select.typeHousing')}
-              buttonStyle={styles.buttonSelect}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-            />
+            {[1, 2].includes(value) && (
+              <Select
+                control={control}
+                name="real_estate_type_id"
+                label={t('select.typeHousing')}
+                data={realEstateTypeOptions}
+                defaultButtonText={t('select.typeHousing')}
+                buttonStyle={styles.buttonSelect}
+                buttonTextStyle={styles.textButtonSelect}
+                rowStyle={styles.buttonSelect}
+                rowTextStyle={styles.rowTextStyle}
+              />
+            )}
             <Select
               control={control}
               name="province_id"
@@ -220,10 +217,10 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
             <Button
               buttonStyle={{
                 width: width * 0.45,
-                borderColor: COLOR_GRAY_7,
+                borderColor: COLORS.GRAY_7,
               }}
               titleStyle={{
-                color: COLOR_BLACK_1,
+                color: COLORS.BLACK_1,
                 fontSize: 14,
                 lineHeight: 22,
               }}
@@ -235,8 +232,8 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
             <Button
               buttonStyle={{
                 width: width * 0.45,
-                backgroundColor: COLOR_BLUE_1,
-                borderColor: COLOR_BLUE_1,
+                backgroundColor: COLORS.BLUE_1,
+                borderColor: COLORS.BLUE_1,
               }}
               titleStyle={{ fontSize: 14, lineHeight: 22 }}
               radius={5}
@@ -249,6 +246,6 @@ const ModalFilter: FC<ModalFilter> = forwardRef(
     );
   }
 );
-ModalFilter.displayName = 'Filter';
+ModalFilterScreen.displayName = 'Filter';
 
-export default ModalFilter;
+export default ModalFilterScreen;

@@ -1,0 +1,45 @@
+export interface IRealEstateDetails {
+  title: string;
+  approved_time: string;
+  address: string;
+  price_per_square_meter: number;
+  news_id: number;
+  real_estate_type_id: number;
+  demand_id: number;
+  contacts: {
+    name_owner: string;
+    phone_owner: string;
+    real_estate_sender_type: number;
+    real_estate_sender_name: string;
+    real_estate_sender_phone: string;
+  };
+  news_rank_type: string;
+  news_expire_date: string;
+  lat_long: string;
+  youtube_video_link: string;
+  real_estate_video_link: string;
+  real_estate_images: any;
+  area: number;
+  length: string;
+  width: string;
+  bedroom: string;
+  bathroom: string;
+  direction: string;
+  introduction_content: string;
+  document_legal: string;
+  location: string;
+  floor: string;
+  house_status: string;
+  usage_status: string;
+  lane_width: string;
+  structure: string;
+  price: string;
+  price_unit: string;
+  district_id: string;
+  province_id: string;
+  ward_id: string;
+  nearby_amenities: any;
+  furniture: any;
+  securities: string;
+  real_estate_entrance: any;
+}

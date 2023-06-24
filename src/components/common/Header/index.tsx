@@ -8,9 +8,10 @@ import styles from './styles';
 
 interface HeaderProps {
   icon?: string;
-  onPress: () => void;
+  onPress?: () => void;
   right?: ReactNode;
   title: string;
+  hasGoBack?: boolean;
 }
 
 const Header = ({
@@ -18,17 +19,18 @@ const Header = ({
   onPress,
   right = null,
   title = '',
+  hasGoBack = true,
 }: HeaderProps) => {
   const { goBack } = useNavigation();
 
   return (
     <SafeAreaView style={styles.header}>
       <View style={styles.headerLeft}>
-        <Icon
+        {hasGoBack && <Icon
           name={icon}
           onPress={onPress || goBack}
           size={16}
-        />
+        />}
         <Text style={styles.title}>{title}</Text>
       </View>
       {right}

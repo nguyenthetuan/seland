@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_BLUE_1 } from '../../../constants/colors';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   heading: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 24,
     fontWeight: '500',
     lineHeight: 32,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   hello: {
-    color: COLOR_BLACK_2,
+    color: COLORS.BLACK_2,
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 24,

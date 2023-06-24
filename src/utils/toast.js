@@ -3,18 +3,19 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import RNTMToast, { SuccessToast } from 'react-native-toast-message';
 
-import { COLOR_BLACK_1, COLOR_GREEN_2 } from '../constants';
+import { COLORS } from '../constants';
 
 const styles = StyleSheet.create({
   icon: {
     justifyContent: 'center',
   },
   successBackground: {
-    backgroundColor: COLOR_GREEN_2,
+    backgroundColor: COLORS.GREEN_2,
   },
   text1: {
-    color: COLOR_BLACK_1,
-    fontSize: 16,
+    color: COLORS.BLACK_1,
+    flexWrap: 'wrap',
+    fontSize: 12,
     lineHeight: 24,
   },
 });
@@ -27,7 +28,7 @@ const toastConfig = {
       renderLeadingIcon={() => (
         <View style={styles.icon}>
           <Icon
-            color={COLOR_BLACK_1}
+            color={COLORS.BLACK_1}
             name="check-circle"
           />
         </View>

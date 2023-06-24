@@ -1,19 +1,27 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_GRAY_2, COLOR_ORANGE_3 } from '../../constants';
+import { COLORS } from '../../constants';
 
 const styles = StyleSheet.create({
+  boxButton: {
+    backgroundColor: COLORS.WHITE,
+    flexDirection: 'row',
+    height: 70,
+    justifyContent: 'space-around',
+    paddingTop: 5,
+  },
   createPost: {
     alignItems: 'center',
-    backgroundColor: COLOR_ORANGE_3,
+    backgroundColor: COLORS.ORANGE_3,
     borderRadius: 24,
     height: 48,
     justifyContent: 'center',
-    marginBottom: 24,
+    marginBottom: -23,
+    top: -25,
     width: 48,
   },
   label: focused => ({
-    color: focused ? COLOR_BLUE_1 : COLOR_GRAY_2,
+    color: focused ? COLORS.BLUE_1 : COLORS.GRAY_2,
     fontSize: 12,
     lineHeight: 20,
   }),

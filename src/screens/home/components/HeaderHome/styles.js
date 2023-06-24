@@ -1,11 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLUE_4,
-  COLOR_GRAY_2,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxSeLand: {
@@ -16,7 +11,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnMenu: {
-    borderColor: COLOR_GRAY_2,
+    borderColor: COLORS.GRAY_2,
     borderRadius: 5,
     borderWidth: 1,
     marginRight: 20,
@@ -28,14 +23,14 @@ const styles = StyleSheet.create({
   },
   headerHome: {
     alignItems: 'center',
-    backgroundColor: COLOR_WHITE,
-    borderBottomColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.WHITE,
+    borderBottomColor: COLORS.GRAY_2,
     borderBottomWidth: 1,
     elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
-    shadowColor: COLOR_BLACK_1,
+    shadowColor: COLORS.BLACK_1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -54,13 +49,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   line: {
-    backgroundColor: COLOR_GRAY_2,
+    backgroundColor: COLORS.GRAY_2,
     height: 40,
     marginHorizontal: 16,
     width: 1,
   },
   seLand: {
-    color: COLOR_BLUE_4,
+    color: COLORS.BLUE_4,
     fontSize: 19,
     fontWeight: 'bold',
     lineHeight: 22,

@@ -1,16 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_GRAY_1,
-  COLOR_GRAY_4,
-  COLOR_GRAY_6,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   btnMenu: {
     alignItems: 'center',
-    backgroundColor: COLOR_GRAY_6,
-    borderColor: COLOR_GRAY_4,
+    backgroundColor: COLORS.GRAY_6,
+    borderColor: COLORS.GRAY_4,
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: 'row',
@@ -26,7 +22,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   name: {
-    color: COLOR_GRAY_1,
+    color: COLORS.GRAY_1,
   },
 });
 

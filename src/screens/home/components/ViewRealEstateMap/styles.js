@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_3,
-  COLOR_BLUE_2,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   children: {
@@ -15,7 +11,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   handle: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     height: 5,
     width: 60,
   },
@@ -23,10 +19,10 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   modalContainer: {
-    backgroundColor: COLOR_BLACK_3,
+    backgroundColor: COLORS.BLACK_3,
   },
   seeAll: {
-    color: COLOR_BLUE_2,
+    color: COLORS.BLUE_2,
     fontSize: 14,
     lineHeight: 18,
   },

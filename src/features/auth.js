@@ -22,7 +22,7 @@ export const signup = createAsyncThunk(
       const data = await requestSignup(input);
       return fulfillWithValue(data?.user?.phone_number);
     } catch (error) {
-      return rejectWithValue(error.data?.phone_number?.[0]);
+      return rejectWithValue(error?.data?.error || 'Lỗi đăng ký.');
     }
   }
 );
@@ -80,7 +80,7 @@ export const verifyOtp = createAsyncThunk(
       const data = await requestVerifyOtp(input);
       return fulfillWithValue(data?.data?.is_phone_verified);
     } catch (error) {
-      return rejectWithValue(error?.data?.otp?.[0] || error?.data?.error);
+      return rejectWithValue(error?.data?.error);
     }
   }
 );

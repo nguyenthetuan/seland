@@ -1,43 +1,52 @@
 import { Button as RNEButton } from '@rneui/themed';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { COLOR_BLUE_1, COLOR_WHITE } from '../../../constants';
+import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
 interface ButtonProps {
-  buttonStyle: {};
+  buttonStyle?: {};
   color?: string;
-  loading: boolean;
+  loading?: boolean;
   outline?: boolean;
   title?: string | null;
   titleStyle?: {};
   onPress?: () => void;
+  icon?: any;
+  radius?: number;
 }
 
 const Button = ({
   buttonStyle,
-  color = COLOR_BLUE_1,
+  color = COLORS.BLUE_1,
   loading = false,
   outline = false,
   title = '',
   titleStyle,
+  icon,
   ...props
 }: ButtonProps) => (
   <RNEButton
     buttonStyle={StyleSheet.flatten([styles.outline(color), buttonStyle])}
-    color={outline ? COLOR_WHITE : color}
+    color={outline ? COLORS.WHITE : color}
     disabled={loading}
     disabledStyle={styles.disabled}
     loading={loading}
-    radius={8}
+    radius={props?.radius}
     title={
-      <Text
-        style={StyleSheet.flatten([styles.title(color, outline), titleStyle])}
-      >
-        {title}
-      </Text>
+      <View style={styles.wrap}>
+        {icon && <View style={styles.wrapIcon}>
+          {icon}
+        </View>}
+        
+        <Text
+          style={StyleSheet.flatten([styles.title(color, outline), titleStyle])}
+        >
+          {title}
+        </Text>
+      </View>
     }
     {...props}
   />

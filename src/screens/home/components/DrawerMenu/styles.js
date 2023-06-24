@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLOR_BLACK_2, COLOR_WHITE } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   boxClose: {
@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   container: {
-    backgroundColor: COLOR_BLACK_2,
+    backgroundColor: COLORS.BLACK_2,
     flexDirection: 'row',
     height: '100%',
   },
   drawer: {
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLORS.WHITE,
     flex: 1,
     paddingTop: 40,
   },

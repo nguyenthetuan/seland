@@ -1,24 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  COLOR_BLACK_1,
-  COLOR_BLACK_2,
-  COLOR_BLACK_3,
-  COLOR_BLUE_1,
-  COLOR_GRAY_7,
-  COLOR_GREEN_3,
-  COLOR_GREEN_4,
-  COLOR_GREEN_5,
-  COLOR_ORANGE_5,
-  COLOR_PURPLE_1,
-  COLOR_PURPLE_2,
-  COLOR_RED_1,
-  COLOR_WHITE,
-} from '../../../../constants';
+import { COLORS } from '../../../../constants';
 
 const styles = StyleSheet.create({
   acreage: {
-    color: COLOR_BLACK_1,
+    color: COLORS.BLACK_1,
     fontSize: 14,
     fontWeight: '400',
     lineHeight: 18,
@@ -37,10 +23,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxLocation: {
+    alignItems: 'center',
     flexDirection: 'row',
   },
   boxMonopoly: {
-    backgroundColor: COLOR_ORANGE_5,
+    backgroundColor: COLORS.ORANGE_5,
     borderRadius: 3,
     elevation: 5,
     height: 20,
@@ -48,7 +35,7 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 3,
     paddingHorizontal: 8,
-    shadowColor: COLOR_BLACK_1,
+    shadowColor: COLORS.BLACK_1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -68,7 +55,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   boxSale: {
-    backgroundColor: COLOR_GREEN_3,
+    backgroundColor: COLORS.GREEN_3,
     borderRadius: 10,
     height: 16,
     justifyContent: 'center',
@@ -86,7 +73,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   boxType: {
-    backgroundColor: COLOR_GREEN_4,
+    backgroundColor: COLORS.GREEN_4,
     borderRadius: 10,
     marginBottom: 8,
     marginRight: 5,
@@ -95,21 +82,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   boxTypeHouse: {
-    backgroundColor: COLOR_PURPLE_2,
+    backgroundColor: COLORS.PURPLE_2,
     borderRadius: 10,
     marginBottom: 3,
     paddingTop: 5,
     padding: 3,
-    width: 60,
+    width: 70,
   },
   call: {
-    backgroundColor: COLOR_GREEN_5,
+    backgroundColor: COLORS.GREEN_5,
     borderRadius: 40,
     margin: 8,
     padding: 5,
   },
   container: {
-    borderColor: COLOR_BLACK_3,
+    borderColor: COLORS.BLACK_3,
     borderRadius: 5,
     borderWidth: 1,
     marginLeft: 10,
@@ -143,10 +130,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   location: {
-    color: COLOR_GRAY_7,
+    color: COLORS.GRAY_7,
     flex: 1,
     fontSize: 12,
     lineHeight: 20,
+    marginLeft: 5,
   },
   love: {
     paddingLeft: 10,
@@ -157,12 +145,12 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   monopoly: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 10,
     lineHeight: 12,
   },
   price: {
-    color: COLOR_RED_1,
+    color: COLORS.RED_1,
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 24,
@@ -180,7 +168,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   }),
   rankName: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 13,
     lineHeight: 15,
   },
@@ -188,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   sale: {
-    color: COLOR_WHITE,
+    color: COLORS.WHITE,
     fontSize: 9,
     lineHeight: 11,
   },
@@ -197,7 +185,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
   },
   time: {
-    color: COLOR_BLACK_2,
+    color: COLORS.BLACK_2,
     fontSize: 12,
     lineHeight: 20,
     marginTop: 7,
@@ -210,13 +198,13 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   }),
   type: {
-    color: COLOR_BLUE_1,
+    color: COLORS.BLUE_1,
     fontSize: 9,
     lineHeight: 15,
     textAlign: 'center',
   },
   typeHouse: {
-    color: COLOR_PURPLE_1,
+    color: COLORS.PURPLE_1,
     fontSize: 9,
     lineHeight: 15,
     textAlign: 'center',
