@@ -163,7 +163,7 @@ const ListPostsScreen = (props: any) => {
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
-          onMomentumScrollEnd={onLoadMore}
+          onEndReached={dataListPosts.length > 0 ? onLoadMore : null}
           data={dataListPosts}
           renderItem={({ item }) => <ItemRealEstates item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}

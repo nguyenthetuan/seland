@@ -85,7 +85,7 @@ const ListProjectScreen = () => {
           }
           refreshing={isLoading}
           onRefresh={onGetListProjects}
-          onMomentumScrollEnd={onLoadMore}
+          onEndReached={dataListProject?.length > 0 ? onLoadMore : null}
           ListFooterComponent={
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
