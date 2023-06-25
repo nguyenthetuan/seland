@@ -118,7 +118,7 @@ const ListPostsScreen = (props: any) => {
   const onGetListRealEstates = () => {
     setIsLoading(true);
 
-    const callback = (res: any, total?: number) => {
+    const callback = (res: any) => {
       setIsLoading(false);
       if (dataListPosts.length > 0) {
         setDataListPosts([...dataListPosts, ...res]);
