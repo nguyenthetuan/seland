@@ -42,6 +42,8 @@ const ListPostsScreen = (props: any) => {
   const [dataListPosts, setDataListPosts] = useState([]);
   const [page, setPage] = useState<number>(1);
 
+  const [totalPost, setTotalPost] = useState<number>(0);
+
   const convertDataFilter = (data: any) => {
     const res: any = {};
     res.sort_by = 'asc';
@@ -116,7 +118,7 @@ const ListPostsScreen = (props: any) => {
   const onGetListRealEstates = () => {
     setIsLoading(true);
 
-    const callback = (res: any) => {
+    const callback = (res: any, total?: number) => {
       setIsLoading(false);
       if (dataListPosts.length > 0) {
         setDataListPosts([...dataListPosts, ...res]);
@@ -130,6 +132,7 @@ const ListPostsScreen = (props: any) => {
       is_hot: is_hot ? is_hot : null,
       for_you: for_you ? for_you : null,
       page: page,
+      setTotal: setTotalPost,
     };
     dispatchThunk(dispatch, getListRealEstates(params), callback);
   };
@@ -173,6 +176,7 @@ const ListPostsScreen = (props: any) => {
               onSelect={onSelect}
               onFilter={onFilter}
               onShowTypeHousing={onShowTypeHousing}
+              dataLength={totalPost}
               {...props}
             />
           }

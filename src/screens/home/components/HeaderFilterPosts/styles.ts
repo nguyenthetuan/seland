@@ -11,10 +11,10 @@ const styles = StyleSheet.create({
     width: '26%',
   },
   boxRealEstate: {
-    width: '33%',
+    width: '46%',
   },
   boxStatus: {
-    width: '27%',
+    width: '57%',
   },
   btnFilter: {
     alignItems: 'center',
@@ -65,6 +65,10 @@ const styles = StyleSheet.create({
   textTypeHousing: {
     fontSize: 12,
   },
+  spaceBetween: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 });
 
 export default styles;
