@@ -332,7 +332,7 @@ const UserPostsScreen = () => {
           ListFooterComponent={
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
-          onMomentumScrollEnd={onLoadMore}
+          onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
         />
       </View>
       <View>
