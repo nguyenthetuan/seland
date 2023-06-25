@@ -24,9 +24,10 @@ export const getListRealEstateByLocation = createAsyncThunk(
 
 export const getListProjects = createAsyncThunk(
   'getListProjects',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+  async (_, { fulfillWithValue, rejectWithValue }, callback) => {
     try {
       const { data } = await requestGetListProjects();
+      callback && callback(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');

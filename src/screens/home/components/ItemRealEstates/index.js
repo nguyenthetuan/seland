@@ -35,7 +35,6 @@ ItemInfo.propTypes = {
 };
 
 const ItemRealEstates = ({ item }) => {
-  console.log('item: ', item);
   const { t } = useTranslation();
   const { navigate } = useNavigation();
   const onPressCall = () => {
