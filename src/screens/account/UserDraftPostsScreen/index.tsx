@@ -78,7 +78,7 @@ const UserDraftPostsScreen = () => {
           ListEmptyComponent={(!loading && <NoResults />) || null}
           refreshing={isLoading}
           onRefresh={onGetListRealEstatesUser}
-          onMomentumScrollEnd={onLoadMore}
+          onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
           ListFooterComponent={
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
