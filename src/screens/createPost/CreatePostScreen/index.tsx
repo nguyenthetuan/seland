@@ -17,6 +17,8 @@ import {
   createRealEstates,
   editRealEstates,
   getListRealEstatesUser,
+  getDistricts,
+  getWards,
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ArticleDetails from '../components/ArticleDetails';
@@ -207,6 +209,23 @@ const CreatePostScreen = (props: any) => {
         }
       }
     });
+    dispatchThunk(
+      dispatch,
+      getDistricts({ province_code: response.province_id }),
+      () => {}
+    );
+    dispatchThunk(
+      dispatch,
+      getDistricts({ province_code: response.province_id }),
+      () => {}
+    );
+    dispatchThunk(
+      dispatch,
+      getWards({
+        province_code: response.province_id,
+        district_code: response.district_id,
+      })
+    );
   }, []);
 
   useEffect(() => {
