@@ -16,4 +16,6 @@ export type IconSvgType =
   | 'next'
   | 'length'
   | 'width'
-  | 'edit';
+  | 'edit'
+  | 'close'
+  | 'pre';

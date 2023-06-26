@@ -2,8 +2,8 @@ import React from 'react';
 import { Svg, Path, SvgProps } from 'react-native-svg';
 import { COLORS } from '../../constants';
 
-const IconNext: React.FC<SvgProps> = ({
-  color = COLORS.BLUE_2,
+const IconPre: React.FC<SvgProps> = ({
+  color = COLORS.WHITE,
   width = 24,
   height = 24,
 }) => {
@@ -15,7 +15,7 @@ const IconNext: React.FC<SvgProps> = ({
       fill="none"
     >
       <Path
-        d="M9 18L15 12L9 6"
+        d="M15 18L9 12L15 6"
         stroke={color}
         stroke-width="2"
         stroke-linecap="round"
@@ -25,4 +25,4 @@ const IconNext: React.FC<SvgProps> = ({
   );
 };
 
-export default IconNext;
+export default IconPre;

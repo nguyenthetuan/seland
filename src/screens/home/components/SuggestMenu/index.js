@@ -49,15 +49,25 @@ const SuggestMenu = () => {
   const { navigate } = useNavigation();
   const { t } = useTranslation();
 
-  const navigateToListPosts = () =>
+  const navigateToListPosts = () => {
+    const dataFilters = {
+      demand_id: IDemandId.BUY,
+    };
     navigate(SCREENS.LIST_POST, {
-      demandType: IDemandId.BUY,
+      demand_id: IDemandId.BUY,
+      dataFilters,
     });
+  };
+
   const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
 
   const navigateToLease = () => {
+    const dataFilters = {
+      demand_id: IDemandId.LEASE,
+    };
     navigate(SCREENS.LIST_POST, {
-      demandType: IDemandId.LEASE,
+      dataFilters,
+      demand_id: IDemandId.LEASE,
     });
   };
 
