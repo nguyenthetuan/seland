@@ -64,7 +64,8 @@
     "viewNewsBDS": "Xem tin BDS",
     "editPost": "Sửa tin",
     "hidePost": "Hạ tin",
-    "actions": "Thao tác"
+    "actions": "Thao tác",
+    "add": "Thêm mới"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản",

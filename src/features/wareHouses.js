@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
+  requestCreateWareHouse,
   requestGetAgency,
   requestGetAllWareHouse,
   requestGetRealEstateWarehouses,
@@ -43,6 +44,20 @@ export const loadRealEstateWarehouses = createAsyncThunk(
           });
 
       return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue('Lỗi hệ thống.');
+    }
+  }
+);
+
+export const createWareHouse = createAsyncThunk(
+  'createWareHouse',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = requestCreateWareHouse(params);
+      console.log('🚀 ~ file: wareHouses.js:58 ~ data:', response);
+
+      return fulfillWithValue(response);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
     }
@@ -97,7 +112,6 @@ const slice = createSlice({
     });
 
     // get Real Estate Warehouses
-
     builder.addCase(loadRealEstateWarehouses.pending, state => {
       state.loadingRealEstateWarehouses = true;
     });
@@ -109,6 +123,10 @@ const slice = createSlice({
     builder.addCase(loadRealEstateWarehouses.rejected, (state, action) => {
       state.loadingRealEstateWarehouses = false;
       state.listRealEstateWarehouses = [];
+      state.error = action.payload;
+    });
+    // create/update ware house
+    builder.addCase(createWareHouse.rejected, (state, action) => {
       state.error = action.payload;
     });
   },
