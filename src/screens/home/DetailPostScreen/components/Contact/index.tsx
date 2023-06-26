@@ -29,7 +29,11 @@ const Contact: FC<Iprops> = props => {
     },
     {
       label: t('detailPost.book'),
-      onPress: () => navigate(SCREENS.CREATEAPPOIONMENTSCREEN, { id: id }),
+      onPress: () =>
+        navigate(SCREENS.USERAPPOINMENTSCREEN, {
+          id: id,
+          title: infoDetail?.title,
+        }),
     },
     {
       label: t('detailPost.quickPost'),

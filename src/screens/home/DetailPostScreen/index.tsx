@@ -45,7 +45,10 @@ const DetailPostScreen = () => {
             <ImagePost infoDetail={data} />
             <AboutPost infoDetail={data} />
             <DetailPost infoDetail={data} />
-            <Contact infoDetail={data} id={ route?.params?.id} />
+            <Contact
+              infoDetail={data}
+              id={route?.params?.id}
+            />
             <RealEstate infoDetail={data} />
           </View>
         </ScrollView>

@@ -67,7 +67,8 @@
     "actions": "Thao tác",
     "crateAppoinment": "Tạo lịch hẹn mới",
     "goBack": "Quay lại",
-    "addNew": "Thêm mới"
+    "addNew": "Thêm mới",
+    "selectTime": "Chọn giờ"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản",
@@ -413,5 +414,8 @@
     "email": "Email:",
     "address": "Địa chỉ:",
     "save": "Lưu"
+  },
+  "Toast": {
+    "complete": "Bạn đã đặt lịch thành công"
   }
 }

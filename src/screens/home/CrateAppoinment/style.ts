@@ -40,8 +40,15 @@ const styles = StyleSheet.create({
   },
   valueBDS: {
     marginTop: 10,
+    color: COLORS.BLUE_2,
   },
   InforRealState: {
+    marginTop: 30,
+  },
+  select: {
+    height: 40,
+  },
+  inputTime: {
     marginTop: 30,
   },
 });

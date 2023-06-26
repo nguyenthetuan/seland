@@ -1,37 +1,27 @@
-import { Icon } from '@rneui/base';
-import React, {
-  FC,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Modal,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { useDispatch } from 'react-redux';
 
-import { Button, DateTimePicker, Input, Header } from '../../../components';
-import { COLORS, SCREENS } from '../../../constants';
-import { createAppoinment } from '../../../features';
-import { dispatchThunk } from '../../../utils';
-import styles from './style';
-import { Control, useController } from 'react-hook-form';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import {
+  Button,
+  DateTimePicker,
+  Header,
+  Input,
+  Select,
+} from '../../../components';
+import { createAppoinment } from '../../../features';
+import { dispatchThunk } from '../../../utils';
+import {
+  validateEmail,
   validateName,
   validatePhone,
-  validateEmail,
 } from '../../../utils/validates';
-import dayjs from 'dayjs';
+import styles from './style';
 
 const CrateAppoinment = () => {
   const router: any = useRoute();
@@ -50,8 +40,8 @@ const CrateAppoinment = () => {
       phone_number: '',
       email: '',
     },
-    // mode: 'onBlur',
-    // reValidateMode: 'onBlur',
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
     // resolver: yupResolver(schema),
   });
   const { t } = useTranslation();
@@ -61,15 +51,91 @@ const CrateAppoinment = () => {
     const formData = new FormData();
     formData.append('real_estate_id', router.params.id);
     formData.append('time_weekday', dayjs(data.date).format('YYYY-MM-YY'));
-    formData.append('time_hour', dayjs(data.date).hour());
+    formData.append('time_hour', data.time);
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('phone_number', data.phone_number);
 
     dispatchThunk(dispatch, createAppoinment(formData), response => {
+      Toast.show({
+        text1: `${t('Toast.complete')}`,
+      });
       goBack();
     });
   };
+  const [data] = useState([
+    {
+      label: '1h Sáng',
+      value: '1h Sáng',
+    },
+    {
+      label: '1h30 Sáng',
+      value: '1h Sáng',
+    },
+    {
+      label: '2h Sáng',
+    },
+    {
+      label: '2h30 Sáng',
+    },
+    {
+      label: '3h Sáng',
+    },
+    {
+      label: '3h30 Sáng',
+    },
+    {
+      label: '4h Sáng',
+    },
+    {
+      label: '4h30 Sáng',
+    },
+    {
+      label: '5h Sáng',
+    },
+    {
+      label: '5h30 Sáng',
+    },
+    {
+      label: '6h Sáng',
+    },
+    {
+      label: '6h30 Sáng',
+    },
+    {
+      label: '7h Sáng',
+    },
+    {
+      label: '7h30 Sáng',
+    },
+    {
+      label: '8h Sáng',
+    },
+    {
+      label: '8h30 Sáng',
+    },
+    {
+      label: '9h Sáng',
+    },
+    {
+      label: '9h30 Sáng',
+    },
+    {
+      label: '10h Sáng',
+    },
+    {
+      label: '10h30 Sáng',
+    },
+    {
+      label: '11h Sáng',
+    },
+    {
+      label: '11h30 Sáng',
+    },
+    {
+      label: '12h Sáng',
+    },
+  ]);
   return (
     <SafeAreaView style={styles.container}>
       <Header title={t('header.appoinmentSeeRealState')} />
@@ -109,9 +175,19 @@ const CrateAppoinment = () => {
             labelStyle={styles.inputLabel}
             name="date"
           />
+          <Select
+            buttonStyle={styles.select}
+            control={control}
+            data={data}
+            defaultButtonText="Please Select"
+            disabled={false}
+            label={t('button.selectTime')}
+            labelStyle={styles.inputTime}
+            name="time"
+          />
           <View style={styles.InforRealState}>
             <Text>{t('input.postBDS')}</Text>
-            <Text style={styles.valueBDS}>Bán căn hộ 219 Trung Kính</Text>
+            <Text style={styles.valueBDS}>{router.params.title}</Text>
           </View>
           <Input
             errorStyle={styles.errorStyle}
