@@ -64,7 +64,10 @@
     "viewNewsBDS": "Xem tin BDS",
     "editPost": "Sửa tin",
     "hidePost": "Hạ tin",
-    "actions": "Thao tác"
+    "actions": "Thao tác",
+    "crateAppoinment": "Tạo lịch hẹn mới",
+    "goBack": "Quay lại",
+    "addNew": "Thêm mới"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản",
@@ -220,7 +223,8 @@
   "header": {
     "personalInformation": "Thông tin cá nhân",
     "userPosts": "Danh sách tin",
-    "listDraft": "Danh sách tin nháp"
+    "listDraft": "Danh sách tin nháp",
+    "appoinmentSeeRealState": "Lịch hẹn xem BĐS"
   },
   "heading": {
     "hello": "Xin chào bạn",
@@ -274,7 +278,12 @@
     "validity": "Thời hạn",
     "days": "ngày",
     "start_date": "Ngày bắt đầu",
-    "end_date": "Ngày kết thúc"
+    "end_date": "Ngày kết thúc",
+    "customer": "Khách hàng",
+    "dateSchedule": "Ngày đặt lịch",
+    "": "Ngày hẹn xem",
+    "postBDS": "Tin BĐS",
+    "noteAppoinment": "Ghi chú"
   },
   "tabBar": {
     "home": "Trang chủ",

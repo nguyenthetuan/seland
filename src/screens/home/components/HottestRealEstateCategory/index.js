@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
 import { COLORS } from '../../../../constants';
+import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
 import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
-import REAL_ESTATE from '../../../../constants/realEstate';
 
 const HottestRealEstateCategory = () => {
   const { t } = useTranslation();

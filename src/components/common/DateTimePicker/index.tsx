@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View, ViewStyle } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
 import { COLORS } from '../../../constants';
@@ -15,6 +15,7 @@ interface DateTimePickerProps {
   label: string;
   labelStyle: {} | [];
   name: string;
+  styleDatePicker?: ViewStyle;
 }
 
 const DateTimePicker = ({
@@ -22,6 +23,7 @@ const DateTimePicker = ({
   name,
   label = '',
   labelStyle = {},
+  styleDatePicker,
 }: DateTimePickerProps) => {
   const {
     field: { onChange, value },
@@ -38,7 +40,7 @@ const DateTimePicker = ({
   };
 
   return (
-    <View>
+    <View style={styleDatePicker}>
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}

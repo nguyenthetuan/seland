@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image } from '@rneui/base';
 import React, { FC } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, SafeAreaView } from 'react-native';
 import styles from './styles';
 import {
   IconBackWhite,
@@ -51,7 +51,7 @@ const ImagePost: FC<Iprops> = props => {
               }
         }
       />
-      <View style={styles.headerAction}>
+      <SafeAreaView style={styles.headerAction}>
         <TouchableOpacity
           style={styles.iconHeader}
           onPress={goBack}
@@ -70,7 +70,7 @@ const ImagePost: FC<Iprops> = props => {
             );
           })}
         </View>
-      </View>
+      </SafeAreaView>
     </View>
   );
 };

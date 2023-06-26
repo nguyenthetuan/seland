@@ -37,6 +37,7 @@ interface InputCustomProps extends InputProps {
   renderErrorMessage?: any;
   rules?: RegisterOptions;
   errorMessage?: string;
+  styleInput?: ViewStyle;
 }
 
 const Input = ({
@@ -59,6 +60,7 @@ const Input = ({
   errorStyle = {},
   rules,
   errorMessage,
+  styleInput,
   ...props
 }: InputCustomProps) => {
   const {
@@ -97,7 +99,7 @@ const Input = ({
   const togglePasswordVisible = () => setPasswordVisible(pv => !pv);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, ...styleInput }}>
       <RNEInput
         style={styles.text}
         errorStyle={StyleSheet.flatten([styles.error, errorStyle])}

@@ -7,26 +7,33 @@ import { Button, Text } from '../../../../../components';
 import { onPressCall } from '../../../../../utils/hook';
 import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
 import styles from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { SCREENS } from '../../../../../constants';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
 }
 
 const Contact: FC<Iprops> = props => {
+  const { navigate } = useNavigation();
   const { t } = useTranslation();
-  const { infoDetail } = props;
+  const { infoDetail, id } = props;
   const listAction = [
     {
       label: t('detailPost.evaluate'),
+      onPress: () => {},
     },
     {
       label: t('detailPost.follow'),
+      onPress: () => {},
     },
     {
       label: t('detailPost.book'),
+      onPress: () => navigate(SCREENS.CREATEAPPOIONMENTSCREEN, { id: id }),
     },
     {
       label: t('detailPost.quickPost'),
+      onPress: () => {},
     },
   ];
   const listFee = [
@@ -117,6 +124,7 @@ const Contact: FC<Iprops> = props => {
                 key={action.label}
                 buttonStyle={styles.buttonActionItem}
                 titleStyle={styles.titleActionItem}
+                onPress={action.onPress}
               />
             );
           })}
