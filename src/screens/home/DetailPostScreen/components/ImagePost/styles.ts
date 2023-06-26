@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import { deviceHeight, deviceWidth } from '../../../../../configs/theme/common';
+import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   boxImage: {
@@ -7,8 +9,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: deviceWidth - 130,
+    height: deviceHeight / 2,
   },
   headerAction: {
     position: 'absolute',
@@ -43,6 +45,50 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginRight: 10,
+  },
+  dot: {
+    borderRadius: 7,
+    height: 10,
+    marginHorizontal: -15,
+    margin: 0,
+    padding: 0,
+    width: 10,
+  },
+  sliderWrapper: {
+    width: deviceWidth,
+    height: deviceHeight,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: COLORS.BLACK_1,
+  },
+  modalDetailImage: {
+    width: deviceWidth,
+    height: deviceHeight,
+    backgroundColor: COLORS.BLACK_1,
+  },
+  slider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    marginBottom: 10,
+  },
+  text: {
+    color: COLORS.WHITE,
+  },
+  pre: {
+    width: 50,
+    marginRight: 5,
+    height: 50,
+  },
+  next: {
+    width: 50,
+    marginLeft: 5,
+    alignItems: 'flex-end',
+    height: 50,
+  },
+  close: {
+    marginBottom: 10,
+    marginTop: 50,
   },
 });
 

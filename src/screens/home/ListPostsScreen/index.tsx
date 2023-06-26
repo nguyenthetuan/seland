@@ -27,9 +27,10 @@ const ListPostsScreen = (props: any) => {
   const filterRef = useRef();
   const { t } = useTranslation();
   const route: any = useRoute();
-  const demand_id = route?.params?.demandType;
+  const demand_id = route?.params?.demand_id;
   const is_hot = route?.params?.is_hot;
   const for_you = route?.params?.for_you;
+
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
     useSelector(selectRealEstates);
@@ -110,8 +111,6 @@ const ListPostsScreen = (props: any) => {
 
   const onSelect = (value: any) => {
     const dataFilter = convertDataFilter(value);
-    // console.log('🚀 dataFilter', dataFilter);
-
     dispatchThunk(dispatch, getListRealEstates(dataFilter));
   };
 
@@ -152,7 +151,6 @@ const ListPostsScreen = (props: any) => {
   useEffect(() => {
     onGetListRealEstates();
   }, [page]);
-
   return (
     <>
       <Loading

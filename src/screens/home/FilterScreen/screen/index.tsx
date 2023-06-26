@@ -432,9 +432,7 @@ const FilterScreen = (props: any) => {
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
-            (Number(val).toFixed(1) || '0')
-              .toString()
-              + ' tỷ VND'
+            (Number(val).toFixed(1) || '0').toString() + ' tỷ VND'
           }
         />
 

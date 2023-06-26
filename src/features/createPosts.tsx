@@ -80,7 +80,7 @@ export const createRealEstates = createAsyncThunk(
 
 export const detailRealEstates = createAsyncThunk(
   'detailPost',
-  async (params, { fulfillWithValue, rejectWithValue }) => {
+  async (params: any, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await requestGetDetailRealEstates(params);
       return fulfillWithValue(response?.data);
