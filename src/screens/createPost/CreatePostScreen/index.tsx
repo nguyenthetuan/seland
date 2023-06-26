@@ -46,7 +46,7 @@ const TAB = {
 };
 
 const initInfo = {
-  status: null,
+  status: 2,
 
   // base infor
   real_estate_type_id: null,
@@ -57,7 +57,7 @@ const initInfo = {
   ward_id: null,
   street_id: null,
   lat_long: `${21.0227523}, ${105.9530334}`,
-  demand_id: 0,
+  demand_id: null,
   // real estate info
   area: '',
   price: '',
@@ -105,13 +105,28 @@ export const formatDataNameId = (data: any) =>
 const CreatePostScreen = (props: any) => {
   const { navigate, goBack } = useNavigation();
   const router: any = useRoute();
+  const {
+    control,
+    setValue,
+    getValues,
+    setError,
+    clearErrors,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: initInfo,
+  });
+
   const { t } = useTranslation();
   const scrollViewRef = useRef();
   const confirmPostRef = useRef();
   const currentTab = useRef<any>();
 
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
-  const [saveType, setSaveType] = useState(YOUR_WANT.SAVE_PRIVATE);
+  const [saveType, setSaveType] = useState(
+    (getValues && getValues().status) || YOUR_WANT.SAVE_PRIVATE
+  );
   const dispatch = useDispatch();
   const {
     loading,
@@ -126,19 +141,6 @@ const CreatePostScreen = (props: any) => {
     value: null,
   };
   const unitPricesOptions = [emptyUnitPrices, ...formatDataValueId(unitPrices)];
-
-  const {
-    control,
-    setValue,
-    getValues,
-    setError,
-    clearErrors,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: initInfo,
-  });
 
   const getDetailPost = useCallback(async (response: any) => {
     Object.entries(response).forEach(([key, value]) => {
@@ -218,7 +220,6 @@ const CreatePostScreen = (props: any) => {
       );
   }, []);
   const handleClosePost = () => {
-    dispatch(clearCreatePosts());
     reset();
     setTab(TAB.BASIC_INFORMATION);
     goBack();
@@ -306,15 +307,24 @@ const CreatePostScreen = (props: any) => {
         'usage_condition_id',
         'location_type_id',
       ];
+      const land_information = [
+        'utilities_id',
+        'furniture_id',
+        'security_id',
+        'road_type_id',
+      ];
+
       if (params[key]) {
         if (information.includes(key)) {
           formData.append(`information[${key}]`, params[key]);
+        } else if (land_information.includes(key)) {
+          formData.append(`land_information[${key}]`, params[key]);
         } else {
           formData.append(key, params[key]);
         }
       }
     });
-
+    console.log('getValues', getValues().address_detail.length);
     // append image to form
     if (params?.photo?.length) {
       params?.photo.forEach(
@@ -364,6 +374,7 @@ const CreatePostScreen = (props: any) => {
       status: saveType,
     };
     const formData = new FormData();
+
     Object.keys(params).forEach((key, value) => {
       if (
         key === 'isPhoto' ||
@@ -466,7 +477,7 @@ const CreatePostScreen = (props: any) => {
         if (errors.title || errors.content) {
           break;
         } else {
-          if (router.params.edit) {
+          if (router.params?.edit) {
             editPosts(value);
           } else {
             createPosts(value);

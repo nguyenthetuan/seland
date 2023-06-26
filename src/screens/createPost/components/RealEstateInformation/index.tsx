@@ -25,34 +25,39 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   getValues,
 }) => {
   const { t } = useTranslation();
-  const { realEstateInformation, information, unitPrices, utilities } =
+  const { realEstateInformation, information, unitPrices, utilities, demands } =
     useSelector(selectPosts);
+  const {
+    utilities_id,
+    demand_id,
+    furniture_id,
+    security_id,
+    road_type_id,
+    legal_documents_id,
+    house_status_id,
+    usage_condition_id,
+    location_type_id,
+    price_unit,
+  } = getValues && getValues();
   const [average, setAverage] = useState(0);
   const [utilitiesId, setUtilitiesId] = useState(
-    (getValues && getValues().utilities_id.split(',').map(Number)) || []
+    utilities_id.split(',').map(Number) || []
   );
   const [furnitureId, setFurnitureId] = useState<any[]>(
-    (getValues && getValues().furniture_id.split(',').map(Number)) || []
+    furniture_id.split(',').map(Number) || []
   );
   const [securityId, setSecurityId] = useState<any[]>(
-    (getValues && getValues().security_id.split(',').map(Number)) || []
+    security_id.split(',').map(Number) || []
   );
   const [roadTypeId, setRoadTypeId] = useState<any[]>(
-    (getValues && getValues().road_type_id.split(',').map(Number)) || []
+    road_type_id.split(',').map(Number) || []
   );
   const [state, setState] = useState({
-    legalDocumentsId:
-      (getValues && getValues().legal_documents_id) ||
-      information[2]?.children[0].id,
-    houseStatusId:
-      (getValues && getValues().house_status_id) ||
-      information[3]?.children[0].id,
-    usageConditionId:
-      (getValues && getValues().usage_condition_id) ||
-      information[4]?.children[0].id,
-    location:
-      (getValues && getValues().location_type_id) ||
-      information[5]?.children[0].id,
+    legalDocumentsId: legal_documents_id || information[2]?.children[0].id,
+    houseStatusId: house_status_id || information[3]?.children[0].id,
+    usageConditionId: usage_condition_id || information[4]?.children[0].id,
+    location: location_type_id || information[5]?.children[0].id,
+    priceUnit: price_unit === 1 ? true : false || true,
   });
   const [show, setShow] = useState<{
     nearbyAmenities: boolean;
@@ -165,8 +170,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         <View style={styles.boxSelectAddress}>
           <Input
             control={control}
-            inputMode="numeric"
-            isNumeric
+            inputMode="decimal"
             rules={{ required: 'Vui lòng nhập Diện tích' }}
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.acreage')}
@@ -180,22 +184,25 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           <View>
             <Input
               control={control}
-              inputMode="numeric"
-              isNumeric
+              inputMode="decimal"
               rules={{ required: 'Vui lòng nhập giá' }}
               inputContainerStyle={styles.inputContainerStyle}
-              label={t('input.price')}
+              label={
+                demand_id === demands[0]?.id
+                  ? t('input.price')
+                  : t('input.leasePrice')
+              }
               labelStyle={styles.inputLabel}
-              name="price"
+              name={'price'}
               required
               maxLength={64}
               onBlur={onBlurPrice}
               renderErrorMessage={false}
             />
             {average > 0 && (
-              <Text style={styles.m2}>{`~ ${average.toFixed(
-                0
-              )} triệu/m2`}</Text>
+              <Text style={styles.m2}>{`~ ${average.toFixed(0)} ${
+                state.priceUnit ? 'Tỷ' : 'Triệu'
+              }/m2`}</Text>
             )}
           </View>
         </View>
@@ -209,11 +216,17 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
             required
+            onSelect={(value: { value: number }) =>
+              setState({
+                ...state,
+                priceUnit: value?.value === 1 ? true : false,
+              })
+            }
             name="price_unit"
           />
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -231,7 +244,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         <View style={styles.boxSelectAddress}>
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.numberBedrooms')}
@@ -244,7 +257,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           />
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -284,7 +297,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           </View>
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -301,7 +314,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         <View style={styles.boxSelectAddress}>
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.width')}
@@ -314,7 +327,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
 
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -330,30 +343,34 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         </View>
         <Text style={styles.realEstateType}>{t('common.legalDocuments')}</Text>
         <View style={styles.boxTypeRealEstate}>
-          {information[2]?.children.map(item => (
-            <View
-              key={`buySell${item.id}`}
-              style={styles.itemRealEstate}
-            >
-              <Button
-                buttonStyle={styles.btnTypeRealEstate(
-                  item.id === state.legalDocumentsId
+          {information[2]?.children.map(
+            (item: { id: any; value: string | null | undefined }) => (
+              <View
+                key={`buySell${item.id}`}
+                style={styles.itemRealEstate}
+              >
+                <Button
+                  buttonStyle={styles.btnTypeRealEstate(
+                    item.id === state.legalDocumentsId
+                  )}
+                  onPress={() => {
+                    setValue('legal_documents_id', item.id);
+                    setState({ ...state, legalDocumentsId: item.id });
+                  }}
+                  title={item.value}
+                  titleStyle={styles.txtType(
+                    item.id === state.legalDocumentsId
+                  )}
+                  outline
+                />
+                {item?.id === state.legalDocumentsId && (
+                  <View style={styles.checked}>
+                    <TickButton />
+                  </View>
                 )}
-                onPress={() => {
-                  setValue('legal_documents_id', item.id);
-                  setState({ ...state, legalDocumentsId: item.id });
-                }}
-                title={item.value}
-                titleStyle={styles.txtType(item.id === state.legalDocumentsId)}
-                outline
-              />
-              {item?.id === state.legalDocumentsId && (
-                <View style={styles.checked}>
-                  <TickButton />
-                </View>
-              )}
-            </View>
-          ))}
+              </View>
+            )
+          )}
         </View>
         <Text style={styles.label}>{t('common.currentStatusHouse')}</Text>
         <View style={styles.boxType}>

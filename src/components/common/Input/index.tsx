@@ -58,6 +58,7 @@ const Input = ({
   showPasswordPolicy = false,
   errorStyle = {},
   rules,
+  inputMode,
   errorMessage,
   ...props
 }: InputCustomProps) => {
@@ -79,13 +80,21 @@ const Input = ({
 
   const handleChange = (text: string) => {
     if (onChangeText) onChangeText(text);
-    onChange(
-      isNumeric
-        ? text.replace(/[^\d]/g, '')
-        : isEmail || isPassword || isWebsite
-        ? text.replace(/\s/g, '')
-        : text
-    );
+    let txt = '';
+    switch (inputMode) {
+      case 'decimal':
+        txt = text.replace(/[^\d*\.?\d*$]/g, '');
+        console.log('inputMode', inputMode, txt);
+        break;
+      case 'numeric':
+        txt = text.replace(/[^\d]/g, '');
+        break;
+      default:
+        txt =
+          isEmail || isPassword || isWebsite ? text.replace(/\s/g, '') : text;
+        break;
+    }
+    onChange(txt);
   };
 
   const handleFocus = () => {
