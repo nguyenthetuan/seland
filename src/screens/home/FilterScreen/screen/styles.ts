@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
   },
+  areaRange: {
+    width: '24%',
+    marginLeft: 4,
+  },
   btnSelect: {
     height: 30,
     marginRight: 8,
@@ -30,7 +34,7 @@ const styles = StyleSheet.create({
   },
   district: {
     paddingRight: 4,
-    width: '33%',
+    width: '25%',
   },
   filterPost: {
     color: COLORS.GRAY_8,
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   ward: {
-    width: '33%',
+    width: '24%',
   },
   wrapArea: {
     flexDirection: 'row',
