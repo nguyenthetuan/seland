@@ -13,12 +13,11 @@ import { store } from '../../../redux';
 // }
 const MapScreen = () => {
   const route: any = useRoute();
-  const { realtyID, latLng } = route?.params;
   const { navigate, goBack } = useNavigation();
   const { token } = store.getState().auth;
   const runFirst = `
       window.document.getElementsByTagName("header-page-seland")[0].style.display = "none";
-      true; // note: this is required, or you'll sometimes get silent failures
+      true; // note: this is required, or you'll sometimes get silent failuresec
     `;
 
   return (
@@ -35,8 +34,10 @@ const MapScreen = () => {
         startInLoadingState={true}
         source={{
           uri: `https://tamthanh-staging.vnextglobal.com/checkLandPlaning?realtyID=${
-            realtyID || '185'
-          }&latLng=${latLng || '16.8018075868834%2C107.28037372286639'}`,
+            route?.params?.realtyID || '185'
+          }&latLng=${
+            route?.params?.latLng || '16.8018075868834%2C107.28037372286639'
+          }`,
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -295,7 +295,7 @@
     "ward": "Phường/xã",
     "typeHousing": "Loại nhà đất",
     "area": "Khu vực",
-    "type": "Loại hình",
+    "type": "Loại giao dịch",
     "sortBy": "Sắp xếp theo: {{sortBy}}",
     "sortBySelect": "Sắp xếp theo",
     "newest": "Mới nhất",

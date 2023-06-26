@@ -32,14 +32,31 @@ const ListProjectScreen = () => {
   const { loading } = listProject;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [dataListProject, setDataListProject] = useState([]);
+  const [page, setPage] = useState(1);
 
   const onGetListProjects = () => {
-    dispatchThunk(dispatch, getListProjects());
+    setIsLoading(true);
+
+    const callback = (res: any) => {
+      setIsLoading(false);
+      if (dataListProject.length > 0) {
+        setDataListProject([...dataListProject, ...res]);
+      } else {
+        setDataListProject(res);
+      }
+    };
+
+    dispatchThunk(dispatch, getListProjects(), callback);
+  };
+
+  const onLoadMore = () => {
+    setPage(page + 1);
   };
 
   useEffect(() => {
     onGetListProjects();
-  }, [dispatch]);
+  }, [page]);
 
   return (
     <>
@@ -51,27 +68,28 @@ const ListProjectScreen = () => {
       />
       <View style={styles.boxListPost}>
         <HeaderListPosts control={control} />
-        {isLoading ? (
-          <ActivityIndicator size={'small'} />
-        ) : (
-          <FlatList
-            style={styles.list}
-            contentContainerStyle={styles.contentContainer}
-            data={data}
-            renderItem={({ item }) => <ItemProject item={item} />}
-            keyExtractor={(_, index) => `itemProject${index}`}
-            ListEmptyComponent={loading ? null : <NoResults />}
-            ListHeaderComponent={
-              <HeaderFilterPosts
-                control={control}
-                handleSubmit={handleSubmit}
-                onSelect={onSelect}
-              />
-            }
-            refreshing={isLoading}
-            onRefresh={onGetListProjects}
-          />
-        )}
+
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.contentContainer}
+          data={dataListProject}
+          renderItem={({ item }) => <ItemProject item={item} />}
+          keyExtractor={(_, index) => `itemProject${index}`}
+          ListEmptyComponent={loading ? null : <NoResults />}
+          ListHeaderComponent={
+            <HeaderFilterPosts
+              control={control}
+              handleSubmit={handleSubmit}
+              onSelect={onSelect}
+            />
+          }
+          refreshing={isLoading}
+          onRefresh={onGetListProjects}
+          onEndReached={dataListProject?.length > 0 ? onLoadMore : null}
+          ListFooterComponent={
+            isLoading ? <ActivityIndicator size={'small'} /> : null
+          }
+        />
       </View>
     </>
   );

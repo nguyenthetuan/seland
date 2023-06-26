@@ -9,9 +9,10 @@ export const selectUserRealEstates = state => state.userRealEstates;
 
 export const getListRealEstatesUser = createAsyncThunk(
   'getListRealEstatesUser',
-  async (params, { fulfillWithValue, rejectWithValue }) => {
+  async (params, { fulfillWithValue, rejectWithValue }, callback) => {
     try {
       const { data } = await requestGetListRealEstatesUser(params);
+      callback && callback(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');

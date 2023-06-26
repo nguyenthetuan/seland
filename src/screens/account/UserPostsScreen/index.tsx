@@ -3,7 +3,7 @@ import { Icon } from '@rneui/themed';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Pressable, View } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,23 +34,43 @@ const UserPostsScreen = () => {
     dateStart: '',
     dateEnd: '',
   });
+  const [dataUserRealEstates, setDataUserRealEstates] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
 
   const onGetListRealEstatesUser = () => {
+    setIsLoading(true);
+
+    const callback = (res: any) => {
+      setIsLoading(false);
+      if (dataUserRealEstates.length > 0) {
+        setDataUserRealEstates([...dataUserRealEstates, ...res]);
+      } else {
+        setDataUserRealEstates(res);
+      }
+    };
+
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
         sort_by: 'createdAt',
-      })
+        page: page,
+      }),
+      callback
     );
+  };
+
+  const onLoadMore = () => {
+    setPage(page + 1);
   };
 
   useEffect(() => {
     onGetListRealEstatesUser();
-  }, [dispatch]);
+  }, [page]);
 
   const handleSelectStatus = (value: number) => {
     dispatchThunk(
@@ -304,11 +324,15 @@ const UserPostsScreen = () => {
         </View>
         <FlatList
           style={styles.list}
-          data={userRealEstates}
+          data={dataUserRealEstates}
           keyExtractor={(_, index) => `itemPost${index}`}
           renderItem={({ item }) => <UserPost item={item} />}
           ListHeaderComponent={renderHeader()}
           ListEmptyComponent={loadingList ? null : <NoResults />}
+          ListFooterComponent={
+            isLoading ? <ActivityIndicator size={'small'} /> : null
+          }
+          onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
         />
       </View>
       <View>
