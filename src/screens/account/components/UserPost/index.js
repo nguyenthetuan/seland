@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import {
   deleteRealEstatesUser,
   editPost,
@@ -18,7 +18,6 @@ import {
 } from '../../../../features'
 import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
-import { SCREENS } from '../../../../constants'
 
 
 const Info = ({ value, icon }) => (
@@ -114,7 +113,6 @@ const UserPost = (props) => {
         Alert.alert(t('common.deleteSuccess'));
       }
     } catch (error) {
-      f
       console.log(error);
     }
   };
