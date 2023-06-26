@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     width: '46%',
   },
   boxStatus: {
-    width: '57%',
+    width: '30%',
   },
   btnFilter: {
     alignItems: 'center',
@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
   },
   wrapTypeHousing: {
     marginBottom: 12,
-    width: '100%',
+    // width: '50%',
+    marginLeft: 6,
+    flex: 1,
   },
   textTypeHousing: {
     fontSize: 12,

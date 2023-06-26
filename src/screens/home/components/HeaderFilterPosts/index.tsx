@@ -267,6 +267,23 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               onSelect={(val: any) => submitFilter(val, 'demand_id')}
             />
           </View>
+
+          <View style={styles.wrapTypeHousing}>
+            {/* <Text style={styles.textTypeHousing}>
+              {t('select.typeHousing')}
+            </Text> */}
+            <TypeHousing
+              options={typeHousingOptions}
+              type={'typeHousing'}
+              control={control}
+              name="typeHousing"
+              multipleChoice
+              onSelectTypeHousing={onSelectTypeHousing}
+              onShowTypeHousing={onShowTypeHousing}
+              brief={true}
+              placeHolder={t('select.typeHousing') || ""}
+            />
+          </View>
         </View>
 
         {/* <View style={styles.row}>
@@ -318,20 +335,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
         </View> */}
 
         <View style={styles.row}>
-          <View style={styles.wrapTypeHousing}>
-            <Text style={styles.textTypeHousing}>
-              {t('select.typeHousing')}
-            </Text>
-            <TypeHousing
-              options={typeHousingOptions}
-              type={'typeHousing'}
-              control={control}
-              name="typeHousing"
-              multipleChoice
-              onSelectTypeHousing={onSelectTypeHousing}
-              onShowTypeHousing={onShowTypeHousing}
-            />
-          </View>
+          
         </View>
 
         <View style={[styles.row, styles.spaceBetween]}>

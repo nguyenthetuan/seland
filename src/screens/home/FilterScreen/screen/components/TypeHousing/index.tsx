@@ -12,6 +12,7 @@ import { Text } from '../../../../../../components';
 import { COLORS } from '../../../../../../constants';
 import { Icon } from '@rneui/themed';
 import { useController } from 'react-hook-form';
+import { CheckBox as RNECheckBox } from '@rneui/themed';
 
 interface IProps {
   options?: any[];
@@ -20,7 +21,9 @@ interface IProps {
   control?: any;
   multipleChoice?: boolean;
   onSelectTypeHousing?: any;
-  onShowTypeHousing?: () => void;
+  onShowTypeHousing?: (val?: any) => void;
+  brief?: boolean;
+  placeHolder?: string;
 }
 
 interface ITypeHousingItem {
@@ -36,6 +39,8 @@ const TypeHousing = ({
   multipleChoice = false,
   onSelectTypeHousing: onSelectType,
   onShowTypeHousing,
+  brief = false,
+  placeHolder = "",
 }: IProps) => {
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
@@ -54,6 +59,7 @@ const TypeHousing = ({
   const onSelectTypeHousing = (item: string | number) => {
     const data = [...value];
     if (data.includes(item)) {
+      onRemoveTypeHousing(item);
       return;
     }
     if (multipleChoice) {
@@ -88,10 +94,10 @@ const TypeHousing = ({
   return (
     <>
       <TouchableOpacity
-        style={styles.typeHousingContainer}
+        style={brief ? styles.typeHousingContainerBrief : styles.typeHousingContainer}
         onPress={onShowListTypeHousing}
       >
-        {(value?.length > 0 ? value : []).map((item: any, index: number) => {
+        {((value?.length > 0 && !brief) ? value : []).map((item: any, index: number) => {
           return (
             <TouchableOpacity
               style={styles.typeHousing}
@@ -107,6 +113,7 @@ const TypeHousing = ({
             </TouchableOpacity>
           );
         })}
+        {(placeHolder && brief) && <Text style={styles.placeHolder}>{placeHolder}{value.length > 0 ? ` (${value.length}) `: ""}</Text> }
       </TouchableOpacity>
 
       {showTypeHousing ? (
@@ -135,7 +142,16 @@ const TypeHousing = ({
                       paddingBottom: 4,
                     }}
                   >
-                    <Text>{t(`${item?.title}`)}</Text>
+                    <View style={styles.row}>
+                      <RNECheckBox
+                        containerStyle={styles.checkbox}
+                        checked={value.includes(item?.value)}
+                        iconType="material"
+                        checkedIcon="check-box"
+                        uncheckedIcon="check-box-outline-blank"
+                      />
+                      <Text>{t(`${item?.title}`)}</Text>
+                    </View>
                   </TouchableOpacity>
                 );
               }
@@ -148,6 +164,10 @@ const TypeHousing = ({
 };
 
 const styles = StyleSheet.create({
+  checkbox: {
+    padding: 0,
+    margin: 0,
+  },
   wrapContainer: {
     height: 160,
     shadowOffset: {
@@ -172,6 +192,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  typeHousingContainerBrief: {
+    borderWidth: 1,
+    borderColor: COLORS.GRAY_4,
+    minHeight: 36,
+    borderRadius: 5,
+    padding: 4,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   typeHousing: {
     backgroundColor: COLORS.GRAY_6,
     marginRight: 8,
@@ -184,6 +213,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     zIndex: 1000,
+  },
+  placeHolder: {
+    paddingLeft: 8,
+    fontSize: 14,
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 4,
   },
 });
 
