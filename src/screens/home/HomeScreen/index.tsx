@@ -25,10 +25,13 @@ import RealEstateForYouCategory from '../components/RealEstateForYouCategory';
 import RealEstateNews from '../components/RealEstateNews';
 import SuggestMenu from '../components/SuggestMenu';
 import styles from './styles';
+import { IDemandId } from '../../../utils/interface/home';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const { navigate }: any = useNavigation();
+  const [isBuy, setIsBuy]: any = useState(true);
+
   const dispatch = useDispatch();
 
   const [isBuyHottest, setIsBuyHottest] = useState(true);
@@ -45,31 +48,49 @@ const HomeScreen = () => {
     dispatchThunk(dispatch, getListNews());
   }, [dispatch]);
 
-  const navigateToListPostsHot = () =>
-    navigate(SCREENS.LIST_POST, {
-      is_hot: 1,
-      dataFilters: {
-        demand_id: isBuyHottest ? 1 : 2,
-      },
-    });
-  const navigateToListPostsForYou = () =>
-    navigate(SCREENS.LIST_POST, {
-      for_you: 1,
-      dataFilters: {
-        demand_id: isBuyForYou ? 1 : 2,
-      },
-    });
+  const navigateToListPostsHot = () => {
+    if (isBuy) {
+      navigate(SCREENS.LIST_POST, {
+        is_hot: 1,
+        demand_id: IDemandId.BUY,
+        dataFilters: {
+          demand_id: IDemandId.BUY,
+        },
+      });
+    } else {
+      navigate(SCREENS.LIST_POST, {
+        is_hot: 1,
+        demand_id: IDemandId.LEASE,
+        dataFilters: {
+          demand_id: IDemandId.LEASE,
+        },
+      });
+    }
+  };
+
+  const navigateToListPostsForYou = () => {
+    if (isBuy) {
+      navigate(SCREENS.LIST_POST, {
+        for_you: 1,
+        demand_id: IDemandId.BUY,
+        dataFilters: {
+          demand_id: IDemandId.BUY,
+        },
+      });
+    } else {
+      navigate(SCREENS.LIST_POST, {
+        for_you: 1,
+        demand_id: IDemandId.LEASE,
+        dataFilters: {
+          demand_id: IDemandId.LEASE,
+        },
+      });
+    }
+  };
+
   const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
 
   const navigateToMaps = () => navigate(SCREENS.MAPS);
-
-  const handleSelectOptionsHottest = (val: boolean) => {
-    setIsBuyHottest(val);
-  }
-
-  const handleSelectOptionsForYou = (val: boolean) => {
-    setIsBuyForYou(val);
-  }
 
   return (
     <View style={styles.containerScreen}>
@@ -114,8 +135,8 @@ const HomeScreen = () => {
             onSeeAll={navigateToListPostsHot}
           >
             <HottestRealEstateCategory
-              handleSelectOptions={handleSelectOptionsHottest}
-              isBuy={isBuyHottest}
+              isBuy={isBuy}
+              setIsBuy={setIsBuy}
             />
           </Category>
         ) : null}
@@ -125,8 +146,8 @@ const HomeScreen = () => {
             onSeeAll={navigateToListPostsForYou}
           >
             <RealEstateForYouCategory
-              handleSelectOptions={handleSelectOptionsForYou}
-              isBuy={isBuyForYou}
+              isBuy={isBuy}
+              setIsBuy={setIsBuy}
             />
           </Category>
         ) : null}

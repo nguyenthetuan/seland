@@ -1,25 +1,28 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Header, NoResults } from '../../../components';
 import { COLORS, YOUR_WANT } from '../../../constants';
 import {
   getListRealEstatesUser,
   selectUserRealEstates,
+  deleteRealEstatesUser,
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { UserPost } from '../components';
 import styles from './styles';
+import PopupConfirm from '../../../components/common/PopupConfirm';
 
 const UserDraftPostsScreen = () => {
   const dispatch = useDispatch();
   const route: any = useRoute();
   const { data: userRealEstates, loading } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
+  const confirmCancelPaymentRef = useRef();
+  const [idItemDelete, setIdItemDelete] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
   const [dataUserRealEstates, setDataUserRealEstates] = useState([]);
@@ -45,6 +48,23 @@ const UserDraftPostsScreen = () => {
     dispatchThunk(dispatch, getListRealEstatesUser(params), callback);
   };
 
+  const onGetReFresh = () => {
+    setIsLoading(true);
+    const callback = (res: any) => {
+      setIsLoading(false);
+      setDataUserRealEstates(res);
+    };
+
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        sort_by: 'createdAt',
+        page: page,
+      }),
+      callback
+    );
+  };
+
   const onLoadMore = () => {
     setPage(page + 1);
   };
@@ -52,6 +72,29 @@ const UserDraftPostsScreen = () => {
   useEffect(() => {
     onGetListRealEstatesUser();
   }, [page]);
+
+  const deleteSuccess = () => {
+    onGetReFresh();
+  };
+
+  const handleConfirm = () => {
+    try {
+      if (idItemDelete) {
+        dispatchThunk(
+          dispatch,
+          deleteRealEstatesUser(idItemDelete),
+          deleteSuccess
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleCancel = () => {};
+  const deletePost = (id: any) => {
+    setIdItemDelete(id);
+    confirmCancelPaymentRef?.current.openPopup();
+  };
 
   return (
     <>
@@ -71,8 +114,9 @@ const UserDraftPostsScreen = () => {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <UserPost
+              type="DRAFT"
               item={item}
-              refreshData={onGetListRealEstatesUser}
+              deletePost={deletePost}
             />
           )}
           ListEmptyComponent={(!loading && <NoResults />) || null}
@@ -84,6 +128,14 @@ const UserDraftPostsScreen = () => {
           }
         />
       </View>
+      <PopupConfirm
+        ref={confirmCancelPaymentRef}
+        onPressButtonRight={handleConfirm}
+        onPressButtonLeft={handleCancel}
+        titleButtonLeft="Huỷ"
+        titleButtonRight="Xác nhận"
+        label="Bạn có muốn xoá tin không!"
+      />
     </>
   );
 };

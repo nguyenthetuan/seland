@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
@@ -13,28 +13,16 @@ import { Button, Input, Text } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import {
   deleteRealEstatesUser,
-  editPost,
   selectUserRealEstates,
-} from '../../../../features'
+} from '../../../../features';
 import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
-
-
-const Info = ({ value, icon }) => (
+const Info = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={[styles.info, styles.row]}>
     {icon}
     <Text style={styles.value}>{value}</Text>
   </View>
 );
-
-Info.defaultProps = {
-  value: '',
-};
-
-Info.propTypes = {
-  icon: PropTypes.node.isRequired,
-  value: PropTypes.string,
-};
 
 const schema = yup.object({
   code: yup.string(),
@@ -43,8 +31,13 @@ const schema = yup.object({
   end_date: yup.string(),
 });
 
-const UserPost = (props) => {
-  const { item, refreshData } = props
+interface UserPostProps {
+  item?: any;
+  type?: 'DRAFT' | 'PRIVATE' | 'PUBLIC';
+  deletePost?: Function;
+}
+
+const UserPost = ({ item, type, deletePost }: UserPostProps) => {
   const { navigate, goBack } = useNavigation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -69,8 +62,9 @@ const UserPost = (props) => {
   });
 
   const handleCall = () => {
-    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${item?.phone_number
-      }`;
+    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${
+      item?.phone_number
+    }`;
     Linking.canOpenURL(callUrl).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
@@ -103,23 +97,13 @@ const UserPost = (props) => {
         return 'common.vipDiamond';
     }
   };
-  const onDeletePost = async () => {
-    try {
-      if (item?.id) {
-        dispatchThunk(dispatch, deleteRealEstatesUser(item?.id), () => {
-          goBack()
-        });
-        refreshData()
-        Alert.alert(t('common.deleteSuccess'));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const onDeletePost = () => {
+    deletePost && deletePost(item.id);
   };
 
   const navigateToEdit = () => {
-    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id })
-  }
+    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id });
+  };
 
   return (
     <TouchableOpacity style={styles.item}>
@@ -233,25 +217,39 @@ const UserPost = (props) => {
           renderErrorMessage={false}
         />
       </View>
-      <View style={[styles.buttons, styles.row]}>
-        <View style={[styles.buttonLeft, styles.flex]}>
+      <View style={[styles.buttons, styles.row, { flex: 1 }]}>
+        <View style={[styles.buttonLeft, { flex: type === 'DRAFT' ? 1 : 0.5 }]}>
           <Button
             color={COLORS.GREEN_1}
             title={t('button.editPost')}
             onPress={navigateToEdit}
           />
         </View>
-        <View style={[styles.flex, styles.buttonMiddle]}>
-          <Button
-            color={COLORS.RED_2}
-            title={t('button.hidePost')}
-            onPress={onDeletePost}
-            loading={loadingDelete}
-          />
-        </View>
-        <View style={[styles.flex, styles.buttonRight]}>
-          <Button title={t('button.actions')} />
-        </View>
+        {type === 'DRAFT' ? (
+          <View style={[styles.buttonLeft, { flex: 1 }]}>
+            <Button
+              color={COLORS.RED_2}
+              title={t('button.delete')}
+              onPress={onDeletePost}
+              loading={loadingDelete}
+            />
+          </View>
+        ) : (
+          <View style={{ flexDirection: 'row', flex: 1 }}>
+            <View style={[styles.buttonMiddle, { flex: 1 }]}>
+              {/* Todo xoa tin, sau thay UI item khac */}
+              <Button
+                color={COLORS.RED_2}
+                title={t('button.delete')}
+                onPress={onDeletePost}
+                loading={loadingDelete}
+              />
+            </View>
+            <View style={[styles.buttonRight, { flex: 1 }]}>
+              <Button title={t('button.actions')} />
+            </View>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );

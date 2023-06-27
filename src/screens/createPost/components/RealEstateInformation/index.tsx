@@ -86,6 +86,13 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   ];
 
   useEffect(() => {
+    setValue && setValue('legal_documents_id', information[2]?.children[0].id);
+    setValue && setValue('location_type_id', information[5]?.children[0].id);
+    setValue && setValue('house_status_id', information[3]?.children[0].id);
+    setValue && setValue('usage_condition_id', information[4]?.children[0].id);
+  }, []);
+
+  useEffect(() => {
     Object.entries(realEstateInformation).forEach(
       ([key, value]) => value && setValue && setValue(key, value)
     );

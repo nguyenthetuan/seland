@@ -2,11 +2,21 @@ import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal, View } from 'react-native';
 
-import { Button, Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS } from '../../../constants';
+import { Button, Text } from '../..';
 import styles from './styles';
 
-const PopupConfirmPost = forwardRef(
+interface PopupConfirmProps {
+  onPressButtonLeft: Function;
+  onPressButtonRight: Function;
+  label: string;
+  content: string;
+  description: string;
+  titleButtonLeft: string;
+  titleButtonRight: string;
+}
+
+const PopupConfirm: React.FC<PopupConfirmProps> = forwardRef(
   (
     {
       onPressButtonLeft,
@@ -72,25 +82,4 @@ const PopupConfirmPost = forwardRef(
   }
 );
 
-PopupConfirmPost.defaultProps = {
-  onPressButtonLeft: () => {},
-  onPressButtonRight: () => {},
-  label: '',
-  description: '',
-  titleButtonLeft: '',
-  titleButtonRight: '',
-};
-
-PopupConfirmPost.propTypes = {
-  onPressButtonRight: PropTypes.func,
-  onPressButtonLeft: PropTypes.func,
-  label: PropTypes.string,
-  description: PropTypes.string,
-  titleButtonLeft: PropTypes.string,
-  titleButtonRight: PropTypes.string,
-  content: PropTypes.node.isRequired,
-};
-
-PopupConfirmPost.displayName = 'PopupConfirmPost';
-
-export default PopupConfirmPost;
+export default PopupConfirm;

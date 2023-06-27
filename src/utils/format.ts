@@ -16,5 +16,12 @@ export const formatSelect = (data: IFormatSelect[]) => {
       value: item?.id,
     };
   });
-  return selectAll.concat(dataSelectConvert);
+  return [
+    ...selectAll,
+    ...dataSelectConvert,
+    {
+      label: 'Thêm',
+      value: undefined,
+    },
+  ];
 };

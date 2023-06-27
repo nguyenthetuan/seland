@@ -5,31 +5,30 @@ import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
 import { COLORS } from '../../../../constants';
+import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
 import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
-import REAL_ESTATE from '../../../../constants/realEstate';
 
-
-const HottestRealEstateCategory = (props) => {
+const HottestRealEstateCategory = ({ isBuy, setIsBuy }: any) => {
   const { t } = useTranslation();
-  // const [isBuy, setIsBuy] = useState(true);
   const { listRealEstatesHots } = useSelector(selectHome);
 
-  const handleSelectOptions = props?.handleSelectOptions ? props?.handleSelectOptions : null;
-  const isBuy = props?.isBuy;
+  const handleSelectOptions = (value: boolean) => {
+    setIsBuy(value);
+  };
 
   const listHottestRealEstate = useMemo(() => {
     let results = [];
 
     if (isBuy) {
       results = listRealEstatesHots?.data
-        ?.filter(item => item.demand_id === IDemandId.BUY)
+        ?.filter((item: any) => item.demand_id === IDemandId.BUY)
         ?.slice(0, 3);
     } else {
       results = listRealEstatesHots?.data
-        ?.filter(item => item.demand_id === IDemandId.LEASE)
+        ?.filter((item: any) => item.demand_id === IDemandId.LEASE)
         ?.slice(0, 3);
     }
     return results;
@@ -65,13 +64,12 @@ const HottestRealEstateCategory = (props) => {
         />
       </View>
       <ScrollView
-        style={styles.carousel}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map(item => (
+        {listHottestRealEstate.map((item: any, index: number) => (
           <ItemHottestRealEstate
-            key={`ItemHottestRealEstate${item?.id}`}
+            key={`ItemHottestRealEstate${item?.id}-${index}`}
             item={item}
             type={REAL_ESTATE.REAL_ESTATE_HOSTEST}
           />

@@ -8,7 +8,7 @@ import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Save } from '../../../assets';
-import { Button, Text } from '../../../components';
+import { Button, PopupConfirm, Text } from '../../../components';
 import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
 import {
   clearCreatePosts,
@@ -23,7 +23,6 @@ import {
 import { dispatchThunk } from '../../../utils';
 import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
-import PopupConfirmPost from '../components/PopupConfirm';
 import RealEstateInformation from '../components/RealEstateInformation';
 import styles from './styles';
 
@@ -59,7 +58,7 @@ const initInfo = {
   ward_id: null,
   street_id: null,
   lat_long: `${21.0227523}, ${105.9530334}`,
-  demand_id: null,
+  demand_id: 1,
   // real estate info
   area: '',
   price: '',
@@ -299,11 +298,11 @@ const CreatePostScreen = (props: any) => {
         navigate(SCREENS.CONFIRM_POST_SCREEN, {
           realEstateId: value?.real_estate_id,
         });
-        setTab(TAB.BASIC_INFORMATION);
       } else {
         confirmPostRef.current.openPopup();
       }
-      dispatch(clearCreatePosts());
+      reset();
+      setTab(TAB.BASIC_INFORMATION);
     }
   };
 
@@ -692,7 +691,7 @@ const CreatePostScreen = (props: any) => {
           </View>
         )}
       </ScrollView>
-      <PopupConfirmPost
+      <PopupConfirm
         ref={confirmPostRef}
         onPressButtonRight={handlePostOther}
         onPressButtonLeft={handleManagePost}

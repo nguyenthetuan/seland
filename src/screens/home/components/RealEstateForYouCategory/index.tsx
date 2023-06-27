@@ -11,25 +11,28 @@ import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
-const RealEstateForYouCategory = (props) => {
+interface Iprops {
+  isBuy: boolean;
+  setIsBuy: any;
+}
+
+const RealEstateForYouCategory = ({ isBuy, setIsBuy }: Iprops) => {
   const { t } = useTranslation();
-  // const [isBuy, setIsBuy] = useState(true);
   const { listRealEstatesForYou } = useSelector(selectHome);
 
-  const handleSelectOptions = props?.handleSelectOptions ? props?.handleSelectOptions : null;
-  const isBuy = props?.isBuy;
-
-
+  const handleSelectOptions = (value: boolean) => {
+    setIsBuy(value);
+  };
   const listHottestRealEstate = useMemo(() => {
     let results = [];
 
     if (isBuy) {
       results = listRealEstatesForYou?.data
-        ?.filter(item => item.demand_id === IDemandId.BUY)
+        ?.filter((item: any) => item.demand_id === IDemandId.BUY)
         ?.slice(0, 3);
     } else {
       results = listRealEstatesForYou?.data
-        ?.filter(item => item.demand_id === IDemandId.LEASE)
+        ?.filter((item: any) => item.demand_id === IDemandId.LEASE)
         ?.slice(0, 3);
     }
     return results;
@@ -65,13 +68,12 @@ const RealEstateForYouCategory = (props) => {
         />
       </View>
       <ScrollView
-        style={styles.carousel}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map(item => (
+        {listHottestRealEstate.map((item: any, index: number) => (
           <ItemHottestRealEstate
-            key={`RealEstateForYouCategory${item?.id}`}
+            key={`RealEstateForYouCategory${item?.id}-${index}`}
             item={item}
             type={REAL_ESTATE.REAL_ESTATE_FOR_YOU}
           />
