@@ -58,7 +58,7 @@ const initInfo = {
   ward_id: null,
   street_id: null,
   lat_long: `${21.0227523}, ${105.9530334}`,
-  demand_id: null,
+  demand_id: 1,
   // real estate info
   area: '',
   price: '',

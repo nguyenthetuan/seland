@@ -240,7 +240,7 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
               {/* Todo xoa tin, sau thay UI item khac */}
               <Button
                 color={COLORS.RED_2}
-                title={t('button.hidePost')}
+                title={t('button.delete')}
                 onPress={onDeletePost}
                 loading={loadingDelete}
               />
