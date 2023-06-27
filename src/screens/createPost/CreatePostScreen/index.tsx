@@ -163,25 +163,29 @@ const CreatePostScreen = (props: any) => {
           case 'document_legal':
             setValue(
               'legal_documents_id',
-              information[2].children.find((elm: any) => elm.value === value).id
+              information[2].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'house_status':
             setValue(
               'house_status_id',
-              information[3].children.find((elm: any) => elm.value === value).id
+              information[3].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'usage_status':
             setValue(
               'usage_condition_id',
-              information[4].children.find((elm: any) => elm.value === value).id
+              information[4].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'location':
             setValue(
               'location_type_id',
-              information[5].children.find((elm: any) => elm.value === value).id
+              information[5].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'introduction_content':
@@ -210,15 +214,13 @@ const CreatePostScreen = (props: any) => {
         }
       }
     });
+    console.log('response', response);
     dispatchThunk(
       dispatch,
       getDistricts({ province_code: response.province_id }),
-      () => {}
-    );
-    dispatchThunk(
-      dispatch,
-      getDistricts({ province_code: response.province_id }),
-      () => {}
+      response => {
+        console.log('responsexx', response);
+      }
     );
     dispatchThunk(
       dispatch,
@@ -425,7 +427,7 @@ const CreatePostScreen = (props: any) => {
             name: item.fileName,
             type: item.type,
           };
-          formData.append(`images[${index}]`, file);
+          formData.append(`images[${index}]`, item.uri);
         }
       );
     }
