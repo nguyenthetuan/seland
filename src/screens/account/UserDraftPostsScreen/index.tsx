@@ -71,6 +71,7 @@ const UserDraftPostsScreen = () => {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <UserPost
+              type="DRAFT"
               item={item}
               refreshData={onGetListRealEstatesUser}
             />
