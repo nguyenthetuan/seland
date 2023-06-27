@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   FlatList,
-  RefreshControl,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -113,7 +112,7 @@ const ListPostsScreen = (props: any) => {
   };
 
   const onGetListRealEstates = (params?: any, type?: string) => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const callback = (res: any) => {
       setIsLoading(false);
@@ -197,9 +196,9 @@ const ListPostsScreen = (props: any) => {
               {...props}
             />
           }
-          ListFooterComponent={
-            isLoading ? <ActivityIndicator size={'small'} /> : null
-          }
+          // ListFooterComponent={
+          //   isLoading ? <ActivityIndicator size={'small'} /> : null
+          // }
           refreshing={isLoading}
           onRefresh={onPullToRefresh}
           scrollEnabled={enableScroll}
