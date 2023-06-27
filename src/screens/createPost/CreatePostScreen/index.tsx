@@ -300,11 +300,11 @@ const CreatePostScreen = (props: any) => {
         navigate(SCREENS.CONFIRM_POST_SCREEN, {
           realEstateId: value?.real_estate_id,
         });
-        setTab(TAB.BASIC_INFORMATION);
       } else {
         confirmPostRef.current.openPopup();
       }
-      dispatch(clearCreatePosts());
+      reset();
+      setTab(TAB.BASIC_INFORMATION);
     }
   };
 
