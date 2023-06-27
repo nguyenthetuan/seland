@@ -3,11 +3,11 @@ import { Icon } from '@rneui/themed';
 import React, { FC, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 
 import { LogoZoning } from '../../../../assets';
 import { Input, Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import styles from './styles';
 
 interface Iprops {
@@ -19,7 +19,7 @@ interface Iprops {
 
 const HeaderListPosts: FC<Iprops> = props => {
   const { t } = useTranslation();
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   const { handleSubmit, onChangeSearch, getValues } = props;
   const control = props?.control;
   const {
@@ -28,6 +28,10 @@ const HeaderListPosts: FC<Iprops> = props => {
 
   const submit = () => {
     onChangeSearch && handleSubmit(onChangeSearch());
+  };
+
+  const navigateMapScreen = () => {
+    navigate(SCREENS.MAPS);
   };
 
   return (
@@ -56,10 +60,13 @@ const HeaderListPosts: FC<Iprops> = props => {
         </View>
 
         <Icon name="my-location" />
-        <View style={styles.boxZoning}>
+        <TouchableOpacity
+          style={styles.boxZoning}
+          onPress={navigateMapScreen}
+        >
           <LogoZoning />
           <Text style={styles.checkZoning}>{t('heading.checkZoning')}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

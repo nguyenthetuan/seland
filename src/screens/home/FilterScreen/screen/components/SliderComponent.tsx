@@ -94,9 +94,8 @@ export const SliderComponent = ({
   const {
     field: { onChange, value = defaultValues },
   } = useController({ control, name });
-
   const [buttonSelected, setButtonSelected] = useState<Array<string | number>>([
-    options[0]?.value,
+    defaultValues[0].toString() + '-' + defaultValues[1].toString(),
   ]);
 
   const handleOnClick = (option: string | number) => {
@@ -116,11 +115,11 @@ export const SliderComponent = ({
     }
   };
 
-  useEffect(() => {
-    if (value[0] == defaultValues[0] && value[1] == defaultValues[1]) {
-      setButtonSelected([options[0]?.value]);
-    }
-  }, [defaultValues, value]);
+  // useEffect(() => {
+  //   if (value[0] == defaultValues[0] && value[1] == defaultValues[1]) {
+  //     setButtonSelected([options[0]?.value]);
+  //   }
+  // }, [defaultValues, value]);
 
   const renderSlider = useCallback(() => {
     return (
@@ -166,7 +165,7 @@ export const SliderComponent = ({
       </ScrollView>
       {renderSlider()}
       <Text style={styles.txtValue}>
-        {String(value?.[0]).slice(0,4) || ''}
+        {String(value?.[0]).slice(0, 4) || ''}
         {(convertDisplay
           ? ' - ' + convertDisplay(value?.[1])
           : ' - ' + value?.[1]) || ''}
