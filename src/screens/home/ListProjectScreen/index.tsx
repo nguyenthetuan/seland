@@ -30,7 +30,7 @@ const ListProjectScreen = () => {
   const { listProject } = useSelector(selectHome);
   const { data } = listProject;
   const { loading } = listProject;
-
+  const [total, setTotal] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [dataListProject, setDataListProject] = useState([]);
   const [page, setPage] = useState(1);
@@ -47,10 +47,15 @@ const ListProjectScreen = () => {
       }
     };
 
-    dispatchThunk(dispatch, getListProjects(), callback);
+    const params = {
+      setTotal: setTotal,
+    };
+
+    dispatchThunk(dispatch, getListProjects(params), callback);
   };
 
   const onLoadMore = () => {
+    if (total === dataListProject.length) return;
     setPage(page + 1);
   };
 

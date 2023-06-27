@@ -42,6 +42,7 @@ const UserPostsScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const confirmCancelPaymentRef = useRef();
   const [idItemDelete, setIdItemDelete] = useState('');
+  const [total, setTotal] = useState();
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
@@ -62,6 +63,7 @@ const UserPostsScreen = () => {
       getListRealEstatesUser({
         sort_by: 'createdAt',
         page: page,
+        setTotal: setTotal,
       }),
       callback
     );
@@ -85,6 +87,7 @@ const UserPostsScreen = () => {
   };
 
   const onLoadMore = () => {
+    if (total === dataUserRealEstates.length) return;
     setPage(page + 1);
   };
 

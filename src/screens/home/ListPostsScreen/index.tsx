@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   FlatList,
+  RefreshControl,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -22,9 +23,10 @@ import HeaderFilterPosts from '../components/HeaderFilterPosts';
 import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
+import TYPE from '../../../constants/types';
 
 const ListPostsScreen = (props: any) => {
-  const filterRef = useRef();
+  let dataFilterRef = useRef({});
   const { t } = useTranslation();
   const route: any = useRoute();
   const demand_id = route?.params?.demand_id;
@@ -42,13 +44,14 @@ const ListPostsScreen = (props: any) => {
   const [enableScroll, setEnableScroll] = useState<boolean>(true);
   const [dataListPosts, setDataListPosts] = useState([]);
   const [page, setPage] = useState<number>(1);
-
   const [totalPost, setTotalPost] = useState<number>(0);
 
   const convertDataFilter = (data: any) => {
     const res: any = {};
     res.sort_by = 'asc';
     res.demand_id = '1';
+    res.page = page;
+    res.setTotal = setTotalPost;
 
     if (data?.sort_by) {
       res.sort_by = data?.sort_by;
@@ -105,35 +108,36 @@ const ListPostsScreen = (props: any) => {
 
   const onFilter = (data: any) => {
     const dataFilter = convertDataFilter(data);
-    dispatchThunk(dispatch, getListRealEstates(dataFilter));
-    filterRef?.current?.onClose();
+    dataFilterRef.current = dataFilter;
+    onGetListRealEstates(dataFilter, TYPE.FILTER);
   };
 
-  const onSelect = (value: any) => {
-    const dataFilter = convertDataFilter(value);
-    dispatchThunk(dispatch, getListRealEstates(dataFilter));
-  };
-
-  const onGetListRealEstates = () => {
+  const onGetListRealEstates = (params?: any, type?: string) => {
     setIsLoading(true);
 
     const callback = (res: any) => {
       setIsLoading(false);
-      if (dataListPosts.length > 0) {
+
+      if (dataListPosts.length > 0 && type === TYPE.LOAD_MORE) {
         setDataListPosts([...dataListPosts, ...res]);
       } else {
         setDataListPosts(res);
       }
     };
 
-    const params = {
+    const paramsData = {
       demand_id: demand_id,
       is_hot: is_hot ? is_hot : null,
       for_you: for_you ? for_you : null,
       page: page,
       setTotal: setTotalPost,
     };
-    dispatchThunk(dispatch, getListRealEstates(params), callback);
+
+    dispatchThunk(
+      dispatch,
+      getListRealEstates(params ? params : paramsData),
+      callback
+    );
   };
 
   const onShowTypeHousing = (data: boolean) => {
@@ -144,13 +148,27 @@ const ListPostsScreen = (props: any) => {
     }
   };
 
+  const onPullToRefresh = () => {
+    setPage(1);
+    onGetListRealEstates(
+      { ...dataFilterRef.current, setTotal: setTotalPost },
+      TYPE.PULL_TO_REFRESH
+    );
+  };
+
   const onLoadMore = () => {
+    if (dataListPosts.length === totalPost) return;
     setPage(page + 1);
+    onGetListRealEstates(
+      { ...dataFilterRef.current, setTotal: setTotalPost },
+      TYPE.LOAD_MORE
+    );
   };
 
   useEffect(() => {
     onGetListRealEstates();
-  }, [page]);
+  }, []);
+
   return (
     <>
       <Loading
@@ -166,12 +184,13 @@ const ListPostsScreen = (props: any) => {
           contentContainerStyle={styles.contentContainer}
           onEndReached={dataListPosts.length > 0 ? onLoadMore : null}
           data={dataListPosts}
+          initialNumToRender={20}
           renderItem={({ item }) => <ItemRealEstates item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}
           ListEmptyComponent={loadingListPost ? null : <NoResults />}
           ListHeaderComponent={
             <HeaderFilterPosts
-              onSelect={onSelect}
+              onSelect={onFilter}
               onFilter={onFilter}
               onShowTypeHousing={onShowTypeHousing}
               dataLength={totalPost}
@@ -182,8 +201,9 @@ const ListPostsScreen = (props: any) => {
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
           refreshing={isLoading}
-          onRefresh={onGetListRealEstates}
+          onRefresh={onPullToRefresh}
           scrollEnabled={enableScroll}
+          onEndReachedThreshold={0.1}
         />
       </View>
     </>
