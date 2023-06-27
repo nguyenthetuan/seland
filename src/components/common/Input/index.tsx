@@ -31,6 +31,7 @@ interface InputCustomProps extends InputProps {
   placeholder?: string;
   required?: boolean;
   rightLabel?: string | ReactNode;
+  rightAfterLabel?: string | ReactNode;
   showPasswordPolicy?: boolean;
   disabled?: boolean;
   inputMode?: InputModeOptions;
@@ -60,6 +61,7 @@ const Input = ({
   rules,
   inputMode,
   errorMessage,
+  rightAfterLabel,
   ...props
 }: InputCustomProps) => {
   const {
@@ -118,10 +120,13 @@ const Input = ({
         label={
           label && (
             <View style={styles.boxLabel}>
-              <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
-                {label}
-                {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
-              </Text>
+              <View>
+                <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
+                  {label}
+                  {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
+                  <View style={styles.wrapRightAfterLabel}>{rightAfterLabel}</View>
+                </Text>
+              </View>
               {rightLabel}
             </View>
           )

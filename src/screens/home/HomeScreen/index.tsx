@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/themed';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
@@ -30,6 +30,10 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
+
+  const [isBuyHottest, setIsBuyHottest] = useState(true);
+  const [isBuyForYou, setIsBuyForYou] = useState(true);
+
   const { listRealEstatesForYou, listProject, listRealEstatesHots } =
     useSelector(selectHome);
 
@@ -44,14 +48,28 @@ const HomeScreen = () => {
   const navigateToListPostsHot = () =>
     navigate(SCREENS.LIST_POST, {
       is_hot: 1,
+      dataFilters: {
+        demand_id: isBuyHottest ? 1 : 2,
+      },
     });
   const navigateToListPostsForYou = () =>
     navigate(SCREENS.LIST_POST, {
       for_you: 1,
+      dataFilters: {
+        demand_id: isBuyForYou ? 1 : 2,
+      },
     });
   const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
 
   const navigateToMaps = () => navigate(SCREENS.MAPS);
+
+  const handleSelectOptionsHottest = (val: boolean) => {
+    setIsBuyHottest(val);
+  }
+
+  const handleSelectOptionsForYou = (val: boolean) => {
+    setIsBuyForYou(val);
+  }
 
   return (
     <View style={styles.containerScreen}>
@@ -95,7 +113,10 @@ const HomeScreen = () => {
             label={t('common.hottestRealEstate')}
             onSeeAll={navigateToListPostsHot}
           >
-            <HottestRealEstateCategory />
+            <HottestRealEstateCategory
+              handleSelectOptions={handleSelectOptionsHottest}
+              isBuy={isBuyHottest}
+            />
           </Category>
         ) : null}
         {listRealEstatesForYou?.data?.length ? (
@@ -103,7 +124,10 @@ const HomeScreen = () => {
             label={t('common.realEstateForYou')}
             onSeeAll={navigateToListPostsForYou}
           >
-            <RealEstateForYouCategory />
+            <RealEstateForYouCategory
+              handleSelectOptions={handleSelectOptionsForYou}
+              isBuy={isBuyForYou}
+            />
           </Category>
         ) : null}
         {listProject?.data?.length ? (

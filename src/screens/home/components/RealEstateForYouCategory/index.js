@@ -11,14 +11,15 @@ import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
-const RealEstateForYouCategory = () => {
+const RealEstateForYouCategory = (props) => {
   const { t } = useTranslation();
-  const [isBuy, setIsBuy] = useState(true);
+  // const [isBuy, setIsBuy] = useState(true);
   const { listRealEstatesForYou } = useSelector(selectHome);
 
-  const handleSelectOptions = value => {
-    setIsBuy(value);
-  };
+  const handleSelectOptions = props?.handleSelectOptions ? props?.handleSelectOptions : null;
+  const isBuy = props?.isBuy;
+
+
   const listHottestRealEstate = useMemo(() => {
     let results = [];
 
