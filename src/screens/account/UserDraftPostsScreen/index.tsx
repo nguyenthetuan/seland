@@ -48,6 +48,23 @@ const UserDraftPostsScreen = () => {
     dispatchThunk(dispatch, getListRealEstatesUser(params), callback);
   };
 
+  const onGetReFresh = () => {
+    setIsLoading(true);
+    const callback = (res: any) => {
+      setIsLoading(false);
+      setDataUserRealEstates(res);
+    };
+
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        sort_by: 'createdAt',
+        page: page,
+      }),
+      callback
+    );
+  };
+
   const onLoadMore = () => {
     setPage(page + 1);
   };
@@ -57,7 +74,7 @@ const UserDraftPostsScreen = () => {
   }, [page]);
 
   const deleteSuccess = () => {
-    onGetListRealEstatesUser();
+    onGetReFresh();
   };
 
   const handleConfirm = () => {

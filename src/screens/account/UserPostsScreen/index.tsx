@@ -67,6 +67,23 @@ const UserPostsScreen = () => {
     );
   };
 
+  const onGetReFresh = () => {
+    setIsLoading(true);
+    const callback = (res: any) => {
+      setIsLoading(false);
+      setDataUserRealEstates(res);
+    };
+
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        sort_by: 'createdAt',
+        page: page,
+      }),
+      callback
+    );
+  };
+
   const onLoadMore = () => {
     setPage(page + 1);
   };
@@ -306,7 +323,9 @@ const UserPostsScreen = () => {
   }
 
   const deleteSuccess = () => {
-    onGetListRealEstatesUser();
+    console.log('xxxx');
+
+    onGetReFresh();
   };
   const handleConfirm = () => {
     try {
