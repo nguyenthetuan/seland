@@ -129,6 +129,13 @@ const initValues = {
   demand_id: 1,
 };
 
+const projectOptions = [
+  {
+    label: 'Dự án 1',
+    value: 1,
+  },
+];
+
 const FilterScreen = (props: any) => {
   const { route } = props;
   const { params } = route;
@@ -375,6 +382,19 @@ const FilterScreen = (props: any) => {
                   onSelect={handleSubmit(onSelect)}
                 />
               </View>
+              <View style={styles.areaRange}>
+                <Select
+                  buttonStyle={[styles.buttonSelect]}
+                  buttonTextStyle={styles.textButtonSelect}
+                  rowStyle={styles.buttonSelect}
+                  rowTextStyle={styles.rowTextStyle}
+                  control={control}
+                  data={projectOptions}
+                  defaultButtonText={t('common.project') || ''}
+                  name="project_id"
+                  onSelect={(val: any) => {}}
+                />
+              </View>
             </View>
 
             {/* <View>
@@ -412,9 +432,7 @@ const FilterScreen = (props: any) => {
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
-            (Number(val).toFixed(1) || '0')
-              .toString()
-              + ' tỷ VND'
+            (Number(val).toFixed(1) || '0').toString() + ' tỷ VND'
           }
         />
 

@@ -2,10 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  loadRealEstateWarehouses,
-  selectWareHouses,
-} from '../../../../../features';
+import { getListRealEstates, selectRealEstates } from '../../../../../features';
 import { dispatchThunk } from '../../../../../utils';
 import styles from './styles';
 import Category from '../../../components/Category';
@@ -24,17 +21,16 @@ const RealEstate: FC<Iprops> = props => {
   const { infoDetail } = props;
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
-  const { listRealEstateWarehouses } = useSelector(selectWareHouses);
+  const { data: listPosts } = useSelector(selectRealEstates);
+  const params = {
+    province_id: infoDetail?.province_id || null,
+    district_id: infoDetail?.district_id || null,
+  };
 
-  const navigateToListPosts = () => navigate(SCREENS.LIST_POST);
+  const navigateToListPosts = () => navigate(SCREENS.LIST_POSTS, params);
   useEffect(() => {
-    const params = {
-      province_id: infoDetail?.province_id,
-      district_id: infoDetail?.district_id || null,
-      ward_id: infoDetail?.ward_id || null,
-    };
     if (infoDetail?.province_id) {
-      dispatchThunk(dispatch, loadRealEstateWarehouses(params));
+      dispatchThunk(dispatch, getListRealEstates(params));
     }
   }, [dispatch]);
 
@@ -43,10 +39,10 @@ const RealEstate: FC<Iprops> = props => {
       <Category
         label={t('detailPost.realEstateNear')}
         onSeeAll={navigateToListPosts}
-        isSeeAll={listRealEstateWarehouses?.length > 0 ? true : false}
+        isSeeAll={listPosts?.length > 0 ? true : false}
       >
-        {listRealEstateWarehouses?.length > 0 && <SameAreaRealEstate />}
-        {listRealEstateWarehouses?.length === 0 && (
+        {listPosts?.length > 0 && <SameAreaRealEstate />}
+        {listPosts?.length === 0 && (
           <Text style={styles.textNoValue}>{t('common.noValue')}</Text>
         )}
       </Category>
@@ -54,10 +50,10 @@ const RealEstate: FC<Iprops> = props => {
       <Category
         label={t('detailPost.realEstateSeen')}
         onSeeAll={navigateToListPosts}
-        isSeeAll={listRealEstateWarehouses?.length > 0 ? true : false}
+        isSeeAll={listPosts?.length > 0 ? true : false}
       >
-        {listRealEstateWarehouses?.length > 0 && <SameAreaRealEstate />}
-        {listRealEstateWarehouses?.length === 0 && (
+        {listPosts?.length > 0 && <SameAreaRealEstate />}
+        {listPosts?.length === 0 && (
           <Text style={styles.textNoValue}>{t('common.noValue')}</Text>
         )}
       </Category>

@@ -32,7 +32,11 @@ export const SelectComponent = ({
     // } else {
     //   newVal = [...newVal, val];
     // }
-    onChange([val]);
+    if (value[0] === val) {
+      onChange([]);
+    } else {
+      onChange([val]);
+    }
   };
 
   return (

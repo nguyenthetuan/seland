@@ -5,15 +5,15 @@ import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
 import { COLORS } from '../../../../constants';
-import { selectWareHouses } from '../../../../features';
+import { selectRealEstates } from '../../../../features';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
 const SameAreaRealEstate = () => {
   const { t } = useTranslation();
   const [isBuy, setIsBuy] = useState(true);
-  const { listRealEstateWarehouses, loadingRealEstateWarehouses } =
-    useSelector(selectWareHouses);
+  const { data: listPosts, loading } = useSelector(selectRealEstates);
+
   const handleSelectOptions = (value: any) => {
     setIsBuy(value);
   };
@@ -22,14 +22,14 @@ const SameAreaRealEstate = () => {
     let results = [];
 
     if (isBuy) {
-      results = listRealEstateWarehouses;
+      results = listPosts;
     } else {
-      results = listRealEstateWarehouses?.slice(0, 3);
+      results = listPosts?.slice(0, 3);
     }
     return results;
-  }, [isBuy, listRealEstateWarehouses]);
+  }, [isBuy, listPosts]);
 
-  if (loadingRealEstateWarehouses) {
+  if (loading) {
     return (
       <View>
         <ActivityIndicator
