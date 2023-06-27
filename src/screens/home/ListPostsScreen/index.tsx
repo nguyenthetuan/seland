@@ -193,6 +193,7 @@ const ListPostsScreen = (props: any) => {
               onFilter={onFilter}
               onShowTypeHousing={onShowTypeHousing}
               dataLength={totalPost}
+              dataFilters={{demand_id: "2"}}
               {...props}
             />
           }

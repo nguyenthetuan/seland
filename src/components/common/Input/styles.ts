@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     // lineHeight: 24,
   },
+  wrapRightAfterLabel: {
+    paddingLeft: 8,
+  }
 });
 
 export default styles;

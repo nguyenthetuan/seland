@@ -40,6 +40,7 @@ const COLORS = {
   YELLOW_5: '#EF781E',
   YELLOW_6: '#E96026',
   YELLOW_7: '#E13D31',
+  YELLOW_8: '#EDA749',
 
   ORANGE_1: '#fa541c',
   ORANGE_2: '#d46b08',
