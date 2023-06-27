@@ -58,6 +58,7 @@ const UserDraftPostsScreen = () => {
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
+        status: YOUR_WANT.SAVE_DRAFTS,
         sort_by: 'createdAt',
         page: page,
       }),

@@ -46,6 +46,20 @@ const UserPostsScreen = () => {
     filterRef.current.onOpen();
   };
 
+  const { control, getValues, handleSubmit, setValue } = useForm({
+    defaultValues: {
+      title: '',
+      date: 'week',
+      sort_by: 'createdAt',
+      real_estate_type_id: null,
+      area_range_id: null,
+      province_id: null,
+      type: null,
+      status: '',
+      demand_id: null,
+    },
+  });
+
   const onGetListRealEstatesUser = () => {
     // setIsLoading(true);
     // const callback = (res: any) => {
@@ -61,12 +75,15 @@ const UserPostsScreen = () => {
       dispatch,
       getListRealEstatesUser({
         sort_by: 'createdAt',
-      }),
+      })
     );
   };
 
   const onGetReFresh = () => {
     setIsLoading(true);
+    const {
+      sort_by} = getValues();
+
     const callback = (res: any) => {
       setIsLoading(false);
       setDataUserRealEstates(res);
@@ -75,8 +92,9 @@ const UserPostsScreen = () => {
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
-        sort_by: 'createdAt',
+        sort_by,
         page: page,
+        status,
       }),
       callback
     );
@@ -188,20 +206,6 @@ const UserPostsScreen = () => {
       value: 'price_per_m_desc',
     },
   ];
-
-  const { control, getValues, handleSubmit, setValue } = useForm({
-    defaultValues: {
-      title: '',
-      date: 'week',
-      sort_by: 'createdAt',
-      real_estate_type_id: null,
-      area_range_id: null,
-      province_id: null,
-      type: null,
-      status: '',
-      demand_id: null,
-    },
-  });
 
   const onSubmit = async (data: any) => {
     const parmas = { ...data, title: data?.title?.trim() };
@@ -321,10 +325,9 @@ const UserPostsScreen = () => {
   }
 
   const deleteSuccess = () => {
-    console.log('xxxx');
-
     onGetReFresh();
   };
+
   const handleConfirm = () => {
     try {
       if (idItemDelete) {
@@ -338,6 +341,7 @@ const UserPostsScreen = () => {
       console.log(error);
     }
   };
+
   const handleCancel = () => {};
   const deletePost = (id: any) => {
     setIdItemDelete(id);
