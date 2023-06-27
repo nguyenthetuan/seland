@@ -110,10 +110,10 @@ const AboutPost: FC<Iprops> = props => {
   };
 
   const goToYoutube = () => {
-    if (Array.isArray(infoDetail?.youtube_video_link)) {
+    if (infoDetail?.youtube_video_link) {
       Linking.openURL(infoDetail?.youtube_video_link?.[0]);
-    } else {
-      Linking.openURL(infoDetail?.youtube_video_link);
+    } else if (infoDetail?.real_estate_video_link) {
+      Linking.openURL(infoDetail?.real_estate_video_link?.[0]);
     }
   };
   const goToMapScreen = () => {
@@ -141,7 +141,8 @@ const AboutPost: FC<Iprops> = props => {
         <View style={styles.icon}>
           <Icon360 />
         </View>
-        {infoDetail?.youtube_video_link && (
+        {(infoDetail?.youtube_video_link ||
+          infoDetail?.real_estate_video_link) && (
           <TouchableOpacity
             style={styles.icon}
             onPress={goToYoutube}
