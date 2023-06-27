@@ -47,23 +47,21 @@ const UserPostsScreen = () => {
   };
 
   const onGetListRealEstatesUser = () => {
-    setIsLoading(true);
-    const callback = (res: any) => {
-      setIsLoading(false);
-      if (dataUserRealEstates.length > 0) {
-        setDataUserRealEstates([...dataUserRealEstates, ...res]);
-      } else {
-        setDataUserRealEstates(res);
-      }
-    };
+    // setIsLoading(true);
+    // const callback = (res: any) => {
+    //   setIsLoading(false);
+    //   if (dataUserRealEstates.length > 0) {
+    //     setDataUserRealEstates([...dataUserRealEstates, ...res]);
+    //   } else {
+    //     setDataUserRealEstates(res);
+    //   }
+    // };
 
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
         sort_by: 'createdAt',
-        page: page,
       }),
-      callback
     );
   };
 
@@ -90,7 +88,7 @@ const UserPostsScreen = () => {
 
   useEffect(() => {
     onGetListRealEstatesUser();
-  }, [page]);
+  }, []);
 
   const handleSelectStatus = (value: number) => {
     dispatchThunk(
@@ -369,7 +367,7 @@ const UserPostsScreen = () => {
         </View>
         <FlatList
           style={styles.list}
-          data={dataUserRealEstates}
+          data={userRealEstates}
           keyExtractor={(_, index) => `itemPost${index}`}
           renderItem={({ item }) => (
             <UserPost
@@ -382,7 +380,7 @@ const UserPostsScreen = () => {
           ListFooterComponent={
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
-          onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
+          // onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
         />
       </View>
       <View>
