@@ -24,9 +24,10 @@ export const deleteRealEstatesUser = createAsyncThunk(
   'deleteRealEstatesUser',
   async (id, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestDeleteRealEstates(id);
-      return fulfillWithValue(data);
+      const response = await requestDeleteRealEstates(id);
+      return fulfillWithValue(response);
     } catch (error) {
+      console.log('error', error);
       return rejectWithValue(error?.errors);
     }
   }
