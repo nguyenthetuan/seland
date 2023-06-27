@@ -17,7 +17,6 @@ import {
 } from '../../../../features';
 import { dispatchThunk, yup } from '../../../../utils';
 import styles from './styles';
-
 const Info = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={[styles.info, styles.row]}>
     {icon}
@@ -34,11 +33,11 @@ const schema = yup.object({
 
 interface UserPostProps {
   item?: any;
-  refreshData?: Function;
   type?: 'DRAFT' | 'PRIVATE' | 'PUBLIC';
+  deletePost?: Function;
 }
 
-const UserPost = ({ item, refreshData, type }: UserPostProps) => {
+const UserPost = ({ item, type, deletePost }: UserPostProps) => {
   const { navigate, goBack } = useNavigation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -98,18 +97,8 @@ const UserPost = ({ item, refreshData, type }: UserPostProps) => {
         return 'common.vipDiamond';
     }
   };
-  const onDeletePost = async () => {
-    try {
-      if (item?.id) {
-        dispatchThunk(dispatch, deleteRealEstatesUser(item?.id), () => {
-          goBack();
-        });
-        refreshData && refreshData();
-        Alert.alert(t('common.deleteSuccess'));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const onDeletePost = () => {
+    deletePost && deletePost(item.id);
   };
 
   const navigateToEdit = () => {
@@ -248,9 +237,12 @@ const UserPost = ({ item, refreshData, type }: UserPostProps) => {
         ) : (
           <View style={{ flexDirection: 'row', flex: 1 }}>
             <View style={[styles.buttonMiddle, { flex: 1 }]}>
+              {/* Todo xoa tin, sau thay UI item khac */}
               <Button
                 color={COLORS.RED_2}
                 title={t('button.hidePost')}
+                onPress={onDeletePost}
+                loading={loadingDelete}
               />
             </View>
             <View style={[styles.buttonRight, { flex: 1 }]}>
