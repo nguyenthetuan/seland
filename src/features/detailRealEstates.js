@@ -11,7 +11,7 @@ export const getDetailRealEstates = createAsyncThunk(
       const { data } = await requestGetDetailRealEstates(id);
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (2)');
     }
   }
 );

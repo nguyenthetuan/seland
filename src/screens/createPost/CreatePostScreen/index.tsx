@@ -458,15 +458,7 @@ const CreatePostScreen = (props: any) => {
     }
     // append video to form
     if (params?.video?.length) {
-      console.log(
-        '🚀 ~ file: index.tsx:461 ~ editPosts ~ params?.video?.length:',
-        params?.video?.length
-      );
       params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
-        console.log(
-          '🚀 ~ file: index.tsx:466 ~ params?.video.forEach ~ item:',
-          item
-        );
         const file = {
           uri: item.uri,
           name: item.fileName,
@@ -479,7 +471,6 @@ const CreatePostScreen = (props: any) => {
     if (params?.urlVideo) {
       formData.append(`video`, params?.urlVideo);
     }
-    console.log('🚀 ~ file: index.tsx:383 ~ createPosts ~ formData:', formData);
 
     dispatchThunk(
       dispatch,

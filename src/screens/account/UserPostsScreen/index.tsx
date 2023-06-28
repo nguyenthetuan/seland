@@ -63,14 +63,14 @@ const UserPostsScreen = () => {
 
   const onGetListRealEstatesUser = () => {
     // setIsLoading(true);
-    // const callback = (res: any) => {
-    //   setIsLoading(false);
-    //   if (dataUserRealEstates.length > 0) {
-    //     setDataUserRealEstates([...dataUserRealEstates, ...res]);
-    //   } else {
-    //     setDataUserRealEstates(res);
-    //   }
-    // };
+    const callback = (res: any) => {
+      // setIsLoading(false);
+      // if (dataUserRealEstates.length > 0) {
+      //   setDataUserRealEstates([...dataUserRealEstates, ...res]);
+      // } else {
+      //   setDataUserRealEstates(res);
+      // }
+    };
 
     dispatchThunk(
       dispatch,
@@ -78,8 +78,8 @@ const UserPostsScreen = () => {
         sort_by: 'createdAt',
         page: page,
         setTotal: setTotal,
-      })
-      // callback
+      }),
+      callback
     );
   };
 

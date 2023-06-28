@@ -34,7 +34,7 @@ export const createRealEstates = createAsyncThunk(
       return fulfillWithValue({ ...data });
     } catch (error) {
       const { data } = error;
-      let errorString = 'Lỗi hệ thống';
+      let errorString = 'Hệ thống đang bận. Vui lòng thử lại sau (1)';
       if (data) {
         errorString = ` ${
           Object.keys(data)[Object.keys(data).length - 1]

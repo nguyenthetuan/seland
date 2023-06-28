@@ -17,7 +17,7 @@ export const getListRealEstates = createAsyncThunk(
       setTotal && setTotal(total);
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (3.1)');
     }
   }
 );
@@ -29,7 +29,7 @@ export const getAllFilter = createAsyncThunk(
       const data = await requestGetAllFilter();
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (3.2)');
     }
   }
 );
