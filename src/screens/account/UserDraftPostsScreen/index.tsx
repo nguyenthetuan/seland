@@ -23,7 +23,7 @@ const UserDraftPostsScreen = () => {
   const { t } = useTranslation();
   const confirmCancelPaymentRef = useRef();
   const [idItemDelete, setIdItemDelete] = useState('');
-
+  const [total, setTotal] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [dataUserRealEstates, setDataUserRealEstates] = useState([]);
   const [page, setPage] = useState(1);
@@ -43,7 +43,8 @@ const UserDraftPostsScreen = () => {
     const params = {
       status: YOUR_WANT.SAVE_DRAFTS,
       sort_by: 'createdAt',
-      // page: page,
+      page: page,
+      setTotal: setTotal,
     };
     dispatchThunk(dispatch, getListRealEstatesUser(params));
   };
@@ -67,6 +68,7 @@ const UserDraftPostsScreen = () => {
   };
 
   const onLoadMore = () => {
+    if (total === dataUserRealEstates.length) return;
     setPage(page + 1);
   };
 

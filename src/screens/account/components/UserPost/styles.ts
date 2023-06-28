@@ -96,6 +96,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     marginTop: 5,
   }),
+  tag: color => ({
+    backgroundColor: color,
+    borderTopRightRadius: 3,
+    borderBottomRightRadius: 3,
+    height: 25,
+    justifyContent: 'center',
+    paddingHorizontal: 5,
+    marginTop: 5,
+  }),
   rankContainer: {
     justifyContent: 'space-between',
     position: 'absolute',

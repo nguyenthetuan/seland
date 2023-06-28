@@ -10,7 +10,6 @@ import { COLORS, SCREENS } from '../../constants';
 import { getAllInformation, getProfile, selectUser } from '../../features';
 import { dispatchThunk, getScreens } from '../../utils';
 import routes from './routes';
-import Toast from 'react-native-toast-message';
 import styles from './styles';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -87,23 +86,6 @@ const BottomTabNavigator = () => {
     const focusedOptions = descriptors[state.routes[state.index].key].options;
     if (focusedOptions?.tabBarStyle?.display === 'none') {
       return null;
-    }
-
-    if (user?.phone_number && !user?.name) {
-      if (!user?.name && user?.is_phone_verified === 0) {
-        Toast.show({
-          text1: t(`common.toastVerifyNoName`),
-        });
-      } else if (user?.is_phone_verified === 0) {
-        Toast.show({
-          text1: t(`common.toastVerify`),
-        });
-      } else if (!user?.name) {
-        Toast.show({
-          text1: t(`common.toastNoName`),
-        });
-      }
-      navigation.navigate(SCREENS.PERSONAL_INFORMATION, {hasGoBack: false});
     }
 
     return (

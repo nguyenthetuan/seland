@@ -1,14 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Avatar, Icon } from '@rneui/themed';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { TickButton } from '../../../assets';
+import { IconCheckCircle, IconWarning, TickButton } from '../../../assets';
 import {
   Button,
   Container,
@@ -38,6 +38,7 @@ import {
 } from '../../../features';
 import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
+import OtpModal from '../../../components/common/ModalPhoneVerify';
 
 const schema = yup.object({
   name: yup.string().isValidName(),
@@ -61,6 +62,8 @@ const PersonalInformationScreen = () => {
   const { loading, data: user } = useSelector(selectUser);
   const { t } = useTranslation();
   const [Iam, setIam] = useState(user.user_type_id || 1);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const route = useRoute();
   const { params } = route;
@@ -210,6 +213,25 @@ const PersonalInformationScreen = () => {
     );
   }, [user, setValue]);
 
+  const textWarning = useMemo(() => {
+    if (user?.phone_number && !user?.name) {
+      if (!user?.name && user?.is_phone_verified === 0) {
+        return t(`common.toastVerifyNoName`);
+      } else if (user?.is_phone_verified === 0) {
+        return t(`common.toastVerify`);
+      } else if (!user?.name) {
+        return t(`common.toastNoName`);
+      } else {
+        return "";
+      }
+    } else {
+      return "";
+    }
+  }, [user]);
+
+  const onCloseModal = () => setIsOpenModal(false);
+  const onOpenModal = () => setIsOpenModal(true);
+
   const handleSelectProvince = selectedItem => {
     setValue('district_id', null);
     // setValue('ward_id', null);
@@ -293,9 +315,20 @@ const PersonalInformationScreen = () => {
     );
   };
 
+  const IconWarningToPress = () => {
+    return (
+      <TouchableOpacity onPress={textWarning ? onOpenModal : null} style={styles.wrapIcon}>
+        {textWarning ? <IconWarning /> : <IconCheckCircle />}
+      </TouchableOpacity>
+    )
+  };
+
   return (
     <View style={styles.container}>
-      <Header title={t('header.personalInformation')} hasGoBack={params?.hasGoBack} />
+      <Header title={t('header.personalInformation')} hasGoBack={true} />
+      {textWarning && <View style={styles.wrapWarning}>
+        <Text style={styles.textWarning}>{textWarning}</Text>
+      </View>}
       <Screen>
         <Container>
           <Avatar
@@ -377,6 +410,7 @@ const PersonalInformationScreen = () => {
           />
           <Text style={styles.label}>{t('common.contactInformation')}</Text>
           <Input
+            rightAfterLabel={<IconWarningToPress />}
             autoComplete="tel"
             control={control}
             // disabled
@@ -538,6 +572,12 @@ const PersonalInformationScreen = () => {
           loading={loading}
           onPress={handleSubmit(onSubmit)}
           title={t('button.save')}
+        />
+
+        <OtpModal
+          isOpen={isOpenModal}
+          phoneNumber={user?.phone_number}
+          onCloseModal={onCloseModal}
         />
       </Screen>
     </View>

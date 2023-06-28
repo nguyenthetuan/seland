@@ -42,6 +42,7 @@ const UserPostsScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const confirmCancelPaymentRef = useRef();
   const [idItemDelete, setIdItemDelete] = useState('');
+  const [total, setTotal] = useState();
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
@@ -75,7 +76,10 @@ const UserPostsScreen = () => {
       dispatch,
       getListRealEstatesUser({
         sort_by: 'createdAt',
+        page: page,
+        setTotal: setTotal,
       })
+      // callback
     );
   };
 
@@ -94,12 +98,14 @@ const UserPostsScreen = () => {
         sort_by,
         page: page,
         status,
+        setTotal: setTotal,
       }),
       callback
     );
   };
 
   const onLoadMore = () => {
+    if (total === dataUserRealEstates.length) return;
     setPage(page + 1);
   };
 
@@ -113,9 +119,11 @@ const UserPostsScreen = () => {
       value >= 0
         ? getListRealEstatesUser({
             status: value,
+            setTotal: setTotal,
           })
         : getListRealEstatesUser({
             sort_by: 'createdAt',
+            setTotal: setTotal,
           })
     );
     setStatus(value);
@@ -207,7 +215,7 @@ const UserPostsScreen = () => {
   ];
 
   const onSubmit = async (data: any) => {
-    const parmas = { ...data, title: data?.title?.trim() };
+    const parmas = { ...data, title: data?.title?.trim(), setTotal };
     setLoadingList(true);
 
     try {
@@ -234,6 +242,7 @@ const UserPostsScreen = () => {
         title: getValues().title,
         sort_by: getValues().sort_by,
         dateRange,
+        setTotal: setTotal,
       })
     );
     hideDateRangePicker();

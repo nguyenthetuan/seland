@@ -13,6 +13,18 @@ import { COLORS, SCREENS } from '../../../../constants';
 import { selectUserRealEstates } from '../../../../features';
 import { yup } from '../../../../utils';
 import styles from './styles';
+
+const STATUS_NAME = {
+  PUBLIC_POSTS: "Công khai",
+  PUBLIC: "Công khai",
+  HIDDEN: "Đã hạ",
+  REJECTED: "Không duyệt",
+  EXPIRED: "Hết hạn",
+  PRIVATE_POSTS: "Riêng tư",
+  DRAFF_POSTS: "Tin nháp",
+  PENDING_REVIEW: "Chờ duyệt",
+}
+
 const Info = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={[styles.info, styles.row]}>
     {icon}
@@ -82,14 +94,30 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
     }
   };
 
-  const rankName = () => {
-    switch (item?.rank_id) {
-      case 2:
-        return 'common.vipSilver';
-      case 3:
-        return 'common.vipGold';
+  const tagBackground = () => {
+    switch (item?.status_name) {
+      case STATUS_NAME.PUBLIC:
+        return COLORS.GREEN_1;
+      case STATUS_NAME.PENDING_REVIEW:
+        return COLORS.YELLOW_8;
+      case STATUS_NAME.REJECTED:
+      case STATUS_NAME.EXPIRED:
+      case STATUS_NAME.HIDDEN:
+        return COLORS.RED_2;
+      case STATUS_NAME.DRAFF_POSTS:
+      case STATUS_NAME.PRIVATE_POSTS:
+        return COLORS.PURPLE_2;
       default:
-        return 'common.vipDiamond';
+        return COLORS.RED_1;
+    }
+  };
+
+  const rankName = () => {
+    switch (item?.status_name) {
+      case STATUS_NAME.PUBLIC:
+        return t('common.active');
+      default:
+        return item?.status_name;
     }
   };
   const onDeletePost = () => {
@@ -112,9 +140,9 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
       />
       <View style={[styles.rankContainer, styles.row]}>
         <View>
-          {[2, 3, 4].includes(item?.rank_id) && (
-            <View style={styles.rank(rankBackground())}>
-              <Text style={styles.rankName}>{t(rankName())}</Text>
+          {item?.status_name && (
+            <View style={styles.tag(tagBackground())}>
+              <Text style={styles.rankName}>{rankName()}</Text>
             </View>
           )}
         </View>

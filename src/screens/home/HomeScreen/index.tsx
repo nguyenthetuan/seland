@@ -33,6 +33,10 @@ const HomeScreen = () => {
   const [isBuy, setIsBuy]: any = useState(true);
 
   const dispatch = useDispatch();
+
+  const [isBuyHottest, setIsBuyHottest] = useState(true);
+  const [isBuyForYou, setIsBuyForYou] = useState(true);
+
   const { listRealEstatesForYou, listProject, listRealEstatesHots } =
     useSelector(selectHome);
 

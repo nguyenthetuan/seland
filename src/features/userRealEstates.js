@@ -11,7 +11,10 @@ export const getListRealEstatesUser = createAsyncThunk(
   'getListRealEstatesUser',
   async (params, { fulfillWithValue, rejectWithValue }, callback) => {
     try {
-      const { data } = await requestGetListRealEstatesUser(params);
+      const setTotal = params?.setTotal;
+      delete params?.setTotal;
+      const { data, total } = await requestGetListRealEstatesUser(params);
+      setTotal(total);
       callback && callback(data);
       return fulfillWithValue(data);
     } catch (error) {
