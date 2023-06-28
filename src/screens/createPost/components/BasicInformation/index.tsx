@@ -103,7 +103,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     const { value } = selectedItem;
 
     if (value) {
-      // setValue && setValue('address_detail', selectedItem.label);
+      setValue && setValue('address_detail', selectedItem.label);
       fetchDistricts({
         province_code: value,
       });
@@ -119,13 +119,39 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
   }) => {
     setValue && setValue('ward_id', null);
     const { value } = selectedItem;
-
+    const address_detail = getValues && getValues().address_detail;
     if (value) {
-      // setValue && setValue('address_detail', selectedItem.label);
+      const address_detail_array = address_detail?.split(',');
+
+      setValue &&
+        setValue(
+          'address_detail',
+          `${selectedItem.label}, ${address_detail_array[0]}`
+        );
       fetchWards({
         province_code: getValues && getValues().province_id,
         district_code: value,
       });
+    } else {
+      dispatch(clearWards());
+    }
+  };
+
+  const handleSelectWardId = (selectedItem: {
+    value: number;
+    label: string;
+  }) => {
+    const { value } = selectedItem;
+    const address_detail = getValues && getValues().address_detail;
+    if (value) {
+      const address_detail_array = address_detail?.split(',');
+      setValue &&
+        setValue(
+          'address_detail',
+          `${
+            selectedItem.label
+          }, ${address_detail_array[1]?.trim()}, ${address_detail_array[0]?.trim()}`
+        );
     } else {
       dispatch(clearWards());
     }
@@ -289,6 +315,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
           rules={{ required: 'Vui lòng chọn Phường/xã' }}
           labelStyle={styles.inputLabel}
           name="ward_id"
+          onSelect={handleSelectWardId}
           required
         />
         <Select
