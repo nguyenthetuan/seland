@@ -145,9 +145,9 @@ const FilterScreen = (props: any) => {
 
   const dataFilters = params?.dataFilters;
 
-  const defaultVal: any = Object.assign(initValues, dataFilters);
+  const defaultVal: any = Object.assign({...initValues}, dataFilters ? {...dataFilters}: null);
 
-  const { control, handleSubmit, setValue, getValues } = useForm({
+  const { control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: defaultVal,
   });
 
@@ -217,12 +217,14 @@ const FilterScreen = (props: any) => {
 
   const clearForm = () => {
     Object.entries(initValues).forEach(
-      ([key, value]: any) => value && setValue(key, value)
+      ([key, value]: any) => {
+        value && setValue(key, value)
+      }
     );
     setValue('address', '');
     params?.onSubmit &&
-      params?.onSubmit({ ...initValues, priceRange: [], acreage: [] });
-    navigate(SCREENS.LIST_POST, initValues);
+      params?.onSubmit(initValues);
+    navigate(SCREENS.LIST_POST, {...initValues});
   };
 
   const fetchDistricts = (params: any, callback?: () => void) => {
@@ -461,12 +463,12 @@ const FilterScreen = (props: any) => {
           />
         </View>
 
-        <SelectComponent
+        {/* <SelectComponent
           title={t('common.legalDocuments') || ''}
           options={legalDocumentOptions}
           name="legalDocuments"
           control={control}
-        />
+        /> */}
 
         <SelectComponent
           title={t('common.location') || ''}
@@ -493,14 +495,14 @@ const FilterScreen = (props: any) => {
           control={control}
         />
 
-        <SelectComponent
+        {/* <SelectComponent
           title={t('common.numberFloors') || ''}
           options={floor.map((bathroomItem: any) =>
             convertOptionsFromApi(bathroomItem)
           )}
           name="numberFloors"
           control={control}
-        />
+        /> */}
 
         <View style={styles.footer}>
           <Button

@@ -111,6 +111,15 @@ const ListPostsScreen = (props: any) => {
     onGetListRealEstates(dataFilter, TYPE.FILTER);
   };
 
+  const onFilterTitle = (val: string) => {
+    if (dataFilterRef.current) {
+      dataFilterRef.current = {...dataFilterRef.current, title: val};
+      onGetListRealEstates(dataFilterRef.current, TYPE.FILTER);
+    } else {
+      onGetListRealEstates({title: val}, TYPE.FILTER);
+    }
+  }
+
   const onGetListRealEstates = (params?: any, type?: string) => {
     // setIsLoading(true);
 
@@ -118,7 +127,7 @@ const ListPostsScreen = (props: any) => {
       setIsLoading(false);
 
       if (dataListPosts.length > 0 && type === TYPE.LOAD_MORE) {
-        setDataListPosts([...dataListPosts, ...res]);
+        setDataListPosts([...dataListPosts, ...res] as any);
       } else {
         setDataListPosts(res);
       }
@@ -177,7 +186,7 @@ const ListPostsScreen = (props: any) => {
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.boxListPost}>
-        <HeaderListPosts control={control} />
+        <HeaderListPosts control={control} handleSubmit={onFilterTitle} />
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
@@ -193,7 +202,6 @@ const ListPostsScreen = (props: any) => {
               onFilter={onFilter}
               onShowTypeHousing={onShowTypeHousing}
               dataLength={totalPost}
-              dataFilters={{demand_id: "2"}}
               {...props}
             />
           }

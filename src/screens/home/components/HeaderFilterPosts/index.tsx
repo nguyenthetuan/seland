@@ -71,7 +71,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   const dataFilters = params?.dataFilters;
   const { control, handleSubmit, setValue, getValues } = useForm({
     defaultValues: dataFilters
-      ? Object.assign(initValues, dataFilters)
+      ? Object.assign({...initValues}, dataFilters ? {...dataFilters} : null)
       : initValues,
   });
 

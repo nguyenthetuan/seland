@@ -148,6 +148,7 @@ const TypeHousing = ({
                         checked={value.includes(item?.value)}
                         iconType="material"
                         checkedIcon="check-box"
+                        onPress={() => onSelectTypeHousing(item?.value)}
                         uncheckedIcon="check-box-outline-blank"
                       />
                       <Text>{t(`${item?.title}`)}</Text>
