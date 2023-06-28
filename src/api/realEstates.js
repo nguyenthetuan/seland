@@ -42,7 +42,9 @@ export const requestDeleteRealEstates = id =>
   deleteBase(`${DELETE_REAL_ESTATE}/${id}`);
 
 export const editRealStates = params =>
-  post(`${EDIT_REAL_STATE}/params.id`, params.formData);
+  post(`${EDIT_REAL_STATE}/${params.id}`, params.formData, {
+    'Content-type': 'multipart/form-data',
+  });
 
 export const requestCreateWareHouse = params =>
   post(CREATE_OR_UPDATE_WARE_HOUSE, params);

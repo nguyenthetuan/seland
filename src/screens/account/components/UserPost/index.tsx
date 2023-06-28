@@ -1,21 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
-import PropTypes from 'prop-types';
 import React, { useEffect, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
-import {
-  deleteRealEstatesUser,
-  selectUserRealEstates,
-} from '../../../../features';
-import { dispatchThunk, yup } from '../../../../utils';
+import { selectUserRealEstates } from '../../../../features';
+import { yup } from '../../../../utils';
 import styles from './styles';
 const Info = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={[styles.info, styles.row]}>
@@ -38,8 +34,7 @@ interface UserPostProps {
 }
 
 const UserPost = ({ item, type, deletePost }: UserPostProps) => {
-  const { navigate, goBack } = useNavigation();
-  const dispatch = useDispatch();
+  const { navigate } = useNavigation();
   const { t } = useTranslation();
   const { loadingDelete } = useSelector(selectUserRealEstates);
 
@@ -102,7 +97,7 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
   };
 
   const navigateToEdit = () => {
-    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id });
+    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id, type });
   };
 
   return (
@@ -253,14 +248,6 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-UserPost.defaultProps = {
-  item: {},
-};
-
-UserPost.propTypes = {
-  item: PropTypes.object,
 };
 
 export default UserPost;

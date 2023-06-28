@@ -11,7 +11,6 @@ import { Save } from '../../../assets';
 import { Button, PopupConfirm, Text } from '../../../components';
 import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
 import {
-  clearCreatePosts,
   detailRealEstates,
   selectPosts,
   createRealEstates,
@@ -25,6 +24,7 @@ import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import RealEstateInformation from '../components/RealEstateInformation';
 import styles from './styles';
+import Toast from 'react-native-simple-toast';
 
 const SaveType = [
   {
@@ -199,7 +199,7 @@ const CreatePostScreen = (props: any) => {
             const arrayImages = Object.values(value).map(item => {
               return {
                 uri: item,
-                name: item.substring(item.lastIndexOf('/') + 1),
+                fileName: item.substring(item.lastIndexOf('/') + 1),
                 type: 'image',
               };
             });
@@ -344,7 +344,7 @@ const CreatePostScreen = (props: any) => {
         }
       }
     });
-    console.log('getValues', getValues().address_detail.length);
+
     // append image to form
     if (params?.photo?.length) {
       params?.photo.forEach(
@@ -377,10 +377,16 @@ const CreatePostScreen = (props: any) => {
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
-  const editSucess = () => {
+  const editSuccess = () => {
+    goBack();
+    Toast.show('Cập nhật tin thành công.');
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
+        status:
+          router.params?.type === 'DRAFT'
+            ? YOUR_WANT.SAVE_DRAFTS
+            : YOUR_WANT.SAVE_PRIVATE,
         sort_by: 'createdAt',
       })
     );
@@ -409,9 +415,18 @@ const CreatePostScreen = (props: any) => {
         'usage_condition_id',
         'location_type_id',
       ];
+      const land_information = [
+        'utilities_id',
+        'furniture_id',
+        'security_id',
+        'road_type_id',
+      ];
+
       if (params[key]) {
         if (information.includes(key)) {
           formData.append(`information[${key}]`, params[key]);
+        } else if (land_information.includes(key)) {
+          formData.append(`land_information[${key}]`, params[key]);
         } else {
           formData.append(key, params[key]);
         }
@@ -449,7 +464,7 @@ const CreatePostScreen = (props: any) => {
     dispatchThunk(
       dispatch,
       editRealEstates({ id: router.params.id, formData }),
-      editSucess
+      editSuccess
     );
   };
 
