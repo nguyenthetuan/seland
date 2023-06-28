@@ -66,7 +66,7 @@ export const editRealEstates = createAsyncThunk(
       const response = await editRealStates(params);
       return fulfillWithValue(response);
     } catch (error) {
-      return rejectWithValue('dđ');
+      return rejectWithValue('Update thất bại.');
     }
   }
 );

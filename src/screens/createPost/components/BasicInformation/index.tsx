@@ -93,13 +93,17 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
-  const handleSelectProvince = (selectedItem: { value: number }) => {
+  const handleSelectProvince = (selectedItem: {
+    value: number;
+    label?: string;
+  }) => {
     setValue && setValue('district_id', null);
     setValue && setValue('ward_id', null);
 
     const { value } = selectedItem;
 
     if (value) {
+      // setValue && setValue('address_detail', selectedItem.label);
       fetchDistricts({
         province_code: value,
       });
@@ -109,12 +113,15 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
-  const handleSelectDistrict = (selectedItem: { value: number }) => {
+  const handleSelectDistrict = (selectedItem: {
+    value: number;
+    label: string;
+  }) => {
     setValue && setValue('ward_id', null);
-
     const { value } = selectedItem;
 
     if (value) {
+      // setValue && setValue('address_detail', selectedItem.label);
       fetchWards({
         province_code: getValues && getValues().province_id,
         district_code: value,

@@ -81,8 +81,7 @@ const UserPostsScreen = () => {
 
   const onGetReFresh = () => {
     setIsLoading(true);
-    const {
-      sort_by} = getValues();
+    const { sort_by } = getValues();
 
     const callback = (res: any) => {
       setIsLoading(false);
@@ -418,7 +417,7 @@ const UserPostsScreen = () => {
           onPressButtonLeft={handleCancel}
           titleButtonLeft="Huỷ"
           titleButtonRight="Xác nhận"
-          label="Bạn có muốn hạ tin không!"
+          label="Bạn có muốn xoá tin không!"
         />
       </View>
     </>

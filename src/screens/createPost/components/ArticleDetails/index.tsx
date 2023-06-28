@@ -250,7 +250,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             {file?.map((item: { fileName?: string; uri?: string }) => (
               <View
                 key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
-                  item?.fileName
+                  item?.uri
                 }`}
                 style={styles.boxImage}
               >

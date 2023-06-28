@@ -196,11 +196,12 @@ const CreatePostScreen = (props: any) => {
             setValue('phone_number', `${value}`);
             break;
           case 'real_estate_images':
-            const arrayImages = Object.values(value).map(item => {
+            const arrayImages = Object.values(value).map((item: any) => {
               return {
                 uri: item,
                 fileName: item.substring(item.lastIndexOf('/') + 1),
                 type: 'image',
+                update: true,
               };
             });
             setValue('photo', arrayImages);
@@ -214,7 +215,7 @@ const CreatePostScreen = (props: any) => {
         }
       }
     });
-    console.log('response', response);
+
     dispatchThunk(
       dispatch,
       getDistricts({ province_code: response.province_id }),
@@ -239,11 +240,13 @@ const CreatePostScreen = (props: any) => {
         (response: any) => getDetailPost(response)
       );
   }, []);
+
   const handleClosePost = () => {
     reset();
     setTab(TAB.BASIC_INFORMATION);
     goBack();
   };
+
   const handleTab = (value: number) => {
     setTab(value);
     if (
@@ -360,7 +363,11 @@ const CreatePostScreen = (props: any) => {
     }
     // append video to form
     if (params?.video?.length) {
-      params?.photo.forEach((item: { uri: any; fileName: any; type: any }) => {
+      params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
+        console.log(
+          '🚀 ~ file: index.tsx:367 ~ params?.photo.forEach ~ item:',
+          item
+        );
         const file = {
           uri: item.uri,
           name: item.fileName,
@@ -436,19 +443,30 @@ const CreatePostScreen = (props: any) => {
     // append image to form
     if (params?.photo?.length) {
       params?.photo.forEach(
-        (item: { uri: any; fileName: any; type: any }, index: any) => {
+        (
+          item: { uri: any; fileName: any; type: any; update?: boolean },
+          index: any
+        ) => {
           const file = {
             uri: item.uri,
             name: item.fileName,
             type: item.type,
           };
-          formData.append(`images[${index}]`, item.uri);
+          formData.append(`images[${index}]`, item?.update ? item.uri : file);
         }
       );
     }
     // append video to form
     if (params?.video?.length) {
-      params?.photo.forEach((item: { uri: any; fileName: any; type: any }) => {
+      console.log(
+        '🚀 ~ file: index.tsx:461 ~ editPosts ~ params?.video?.length:',
+        params?.video?.length
+      );
+      params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
+        console.log(
+          '🚀 ~ file: index.tsx:466 ~ params?.video.forEach ~ item:',
+          item
+        );
         const file = {
           uri: item.uri,
           name: item.fileName,
@@ -461,6 +479,8 @@ const CreatePostScreen = (props: any) => {
     if (params?.urlVideo) {
       formData.append(`video`, params?.urlVideo);
     }
+    console.log('🚀 ~ file: index.tsx:383 ~ createPosts ~ formData:', formData);
+
     dispatchThunk(
       dispatch,
       editRealEstates({ id: router.params.id, formData }),
@@ -599,7 +619,11 @@ const CreatePostScreen = (props: any) => {
             onPress={handleClosePost}
           />
           <Text style={styles.createPostNews}>
-            {t('common.createPostNews')}
+            {t(
+              router.params?.edit
+                ? 'common.updatePost'
+                : 'common.createPostNews'
+            )}
           </Text>
         </View>
         <Save />

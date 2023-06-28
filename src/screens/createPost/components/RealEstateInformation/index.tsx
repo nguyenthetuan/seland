@@ -25,7 +25,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   getValues,
 }) => {
   const { t } = useTranslation();
-  const { realEstateInformation, information, unitPrices, utilities, demands } =
+  const { information, unitPrices, utilities, demands } =
     useSelector(selectPosts);
   const {
     utilities_id,
@@ -91,12 +91,6 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     setValue && setValue('house_status_id', information[3]?.children[0].id);
     setValue && setValue('usage_condition_id', information[4]?.children[0].id);
   }, []);
-
-  useEffect(() => {
-    Object.entries(realEstateInformation).forEach(
-      ([key, value]) => value && setValue && setValue(key, value)
-    );
-  }, [realEstateInformation, setValue]);
 
   const onBlurPrice = () => {
     const value = getValues && getValues();
