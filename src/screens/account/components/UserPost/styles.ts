@@ -110,11 +110,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
   },
-  rankName: {
-    color: COLORS.WHITE,
+  rankName: color => ({
+    color: color,
     fontSize: 13,
     lineHeight: 15,
-  },
+  }),
   row: {
     flexDirection: 'row',
   },

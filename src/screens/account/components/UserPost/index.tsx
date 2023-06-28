@@ -15,15 +15,15 @@ import { yup } from '../../../../utils';
 import styles from './styles';
 
 const STATUS_NAME = {
-  PUBLIC_POSTS: "Công khai",
-  PUBLIC: "Công khai",
-  HIDDEN: "Đã hạ",
-  REJECTED: "Không duyệt",
-  EXPIRED: "Hết hạn",
-  PRIVATE_POSTS: "Riêng tư",
-  DRAFF_POSTS: "Tin nháp",
-  PENDING_REVIEW: "Chờ duyệt",
-}
+  PUBLIC_POSTS: 'Công khai',
+  PUBLIC: 'Công khai',
+  HIDDEN: 'Đã hạ',
+  REJECTED: 'Không duyệt',
+  EXPIRED: 'Hết hạn',
+  PRIVATE_POSTS: 'Riêng tư',
+  DRAFF_POSTS: 'Tin nháp',
+  PENDING_REVIEW: 'Chờ duyệt',
+};
 
 const Info = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={[styles.info, styles.row]}>
@@ -112,6 +112,22 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
     }
   };
 
+  const rankNameColor = () => {
+    switch (item?.status_name) {
+      case STATUS_NAME.PUBLIC:
+      case STATUS_NAME.PENDING_REVIEW:
+      case STATUS_NAME.REJECTED:
+      case STATUS_NAME.EXPIRED:
+      case STATUS_NAME.HIDDEN:
+        return COLORS.WHITE_1;
+      case STATUS_NAME.DRAFF_POSTS:
+      case STATUS_NAME.PRIVATE_POSTS:
+        return COLORS.BLACK_1;
+      default:
+        return COLORS.BLACK_1;
+    }
+  };
+
   const rankName = () => {
     switch (item?.status_name) {
       case STATUS_NAME.PUBLIC:
@@ -142,7 +158,7 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
         <View>
           {item?.status_name && (
             <View style={styles.tag(tagBackground())}>
-              <Text style={styles.rankName}>{rankName()}</Text>
+              <Text style={styles.rankName(rankNameColor())}>{rankName()}</Text>
             </View>
           )}
         </View>
