@@ -81,6 +81,7 @@ const UserPostsScreen = () => {
       getListRealEstatesUser({
         sort_by: 'createdAt',
         page: page,
+        setTotal: setTotal,
       }),
       callback
     );
@@ -101,9 +102,11 @@ const UserPostsScreen = () => {
       value >= 0
         ? getListRealEstatesUser({
             status: value,
+            setTotal: setTotal,
           })
         : getListRealEstatesUser({
             sort_by: 'createdAt',
+            setTotal: setTotal,
           })
     );
     setStatus(value);
@@ -209,7 +212,7 @@ const UserPostsScreen = () => {
   });
 
   const onSubmit = async (data: any) => {
-    const parmas = { ...data, title: data?.title?.trim() };
+    const parmas = { ...data, title: data?.title?.trim(), setTotal };
     setLoadingList(true);
 
     try {
@@ -236,6 +239,7 @@ const UserPostsScreen = () => {
         title: getValues().title,
         sort_by: getValues().sort_by,
         dateRange,
+        setTotal: setTotal,
       })
     );
     hideDateRangePicker();
