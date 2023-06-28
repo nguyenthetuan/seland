@@ -16,7 +16,7 @@ const MapScreen = () => {
   const { navigate, goBack } = useNavigation();
   const { token } = store.getState().auth;
   const runFirst = `
-      window.document.getElementsByTagName("header-page-seland")[0].style.display = "none";
+      window.document.getElementsByClassName("header-page-seland")[0].style.display = "none";
       true; // note: this is required, or you'll sometimes get silent failuresec
     `;
 
@@ -33,7 +33,7 @@ const MapScreen = () => {
       <WebView
         startInLoadingState={true}
         source={{
-          uri: `https://tamthanh-staging.vnextglobal.com/checkLandPlaning?realtyID=${
+          uri: `https://tamthanh.vnextglobal.com/checkLandPlaning?realtyID=${
             route?.params?.realtyID || '185'
           }&latLng=${
             route?.params?.latLng || '16.8018075868834%2C107.28037372286639'
