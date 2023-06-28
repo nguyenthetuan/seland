@@ -29,23 +29,23 @@ const UserDraftPostsScreen = () => {
   const [page, setPage] = useState(1);
 
   const onGetListRealEstatesUser = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
-    const callback = (res: any) => {
-      setIsLoading(false);
-      if (dataUserRealEstates.length > 0) {
-        setDataUserRealEstates([...dataUserRealEstates, ...res]);
-      } else {
-        setDataUserRealEstates(res);
-      }
-    };
+    // const callback = (res: any) => {
+    //   setIsLoading(false);
+    //   if (dataUserRealEstates.length > 0) {
+    //     setDataUserRealEstates([...dataUserRealEstates, ...res]);
+    //   } else {
+    //     setDataUserRealEstates(res);
+    //   }
+    // };
 
     const params = {
       status: YOUR_WANT.SAVE_DRAFTS,
       sort_by: 'createdAt',
-      page: page,
+      // page: page,
     };
-    dispatchThunk(dispatch, getListRealEstatesUser(params), callback);
+    dispatchThunk(dispatch, getListRealEstatesUser(params));
   };
 
   const onGetReFresh = () => {
@@ -111,8 +111,8 @@ const UserDraftPostsScreen = () => {
 
         <FlatList
           style={[styles.list, styles.marginHorizontal]}
-          data={dataUserRealEstates}
-          keyExtractor={item => item.id}
+          data={userRealEstates}
+          keyExtractor={item => item?.id}
           renderItem={({ item }) => (
             <UserPost
               type="DRAFT"
