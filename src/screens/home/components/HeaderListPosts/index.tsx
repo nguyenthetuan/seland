@@ -31,7 +31,7 @@ const HeaderListPosts: FC<Iprops> = props => {
   };
 
   const submit = () => {
-    // onChangeSearch && handleSubmit(onChangeSearch());
+    onChangeSearch && handleSubmit(onChangeSearch());
     handleSubmit && handleSubmit(value);
   };
 
