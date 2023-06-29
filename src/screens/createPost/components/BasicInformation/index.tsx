@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
@@ -41,6 +41,10 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
 }) => {
   const { t } = useTranslation();
   const { realEstateType, projects, demands } = useSelector(selectPosts);
+  const [latLong, setLatLong] = useState({
+    lat: 21.0227523,
+    long: 105.9530334,
+  });
   const [isBuy, setIsBuy] = useState(
     (getValues && getValues()?.demand_id) || 1
   );
@@ -161,6 +165,10 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     latitude: number | string;
     longitude: number | string;
   }) => {
+    setLatLong({
+      lat: value?.latitude,
+      long: value?.longitude,
+    });
     setValue && setValue('lat_long', `${value?.latitude}, ${value?.longitude}`);
   };
 
@@ -362,7 +370,11 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
               longitudeDelta: 0.21,
             }}
             onRegionChangeComplete={onRegionChangeComplete}
-          />
+          >
+            <Marker
+              coordinate={{ latitude: latLong.lat, longitude: latLong.long }}
+            ></Marker>
+          </MapView>
         </View>
       </KeyboardAwareScrollView>
     </View>
