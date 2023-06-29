@@ -26,11 +26,6 @@ const HeaderListPosts: FC<Iprops> = props => {
     field: { onChange, value },
   } = useController({ control, name: 'title' });
 
-  const submit = () => {
-    // onChangeSearch && handleSubmit(onChangeSearch());
-    handleSubmit && handleSubmit(value);
-  };
-
   const navigateMapScreen = () => {
     navigate(SCREENS.MAPS);
   };
@@ -50,12 +45,15 @@ const HeaderListPosts: FC<Iprops> = props => {
             // onSubmitEditing={value => onChange(value)}
             onEndEditing={value => onChange(value)}
             // onChangeText={value => onChange(value)}
-            placeholder={(t('placeholder.searchTitle').length <= 21 ? t('placeholder.searchTitle') : t('placeholder.searchTitle').slice(0,21) + "..." || "") as string}
+            placeholder={
+              (t('placeholder.searchTitle').length <= 21
+                ? t('placeholder.searchTitle')
+                : t('placeholder.searchTitle').slice(0, 21) + '...' ||
+                  '') as string
+            }
             rightIcon={
-              <TouchableOpacity onPress={submit}>
-                <Icon
-                  name="search"
-                />
+              <TouchableOpacity onPress={handleSubmit(onChangeSearch)}>
+                <Icon name="search" />
               </TouchableOpacity>
             }
           />
