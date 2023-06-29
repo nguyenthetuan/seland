@@ -154,7 +154,7 @@ const FilterScreen = (props: any) => {
   const [tabSelected, setTabSelected] = useState(dataFilters?.demand_id || 1);
   const [enableScroll, setEnableScroll] = useState(true);
 
-  const { basicInformation, demands } = useSelector(selectPosts);
+  const { demands } = useSelector(selectPosts);
 
   const { area, bathroom, bedroom, floor, more, price, real_estate_type } =
     useSelector(selectRealEstates);
@@ -263,21 +263,8 @@ const FilterScreen = (props: any) => {
   };
 
   const refresh = async () => {
-    const { district_id } = basicInformation;
-    const province_id = 'HNI';
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
-      province_id &&
-        fetchDistricts({
-          province_code: province_id,
-        }),
-
-      province_id &&
-        district_id &&
-        fetchWards({
-          province_code: province_id,
-          district_code: district_id,
-        }),
     ]);
   };
 
@@ -300,12 +287,6 @@ const FilterScreen = (props: any) => {
   useEffect(() => {
     setValue('demand_id', tabSelected);
   }, [tabSelected]);
-
-  useEffect(() => {
-    Object.entries(basicInformation).forEach(
-      ([key, value]) => value && setValue(key, value)
-    );
-  }, [basicInformation, setValue]);
 
   return (
     <SafeAreaView style={styles.container}>
