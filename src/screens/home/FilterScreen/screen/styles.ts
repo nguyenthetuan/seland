@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   boxRealEstate: {
     flexDirection: 'row',
     flex: 1,
+    justifyContent: 'space-between'
   },
   areaRange: {
     width: '24%',
@@ -32,9 +33,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
     flex: 1,
   },
-  district: {
+  district1: {
+    width: '50%',
     paddingRight: 4,
-    width: '25%',
+    marginBottom: 6,
+  },
+  district2: {
+    width: '50%',
+    paddingLeft: 4,
+    marginBottom: 6,
   },
   filterPost: {
     color: COLORS.GRAY_8,

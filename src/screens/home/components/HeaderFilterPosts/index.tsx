@@ -232,7 +232,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
             onPress={() => {
               navigate(SCREENS.FILTER_SCREEN, {
                 onSubmit,
-                dataFilters,
+                dataFilters: getValues(),
               });
             }}
           >

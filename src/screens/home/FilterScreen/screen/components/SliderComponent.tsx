@@ -115,11 +115,11 @@ export const SliderComponent = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (value[0] == defaultValues[0] && value[1] == defaultValues[1]) {
-  //     setButtonSelected([options[0]?.value]);
-  //   }
-  // }, [defaultValues, value]);
+  useEffect(() => {
+    if (value) {
+      setButtonSelected([value[0].toString() + '-' + value[1].toString()])
+    }
+  }, [value]);
 
   const renderSlider = useCallback(() => {
     return (
