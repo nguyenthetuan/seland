@@ -30,7 +30,6 @@ import { IDemandId } from '../../../utils/interface/home';
 const HomeScreen = () => {
   const { t } = useTranslation();
   const { navigate }: any = useNavigation();
-  const [isBuy, setIsBuy]: any = useState(true);
 
   const dispatch = useDispatch();
 
@@ -49,7 +48,7 @@ const HomeScreen = () => {
   }, [dispatch]);
 
   const navigateToListPostsHot = () => {
-    if (isBuy) {
+    if (isBuyHottest) {
       navigate(SCREENS.LIST_POST, {
         is_hot: 1,
         demand_id: IDemandId.BUY,
@@ -69,7 +68,7 @@ const HomeScreen = () => {
   };
 
   const navigateToListPostsForYou = () => {
-    if (isBuy) {
+    if (isBuyForYou) {
       navigate(SCREENS.LIST_POST, {
         for_you: 1,
         demand_id: IDemandId.BUY,
@@ -135,8 +134,8 @@ const HomeScreen = () => {
             onSeeAll={navigateToListPostsHot}
           >
             <HottestRealEstateCategory
-              isBuy={isBuy}
-              setIsBuy={setIsBuy}
+              isBuy={isBuyHottest}
+              setIsBuy={setIsBuyHottest}
             />
           </Category>
         ) : null}
@@ -146,8 +145,8 @@ const HomeScreen = () => {
             onSeeAll={navigateToListPostsForYou}
           >
             <RealEstateForYouCategory
-              isBuy={isBuy}
-              setIsBuy={setIsBuy}
+              isBuy={isBuyForYou}
+              setIsBuy={setIsBuyForYou}
             />
           </Category>
         ) : null}

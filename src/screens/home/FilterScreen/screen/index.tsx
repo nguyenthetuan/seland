@@ -222,9 +222,9 @@ const FilterScreen = (props: any) => {
       }
     );
     setValue('address', '');
-    params?.onSubmit &&
-      params?.onSubmit(initValues);
-    navigate(SCREENS.LIST_POST, {...initValues});
+    // params?.onSubmit &&
+    //   params?.onSubmit(initValues);
+    // navigate(SCREENS.LIST_POST, {...initValues});
   };
 
   const fetchDistricts = (params: any, callback?: () => void) => {
