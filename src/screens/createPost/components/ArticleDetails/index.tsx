@@ -247,43 +247,57 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
 
         {file.length ? (
           <View style={styles.boxFile}>
-            {file?.map((item: { fileName?: string; uri?: string }) => (
-              <View
-                key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
-                  item?.uri
-                }`}
-                style={styles.boxImage}
-              >
-                {typeUpload.isPhoto ? (
-                  <Image
-                    source={{ uri: item?.uri }}
-                    style={styles.image}
-                  />
-                ) : (
+            {file?.map(
+              (item: { fileName?: string; uri?: string; fileSize: number }) => {
+                return (
                   <View
-                    style={[
-                      styles.image,
-                      { alignItems: 'center', justifyContent: 'center' },
-                    ]}
+                    key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
+                      item?.uri
+                    }`}
+                    style={styles.boxImage}
                   >
-                    <Icon
-                      name="movie"
-                      color={COLORS.GRAY_1}
-                    />
-                  </View>
-                )}
+                    {typeUpload.isPhoto ? (
+                      <>
+                        <Image
+                          source={{ uri: item?.uri }}
+                          style={styles.image}
+                        />
+                        <Text style={styles.fileSize}>
+                          {`${(item?.fileSize / 1048576).toFixed(2)}/MB`}
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <View
+                          style={[
+                            styles.image,
+                            { alignItems: 'center', justifyContent: 'center' },
+                          ]}
+                        >
+                          <Icon
+                            name="movie"
+                            color={COLORS.GRAY_1}
+                          />
+                        </View>
+                        <Text style={styles.fileSize}>{`${(
+                          item?.fileSize / 1048576
+                        ).toFixed(2)}/MB`}</Text>
+                      </>
+                    )}
 
-                <Pressable
-                  style={styles.btnDeleteImage}
-                  onPress={() => handleDeleteFile(item?.fileName)}
-                >
-                  <Icon
-                    name="close"
-                    size={20}
-                  />
-                </Pressable>
-              </View>
-            ))}
+                    <Pressable
+                      style={styles.btnDeleteImage}
+                      onPress={() => handleDeleteFile(item?.fileName)}
+                    >
+                      <Icon
+                        name="close"
+                        size={20}
+                      />
+                    </Pressable>
+                  </View>
+                );
+              }
+            )}
             {typeUpload?.isPhoto && file.length < 11 ? (
               <Pressable
                 style={styles.btnAddImage}

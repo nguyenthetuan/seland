@@ -25,6 +25,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 5,
   },
+  fileSize: {
+    fontSize: 12,
+    left: 10,
+    bottom: 0,
+    color: COLORS.GRAY_5,
+    position: 'absolute',
+  },
   boxSelectTypeUpload: {
     alignSelf: 'center',
     flexDirection: 'row',
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   inputContainerContent: {
-    height: 64,
+    height: 160,
   },
   inputContainerStyle: {
     marginHorizontal: 10,

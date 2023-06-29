@@ -196,7 +196,12 @@ const CreatePostScreen = (props: any) => {
             setValue('phone_number', `${value}`);
             break;
           case 'real_estate_images':
-            const arrayImages = Object.values(value).map((item: any) => {
+            const arrayImages: {
+              uri: string;
+              fileName: string;
+              type: string;
+              update: boolean;
+            }[] = Object.values(value).map((item: any) => {
               return {
                 uri: item,
                 fileName: item.substring(item.lastIndexOf('/') + 1),
@@ -210,15 +215,17 @@ const CreatePostScreen = (props: any) => {
             setValue('address_detail', value);
             break;
           case 'youtube_video_link':
-            console.log('youtube_video_link', value);
-            setValue('video', [
-              {
-                uri: value[0],
-                name: value[0].substring(value[0].lastIndexOf('/') + 1),
-                type: 'mp4',
-                update: true,
-              },
-            ]);
+            if (value) {
+              setValue('video', [
+                {
+                  uri: value[0],
+                  name: value[0].substring(value[0].lastIndexOf('/') + 1),
+                  type: 'mp4',
+                  update: true,
+                },
+              ]);
+            }
+
             break;
           default:
             value && setValue(key, value);
@@ -376,14 +383,10 @@ const CreatePostScreen = (props: any) => {
     // append video to form
     if (params?.video?.length) {
       params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
-        console.log(
-          '🚀 ~ file: index.tsx:367 ~ params?.photo.forEach ~ item:',
-          item
-        );
         const file = {
           uri: item.uri,
           name: item.fileName,
-          type: 'mp4',
+          type: item.type,
         };
         formData.append(`video`, file);
       });
