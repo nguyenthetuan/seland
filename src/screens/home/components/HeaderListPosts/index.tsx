@@ -69,7 +69,7 @@ const HeaderListPosts: FC<Iprops> = props => {
                   '') as string
             }
             rightIcon={
-              <TouchableOpacity onPress={handleSubmit(onChangeSearch)}>
+              <TouchableOpacity onPress={submit}>
                 <Icon name="search" />
               </TouchableOpacity>
             }
