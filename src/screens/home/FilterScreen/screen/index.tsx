@@ -207,10 +207,7 @@ const FilterScreen = (props: any) => {
 
   const onSubmit = (data: any) => {
     navigate(SCREENS.LIST_POST, {
-      district_id: data?.district_id,
-      typeHousing: data?.typeHousing,
-      demand_id: tabSelected,
-      dataFilters: data,
+      dataFilters: data
     });
     params?.onSubmit && params?.onSubmit(data);
   };
@@ -326,7 +323,7 @@ const FilterScreen = (props: any) => {
           <View style={styles.wrapFilter}>
             <Text style={styles.txtFilter}>{t('select.area')}</Text>
             <View style={styles.boxRealEstate}>
-              <View style={styles.district}>
+              <View style={styles.district1}>
                 <Select
                   buttonStyle={styles.buttonSelect}
                   buttonTextStyle={styles.textButtonSelect}
@@ -339,7 +336,7 @@ const FilterScreen = (props: any) => {
                   onSelect={handleSelectProvince}
                 />
               </View>
-              <View style={styles.district}>
+              <View style={styles.district2}>
                 <Select
                   buttonStyle={styles.buttonSelect}
                   buttonTextStyle={styles.textButtonSelect}
@@ -352,7 +349,10 @@ const FilterScreen = (props: any) => {
                   onSelect={handleSelectDistrict}
                 />
               </View>
-              <View style={styles.ward}>
+            </View>
+
+            <View style={styles.boxRealEstate}>
+              <View style={styles.district1}>
                 <Select
                   buttonStyle={styles.buttonSelect}
                   buttonTextStyle={styles.textButtonSelect}
@@ -365,7 +365,7 @@ const FilterScreen = (props: any) => {
                   onSelect={handleSubmit(onSelect)}
                 />
               </View>
-              <View style={styles.areaRange}>
+              <View style={styles.district2}>
                 <Select
                   buttonStyle={[styles.buttonSelect]}
                   buttonTextStyle={styles.textButtonSelect}
