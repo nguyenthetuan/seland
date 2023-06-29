@@ -86,9 +86,8 @@ const ItemRealEstates = ({ item }) => {
   };
 
   return (
-    <TouchableOpacity
+    <View
       style={styles.boxItem}
-      onPress={onGoDetail}
     >
       <View style={styles.boxImage}>
         <Image
@@ -153,9 +152,11 @@ const ItemRealEstates = ({ item }) => {
           icon={<Compass />}
         />
       </View>
-      <Text style={styles.title(backgroundRank())}>
-        {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
-      </Text>
+      <TouchableOpacity onPress={onGoDetail}>
+        <Text style={styles.title(backgroundRank())}>
+          {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
+        </Text>
+      </TouchableOpacity>
       {[2, 3, 4].includes(item?.rank_id) && (
         <Text
           style={styles.content}
@@ -190,7 +191,7 @@ const ItemRealEstates = ({ item }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
