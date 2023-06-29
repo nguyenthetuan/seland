@@ -71,6 +71,29 @@ export const editRealEstates = createAsyncThunk(
   }
 );
 
+export const createBasicInformation = createAsyncThunk(
+  'createBasicInformation',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      return fulfillWithValue(params);
+    } catch (error) {
+      return rejectWithValue('');
+    }
+  }
+);
+
+const initialBasicInformation = {
+  demand_id: 0,
+  real_estate_type_id: null,
+  project_id: null,
+  address_detail: '',
+  province_id: null,
+  district_id: null,
+  ward_id: null,
+  street_id: null,
+  lat_long: 0,
+};
+
 const slice = createSlice({
   name: 'post',
   initialState: {
@@ -78,6 +101,7 @@ const slice = createSlice({
     error: '',
     realEstateType: [],
     information: [],
+    basicInformation: initialBasicInformation,
     projects: [],
     demands: [],
     unitPrices: [],
@@ -91,6 +115,10 @@ const slice = createSlice({
   },
   reducers: {},
   extraReducers: builder => {
+    // create form basic info
+    builder.addCase(createBasicInformation.fulfilled, (state, action) => {
+      state.basicInformation = action.payload;
+    });
     // create post
     builder.addCase(createRealEstates.pending, state => {
       state.createRealEstate.loading = true;
