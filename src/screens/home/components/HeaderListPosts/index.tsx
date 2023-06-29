@@ -20,7 +20,7 @@ interface Iprops {
 const HeaderListPosts: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { goBack, navigate } = useNavigation();
-  const { handleSubmit, onChangeSearch, getValues } = props;
+  const { handleSubmit } = props;
   const control = props?.control;
   const {
     field: { onChange, value },
@@ -31,21 +31,8 @@ const HeaderListPosts: FC<Iprops> = props => {
   };
 
   const submit = () => {
-    onChangeSearch && handleSubmit(onChangeSearch());
     handleSubmit && handleSubmit(value);
   };
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      if (value) {
-        submit();
-      }
-    }, 500);
-    
-    return () => {
-      clearTimeout(debounceTimer);
-    };
-  }, [value]);
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
@@ -61,7 +48,6 @@ const HeaderListPosts: FC<Iprops> = props => {
             returnKeyType="search"
             onSubmitEditing={submit}
             onEndEditing={value => onChange(value)}
-            // onChangeText={value => onChange(value)}
             placeholder={
               (t('placeholder.searchTitle').length <= 21
                 ? t('placeholder.searchTitle')
