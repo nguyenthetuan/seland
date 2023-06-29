@@ -47,15 +47,29 @@ const UserPostsScreen = () => {
     filterRef.current.onOpen();
   };
 
+  const { control, getValues, handleSubmit, setValue } = useForm({
+    defaultValues: {
+      title: '',
+      date: 'week',
+      sort_by: 'createdAt',
+      real_estate_type_id: null,
+      area_range_id: null,
+      province_id: null,
+      type: null,
+      status: '',
+      demand_id: null,
+    },
+  });
+
   const onGetListRealEstatesUser = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const callback = (res: any) => {
-      setIsLoading(false);
-      if (dataUserRealEstates.length > 0) {
-        setDataUserRealEstates([...dataUserRealEstates, ...res]);
-      } else {
-        setDataUserRealEstates(res);
-      }
+      // setIsLoading(false);
+      // if (dataUserRealEstates.length > 0) {
+      //   setDataUserRealEstates([...dataUserRealEstates, ...res]);
+      // } else {
+      //   setDataUserRealEstates(res);
+      // }
     };
 
     dispatchThunk(
@@ -71,6 +85,8 @@ const UserPostsScreen = () => {
 
   const onGetReFresh = () => {
     setIsLoading(true);
+    const { sort_by } = getValues();
+
     const callback = (res: any) => {
       setIsLoading(false);
       setDataUserRealEstates(res);
@@ -79,8 +95,9 @@ const UserPostsScreen = () => {
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
-        sort_by: 'createdAt',
+        sort_by,
         page: page,
+        status,
         setTotal: setTotal,
       }),
       callback
@@ -94,7 +111,7 @@ const UserPostsScreen = () => {
 
   useEffect(() => {
     onGetListRealEstatesUser();
-  }, [page]);
+  }, []);
 
   const handleSelectStatus = (value: number) => {
     dispatchThunk(
@@ -196,20 +213,6 @@ const UserPostsScreen = () => {
       value: 'price_per_m_desc',
     },
   ];
-
-  const { control, getValues, handleSubmit, setValue } = useForm({
-    defaultValues: {
-      title: '',
-      date: 'week',
-      sort_by: 'createdAt',
-      real_estate_type_id: null,
-      area_range_id: null,
-      province_id: null,
-      type: null,
-      status: '',
-      demand_id: null,
-    },
-  });
 
   const onSubmit = async (data: any) => {
     const parmas = { ...data, title: data?.title?.trim(), setTotal };
@@ -330,10 +333,9 @@ const UserPostsScreen = () => {
   }
 
   const deleteSuccess = () => {
-    console.log('xxxx');
-
     onGetReFresh();
   };
+
   const handleConfirm = () => {
     try {
       if (idItemDelete) {
@@ -347,6 +349,7 @@ const UserPostsScreen = () => {
       console.log(error);
     }
   };
+
   const handleCancel = () => {};
   const deletePost = (id: any) => {
     setIdItemDelete(id);
@@ -376,7 +379,7 @@ const UserPostsScreen = () => {
         </View>
         <FlatList
           style={styles.list}
-          data={dataUserRealEstates}
+          data={userRealEstates}
           keyExtractor={(_, index) => `itemPost${index}`}
           renderItem={({ item }) => (
             <UserPost
@@ -389,7 +392,7 @@ const UserPostsScreen = () => {
           ListFooterComponent={
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
-          onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
+          // onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
         />
       </View>
       <View>
@@ -423,7 +426,7 @@ const UserPostsScreen = () => {
           onPressButtonLeft={handleCancel}
           titleButtonLeft="Huỷ"
           titleButtonRight="Xác nhận"
-          label="Bạn có muốn hạ tin không!"
+          label="Bạn có muốn xoá tin không!"
         />
       </View>
     </>

@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
-import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { COLORS } from '../../../constants';
 import styles from './styles';
@@ -13,12 +13,24 @@ import { store } from '../../../redux';
 // }
 const MapScreen = () => {
   const route: any = useRoute();
+  const webviewRef = useRef();
   const { navigate, goBack } = useNavigation();
   const { token } = store.getState().auth;
   const runFirst = `
-      window.document.getElementsByTagName("header-page-seland")[0].style.display = "none";
+      window.document.getElementsByClassName("masthead-finish")[0].style.display = "none";
       true; // note: this is required, or you'll sometimes get silent failuresec
     `;
+
+  const renderLoading = () => {
+    return (
+      <View>
+        <ActivityIndicator
+          color={'red'}
+          size="small"
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -31,17 +43,15 @@ const MapScreen = () => {
         </View>
       </SafeAreaView>
       <WebView
-        startInLoadingState={true}
         source={{
-          uri: `https://tamthanh-staging.vnextglobal.com/checkLandPlaning?realtyID=${
-            route?.params?.realtyID || '185'
-          }&latLng=${
-            route?.params?.latLng || '16.8018075868834%2C107.28037372286639'
-          }`,
+          uri: `https://www.youtube.com/watch?v=MDZhbSzRB_Q`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }}
+        renderLoading={renderLoading}
+        startInLoadingState={true}
+        javaScriptEnabledAndroid={true}
         injectedJavaScript={runFirst}
         style={{ flex: 1 }}
       />

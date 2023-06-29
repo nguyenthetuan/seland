@@ -16,7 +16,7 @@ export const loadListAllWareHouses = createAsyncThunk(
       const data = await requestGetAllWareHouse();
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (5.1)');
     }
   }
 );
@@ -28,7 +28,7 @@ export const loadListAgency = createAsyncThunk(
       const data = await requestGetAgency();
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (5.2)');
     }
   }
 );
@@ -45,7 +45,7 @@ export const loadRealEstateWarehouses = createAsyncThunk(
 
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (5.3)');
     }
   }
 );
@@ -59,7 +59,7 @@ export const createWareHouse = createAsyncThunk(
 
       return fulfillWithValue(response);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (5.4)');
     }
   }
 );

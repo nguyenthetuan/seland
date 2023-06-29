@@ -76,6 +76,7 @@
     "landlord": "Chủ đất"
   },
   "common": {
+    "updatePost": "Cập nhật bài đăng",
     "forgotPassword": "Quên mật khẩu?",
     "nonmember": "Chưa là thành viên?",
     "signup": "Đăng ký",

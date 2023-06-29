@@ -250,7 +250,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             {file?.map((item: { fileName?: string; uri?: string }) => (
               <View
                 key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
-                  item?.fileName
+                  item?.uri
                 }`}
                 style={styles.boxImage}
               >
@@ -260,7 +260,17 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                     style={styles.image}
                   />
                 ) : (
-                  <View style={[styles.image]} />
+                  <View
+                    style={[
+                      styles.image,
+                      { alignItems: 'center', justifyContent: 'center' },
+                    ]}
+                  >
+                    <Icon
+                      name="movie"
+                      color={COLORS.GRAY_1}
+                    />
+                  </View>
                 )}
 
                 <Pressable

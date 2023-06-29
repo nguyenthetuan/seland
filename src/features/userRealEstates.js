@@ -14,11 +14,11 @@ export const getListRealEstatesUser = createAsyncThunk(
       const setTotal = params?.setTotal;
       delete params?.setTotal;
       const { data, total } = await requestGetListRealEstatesUser(params);
-      setTotal(total);
-      callback && callback(data);
+      // setTotal(total);
+      // callback && callback(data);
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (4)');
     }
   }
 );

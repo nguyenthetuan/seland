@@ -25,6 +25,7 @@ export const getHeaders = customHeaders => {
 };
 
 const successHandler = response => {
+  // console.log('🚀 ~ file: api.js:28 ~ successHandler ~ response:', response);
   const { data, status } = response;
 
   if (!data || status !== 200) {
@@ -35,6 +36,7 @@ const successHandler = response => {
 };
 
 const errorHandler = error => {
+  console.log('🚀 ~ file: api.js:39 ~ errorHandler ~ error:', error);
   if (['ERR_NETWORK', 'ECONNABORTED'].includes(error.code)) {
     return Toast.show(t('error.network'));
   }

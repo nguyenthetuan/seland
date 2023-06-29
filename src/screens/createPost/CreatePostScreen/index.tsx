@@ -11,7 +11,6 @@ import { Save } from '../../../assets';
 import { Button, PopupConfirm, Text } from '../../../components';
 import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
 import {
-  clearCreatePosts,
   detailRealEstates,
   selectPosts,
   createRealEstates,
@@ -25,6 +24,7 @@ import ArticleDetails from '../components/ArticleDetails';
 import BasicInformation from '../components/BasicInformation';
 import RealEstateInformation from '../components/RealEstateInformation';
 import styles from './styles';
+import Toast from 'react-native-simple-toast';
 
 const SaveType = [
   {
@@ -163,25 +163,29 @@ const CreatePostScreen = (props: any) => {
           case 'document_legal':
             setValue(
               'legal_documents_id',
-              information[2].children.find((elm: any) => elm.value === value).id
+              information[2].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'house_status':
             setValue(
               'house_status_id',
-              information[3].children.find((elm: any) => elm.value === value).id
+              information[3].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'usage_status':
             setValue(
               'usage_condition_id',
-              information[4].children.find((elm: any) => elm.value === value).id
+              information[4].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'location':
             setValue(
               'location_type_id',
-              information[5].children.find((elm: any) => elm.value === value).id
+              information[5].children.find((elm: any) => elm.value === value)
+                ?.id || null
             );
             break;
           case 'introduction_content':
@@ -192,11 +196,12 @@ const CreatePostScreen = (props: any) => {
             setValue('phone_number', `${value}`);
             break;
           case 'real_estate_images':
-            const arrayImages = Object.values(value).map(item => {
+            const arrayImages = Object.values(value).map((item: any) => {
               return {
                 uri: item,
-                name: item.substring(item.lastIndexOf('/') + 1),
+                fileName: item.substring(item.lastIndexOf('/') + 1),
                 type: 'image',
+                update: true,
               };
             });
             setValue('photo', arrayImages);
@@ -204,21 +209,30 @@ const CreatePostScreen = (props: any) => {
           case 'address':
             setValue('address_detail', value);
             break;
+          case 'youtube_video_link':
+            console.log('youtube_video_link', value);
+            setValue('video', [
+              {
+                uri: value[0],
+                name: value[0].substring(value[0].lastIndexOf('/') + 1),
+                type: 'mp4',
+                update: true,
+              },
+            ]);
+            break;
           default:
             value && setValue(key, value);
             break;
         }
       }
     });
+
     dispatchThunk(
       dispatch,
       getDistricts({ province_code: response.province_id }),
-      () => {}
-    );
-    dispatchThunk(
-      dispatch,
-      getDistricts({ province_code: response.province_id }),
-      () => {}
+      response => {
+        console.log('responsexx', response);
+      }
     );
     dispatchThunk(
       dispatch,
@@ -237,11 +251,13 @@ const CreatePostScreen = (props: any) => {
         (response: any) => getDetailPost(response)
       );
   }, []);
+
   const handleClosePost = () => {
     reset();
     setTab(TAB.BASIC_INFORMATION);
     goBack();
   };
+
   const handleTab = (value: number) => {
     setTab(value);
     if (
@@ -293,6 +309,7 @@ const CreatePostScreen = (props: any) => {
   };
 
   const createSuccess = (value: any) => {
+    console.log('🚀 ~ file: index.tsx:316 ~ createSuccess ~ value:', value);
     if (value?.real_estate_id) {
       if (saveType === YOUR_WANT.POST_PUBLIC) {
         navigate(SCREENS.CONFIRM_POST_SCREEN, {
@@ -342,7 +359,7 @@ const CreatePostScreen = (props: any) => {
         }
       }
     });
-    console.log('getValues', getValues().address_detail.length);
+
     // append image to form
     if (params?.photo?.length) {
       params?.photo.forEach(
@@ -358,11 +375,15 @@ const CreatePostScreen = (props: any) => {
     }
     // append video to form
     if (params?.video?.length) {
-      params?.photo.forEach((item: { uri: any; fileName: any; type: any }) => {
+      params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
+        console.log(
+          '🚀 ~ file: index.tsx:367 ~ params?.photo.forEach ~ item:',
+          item
+        );
         const file = {
           uri: item.uri,
           name: item.fileName,
-          type: item.type,
+          type: 'mp4',
         };
         formData.append(`video`, file);
       });
@@ -375,10 +396,16 @@ const CreatePostScreen = (props: any) => {
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
-  const editSucess = () => {
+  const editSuccess = () => {
+    goBack();
+    Toast.show('Cập nhật tin thành công.');
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
+        status:
+          router.params?.type === 'DRAFT'
+            ? YOUR_WANT.SAVE_DRAFTS
+            : YOUR_WANT.SAVE_PRIVATE,
         sort_by: 'createdAt',
       })
     );
@@ -407,9 +434,18 @@ const CreatePostScreen = (props: any) => {
         'usage_condition_id',
         'location_type_id',
       ];
+      const land_information = [
+        'utilities_id',
+        'furniture_id',
+        'security_id',
+        'road_type_id',
+      ];
+
       if (params[key]) {
         if (information.includes(key)) {
           formData.append(`information[${key}]`, params[key]);
+        } else if (land_information.includes(key)) {
+          formData.append(`land_information[${key}]`, params[key]);
         } else {
           formData.append(key, params[key]);
         }
@@ -419,19 +455,22 @@ const CreatePostScreen = (props: any) => {
     // append image to form
     if (params?.photo?.length) {
       params?.photo.forEach(
-        (item: { uri: any; fileName: any; type: any }, index: any) => {
+        (
+          item: { uri: any; fileName: any; type: any; update?: boolean },
+          index: any
+        ) => {
           const file = {
             uri: item.uri,
             name: item.fileName,
             type: item.type,
           };
-          formData.append(`images[${index}]`, file);
+          formData.append(`images[${index}]`, item?.update ? item.uri : file);
         }
       );
     }
     // append video to form
     if (params?.video?.length) {
-      params?.photo.forEach((item: { uri: any; fileName: any; type: any }) => {
+      params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
         const file = {
           uri: item.uri,
           name: item.fileName,
@@ -444,10 +483,11 @@ const CreatePostScreen = (props: any) => {
     if (params?.urlVideo) {
       formData.append(`video`, params?.urlVideo);
     }
+
     dispatchThunk(
       dispatch,
       editRealEstates({ id: router.params.id, formData }),
-      editSucess
+      editSuccess
     );
   };
 
@@ -582,7 +622,11 @@ const CreatePostScreen = (props: any) => {
             onPress={handleClosePost}
           />
           <Text style={styles.createPostNews}>
-            {t('common.createPostNews')}
+            {t(
+              router.params?.edit
+                ? 'common.updatePost'
+                : 'common.createPostNews'
+            )}
           </Text>
         </View>
         <Save />

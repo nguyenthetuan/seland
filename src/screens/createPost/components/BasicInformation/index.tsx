@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
@@ -41,6 +41,10 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
 }) => {
   const { t } = useTranslation();
   const { realEstateType, projects, demands } = useSelector(selectPosts);
+  const [latLong, setLatLong] = useState({
+    lat: 21.0227523,
+    long: 105.9530334,
+  });
   const [isBuy, setIsBuy] = useState(
     (getValues && getValues()?.demand_id) || 1
   );
@@ -93,13 +97,17 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
-  const handleSelectProvince = (selectedItem: { value: number }) => {
+  const handleSelectProvince = (selectedItem: {
+    value: number;
+    label?: string;
+  }) => {
     setValue && setValue('district_id', null);
     setValue && setValue('ward_id', null);
 
     const { value } = selectedItem;
 
     if (value) {
+      setValue && setValue('address_detail', selectedItem.label);
       fetchDistricts({
         province_code: value,
       });
@@ -109,12 +117,21 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
-  const handleSelectDistrict = (selectedItem: { value: number }) => {
+  const handleSelectDistrict = (selectedItem: {
+    value: number;
+    label: string;
+  }) => {
     setValue && setValue('ward_id', null);
-
     const { value } = selectedItem;
-
+    const address_detail = getValues && getValues().address_detail;
     if (value) {
+      const address_detail_array = address_detail?.split(',');
+
+      setValue &&
+        setValue(
+          'address_detail',
+          `${selectedItem.label}, ${address_detail_array[0]}`
+        );
       fetchWards({
         province_code: getValues && getValues().province_id,
         district_code: value,
@@ -124,10 +141,34 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
+  const handleSelectWardId = (selectedItem: {
+    value: number;
+    label: string;
+  }) => {
+    const { value } = selectedItem;
+    const address_detail = getValues && getValues().address_detail;
+    if (value) {
+      const address_detail_array = address_detail?.split(',');
+      setValue &&
+        setValue(
+          'address_detail',
+          `${
+            selectedItem.label
+          }, ${address_detail_array[1]?.trim()}, ${address_detail_array[0]?.trim()}`
+        );
+    } else {
+      dispatch(clearWards());
+    }
+  };
+
   const onRegionChangeComplete = (value: {
     latitude: number | string;
     longitude: number | string;
   }) => {
+    setLatLong({
+      lat: value?.latitude,
+      long: value?.longitude,
+    });
     setValue && setValue('lat_long', `${value?.latitude}, ${value?.longitude}`);
   };
 
@@ -282,6 +323,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
           rules={{ required: 'Vui lòng chọn Phường/xã' }}
           labelStyle={styles.inputLabel}
           name="ward_id"
+          onSelect={handleSelectWardId}
           required
         />
         <Select
@@ -328,7 +370,11 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
               longitudeDelta: 0.21,
             }}
             onRegionChangeComplete={onRegionChangeComplete}
-          />
+          >
+            <Marker
+              coordinate={{ latitude: latLong.lat, longitude: latLong.long }}
+            ></Marker>
+          </MapView>
         </View>
       </KeyboardAwareScrollView>
     </View>
