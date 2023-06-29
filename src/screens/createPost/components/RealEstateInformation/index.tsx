@@ -39,7 +39,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     location_type_id,
     price_unit,
   } = getValues && getValues();
-  const [average, setAverage] = useState(0);
+  const [average, setAverage] = useState('');
+  const ONE_THOUSAND = 1000;
+  const ONE_MIL = ONE_THOUSAND * 1000;
+  const ONE_BIL = ONE_MIL * 1000;
   const [utilitiesId, setUtilitiesId] = useState(
     utilities_id.split(',').map(Number) || []
   );
@@ -95,7 +98,26 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   const onBlurPrice = () => {
     const value = getValues && getValues();
     if (value?.area && value?.price) {
-      setAverage(Number(value?.price) / Number(value?.area));
+      const priceInDong = state.priceUnit
+        ? Number(value?.price) * ONE_BIL
+        : Number(value?.price) * ONE_MIL;
+      const result = formatPricePerUnit(priceInDong, Number(value?.area));
+      setAverage(result ?? '');
+    } else {
+      setAverage('');
+    }
+  };
+
+  const formatPricePerUnit = (price: number, area: number) => {
+    const pricePerUnit = price / area;
+    if (pricePerUnit >= ONE_BIL) {
+      return (pricePerUnit / ONE_BIL).toFixed(2) + ' Tỷ/m2';
+    }
+    if (pricePerUnit >= ONE_MIL) {
+      return (pricePerUnit / ONE_MIL).toFixed(2) + ' Triệu/m2';
+    }
+    if (pricePerUnit >= ONE_THOUSAND) {
+      return (pricePerUnit / ONE_THOUSAND).toFixed(2) + ' Ngàn/m2';
     }
   };
   const handleSelectUtils = (value: any) => {
@@ -181,6 +203,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             maxLength={32}
             rightIcon={<Text>m²</Text>}
             renderErrorMessage={false}
+            onBlur={onBlurPrice}
           />
           <View>
             <Input
@@ -200,11 +223,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
               onBlur={onBlurPrice}
               renderErrorMessage={false}
             />
-            {average > 0 && (
-              <Text style={styles.m2}>{`~ ${average.toFixed(0)} ${
-                state.priceUnit ? 'Tỷ' : 'Triệu'
-              }/m2`}</Text>
-            )}
+            {average && <Text style={styles.m2}>{average}</Text>}
           </View>
         </View>
         <View style={styles.boxSelectAddress}>
