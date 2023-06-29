@@ -44,6 +44,7 @@ const ListPostsScreen = (props: any) => {
   const [dataListPosts, setDataListPosts] = useState([]);
   const [page, setPage] = useState<number>(1);
   const [totalPost, setTotalPost] = useState<number>(0);
+  const [totalPage, setTotalPage] = useState<number>(0);
 
   const convertDataFilter = (data: any) => {
     const res: any = {};
@@ -120,6 +121,15 @@ const ListPostsScreen = (props: any) => {
     }
   };
 
+  let paramsData = {
+    demand_id: demand_id,
+    is_hot: is_hot ? is_hot : null,
+    for_you: for_you ? for_you : null,
+    page: page,
+    setTotal: setTotalPost,
+    setTotalPage: setTotalPage,
+  };
+
   const onGetListRealEstates = (params?: any, type?: string) => {
     setIsLoading(true);
 
@@ -133,19 +143,7 @@ const ListPostsScreen = (props: any) => {
       }
     };
 
-    const paramsData = {
-      demand_id: demand_id,
-      is_hot: is_hot ? is_hot : null,
-      for_you: for_you ? for_you : null,
-      page: page,
-      setTotal: setTotalPost,
-    };
-
-    dispatchThunk(
-      dispatch,
-      getListRealEstates(params ? params : paramsData),
-      callback
-    );
+    dispatchThunk(dispatch, getListRealEstates(params), callback);
   };
 
   const onShowTypeHousing = (data: boolean) => {
@@ -159,22 +157,36 @@ const ListPostsScreen = (props: any) => {
   const onPullToRefresh = () => {
     setPage(1);
     onGetListRealEstates(
-      { ...dataFilterRef.current, setTotal: setTotalPost, page: 1 },
+      Object.keys(dataFilterRef.current).length === 0
+        ? { ...paramsData, page: 1 }
+        : {
+            ...dataFilterRef.current,
+            setTotal: setTotalPost,
+            page: 1,
+            setTotalPage: setTotalPage,
+          },
       TYPE.PULL_TO_REFRESH
     );
   };
 
   const onLoadMore = () => {
-    if (dataListPosts.length === totalPost) return;
+    if (page === totalPage) return;
     setPage(page + 1);
     onGetListRealEstates(
-      { ...dataFilterRef.current, setTotal: setTotalPost, page: page + 1 },
+      Object.keys(dataFilterRef.current).length === 0
+        ? { ...paramsData, page: page + 1 }
+        : {
+            ...dataFilterRef.current,
+            setTotal: setTotalPost,
+            setTotalPage: setTotalPage,
+            page: page + 1,
+          },
       TYPE.LOAD_MORE
     );
   };
 
   useEffect(() => {
-    onGetListRealEstates();
+    onGetListRealEstates(paramsData);
   }, []);
 
   return (
@@ -193,7 +205,9 @@ const ListPostsScreen = (props: any) => {
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
-          onEndReached={dataListPosts.length > 0 ? onLoadMore : null}
+          onEndReached={
+            dataListPosts.length > 0 && isLoading === false ? onLoadMore : null
+          }
           data={listPosts}
           initialNumToRender={20}
           renderItem={({ item }) => <ItemRealEstates item={item} />}
