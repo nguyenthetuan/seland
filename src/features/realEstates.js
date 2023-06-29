@@ -9,12 +9,15 @@ export const getListRealEstates = createAsyncThunk(
   async (params, { fulfillWithValue, rejectWithValue }, callback) => {
     try {
       const setTotal = params?.setTotal;
+      const setTotalPage = params?.setTotalPage;
       delete params?.setTotal;
+      delete params?.setTotalPage;
 
       const { data, total } = await requestGetListRealEstates(params);
 
       callback && callback(data);
       setTotal && setTotal(total);
+      setTotalPage && setTotalPage(Math.ceil(total / 20));
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
