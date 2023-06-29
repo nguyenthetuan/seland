@@ -7,17 +7,12 @@ import { COLORS } from '../../../constants';
 import styles from './styles';
 import { store } from '../../../redux';
 
-// interface MapsProps {
-//   realtyID?: number;
-//   latLng?: string;
-// }
-const MapScreen = () => {
+const MapScreen = ({}) => {
   const route: any = useRoute();
-  const webviewRef = useRef();
   const { navigate, goBack } = useNavigation();
   const { token } = store.getState().auth;
   const runFirst = `
-      window.document.getElementsByClassName("masthead-finish")[0].style.display = "none";
+      window.document.getElementsByClassName("header-page-seland")[0].style.display = "none";
       true; // note: this is required, or you'll sometimes get silent failuresec
     `;
 
@@ -44,7 +39,11 @@ const MapScreen = () => {
       </SafeAreaView>
       <WebView
         source={{
-          uri: `https://www.youtube.com/watch?v=MDZhbSzRB_Q`,
+          uri: `https://tamthanh2.vnextglobal.com/checkLandPlaning?realtyID=${
+            route?.params?.realtyID || '185'
+          }&latLng=${
+            route?.params?.latLng || '16.8018075868834%2C107.28037372286639'
+          }&defaultFilter=true&kindRealty=${route?.params?.kindRealty || ''}`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
