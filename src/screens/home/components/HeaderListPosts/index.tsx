@@ -30,6 +30,11 @@ const HeaderListPosts: FC<Iprops> = props => {
     navigate(SCREENS.MAPS);
   };
 
+  const submit = () => {
+    // onChangeSearch && handleSubmit(onChangeSearch());
+    handleSubmit && handleSubmit(value);
+  };
+
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       if (value) {
