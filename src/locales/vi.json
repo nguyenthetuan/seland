@@ -76,6 +76,7 @@
     "landlord": "Chủ đất"
   },
   "common": {
+    "updatePost": "Cập nhật bài đăng",
     "forgotPassword": "Quên mật khẩu?",
     "nonmember": "Chưa là thành viên?",
     "signup": "Đăng ký",
@@ -382,7 +383,7 @@
     "yoe": "Số năm kinh nghiệm môi giới BĐS",
     "workZone": "Khu vực đăng ký làm môi giới BĐS",
     "workingYear": "Năm hoạt động",
-    "searchTitle": "Tìm kiếm tiêu đề, khu vực..."
+    "searchTitle": "Tìm kiếm tiêu đề"
   },
   "addAccount": {
     "header": "Thêm mới tài khoản",
