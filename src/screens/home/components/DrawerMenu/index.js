@@ -15,8 +15,15 @@ const DrawerMenuHome = forwardRef((props, ref) => {
 
   const closeDrawerMenu = () => setVisible(false);
 
-  const navigateToListPost = () => {
-    navigate(SCREENS.LIST_POST);
+  const navigateToListPost = key => {
+    const params = {
+      dataFilters: {
+        demand_id: key,
+      },
+      demand_id: key,
+    };
+
+    navigate(SCREENS.LIST_POST, params);
     closeDrawerMenu();
   };
 
@@ -31,6 +38,7 @@ const DrawerMenuHome = forwardRef((props, ref) => {
     {
       name: 'Cho thuê nhà đất',
       key: 2,
+      onPress: navigateToListPost,
     },
     {
       name: 'Dự án',
@@ -77,7 +85,7 @@ const DrawerMenuHome = forwardRef((props, ref) => {
             <TouchableOpacity
               key={item?.key}
               style={styles.btnMenu}
-              onPress={item?.onPress && item?.onPress}
+              onPress={() => item?.onPress && item?.onPress(item?.key)}
             >
               <Text style={styles.textMenu}>{item?.name}</Text>
             </TouchableOpacity>

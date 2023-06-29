@@ -48,7 +48,7 @@ const ListPostsScreen = (props: any) => {
   const convertDataFilter = (data: any) => {
     const res: any = {};
     res.sort_by = 'asc';
-    res.demand_id = '1';
+    res.demand_id = route?.params?.demand_id;
     res.page = page;
     res.setTotal = setTotalPost;
 
@@ -111,14 +111,23 @@ const ListPostsScreen = (props: any) => {
     onGetListRealEstates(dataFilter, TYPE.FILTER);
   };
 
+  const onFilterTitle = (val: string) => {
+    if (dataFilterRef.current) {
+      dataFilterRef.current = { ...dataFilterRef.current, title: val };
+      onGetListRealEstates(dataFilterRef.current, TYPE.FILTER);
+    } else {
+      onGetListRealEstates({ title: val }, TYPE.FILTER);
+    }
+  };
+
   const onGetListRealEstates = (params?: any, type?: string) => {
-    // setIsLoading(true);
+    setIsLoading(true);
 
     const callback = (res: any) => {
       setIsLoading(false);
 
       if (dataListPosts.length > 0 && type === TYPE.LOAD_MORE) {
-        setDataListPosts([...dataListPosts, ...res]);
+        setDataListPosts([...dataListPosts, ...res] as any);
       } else {
         setDataListPosts(res);
       }
@@ -150,7 +159,7 @@ const ListPostsScreen = (props: any) => {
   const onPullToRefresh = () => {
     setPage(1);
     onGetListRealEstates(
-      { ...dataFilterRef.current, setTotal: setTotalPost },
+      { ...dataFilterRef.current, setTotal: setTotalPost, page: 1 },
       TYPE.PULL_TO_REFRESH
     );
   };
@@ -159,7 +168,7 @@ const ListPostsScreen = (props: any) => {
     if (dataListPosts.length === totalPost) return;
     setPage(page + 1);
     onGetListRealEstates(
-      { ...dataFilterRef.current, setTotal: setTotalPost },
+      { ...dataFilterRef.current, setTotal: setTotalPost, page: page + 1 },
       TYPE.LOAD_MORE
     );
   };
@@ -171,29 +180,31 @@ const ListPostsScreen = (props: any) => {
   return (
     <>
       <Loading
-        visible={loadingListPost}
+        visible={isLoading}
         textContent={t('common.loading') || ''}
         color={COLORS.BLUE_1}
         textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.boxListPost}>
-        <HeaderListPosts control={control} />
+        <HeaderListPosts
+          control={control}
+          handleSubmit={onFilterTitle}
+        />
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           onEndReached={dataListPosts.length > 0 ? onLoadMore : null}
-          data={dataListPosts}
+          data={listPosts}
           initialNumToRender={20}
           renderItem={({ item }) => <ItemRealEstates item={item} />}
           keyExtractor={(_, index) => `itemPost${index}`}
-          ListEmptyComponent={loadingListPost ? null : <NoResults />}
+          ListEmptyComponent={isLoading ? null : <NoResults />}
           ListHeaderComponent={
             <HeaderFilterPosts
               onSelect={onFilter}
               onFilter={onFilter}
               onShowTypeHousing={onShowTypeHousing}
               dataLength={totalPost}
-              dataFilters={{demand_id: "2"}}
               {...props}
             />
           }

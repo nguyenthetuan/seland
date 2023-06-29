@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 import { IconWebchat, IconZalo } from '../../../../../assets';
@@ -9,6 +9,7 @@ import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDet
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '../../../../../constants';
+import ModalAdvise from './components/AdviseModal';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
@@ -18,6 +19,7 @@ const Contact: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { infoDetail } = props;
   const { navigate } = useNavigation();
+  const [showModalAdvise, setShowModalAdvise] = useState<boolean>(false);
 
   const listAction = [
     {
@@ -118,6 +120,7 @@ const Contact: FC<Iprops> = props => {
           buttonStyle={styles.adviseButton}
           icon={<IconWebchat />}
           titleStyle={styles.adviseText}
+          onPress={() => setShowModalAdvise(true)}
         />
         <View style={styles.listAction}>
           {listAction.map(action => {
@@ -166,6 +169,10 @@ const Contact: FC<Iprops> = props => {
         radius={5}
         buttonStyle={styles.buttonCollapse}
         titleStyle={styles.titleCollapse}
+      />
+      <ModalAdvise
+        visible={showModalAdvise}
+        setVisible={setShowModalAdvise}
       />
     </View>
   );

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
@@ -26,13 +26,26 @@ const HeaderListPosts: FC<Iprops> = props => {
     field: { onChange, value },
   } = useController({ control, name: 'title' });
 
-  const submit = () => {
-    onChangeSearch && handleSubmit(onChangeSearch());
-  };
-
   const navigateMapScreen = () => {
     navigate(SCREENS.MAPS);
   };
+
+  const submit = () => {
+    // onChangeSearch && handleSubmit(onChangeSearch());
+    handleSubmit && handleSubmit(value);
+  };
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      if (value) {
+        submit();
+      }
+    }, 500);
+    
+    return () => {
+      clearTimeout(debounceTimer);
+    };
+  }, [value]);
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
@@ -46,15 +59,19 @@ const HeaderListPosts: FC<Iprops> = props => {
             name="title"
             control={control}
             returnKeyType="search"
-            // onSubmitEditing={value => onChange(value)}
+            onSubmitEditing={submit}
             onEndEditing={value => onChange(value)}
             // onChangeText={value => onChange(value)}
-            placeholder={t('placeholder.searchTitle') || ''}
+            placeholder={
+              (t('placeholder.searchTitle').length <= 21
+                ? t('placeholder.searchTitle')
+                : t('placeholder.searchTitle').slice(0, 21) + '...' ||
+                  '') as string
+            }
             rightIcon={
-              <Icon
-                name="search"
-                onPress={submit}
-              />
+              <TouchableOpacity onPress={handleSubmit(onChangeSearch)}>
+                <Icon name="search" />
+              </TouchableOpacity>
             }
           />
         </View>
