@@ -209,6 +209,17 @@ const CreatePostScreen = (props: any) => {
           case 'address':
             setValue('address_detail', value);
             break;
+          case 'youtube_video_link':
+            console.log('youtube_video_link', value);
+            setValue('video', [
+              {
+                uri: value[0],
+                name: value[0].substring(value[0].lastIndexOf('/') + 1),
+                type: 'mp4',
+                update: true,
+              },
+            ]);
+            break;
           default:
             value && setValue(key, value);
             break;
@@ -298,6 +309,7 @@ const CreatePostScreen = (props: any) => {
   };
 
   const createSuccess = (value: any) => {
+    console.log('🚀 ~ file: index.tsx:316 ~ createSuccess ~ value:', value);
     if (value?.real_estate_id) {
       if (saveType === YOUR_WANT.POST_PUBLIC) {
         navigate(SCREENS.CONFIRM_POST_SCREEN, {
@@ -371,7 +383,7 @@ const CreatePostScreen = (props: any) => {
         const file = {
           uri: item.uri,
           name: item.fileName,
-          type: item.type,
+          type: 'mp4',
         };
         formData.append(`video`, file);
       });

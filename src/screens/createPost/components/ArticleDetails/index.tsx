@@ -260,7 +260,17 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                     style={styles.image}
                   />
                 ) : (
-                  <View style={[styles.image]} />
+                  <View
+                    style={[
+                      styles.image,
+                      { alignItems: 'center', justifyContent: 'center' },
+                    ]}
+                  >
+                    <Icon
+                      name="movie"
+                      color={COLORS.GRAY_1}
+                    />
+                  </View>
                 )}
 
                 <Pressable
