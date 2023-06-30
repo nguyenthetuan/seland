@@ -95,6 +95,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     setValue && setValue('usage_condition_id', information[4]?.children[0].id);
   }, []);
 
+  useEffect(() => {
+    onBlurPrice();
+  }, [state.priceUnit]);
+
   const onBlurPrice = () => {
     const value = getValues && getValues();
     if (value?.area && value?.price) {
@@ -117,7 +121,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
       return (pricePerUnit / ONE_MIL).toFixed(2) + ' Triệu/m2';
     }
     if (pricePerUnit >= ONE_THOUSAND) {
-      return (pricePerUnit / ONE_THOUSAND).toFixed(2) + ' Ngàn/m2';
+      return (pricePerUnit / ONE_THOUSAND).toFixed(2) + ' Nghìn/m2';
     }
   };
   const handleSelectUtils = (value: any) => {
