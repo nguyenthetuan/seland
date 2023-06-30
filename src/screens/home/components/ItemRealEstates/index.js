@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
-import PropTypes from 'prop-types';
+import PropTypes, { any } from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
@@ -212,7 +212,7 @@ ItemRealEstates.defaultProps = {
 
 ItemRealEstates.propTypes = {
   item: PropTypes.object,
-  is_hot: Boolean,
+  is_hot: any,
 };
 
 export default ItemRealEstates;

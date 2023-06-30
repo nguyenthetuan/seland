@@ -57,12 +57,12 @@ const ListPostsScreen = (props: any) => {
       res.sort_by = data?.sort_by;
     }
 
-    if (data?.priceRange?.length > 0 && data?.priceRange[1] !== 1) {
+    if (data?.priceRange?.length > 0 && data?.priceRange[1] !== 0.01) {
       res.price_range_id = `${Number(data?.priceRange[0])}-${Number(
         data?.priceRange[1]
       )}`;
     }
-    if (data?.acreage?.length > 0 && data?.acreage[1] !== 1) {
+    if (data?.acreage?.length > 0 && data?.acreage[1] !== 0.01) {
       res.area_range_id = `${Number(data?.acreage[0])}-${Number(
         data?.acreage[1]
       )}`;

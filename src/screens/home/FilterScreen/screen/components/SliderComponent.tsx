@@ -141,6 +141,7 @@ export const SliderComponent = ({
           minimumValue={minimumValue}
           maximumValue={maximumValue}
           step={step}
+          value={value}
           minimumTrackTintColor={COLORS.SLIDER_1}
           maximumTrackTintColor={COLORS.GRAY_5}
           thumbTintColor={COLORS.SLIDER_1}
