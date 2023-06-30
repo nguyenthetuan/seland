@@ -30,6 +30,8 @@ const SCREENS = {
   CHANGE_STATUS_SCREEN: 'ChangeStatusScreen',
   STAFF_INFORMATION_SCREEN: 'StaffInformationScreen',
   REQUEST_CONTACT_SCREEN: 'RequestContactScreen',
+  USERAPPOINMENTSCREEN: 'UserAppoinmentScreen',
+  CREATEAPPOIONMENTSCREEN: 'CreatetAppoinmentScreen',
 };
 
 export default SCREENS;

@@ -38,6 +38,8 @@ interface InputCustomProps extends InputProps {
   renderErrorMessage?: any;
   rules?: RegisterOptions;
   errorMessage?: string;
+  styleInput?: ViewStyle;
+  multiline?: boolean;
 }
 
 const Input = ({
@@ -61,6 +63,8 @@ const Input = ({
   rules,
   inputMode,
   errorMessage,
+  styleInput,
+  multiline,
   rightAfterLabel,
   ...props
 }: InputCustomProps) => {
@@ -108,8 +112,9 @@ const Input = ({
   const togglePasswordVisible = () => setPasswordVisible(pv => !pv);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, ...styleInput }}>
       <RNEInput
+        multiline={multiline}
         style={styles.text}
         errorStyle={StyleSheet.flatten([styles.error, errorStyle])}
         containerStyle={styles.containerInput}
@@ -124,7 +129,9 @@ const Input = ({
                 <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
                   {label}
                   {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
-                  <View style={styles.wrapRightAfterLabel}>{rightAfterLabel}</View>
+                  <View style={styles.wrapRightAfterLabel}>
+                    {rightAfterLabel}
+                  </View>
                 </Text>
               </View>
               {rightLabel}

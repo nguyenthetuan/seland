@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { Image } from '@rneui/base';
 import React, { FC, useState } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
 import styles from './styles';

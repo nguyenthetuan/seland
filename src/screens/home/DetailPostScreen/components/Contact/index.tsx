@@ -10,29 +10,35 @@ import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '../../../../../constants';
 import ModalAdvise from './components/AdviseModal';
-
 interface Iprops {
   infoDetail: IRealEstateDetails;
 }
 
 const Contact: FC<Iprops> = props => {
-  const { t } = useTranslation();
-  const { infoDetail } = props;
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
+  const { infoDetail, id } = props;
   const [showModalAdvise, setShowModalAdvise] = useState<boolean>(false);
-
   const listAction = [
     {
       label: t('detailPost.evaluate'),
+      onPress: () => {},
     },
     {
       label: t('detailPost.follow'),
+      onPress: () => {},
     },
     {
       label: t('detailPost.book'),
+      onPress: () =>
+        navigate(SCREENS.CREATEAPPOIONMENTSCREEN, {
+          id: id,
+          title: infoDetail?.title,
+        }),
     },
     {
       label: t('detailPost.quickPost'),
+      onPress: () => {},
     },
   ];
   const listFee = [
@@ -132,6 +138,7 @@ const Contact: FC<Iprops> = props => {
                 key={action.label}
                 buttonStyle={styles.buttonActionItem}
                 titleStyle={styles.titleActionItem}
+                onPress={action.onPress}
               />
             );
           })}

@@ -30,4 +30,5 @@ export const GET_REAL_ESTATEWAREHOUSES = '/auth/getRealEstateWarehouses';
 export const GET_DETAIL_REAL_ESTATE = '/getRealEstateDetails';
 export const DELETE_REAL_ESTATE = '/auth/delete/realEstate';
 export const EDIT_REAL_STATE = '/auth/realEstate';
+export const CRATE_APPOINTMENT = '/appointment';
 export const CREATE_OR_UPDATE_WARE_HOUSE = '/auth/createOrUpdateWarehouse';

@@ -1,13 +1,15 @@
 import { SCREENS } from '../constants';
 import {
   ChangePasswordScreen,
+  CreateAppoinment,
+  CreatePostScreen,
   ListPostsScreen,
   ListProjectScreen,
   MapScreen,
   PersonalInformationScreen,
+  UserAppoinmentScreen,
   UserDraftPostsScreen,
   UserPostsScreen,
-  CreatePostScreen
 } from '../screens';
 import AddAccountScreen from '../screens/account/AgencyInformationScreen/components/AddAccountScreen';
 import ChangeStatusScreen from '../screens/account/AgencyInformationScreen/components/ChangeStatusScreen';
@@ -102,6 +104,14 @@ const routes = [
   {
     component: CreatePostScreen,
     name: SCREENS.CREATE_POST,
+  },
+  {
+    component: UserAppoinmentScreen,
+    name: SCREENS.USERAPPOINMENTSCREEN,
+  },
+  {
+    component: CreateAppoinment,
+    name: SCREENS.CREATEAPPOIONMENTSCREEN,
   },
 ];
 

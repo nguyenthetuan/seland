@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View, ViewStyle } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
 import { COLORS } from '../../../constants';
@@ -15,6 +15,9 @@ interface DateTimePickerProps {
   label: string;
   labelStyle: {} | [];
   name: string;
+  styleDatePicker?: ViewStyle;
+  mode?: string;
+  disableMaxDate?: boolean;
 }
 
 const DateTimePicker = ({
@@ -22,6 +25,9 @@ const DateTimePicker = ({
   name,
   label = '',
   labelStyle = {},
+  styleDatePicker,
+  mode,
+  disableMaxDate,
 }: DateTimePickerProps) => {
   const {
     field: { onChange, value },
@@ -38,7 +44,7 @@ const DateTimePicker = ({
   };
 
   return (
-    <View>
+    <View style={styleDatePicker}>
       {label && (
         <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
           {label}
@@ -63,10 +69,10 @@ const DateTimePicker = ({
         confirmText={t('button.confirm')}
         date={value ? new Date(value) : new Date()}
         locale="vi"
-        maximumDate={new Date()}
+        maximumDate={!disableMaxDate && new Date()}
         minimumDate={new Date('1900-01-01')}
         modal
-        mode="date"
+        mode={mode || 'date'}
         onCancel={handleCancel}
         onConfirm={handleConfirm}
         open={open}
