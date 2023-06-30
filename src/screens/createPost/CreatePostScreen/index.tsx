@@ -321,7 +321,6 @@ const CreatePostScreen = (props: any) => {
   };
 
   const createSuccess = (value: any) => {
-    console.log('🚀 ~ file: index.tsx:316 ~ createSuccess ~ value:', value);
     if (value?.real_estate_id) {
       if (saveType === YOUR_WANT.POST_PUBLIC) {
         navigate(SCREENS.CONFIRM_POST_SCREEN, {

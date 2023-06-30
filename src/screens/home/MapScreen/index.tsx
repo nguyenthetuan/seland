@@ -43,7 +43,9 @@ const MapScreen = ({}) => {
             route?.params?.realtyID || '185'
           }&latLng=${
             route?.params?.latLng || '16.8018075868834%2C107.28037372286639'
-          }&defaultFilter=true&kindRealty=${route?.params?.kindRealty || ''}`,
+          }&defaultFilter=true&kindRealty=${
+            route?.params?.kindRealty || 'realEstateRental'
+          }`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
