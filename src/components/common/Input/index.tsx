@@ -31,6 +31,7 @@ interface InputCustomProps extends InputProps {
   placeholder?: string;
   required?: boolean;
   rightLabel?: string | ReactNode;
+  rightAfterLabel?: string | ReactNode;
   showPasswordPolicy?: boolean;
   disabled?: boolean;
   inputMode?: InputModeOptions;
@@ -60,9 +61,11 @@ const Input = ({
   showPasswordPolicy = false,
   errorStyle = {},
   rules,
+  inputMode,
   errorMessage,
   styleInput,
   multiline,
+  rightAfterLabel,
   ...props
 }: InputCustomProps) => {
   const {
@@ -83,13 +86,21 @@ const Input = ({
 
   const handleChange = (text: string) => {
     if (onChangeText) onChangeText(text);
-    onChange(
-      isNumeric
-        ? text.replace(/[^\d]/g, '')
-        : isEmail || isPassword || isWebsite
-        ? text.replace(/\s/g, '')
-        : text
-    );
+    let txt = '';
+    switch (inputMode) {
+      case 'decimal':
+        txt = text.replace(/[^\d*\.?\d*$]/g, '');
+        console.log('inputMode', inputMode, txt);
+        break;
+      case 'numeric':
+        txt = text.replace(/[^\d]/g, '');
+        break;
+      default:
+        txt =
+          isEmail || isPassword || isWebsite ? text.replace(/\s/g, '') : text;
+        break;
+    }
+    onChange(txt);
   };
 
   const handleFocus = () => {
@@ -114,10 +125,15 @@ const Input = ({
         label={
           label && (
             <View style={styles.boxLabel}>
-              <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
-                {label}
-                {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
-              </Text>
+              <View>
+                <Text style={StyleSheet.flatten([styles.label, labelStyle])}>
+                  {label}
+                  {required && <Text style={{ color: COLORS.RED_1 }}> *</Text>}
+                  <View style={styles.wrapRightAfterLabel}>
+                    {rightAfterLabel}
+                  </View>
+                </Text>
+              </View>
               {rightLabel}
             </View>
           )

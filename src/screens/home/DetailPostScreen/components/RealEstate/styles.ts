@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
   realEstatePost: {
     width: (deviceWidth - 20) / 2 - 5,
   },
+  textNoValue: {
+    paddingHorizontal: 10,
+  },
 });
 
 export default styles;

@@ -302,11 +302,11 @@ const AccountScreen = () => {
         />
       </ScrollView>
 
-      <OtpModal
+      {/* <OtpModal
         isOpen={isOpenModal}
         phoneNumber={user?.phone_number}
         onCloseModal={onCloseModal}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

@@ -11,31 +11,34 @@ import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
-const HottestRealEstateCategory = () => {
-  const { t } = useTranslation();
-  const [isBuy, setIsBuy] = useState(true);
-  const { listRealEstatesHots } = useSelector(selectHome);
+interface Iprops {
+  isBuy: boolean;
+  setIsBuy: any;
+}
 
-  const handleSelectOptions = value => {
+const RealEstateForYouCategory = ({ isBuy, setIsBuy }: Iprops) => {
+  const { t } = useTranslation();
+  const { listRealEstatesForYou } = useSelector(selectHome);
+
+  const handleSelectOptions = (value: boolean) => {
     setIsBuy(value);
   };
-
   const listHottestRealEstate = useMemo(() => {
     let results = [];
 
     if (isBuy) {
-      results = listRealEstatesHots?.data
-        ?.filter(item => item.demand_id === IDemandId.BUY)
+      results = listRealEstatesForYou?.data
+        ?.filter((item: any) => item.demand_id === IDemandId.BUY)
         ?.slice(0, 3);
     } else {
-      results = listRealEstatesHots?.data
-        ?.filter(item => item.demand_id === IDemandId.LEASE)
+      results = listRealEstatesForYou?.data
+        ?.filter((item: any) => item.demand_id === IDemandId.LEASE)
         ?.slice(0, 3);
     }
     return results;
-  }, [isBuy, listRealEstatesHots?.data]);
+  }, [isBuy, listRealEstatesForYou?.data]);
 
-  if (listRealEstatesHots.loading) {
+  if (listRealEstatesForYou?.loading) {
     return (
       <View>
         <ActivityIndicator
@@ -65,15 +68,14 @@ const HottestRealEstateCategory = () => {
         />
       </View>
       <ScrollView
-        style={styles.carousel}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map(item => (
+        {listHottestRealEstate.map((item: any, index: number) => (
           <ItemHottestRealEstate
-            key={`ItemHottestRealEstate${item?.id}`}
+            key={`RealEstateForYouCategory${item?.id}-${index}`}
             item={item}
-            type={REAL_ESTATE.REAL_ESTATE_HOSTEST}
+            type={REAL_ESTATE.REAL_ESTATE_FOR_YOU}
           />
         ))}
       </ScrollView>
@@ -81,4 +83,4 @@ const HottestRealEstateCategory = () => {
   );
 };
 
-export default HottestRealEstateCategory;
+export default RealEstateForYouCategory;

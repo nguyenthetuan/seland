@@ -12,15 +12,6 @@ export const isPhoneNumber = (value: any) => {
   );
 };
 
-export const validateAddress = (value: string) => {
-  if (value) {
-    if (value.length < 100) {
-      return 'Bạn cần nhập địa chỉ lớn hơn 100 ký tự';
-    }
-  }
-  return undefined;
-};
-
 export const validateApartmentCode = (value: string) => {
   if (value) {
     if (value.length < 2 || value.length > 64) {
@@ -42,7 +33,7 @@ export const validateFormatYear = (value: string) => {
 export const validateNumberBedroom = (value: string) => {
   if (value) {
     if (!check1To99(value)) {
-      return 'Chỉ được phép nhập từ 1 đến 99';
+      return 'Vui lòng nhập giá trị từ 1-99';
     }
   }
   return undefined;
@@ -68,7 +59,7 @@ export const validateName = (value: string) => {
 
 export const validateTitle = (value: string) => {
   if (value) {
-    if (value.length < 5 || value.length > 128) {
+    if (value.trim().length < 40 || value.trim().length > 128) {
       return 'Độ dài tiêu đề: 40-128 kí tự';
     }
   }

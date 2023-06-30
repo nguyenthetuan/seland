@@ -129,6 +129,13 @@ const initValues = {
   demand_id: 1,
 };
 
+const projectOptions = [
+  {
+    label: 'Dự án 1',
+    value: 1,
+  },
+];
+
 const FilterScreen = (props: any) => {
   const { route } = props;
   const { params } = route;
@@ -138,16 +145,16 @@ const FilterScreen = (props: any) => {
 
   const dataFilters = params?.dataFilters;
 
-  const defaultVal: any = Object.assign(initValues, dataFilters);
+  const defaultVal: any = Object.assign({...initValues}, dataFilters ? {...dataFilters}: null);
 
-  const { control, handleSubmit, setValue, getValues } = useForm({
+  const { control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: defaultVal,
   });
 
   const [tabSelected, setTabSelected] = useState(dataFilters?.demand_id || 1);
   const [enableScroll, setEnableScroll] = useState(true);
 
-  const { basicInformation, demands } = useSelector(selectPosts);
+  const { demands } = useSelector(selectPosts);
 
   const { area, bathroom, bedroom, floor, more, price, real_estate_type } =
     useSelector(selectRealEstates);
@@ -200,22 +207,21 @@ const FilterScreen = (props: any) => {
 
   const onSubmit = (data: any) => {
     navigate(SCREENS.LIST_POST, {
-      district_id: data?.district_id,
-      typeHousing: data?.typeHousing,
-      demand_id: tabSelected,
-      dataFilters: data,
+      dataFilters: data
     });
     params?.onSubmit && params?.onSubmit(data);
   };
 
   const clearForm = () => {
     Object.entries(initValues).forEach(
-      ([key, value]: any) => value && setValue(key, value)
+      ([key, value]: any) => {
+        value && setValue(key, value)
+      }
     );
     setValue('address', '');
-    params?.onSubmit &&
-      params?.onSubmit({ ...initValues, priceRange: [], acreage: [] });
-    navigate(SCREENS.LIST_POST, initValues);
+    // params?.onSubmit &&
+    //   params?.onSubmit(initValues);
+    // navigate(SCREENS.LIST_POST, {...initValues});
   };
 
   const fetchDistricts = (params: any, callback?: () => void) => {
@@ -254,21 +260,8 @@ const FilterScreen = (props: any) => {
   };
 
   const refresh = async () => {
-    const { district_id } = basicInformation;
-    const province_id = 'HNI';
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
-      province_id &&
-        fetchDistricts({
-          province_code: province_id,
-        }),
-
-      province_id &&
-        district_id &&
-        fetchWards({
-          province_code: province_id,
-          district_code: district_id,
-        }),
     ]);
   };
 
@@ -291,12 +284,6 @@ const FilterScreen = (props: any) => {
   useEffect(() => {
     setValue('demand_id', tabSelected);
   }, [tabSelected]);
-
-  useEffect(() => {
-    Object.entries(basicInformation).forEach(
-      ([key, value]) => value && setValue(key, value)
-    );
-  }, [basicInformation, setValue]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -336,7 +323,7 @@ const FilterScreen = (props: any) => {
           <View style={styles.wrapFilter}>
             <Text style={styles.txtFilter}>{t('select.area')}</Text>
             <View style={styles.boxRealEstate}>
-              <View style={styles.district}>
+              <View style={styles.district1}>
                 <Select
                   buttonStyle={styles.buttonSelect}
                   buttonTextStyle={styles.textButtonSelect}
@@ -349,7 +336,7 @@ const FilterScreen = (props: any) => {
                   onSelect={handleSelectProvince}
                 />
               </View>
-              <View style={styles.district}>
+              <View style={styles.district2}>
                 <Select
                   buttonStyle={styles.buttonSelect}
                   buttonTextStyle={styles.textButtonSelect}
@@ -362,7 +349,10 @@ const FilterScreen = (props: any) => {
                   onSelect={handleSelectDistrict}
                 />
               </View>
-              <View style={styles.ward}>
+            </View>
+
+            <View style={styles.boxRealEstate}>
+              <View style={styles.district1}>
                 <Select
                   buttonStyle={styles.buttonSelect}
                   buttonTextStyle={styles.textButtonSelect}
@@ -373,6 +363,19 @@ const FilterScreen = (props: any) => {
                   defaultButtonText={t('select.ward') || ''}
                   name="ward_id"
                   onSelect={handleSubmit(onSelect)}
+                />
+              </View>
+              <View style={styles.district2}>
+                <Select
+                  buttonStyle={[styles.buttonSelect]}
+                  buttonTextStyle={styles.textButtonSelect}
+                  rowStyle={styles.buttonSelect}
+                  rowTextStyle={styles.rowTextStyle}
+                  control={control}
+                  data={projectOptions}
+                  defaultButtonText={t('common.project') || ''}
+                  name="project_id"
+                  onSelect={(val: any) => {}}
                 />
               </View>
             </View>
@@ -412,9 +415,7 @@ const FilterScreen = (props: any) => {
           control={control}
           name="priceRange"
           convertDisplay={(val: string) =>
-            (Number(val).toFixed(1) || '0')
-              .toString()
-              + ' tỷ VND'
+            (Number(val).toFixed(1) || '0').toString() + ' tỷ VND'
           }
         />
 
@@ -443,12 +444,12 @@ const FilterScreen = (props: any) => {
           />
         </View>
 
-        <SelectComponent
+        {/* <SelectComponent
           title={t('common.legalDocuments') || ''}
           options={legalDocumentOptions}
           name="legalDocuments"
           control={control}
-        />
+        /> */}
 
         <SelectComponent
           title={t('common.location') || ''}
@@ -475,14 +476,14 @@ const FilterScreen = (props: any) => {
           control={control}
         />
 
-        <SelectComponent
+        {/* <SelectComponent
           title={t('common.numberFloors') || ''}
           options={floor.map((bathroomItem: any) =>
             convertOptionsFromApi(bathroomItem)
           )}
           name="numberFloors"
           control={control}
-        />
+        /> */}
 
         <View style={styles.footer}>
           <Button

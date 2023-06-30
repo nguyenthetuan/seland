@@ -19,7 +19,7 @@ import { COLORS } from '../../../constants';
 import { createPayment, getListRank, selectPosts } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ItemConfirm from '../components/ItemConfirm';
-import PopupConfirmPost from '../components/PopupConfirm';
+import PopupConfirm from '../../../components/common/PopupConfirm';
 import styles from './styles';
 import dayjs from 'dayjs';
 
@@ -73,7 +73,7 @@ const ConfirmPostScreen = () => {
       real_estate_id: route?.params?.realEstateId,
       rank_type_id: 1, // tam thoi fake la 1
     };
-    // dispatchThunk(dispatch, createPayment(paramsPayment), createSuccess);
+    dispatchThunk(dispatch, createPayment(paramsPayment), createSuccess);
   };
 
   const toggleCheck = () => setAgreeTerms(!agreeTerms);
@@ -303,7 +303,7 @@ const ConfirmPostScreen = () => {
             onPress={handleSubmit(handleContinue)}
           />
         </ScrollView>
-        <PopupConfirmPost
+        <PopupConfirm
           ref={confirmCancelPaymentRef}
           onPressButtonRight={handleConfirm}
           onPressButtonLeft={handleCancel}
@@ -312,7 +312,7 @@ const ConfirmPostScreen = () => {
           label="Huỷ thanh toán!"
           description="Khi huỷ thanh toán, bài đăng tự động lưu vào tin nháp."
         />
-        <PopupConfirmPost
+        <PopupConfirm
           ref={confirmPaymentSuccessRef}
           onPressButtonRight={handlePostOther}
           onPressButtonLeft={handleManagePost}

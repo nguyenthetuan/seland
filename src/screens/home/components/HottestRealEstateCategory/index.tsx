@@ -11,30 +11,30 @@ import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
-const RealEstateForYouCategory = () => {
+const HottestRealEstateCategory = ({ isBuy, setIsBuy }: any) => {
   const { t } = useTranslation();
-  const [isBuy, setIsBuy] = useState(true);
-  const { listRealEstatesForYou } = useSelector(selectHome);
+  const { listRealEstatesHots } = useSelector(selectHome);
 
-  const handleSelectOptions = value => {
+  const handleSelectOptions = (value: boolean) => {
     setIsBuy(value);
   };
+
   const listHottestRealEstate = useMemo(() => {
     let results = [];
 
     if (isBuy) {
-      results = listRealEstatesForYou?.data
-        ?.filter(item => item.demand_id === IDemandId.BUY)
+      results = listRealEstatesHots?.data
+        ?.filter((item: any) => item.demand_id === IDemandId.BUY)
         ?.slice(0, 3);
     } else {
-      results = listRealEstatesForYou?.data
-        ?.filter(item => item.demand_id === IDemandId.LEASE)
+      results = listRealEstatesHots?.data
+        ?.filter((item: any) => item.demand_id === IDemandId.LEASE)
         ?.slice(0, 3);
     }
     return results;
-  }, [isBuy, listRealEstatesForYou?.data]);
+  }, [isBuy, listRealEstatesHots?.data]);
 
-  if (listRealEstatesForYou?.loading) {
+  if (listRealEstatesHots.loading) {
     return (
       <View>
         <ActivityIndicator
@@ -64,15 +64,14 @@ const RealEstateForYouCategory = () => {
         />
       </View>
       <ScrollView
-        style={styles.carousel}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map(item => (
+        {listHottestRealEstate.map((item: any, index: number) => (
           <ItemHottestRealEstate
-            key={`RealEstateForYouCategory${item?.id}`}
+            key={`ItemHottestRealEstate${item?.id}-${index}`}
             item={item}
-            type={REAL_ESTATE.REAL_ESTATE_FOR_YOU}
+            type={REAL_ESTATE.REAL_ESTATE_HOSTEST}
           />
         ))}
       </ScrollView>
@@ -80,4 +79,4 @@ const RealEstateForYouCategory = () => {
   );
 };
 
-export default RealEstateForYouCategory;
+export default HottestRealEstateCategory;

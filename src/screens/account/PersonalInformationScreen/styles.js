@@ -82,6 +82,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 28,
   },
+  textWarning: {
+    color: COLORS.WHITE,
+    fontWeight: '700',
+  },
   viewMoreAccountPackages: {
     color: COLORS.BLUE_2,
     fontSize: 14,
@@ -89,6 +93,20 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     textDecorationLine: 'underline',
   },
+  wrapIcon: {
+    alignItems: 'center',
+    height: '100%',
+    justifyContent: 'center',
+  },
+  wrapWarning: {
+    backgroundColor: COLORS.YELLOW_1,
+    borderRadius: 4,
+    marginBottom: 8,
+    marginHorizontal: 12,
+    opacity: 0.6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  }
 });
 
 export default styles;

@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
@@ -13,7 +13,6 @@ import { COLORS } from '../../../../constants';
 import {
   clearDistricts,
   clearWards,
-  createBasicInformation,
   getDistricts,
   getProvinces,
   getWards,
@@ -25,7 +24,6 @@ import { formatDataNameId, formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
 import {
   isYear,
-  validateAddress,
   validateApartmentCode,
   validateFormatYear,
 } from '../../../../utils/validates';
@@ -42,12 +40,17 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
   getValues,
 }) => {
   const { t } = useTranslation();
-  const { basicInformation, realEstateType, projects, demands } =
-    useSelector(selectPosts);
-  const [isBuy, setIsBuy] = useState(basicInformation?.demand_id || 1);
+  const { realEstateType, projects, demands } = useSelector(selectPosts);
+  const [latLong, setLatLong] = useState({
+    lat: 21.0227523,
+    long: 105.9530334,
+  });
+  const [isBuy, setIsBuy] = useState(
+    (getValues && getValues()?.demand_id) || 1
+  );
   const [showInfoApartmentBuilding, setShowInfoApartmentBuilding] =
     useState<boolean>(
-      basicInformation?.real_estate_type_id === 3 ? true : false
+      getValues && getValues()?.real_estate_type_id === 3 ? true : false
     );
   const dispatch = useDispatch();
   const { provinces, districts, wards } = useSelector(selectCommon);
@@ -65,7 +68,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
   const fetchWards = (params: any) => dispatchThunk(dispatch, getWards(params));
 
   const refresh = async () => {
-    const { province_id, district_id } = basicInformation;
+    const { province_id, district_id } = getValues && getValues();
     await Promise.all([
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
@@ -86,12 +89,6 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     refresh();
   }, []);
 
-  useEffect(() => {
-    Object.entries(basicInformation).forEach(
-      ([key, value]) => value && setValue && setValue(key, value)
-    );
-  }, [basicInformation, setValue]);
-
   const handleSelectRealEstateType = (value: { value?: number }) => {
     if (value?.value === 3) {
       setShowInfoApartmentBuilding(true);
@@ -100,13 +97,17 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
-  const handleSelectProvince = (selectedItem: { value: number }) => {
+  const handleSelectProvince = (selectedItem: {
+    value: number;
+    label?: string;
+  }) => {
     setValue && setValue('district_id', null);
     setValue && setValue('ward_id', null);
 
     const { value } = selectedItem;
 
     if (value) {
+      setValue && setValue('address_detail', selectedItem.label);
       fetchDistricts({
         province_code: value,
       });
@@ -116,12 +117,21 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
-  const handleSelectDistrict = (selectedItem: { value: number }) => {
+  const handleSelectDistrict = (selectedItem: {
+    value: number;
+    label: string;
+  }) => {
     setValue && setValue('ward_id', null);
-
     const { value } = selectedItem;
-
+    const address_detail = getValues && getValues().address_detail;
     if (value) {
+      const address_detail_array = address_detail?.split(',');
+
+      setValue &&
+        setValue(
+          'address_detail',
+          `${selectedItem.label}, ${address_detail_array[0]}`
+        );
       fetchWards({
         province_code: getValues && getValues().province_id,
         district_code: value,
@@ -131,10 +141,34 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     }
   };
 
+  const handleSelectWardId = (selectedItem: {
+    value: number;
+    label: string;
+  }) => {
+    const { value } = selectedItem;
+    const address_detail = getValues && getValues().address_detail;
+    if (value) {
+      const address_detail_array = address_detail?.split(',');
+      setValue &&
+        setValue(
+          'address_detail',
+          `${
+            selectedItem.label
+          }, ${address_detail_array[1]?.trim()}, ${address_detail_array[0]?.trim()}`
+        );
+    } else {
+      dispatch(clearWards());
+    }
+  };
+
   const onRegionChangeComplete = (value: {
     latitude: number | string;
     longitude: number | string;
   }) => {
+    setLatLong({
+      lat: value?.latitude,
+      long: value?.longitude,
+    });
     setValue && setValue('lat_long', `${value?.latitude}, ${value?.longitude}`);
   };
 
@@ -170,7 +204,10 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
             >
               <Button
                 buttonStyle={styles.isBuy(item.id === isBuy)}
-                onPress={() => setIsBuy(item.id)}
+                onPress={() => {
+                  setIsBuy(item.id);
+                  setValue && setValue('demand_id', item.id);
+                }}
                 title={item.value}
                 titleStyle={styles.txtType(item.id === isBuy)}
                 outline
@@ -286,6 +323,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
           rules={{ required: 'Vui lòng chọn Phường/xã' }}
           labelStyle={styles.inputLabel}
           name="ward_id"
+          onSelect={handleSelectWardId}
           required
         />
         <Select
@@ -303,9 +341,9 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
           labelStyle={styles.inputLabel}
           name="address_detail"
           required
+          maxLength={100}
           rules={{
             required: 'Vui lòng nhập địa chỉ hiển thị trên tin đăng',
-            validate: validateAddress,
           }}
           renderErrorMessage={false}
         />
@@ -332,7 +370,11 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
               longitudeDelta: 0.21,
             }}
             onRegionChangeComplete={onRegionChangeComplete}
-          />
+          >
+            <Marker
+              coordinate={{ latitude: latLong.lat, longitude: latLong.long }}
+            ></Marker>
+          </MapView>
         </View>
       </KeyboardAwareScrollView>
     </View>

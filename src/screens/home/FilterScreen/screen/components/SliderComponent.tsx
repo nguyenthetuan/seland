@@ -16,6 +16,7 @@ interface SliderComponentProps {
   convertDisplay?: Function;
   name: string;
   control?: any;
+  multiple?: boolean;
 }
 
 interface TOptions {
@@ -90,26 +91,37 @@ export const SliderComponent = ({
   convertDisplay,
   name,
   control,
+  multiple = false,
 }: SliderComponentProps) => {
   const {
     field: { onChange, value = defaultValues },
   } = useController({ control, name });
-
   const [buttonSelected, setButtonSelected] = useState<Array<string | number>>([
-    options[0]?.value,
+    defaultValues[0].toString() + '-' + defaultValues[1].toString(),
   ]);
 
   const handleOnClick = (option: string | number) => {
     let newArrButton = [...buttonSelected];
-    if (buttonSelected.includes(option)) {
-      newArrButton = buttonSelected.filter(i => i !== option);
+    if (multiple) {
+      if (buttonSelected.includes(option)) {
+        newArrButton = buttonSelected.filter(i => i !== option);
+      } else {
+        newArrButton = [...buttonSelected, option];
+      }
     } else {
-      newArrButton = [option];
+      if (buttonSelected?.[0] === option) {
+        newArrButton = [];
+      } else {
+        newArrButton = [option];
+      }
     }
     setButtonSelected(newArrButton);
 
     const arrVal = String(option).split('-');
-    if (arrVal.length === 1) {
+    if (newArrButton.length === 0) {
+      onChange([0, 1])
+    }
+    else if (arrVal.length === 1) {
       onChange([Number(arrVal[0]), Number(arrVal[0])]);
     } else {
       onChange([Number(arrVal[0]), Number(arrVal[1])]);
@@ -117,10 +129,10 @@ export const SliderComponent = ({
   };
 
   useEffect(() => {
-    if (value[0] == defaultValues[0] && value[1] == defaultValues[1]) {
-      setButtonSelected([options[0]?.value]);
+    if (value) {
+      setButtonSelected([value[0].toString() + '-' + value[1].toString()])
     }
-  }, [defaultValues, value]);
+  }, [value]);
 
   const renderSlider = useCallback(() => {
     return (
@@ -166,7 +178,7 @@ export const SliderComponent = ({
       </ScrollView>
       {renderSlider()}
       <Text style={styles.txtValue}>
-        {String(value?.[0]).slice(0,4) || ''}
+        {String(value?.[0]).slice(0, 4) || ''}
         {(convertDisplay
           ? ' - ' + convertDisplay(value?.[1])
           : ' - ' + value?.[1]) || ''}

@@ -34,8 +34,7 @@ ItemInfo.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-const ItemRealEstates = ({ item }) => {
-  console.log('item: ', item);
+const ItemRealEstates = ({ item, is_hot }) => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
   const onPressCall = () => {
@@ -87,9 +86,8 @@ const ItemRealEstates = ({ item }) => {
   };
 
   return (
-    <TouchableOpacity
+    <View
       style={styles.boxItem}
-      onPress={onGoDetail}
     >
       <View style={styles.boxImage}>
         <Image
@@ -102,11 +100,21 @@ const ItemRealEstates = ({ item }) => {
         />
         <View style={styles.boxRank}>
           <View>
-            {[2, 3, 4].includes(item?.rank_id) && (
+            {!is_hot && [2, 3, 4].includes(item?.rank_id) && (
               <View style={styles.rank(backgroundRank())}>
                 <Text style={styles.rankName}>{t(rankName())}</Text>
               </View>
             )}
+            {is_hot && 
+              <View style={styles.boxMonopoly}>
+                <Text
+                  style={styles.monopoly}
+                  onPress={() => Alert.alert('ok')}
+                >
+                  {t('common.monopoly')}
+                </Text>
+              </View>
+            }
           </View>
           <TouchableOpacity
             style={styles.call}
@@ -154,9 +162,11 @@ const ItemRealEstates = ({ item }) => {
           icon={<Compass />}
         />
       </View>
-      <Text style={styles.title(backgroundRank())}>
-        {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
-      </Text>
+      <TouchableOpacity onPress={onGoDetail}>
+        <Text style={styles.title(backgroundRank())}>
+          {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
+        </Text>
+      </TouchableOpacity>
       {[2, 3, 4].includes(item?.rank_id) && (
         <Text
           style={styles.content}
@@ -191,16 +201,18 @@ const ItemRealEstates = ({ item }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
 ItemRealEstates.defaultProps = {
   item: {},
+  is_hot: false,
 };
 
 ItemRealEstates.propTypes = {
   item: PropTypes.object,
+  is_hot: Boolean,
 };
 
 export default ItemRealEstates;

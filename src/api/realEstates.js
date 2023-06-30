@@ -1,4 +1,5 @@
 import {
+  CREATE_OR_UPDATE_WARE_HOUSE,
   CREATE_REAL_ESTATE,
   DELETE_REAL_ESTATE,
   EDIT_REAL_STATE,
@@ -40,4 +41,10 @@ export const requestGetDetailRealEstates = id =>
 export const requestDeleteRealEstates = id =>
   deleteBase(`${DELETE_REAL_ESTATE}/${id}`);
 
-export const editRealStates = params => post(`${EDIT_REAL_STATE}/params.id`, params.formData)
+export const editRealStates = params =>
+  post(`${EDIT_REAL_STATE}/${params.id}`, params.formData, {
+    'Content-type': 'multipart/form-data',
+  });
+
+export const requestCreateWareHouse = params =>
+  post(CREATE_OR_UPDATE_WARE_HOUSE, params);

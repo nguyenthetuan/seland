@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { IconWebchat, IconZalo } from '../../../../../assets';
 import { IconSvg } from '../../../../../assets/icons/IconSvg';
 import { Button, Text } from '../../../../../components';
@@ -9,7 +9,7 @@ import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDet
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '../../../../../constants';
-
+import ModalAdvise from './components/AdviseModal';
 interface Iprops {
   infoDetail: IRealEstateDetails;
 }
@@ -18,6 +18,7 @@ const Contact: FC<Iprops> = props => {
   const { navigate } = useNavigation();
   const { t } = useTranslation();
   const { infoDetail, id } = props;
+  const [showModalAdvise, setShowModalAdvise] = useState<boolean>(false);
   const listAction = [
     {
       label: t('detailPost.evaluate'),
@@ -63,17 +64,23 @@ const Contact: FC<Iprops> = props => {
       onPressCall(infoDetail?.contacts?.phone_owner);
     }
   };
+  const goToContact = () => {
+    navigate(SCREENS.PERSONAL_PAGE_SCREEN);
+  };
 
   return (
     <View style={styles.contactWrapper}>
       <View style={styles.contact}>
         <View style={styles.infoContact}>
-          <View style={styles.avatar}>
+          <TouchableOpacity
+            style={styles.avatar}
+            onPress={goToContact}
+          >
             <Text style={styles.textAvatar}>
               {infoDetail?.contacts?.name_owner &&
                 infoDetail.contacts.name_owner.charAt(0)}
             </Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.contactName}>
             <Text style={styles.contactNameText}>
               {infoDetail?.contacts?.name_owner}
@@ -81,7 +88,9 @@ const Contact: FC<Iprops> = props => {
             <Text style={styles.contactNameTextSdt}>
               SĐT: {infoDetail?.contacts?.phone_owner}
             </Text>
-            <Text style={styles.contactSee}>Xem tất cả tin đăng</Text>
+            <TouchableOpacity onPress={goToContact}>
+              <Text style={styles.contactSee}>Xem tất cả tin đăng</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.flex}>
@@ -117,6 +126,7 @@ const Contact: FC<Iprops> = props => {
           buttonStyle={styles.adviseButton}
           icon={<IconWebchat />}
           titleStyle={styles.adviseText}
+          onPress={() => setShowModalAdvise(true)}
         />
         <View style={styles.listAction}>
           {listAction.map(action => {
@@ -166,6 +176,10 @@ const Contact: FC<Iprops> = props => {
         radius={5}
         buttonStyle={styles.buttonCollapse}
         titleStyle={styles.titleCollapse}
+      />
+      <ModalAdvise
+        visible={showModalAdvise}
+        setVisible={setShowModalAdvise}
       />
     </View>
   );

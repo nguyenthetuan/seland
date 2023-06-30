@@ -13,6 +13,8 @@ import IconInterior from './interior';
 import IconRoad from './road';
 import IconStructure from './structure';
 import { IconSvgType } from './type';
+import CloseIcon from './closeIcon';
+import IconPre from './IconPre';
 interface IconSvgProps {
   name: IconSvgType;
   color?: string;
@@ -118,6 +120,21 @@ const IconSvg: React.FC<IconSvgProps> = ({ name, color, width, height }) => {
           <IconEdit
             width={width}
             height={height}
+          />
+        );
+      case 'close':
+        return (
+          <CloseIcon
+            width={width}
+            height={height}
+          />
+        );
+      case 'pre':
+        return (
+          <IconPre
+            width={width}
+            height={height}
+            color={color}
           />
         );
 

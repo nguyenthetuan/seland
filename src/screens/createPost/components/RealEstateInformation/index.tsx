@@ -25,34 +25,42 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   getValues,
 }) => {
   const { t } = useTranslation();
-  const { realEstateInformation, information, unitPrices, utilities } =
+  const { information, unitPrices, utilities, demands } =
     useSelector(selectPosts);
-  const [average, setAverage] = useState(0);
+  const {
+    utilities_id,
+    demand_id,
+    furniture_id,
+    security_id,
+    road_type_id,
+    legal_documents_id,
+    house_status_id,
+    usage_condition_id,
+    location_type_id,
+    price_unit,
+  } = getValues && getValues();
+  const [average, setAverage] = useState('');
+  const ONE_THOUSAND = 1000;
+  const ONE_MIL = ONE_THOUSAND * 1000;
+  const ONE_BIL = ONE_MIL * 1000;
   const [utilitiesId, setUtilitiesId] = useState(
-    (getValues && getValues().utilities_id.split(',').map(Number)) || []
+    utilities_id.split(',').map(Number) || []
   );
   const [furnitureId, setFurnitureId] = useState<any[]>(
-    (getValues && getValues().furniture_id.split(',').map(Number)) || []
+    furniture_id.split(',').map(Number) || []
   );
   const [securityId, setSecurityId] = useState<any[]>(
-    (getValues && getValues().security_id.split(',').map(Number)) || []
+    security_id.split(',').map(Number) || []
   );
   const [roadTypeId, setRoadTypeId] = useState<any[]>(
-    (getValues && getValues().road_type_id.split(',').map(Number)) || []
+    road_type_id.split(',').map(Number) || []
   );
   const [state, setState] = useState({
-    legalDocumentsId:
-      (getValues && getValues().legal_documents_id) ||
-      information[2]?.children[0].id,
-    houseStatusId:
-      (getValues && getValues().house_status_id) ||
-      information[3]?.children[0].id,
-    usageConditionId:
-      (getValues && getValues().usage_condition_id) ||
-      information[4]?.children[0].id,
-    location:
-      (getValues && getValues().location_type_id) ||
-      information[5]?.children[0].id,
+    legalDocumentsId: legal_documents_id || information[2]?.children[0].id,
+    houseStatusId: house_status_id || information[3]?.children[0].id,
+    usageConditionId: usage_condition_id || information[4]?.children[0].id,
+    location: location_type_id || information[5]?.children[0].id,
+    priceUnit: price_unit === 1 ? true : false || true,
   });
   const [show, setShow] = useState<{
     nearbyAmenities: boolean;
@@ -81,20 +89,46 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   ];
 
   useEffect(() => {
-    Object.entries(realEstateInformation).forEach(
-      ([key, value]) => value && setValue && setValue(key, value)
-    );
-  }, [realEstateInformation, setValue]);
+    setValue && setValue('legal_documents_id', information[2]?.children[0].id);
+    setValue && setValue('location_type_id', information[5]?.children[0].id);
+    setValue && setValue('house_status_id', information[3]?.children[0].id);
+    setValue && setValue('usage_condition_id', information[4]?.children[0].id);
+  }, []);
+
+  useEffect(() => {
+    onBlurPrice();
+  }, [state.priceUnit]);
 
   const onBlurPrice = () => {
     const value = getValues && getValues();
     if (value?.area && value?.price) {
-      setAverage(Number(value?.price) / Number(value?.area));
+      const priceInDong = state.priceUnit
+        ? Number(value?.price) * ONE_BIL
+        : Number(value?.price) * ONE_MIL;
+      const result = formatPricePerUnit(priceInDong, Number(value?.area));
+      setAverage(result ?? '');
+    } else {
+      setAverage('');
+    }
+  };
+
+  const formatPricePerUnit = (price: number, area: number) => {
+    const pricePerUnit = price / area;
+    if (pricePerUnit >= ONE_BIL) {
+      return (pricePerUnit / ONE_BIL).toFixed(2) + ' Tỷ/m2';
+    }
+    if (pricePerUnit >= ONE_MIL) {
+      return (pricePerUnit / ONE_MIL).toFixed(2) + ' Triệu/m2';
+    }
+    if (pricePerUnit >= ONE_THOUSAND) {
+      return (pricePerUnit / ONE_THOUSAND).toFixed(2) + ' Nghìn/m2';
     }
   };
   const handleSelectUtils = (value: any) => {
     if (utilitiesId.includes(value)) {
-      const array = utilitiesId?.filter((item: any) => item !== value);
+      const array = utilitiesId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setUtilitiesId(array);
       setValue && setValue('utilities_id', array.toString());
     } else {
@@ -105,7 +139,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
 
   const handleFurniture = (value: any) => {
     if (furnitureId.includes(value)) {
-      const array = furnitureId?.filter((item: any) => item !== value);
+      const array = furnitureId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setFurnitureId(array);
       setValue && setValue('furniture_id', array.toString());
     } else {
@@ -116,7 +152,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
 
   const handleSecurity = (value: any) => {
     if (securityId.includes(value)) {
-      const array = securityId?.filter((item: any) => item !== value);
+      const array = securityId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setSecurityId(array);
       setValue && setValue('security_id', array.toString());
     } else {
@@ -127,7 +165,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
 
   const handleRoadType = (value: any) => {
     if (roadTypeId.includes(value)) {
-      const array = roadTypeId?.filter((item: any) => item !== value);
+      const array = roadTypeId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setRoadTypeId(array);
       setValue && setValue('road_type_id', array.toString());
     } else {
@@ -165,36 +205,37 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         <View style={styles.boxSelectAddress}>
           <Input
             control={control}
-            inputMode="numeric"
-            isNumeric
+            inputMode="decimal"
             rules={{ required: 'Vui lòng nhập Diện tích' }}
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.acreage')}
             labelStyle={styles.inputLabel}
             name="area"
             required
+            maxLength={32}
             rightIcon={<Text>m²</Text>}
             renderErrorMessage={false}
+            onBlur={onBlurPrice}
           />
           <View>
             <Input
               control={control}
-              inputMode="numeric"
-              isNumeric
+              inputMode="decimal"
               rules={{ required: 'Vui lòng nhập giá' }}
               inputContainerStyle={styles.inputContainerStyle}
-              label={t('input.price')}
+              label={
+                demand_id === demands[0]?.id
+                  ? t('input.price')
+                  : t('input.leasePrice')
+              }
               labelStyle={styles.inputLabel}
-              name="price"
+              name={'price'}
               required
+              maxLength={64}
               onBlur={onBlurPrice}
               renderErrorMessage={false}
             />
-            {average > 0 && (
-              <Text style={styles.m2}>{`~ ${average.toFixed(
-                0
-              )} triệu/m2`}</Text>
-            )}
+            {average && <Text style={styles.m2}>{average}</Text>}
           </View>
         </View>
         <View style={styles.boxSelectAddress}>
@@ -207,11 +248,17 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
             required
+            onSelect={(value: { value: number }) =>
+              setState({
+                ...state,
+                priceUnit: value?.value === 1 ? true : false,
+              })
+            }
             name="price_unit"
           />
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -229,7 +276,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         <View style={styles.boxSelectAddress}>
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.numberBedrooms')}
@@ -242,7 +289,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           />
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -282,7 +329,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           </View>
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -291,6 +338,7 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             label={t('input.length')}
             labelStyle={styles.inputLabel}
             name="length"
+            maxLength={12}
             renderErrorMessage={false}
             rightIcon={<Text>m</Text>}
           />
@@ -298,19 +346,20 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         <View style={styles.boxSelectAddress}>
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.width')}
             labelStyle={styles.inputLabel}
             name="width"
+            maxLength={12}
             renderErrorMessage={false}
             rightIcon={<Text>m</Text>}
           />
 
           <Input
             control={control}
-            inputMode="numeric"
+            inputMode="decimal"
             isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
@@ -319,36 +368,41 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             label={t('input.laneWidth')}
             labelStyle={styles.inputLabel}
             name="lane_width"
+            maxLength={12}
             renderErrorMessage={false}
             rightIcon={<Text>m</Text>}
           />
         </View>
         <Text style={styles.realEstateType}>{t('common.legalDocuments')}</Text>
         <View style={styles.boxTypeRealEstate}>
-          {information[2]?.children.map(item => (
-            <View
-              key={`buySell${item.id}`}
-              style={styles.itemRealEstate}
-            >
-              <Button
-                buttonStyle={styles.btnTypeRealEstate(
-                  item.id === state.legalDocumentsId
+          {information[2]?.children.map(
+            (item: { id: any; value: string | null | undefined }) => (
+              <View
+                key={`buySell${item.id}`}
+                style={styles.itemRealEstate}
+              >
+                <Button
+                  buttonStyle={styles.btnTypeRealEstate(
+                    item.id === state.legalDocumentsId
+                  )}
+                  onPress={() => {
+                    setValue('legal_documents_id', item.id);
+                    setState({ ...state, legalDocumentsId: item.id });
+                  }}
+                  title={item.value}
+                  titleStyle={styles.txtType(
+                    item.id === state.legalDocumentsId
+                  )}
+                  outline
+                />
+                {item?.id === state.legalDocumentsId && (
+                  <View style={styles.checked}>
+                    <TickButton />
+                  </View>
                 )}
-                onPress={() => {
-                  setValue('legal_documents_id', item.id);
-                  setState({ ...state, legalDocumentsId: item.id });
-                }}
-                title={item.value}
-                titleStyle={styles.txtType(item.id === state.legalDocumentsId)}
-                outline
-              />
-              {item?.id === state.legalDocumentsId && (
-                <View style={styles.checked}>
-                  <TickButton />
-                </View>
-              )}
-            </View>
-          ))}
+              </View>
+            )
+          )}
         </View>
         <Text style={styles.label}>{t('common.currentStatusHouse')}</Text>
         <View style={styles.boxType}>

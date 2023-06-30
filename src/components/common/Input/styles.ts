@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
     paddingHorizontal: 12,
-    paddingVertical: 8,
     height: 40,
   }),
   label: {
@@ -42,6 +41,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     // lineHeight: 24,
+  },
+  wrapRightAfterLabel: {
+    paddingLeft: 8,
   },
 });
 

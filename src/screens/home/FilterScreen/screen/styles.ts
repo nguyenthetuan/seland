@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
   boxRealEstate: {
     flexDirection: 'row',
     flex: 1,
+    justifyContent: 'space-between'
+  },
+  areaRange: {
+    width: '24%',
+    marginLeft: 4,
   },
   btnSelect: {
     height: 30,
@@ -28,9 +33,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
     flex: 1,
   },
-  district: {
+  district1: {
+    width: '50%',
     paddingRight: 4,
-    width: '33%',
+    marginBottom: 6,
+  },
+  district2: {
+    width: '50%',
+    paddingLeft: 4,
+    marginBottom: 6,
   },
   filterPost: {
     color: COLORS.GRAY_8,
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   ward: {
-    width: '33%',
+    width: '24%',
   },
   wrapArea: {
     flexDirection: 'row',

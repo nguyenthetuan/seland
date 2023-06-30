@@ -1,25 +1,31 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
-import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { ActivityIndicator, SafeAreaView, View } from 'react-native';
 import { WebView } from 'react-native-webview';
-
 import { COLORS } from '../../../constants';
 import styles from './styles';
 import { store } from '../../../redux';
 
-interface MapsProps {
-  realtyID?: number;
-  latLng?: string;
-}
-const MapScreen = ({ realtyID, latLng }: MapsProps) => {
+const MapScreen = ({}) => {
+  const route: any = useRoute();
   const { navigate, goBack } = useNavigation();
   const { token } = store.getState().auth;
-
   const runFirst = `
-      window.document.getElementsByTagName("header-page-seland")[0].style.display = "none";
-      true; // note: this is required, or you'll sometimes get silent failures
+      window.document.getElementsByClassName("header-page-seland")[0].style.display = "none";
+      true; // note: this is required, or you'll sometimes get silent failuresec
     `;
+
+  const renderLoading = () => {
+    return (
+      <View>
+        <ActivityIndicator
+          color={'red'}
+          size="small"
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -32,15 +38,21 @@ const MapScreen = ({ realtyID, latLng }: MapsProps) => {
         </View>
       </SafeAreaView>
       <WebView
-        startInLoadingState={true}
         source={{
-          uri: `https://tamthanh-staging.vnextglobal.com/checkLandPlaning?realtyID=${
-            realtyID || '185'
-          }&latLng=${latLng || '16.8018075868834%2C107.28037372286639'}`,
+          uri: `https://tamthanh2.vnextglobal.com/checkLandPlaning?realtyID=${
+            route?.params?.realtyID || '185'
+          }&latLng=${
+            route?.params?.latLng || '16.8018075868834%2C107.28037372286639'
+          }&defaultFilter=true&kindRealty=${
+            route?.params?.kindRealty || 'realEstateRental'
+          }`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }}
+        renderLoading={renderLoading}
+        startInLoadingState={true}
+        javaScriptEnabledAndroid={true}
         injectedJavaScript={runFirst}
         style={{ flex: 1 }}
       />

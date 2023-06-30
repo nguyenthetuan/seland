@@ -212,7 +212,10 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
   }, [typeUpload]);
 
   const handleRemoveVideo = (e: any) => {
-    if (e.nativeEvent.text) setTypeUpload({ ...typeUpload, video: [] });
+    if (e.nativeEvent.text) {
+      setTypeUpload({ ...typeUpload, video: [] });
+      setValue && setValue('video', []);
+    }
   };
 
   return (
@@ -247,33 +250,66 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
 
         {file.length ? (
           <View style={styles.boxFile}>
-            {file?.map((item: { fileName?: string; uri?: string }) => (
-              <View
-                key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
-                  item?.fileName
-                }`}
-                style={styles.boxImage}
-              >
-                {typeUpload.isPhoto ? (
-                  <Image
-                    source={{ uri: item?.uri }}
-                    style={styles.image}
-                  />
-                ) : (
-                  <View style={[styles.image]} />
-                )}
+            {file?.map(
+              (item: {
+                fileName?: string;
+                uri?: string;
+                fileSize: number;
+                update?: boolean;
+              }) => {
+                return (
+                  <View
+                    key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
+                      item?.uri
+                    }`}
+                    style={styles.boxImage}
+                  >
+                    {typeUpload.isPhoto ? (
+                      <>
+                        <Image
+                          source={{ uri: item?.uri }}
+                          style={styles.image}
+                        />
+                        {item?.update ? null : (
+                          <Text style={styles.fileSize}>{`${(
+                            item?.fileSize / 1048576
+                          ).toFixed(2)}/MB`}</Text>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <View
+                          style={[
+                            styles.image,
+                            { alignItems: 'center', justifyContent: 'center' },
+                          ]}
+                        >
+                          <Icon
+                            name="movie"
+                            color={COLORS.GRAY_1}
+                          />
+                        </View>
+                        {item?.update ? null : (
+                          <Text style={styles.fileSize}>{`${(
+                            item?.fileSize / 1048576
+                          ).toFixed(2)}/MB`}</Text>
+                        )}
+                      </>
+                    )}
 
-                <Pressable
-                  style={styles.btnDeleteImage}
-                  onPress={() => handleDeleteFile(item?.fileName)}
-                >
-                  <Icon
-                    name="close"
-                    size={20}
-                  />
-                </Pressable>
-              </View>
-            ))}
+                    <Pressable
+                      style={styles.btnDeleteImage}
+                      onPress={() => handleDeleteFile(item?.fileName)}
+                    >
+                      <Icon
+                        name="close"
+                        size={20}
+                      />
+                    </Pressable>
+                  </View>
+                );
+              }
+            )}
             {typeUpload?.isPhoto && file.length < 11 ? (
               <Pressable
                 style={styles.btnAddImage}
@@ -316,7 +352,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             required
             inputContainerStyle={styles.inputContainerTitle}
             rules={{
-              required: 'Vui lòng nhập tiêu đề bài viết',
+              required: 'Vui lòng nhập tiêu đề',
               validate: validateTitle,
             }}
             renderErrorMessage={false}

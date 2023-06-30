@@ -42,7 +42,7 @@ const WarehouseLandScreen = () => {
   const onFilterModal = (value: IModalFilterWarehouse) => {
     dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
   };
-  const onChangeSearch = (value: string) => {
+  const onSearch = (value: string) => {
     dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
   };
 
@@ -53,26 +53,21 @@ const WarehouseLandScreen = () => {
   useEffect(() => {
     onLoadRealEstateWarehouses();
   }, [dispatch]);
-  if (loadingRealEstateWarehouses) {
-    return (
-      <Loading
-        visible={loadingRealEstateWarehouses}
-        textContent={`${t('common.loading')}`}
-        color={COLORS.BLUE_1}
-        textStyle={styles.spinnerTextStyle}
-      />
-    );
-  }
+
   return (
     <>
       <View style={styles.itemWarehouseLand}>
         <HeaderListPosts
           control={control}
-          handleSubmit={handleSubmit}
-          onChangeSearch={onChangeSearch}
+          handleSubmit={onSearch}
           getValues={getValues}
         />
-
+        <Loading
+          visible={loadingRealEstateWarehouses}
+          textContent={`${t('common.loading')}`}
+          color={COLORS.BLUE_1}
+          textStyle={styles.spinnerTextStyle}
+        />
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}

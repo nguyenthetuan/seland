@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 
 import { LogoZoning } from '../../../../assets';
 import { Input, Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import styles from './styles';
 
 interface Iprops {
@@ -19,15 +19,19 @@ interface Iprops {
 
 const HeaderListPosts: FC<Iprops> = props => {
   const { t } = useTranslation();
-  const { goBack } = useNavigation();
-  const { handleSubmit, onChangeSearch, getValues } = props;
+  const { goBack, navigate } = useNavigation();
+  const { handleSubmit } = props;
   const control = props?.control;
   const {
     field: { onChange, value },
   } = useController({ control, name: 'title' });
 
+  const navigateMapScreen = () => {
+    navigate(SCREENS.MAPS);
+  };
+
   const submit = () => {
-    onChangeSearch && handleSubmit(onChangeSearch());
+    handleSubmit && handleSubmit(value);
   };
 
   return (
@@ -42,24 +46,30 @@ const HeaderListPosts: FC<Iprops> = props => {
             name="title"
             control={control}
             returnKeyType="search"
-            // onSubmitEditing={value => onChange(value)}
+            onSubmitEditing={submit}
             onEndEditing={value => onChange(value)}
-            // onChangeText={value => onChange(value)}
-            placeholder={t('placeholder.searchTitle') || ''}
+            placeholder={
+              (t('placeholder.searchTitle').length <= 21
+                ? t('placeholder.searchTitle')
+                : t('placeholder.searchTitle').slice(0, 21) + '...' ||
+                  '') as string
+            }
             rightIcon={
-              <Icon
-                name="search"
-                onPress={submit}
-              />
+              <TouchableOpacity onPress={submit}>
+                <Icon name="search" />
+              </TouchableOpacity>
             }
           />
         </View>
 
         <Icon name="my-location" />
-        <View style={styles.boxZoning}>
+        <TouchableOpacity
+          style={styles.boxZoning}
+          onPress={navigateMapScreen}
+        >
           <LogoZoning />
           <Text style={styles.checkZoning}>{t('heading.checkZoning')}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

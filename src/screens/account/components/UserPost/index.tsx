@@ -1,41 +1,36 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
-import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Acreage, Bathroom, Bedroom, Compass } from '../../../../assets';
 import { Button, Input, Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
-import {
-  deleteRealEstatesUser,
-  editPost,
-  selectUserRealEstates,
-} from '../../../../features'
-import { dispatchThunk, yup } from '../../../../utils';
+import { COLORS, SCREENS } from '../../../../constants';
+import { selectUserRealEstates } from '../../../../features';
+import { yup } from '../../../../utils';
 import styles from './styles';
-import { SCREENS } from '../../../../constants'
 
+const STATUS_NAME = {
+  PUBLIC_POSTS: 'Công khai',
+  PUBLIC: 'Công khai',
+  HIDDEN: 'Đã hạ',
+  REJECTED: 'Không duyệt',
+  EXPIRED: 'Hết hạn',
+  PRIVATE_POSTS: 'Riêng tư',
+  DRAFF_POSTS: 'Tin nháp',
+  PENDING_REVIEW: 'Chờ duyệt',
+};
 
-const Info = ({ value, icon }) => (
+const Info = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={[styles.info, styles.row]}>
     {icon}
     <Text style={styles.value}>{value}</Text>
   </View>
 );
-
-Info.defaultProps = {
-  value: '',
-};
-
-Info.propTypes = {
-  icon: PropTypes.node.isRequired,
-  value: PropTypes.string,
-};
 
 const schema = yup.object({
   code: yup.string(),
@@ -44,10 +39,14 @@ const schema = yup.object({
   end_date: yup.string(),
 });
 
-const UserPost = (props) => {
-  const { item, refreshData } = props
-  const { navigate, goBack } = useNavigation();
-  const dispatch = useDispatch();
+interface UserPostProps {
+  item?: any;
+  type?: 'DRAFT' | 'PRIVATE' | 'PUBLIC';
+  deletePost?: Function;
+}
+
+const UserPost = ({ item, type, deletePost }: UserPostProps) => {
+  const { navigate } = useNavigation();
   const { t } = useTranslation();
   const { loadingDelete } = useSelector(selectUserRealEstates);
 
@@ -70,8 +69,9 @@ const UserPost = (props) => {
   });
 
   const handleCall = () => {
-    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${item?.phone_number
-      }`;
+    const callUrl = `tel${Platform.OS === 'android' ? '' : 'prompt'}:${
+      item?.phone_number
+    }`;
     Linking.canOpenURL(callUrl).then(supported => {
       if (!supported) {
         Alert.alert(t('common.unsupportedPhoneNumber'));
@@ -94,34 +94,55 @@ const UserPost = (props) => {
     }
   };
 
-  const rankName = () => {
-    switch (item?.rank_id) {
-      case 2:
-        return 'common.vipSilver';
-      case 3:
-        return 'common.vipGold';
+  const tagBackground = () => {
+    switch (item?.status_name) {
+      case STATUS_NAME.PUBLIC:
+        return COLORS.GREEN_1;
+      case STATUS_NAME.PENDING_REVIEW:
+        return COLORS.YELLOW_8;
+      case STATUS_NAME.REJECTED:
+      case STATUS_NAME.EXPIRED:
+      case STATUS_NAME.HIDDEN:
+        return COLORS.RED_2;
+      case STATUS_NAME.DRAFF_POSTS:
+      case STATUS_NAME.PRIVATE_POSTS:
+        return COLORS.PURPLE_2;
       default:
-        return 'common.vipDiamond';
-    }
-  };
-  const onDeletePost = async () => {
-    try {
-      if (item?.id) {
-        dispatchThunk(dispatch, deleteRealEstatesUser(item?.id), () => {
-          goBack()
-        });
-        refreshData()
-        Alert.alert(t('common.deleteSuccess'));
-      }
-    } catch (error) {
-      f
-      console.log(error);
+        return COLORS.RED_1;
     }
   };
 
+  const rankNameColor = () => {
+    switch (item?.status_name) {
+      case STATUS_NAME.PUBLIC:
+      case STATUS_NAME.PENDING_REVIEW:
+      case STATUS_NAME.REJECTED:
+      case STATUS_NAME.EXPIRED:
+      case STATUS_NAME.HIDDEN:
+        return COLORS.WHITE_1;
+      case STATUS_NAME.DRAFF_POSTS:
+      case STATUS_NAME.PRIVATE_POSTS:
+        return COLORS.BLACK_1;
+      default:
+        return COLORS.BLACK_1;
+    }
+  };
+
+  const rankName = () => {
+    switch (item?.status_name) {
+      case STATUS_NAME.PUBLIC:
+        return t('common.active');
+      default:
+        return item?.status_name;
+    }
+  };
+  const onDeletePost = () => {
+    deletePost && deletePost(item.id);
+  };
+
   const navigateToEdit = () => {
-    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id })
-  }
+    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id, type });
+  };
 
   return (
     <TouchableOpacity style={styles.item}>
@@ -135,9 +156,9 @@ const UserPost = (props) => {
       />
       <View style={[styles.rankContainer, styles.row]}>
         <View>
-          {[2, 3, 4].includes(item?.rank_id) && (
-            <View style={styles.rank(rankBackground())}>
-              <Text style={styles.rankName}>{t(rankName())}</Text>
+          {item?.status_name && (
+            <View style={styles.tag(tagBackground())}>
+              <Text style={styles.rankName(rankNameColor())}>{rankName()}</Text>
             </View>
           )}
         </View>
@@ -235,36 +256,42 @@ const UserPost = (props) => {
           renderErrorMessage={false}
         />
       </View>
-      <View style={[styles.buttons, styles.row]}>
-        <View style={[styles.buttonLeft, styles.flex]}>
+      <View style={[styles.buttons, styles.row, { flex: 1 }]}>
+        <View style={[styles.buttonLeft, { flex: type === 'DRAFT' ? 1 : 0.5 }]}>
           <Button
             color={COLORS.GREEN_1}
             title={t('button.editPost')}
             onPress={navigateToEdit}
           />
         </View>
-        <View style={[styles.flex, styles.buttonMiddle]}>
-          <Button
-            color={COLORS.RED_2}
-            title={t('button.hidePost')}
-            onPress={onDeletePost}
-            loading={loadingDelete}
-          />
-        </View>
-        <View style={[styles.flex, styles.buttonRight]}>
-          <Button title={t('button.actions')} />
-        </View>
+        {type === 'DRAFT' ? (
+          <View style={[styles.buttonLeft, { flex: 1 }]}>
+            <Button
+              color={COLORS.RED_2}
+              title={t('button.delete')}
+              onPress={onDeletePost}
+              loading={loadingDelete}
+            />
+          </View>
+        ) : (
+          <View style={{ flexDirection: 'row', flex: 1 }}>
+            <View style={[styles.buttonMiddle, { flex: 1 }]}>
+              {/* Todo xoa tin, sau thay UI item khac */}
+              <Button
+                color={COLORS.RED_2}
+                title={t('button.delete')}
+                onPress={onDeletePost}
+                loading={loadingDelete}
+              />
+            </View>
+            <View style={[styles.buttonRight, { flex: 1 }]}>
+              <Button title={t('button.actions')} />
+            </View>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
-};
-
-UserPost.defaultProps = {
-  item: {},
-};
-
-UserPost.propTypes = {
-  item: PropTypes.object,
 };
 
 export default UserPost;

@@ -1,10 +1,16 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  TouchableOpacity,
+  View,
+  Modal,
+  TextInput,
+} from 'react-native';
 import { Icon } from '@rneui/base';
 import { Control, useController } from 'react-hook-form';
-import { Button, Select } from '../../../../../components';
+import { Button, Select, Text } from '../../../../../components';
 import { dispatchThunk } from '../../../../../utils';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,10 +18,12 @@ import {
   loadListAgency,
   selectWareHouses,
   loadRealEstateWarehouses,
+  createWareHouse,
 } from '../../../../../features';
 import { formatSelect } from '../../../../../utils/format';
 import ModalFilter from '../../../UserPostsScreen/components/ModalFilter';
-import { YOUR_WANT } from '../../../../../constants';
+import { COLORS, YOUR_WANT } from '../../../../../constants';
+import Toast from 'react-native-simple-toast';
 
 interface Iprops {
   control: Control<any>;
@@ -32,6 +40,10 @@ const FilterWarehouse: FC<Iprops> = props => {
   const {
     field: { onChange, value },
   } = useController({ control, name: 'status' });
+  const [showAddWare, setShowAddWare] = useState<boolean>(false);
+  const [nameWare, setNameWare] = useState<string>('');
+  const refSelect = useRef();
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -102,6 +114,7 @@ const FilterWarehouse: FC<Iprops> = props => {
     },
   ];
   const { listAllWareHouses, listAgency } = useSelector(selectWareHouses);
+
   const listAllWareHousesConvert = (listAllWareHouses &&
     Array.isArray(listAllWareHouses) &&
     formatSelect(listAllWareHouses)) || [
@@ -131,6 +144,28 @@ const FilterWarehouse: FC<Iprops> = props => {
     dispatchThunk(dispatch, loadListAllWareHouses());
     dispatchThunk(dispatch, loadListAgency());
   }, [dispatch]);
+
+  const selectFilter = handleSubmit(onSelect);
+
+  const onSelectWareHouses = (value: any) => {
+    if (value?.value === undefined) {
+      setShowAddWare(!showAddWare);
+      return;
+    }
+    selectFilter();
+  };
+
+  const createWareSuccess = () => {
+    Toast.show('Tạo kho BDS thành công.');
+  };
+
+  const handleAddWare = () => {
+    const params = {
+      warehouse_name: nameWare,
+    };
+    setShowAddWare(!showAddWare);
+    dispatchThunk(dispatch, createWareHouse(params), createWareSuccess);
+  };
 
   return (
     <>
@@ -166,7 +201,7 @@ const FilterWarehouse: FC<Iprops> = props => {
               control={control}
               data={listAllWareHousesConvert}
               name="real_estate_warehouse_id"
-              onSelect={handleSubmit(onSelect)}
+              onSelect={onSelectWareHouses}
               title={`${t('upgradeAccount.realEstatesSelect')}` || ''}
             />
           </View>
@@ -179,7 +214,7 @@ const FilterWarehouse: FC<Iprops> = props => {
               control={control}
               data={listAgencyConvert}
               name="area_range_id"
-              onSelect={handleSubmit(onSelect)}
+              onSelect={selectFilter}
               title={`${t('upgradeAccount.agencySelect')}` || ''}
             />
           </View>
@@ -199,6 +234,40 @@ const FilterWarehouse: FC<Iprops> = props => {
           onSelect={handleSubmit(onSelect)}
         />
       </View>
+
+      <Modal
+        visible={showAddWare}
+        transparent
+      >
+        <View style={styles.container}>
+          <View style={styles.boxPopup}>
+            <Text style={styles.title}>Thêm kho BDS</Text>
+            <TextInput
+              placeholder="Nhập tên kho BDS"
+              onChangeText={text => setNameWare(text)}
+              value={nameWare}
+              style={styles.input}
+            />
+            <View style={styles.boxButton}>
+              <Button
+                buttonStyle={[styles.btnPopup, { borderColor: COLORS.GRAY_4 }]}
+                titleStyle={{ color: COLORS.GRAY_7 }}
+                title={t('button.cancel')}
+                outline
+                onPress={() => setShowAddWare(false)}
+              />
+              <Button
+                buttonStyle={[
+                  styles.btnPopup,
+                  { backgroundColor: COLORS.BLUE_1 },
+                ]}
+                title={t('button.add')}
+                onPress={handleAddWare}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
       <ModalFilter
         ref={filterRef}
         control={control}

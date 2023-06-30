@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { COLORS } from '../../../../../constants';
+
+const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   areaRange: {
@@ -56,6 +58,50 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingVertical: 0,
     width: 150,
+  },
+
+  boxButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  boxPopup: {
+    backgroundColor: COLORS.WHITE,
+    borderRadius: 8,
+    padding: 20,
+    width: width * 0.96,
+  },
+  btnPopup: {
+    width: width * 0.41,
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: COLORS.BLACK_2,
+    flexDirection: 'row',
+    height: '100%',
+    justifyContent: 'center',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    lineHeight: 32,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  input: {
+    padding: 10,
+    borderColor: COLORS.GRAY_5,
+    borderRadius: 2,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    height: 40,
+    marginBottom: 20,
+  },
+  itemSelect: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'center',
   },
 });
 

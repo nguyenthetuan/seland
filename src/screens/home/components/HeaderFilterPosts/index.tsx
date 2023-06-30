@@ -32,6 +32,7 @@ interface Iprops {
   setValue?: any;
   getValues?: any;
   onShowTypeHousing?: () => void;
+  dataLength?: number;
 }
 
 const projectOptions = [
@@ -61,17 +62,16 @@ const initValues = {
 };
 
 const HeaderFilterPosts: FC<Iprops> = props => {
-  const { onSelect, onFilter, route, onShowTypeHousing } = props;
+  const { onSelect, onFilter, route, onShowTypeHousing, dataLength } = props;
 
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
   const params = route?.params;
   const dataFilters = params?.dataFilters;
-
   const { control, handleSubmit, setValue, getValues } = useForm({
     defaultValues: dataFilters
-      ? Object.assign(initValues, dataFilters)
+      ? Object.assign({...initValues}, dataFilters ? {...dataFilters} : null)
       : initValues,
   });
 
@@ -232,35 +232,14 @@ const HeaderFilterPosts: FC<Iprops> = props => {
             onPress={() => {
               navigate(SCREENS.FILTER_SCREEN, {
                 onSubmit,
-                dataFilters,
+                dataFilters: getValues(),
               });
             }}
           >
             <Icon name="filter-list" />
           </TouchableOpacity>
 
-          <View style={styles.boxRealEstate}>
-            <Select
-              buttonStyle={[styles.buttonSelect]}
-              buttonTextStyle={styles.textButtonSelect}
-              rowStyle={styles.buttonSelect}
-              rowTextStyle={styles.rowTextStyle}
-              control={control}
-              data={sortBy.map(item => ({
-                ...item,
-                label: t(`select.${item?.label}`),
-              }))}
-              defaultButtonText={
-                t('select.sortBy', {
-                  sortBy: t('select.newest'),
-                }) || ''
-              }
-              name="sort_by"
-              onSelect={(val: any) => submitFilter(val, 'sort_by')}
-            />
-          </View>
-
-          <View style={styles.areaRange}>
+          {/* <View style={styles.areaRange}>
             <Select
               buttonStyle={[styles.buttonSelect]}
               buttonTextStyle={styles.textButtonSelect}
@@ -272,7 +251,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               name="project_id"
               onSelect={(val: any) => submitFilter(val, 'project_id')}
             />
-          </View>
+          </View> */}
           <View style={styles.boxStatus}>
             <Select
               buttonStyle={styles.buttonSelect}
@@ -286,9 +265,26 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               onSelect={(val: any) => submitFilter(val, 'demand_id')}
             />
           </View>
+
+          <View style={styles.wrapTypeHousing}>
+            {/* <Text style={styles.textTypeHousing}>
+              {t('select.typeHousing')}
+            </Text> */}
+            <TypeHousing
+              options={typeHousingOptions}
+              type={'typeHousing'}
+              control={control}
+              name="typeHousing"
+              multipleChoice
+              onSelectTypeHousing={onSelectTypeHousing}
+              onShowTypeHousing={onShowTypeHousing}
+              brief={true}
+              placeHolder={t('select.typeHousing') || ""}
+            />
+          </View>
         </View>
 
-        <View style={styles.row}>
+        {/* <View style={styles.row}>
           <View style={styles.address}>
             <Select
               buttonStyle={styles.buttonAddress}
@@ -334,21 +330,32 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               onSelect={(val: any) => submitFilter(val, 'ward_id')}
             />
           </View>
-        </View>
+        </View> */}
 
         <View style={styles.row}>
-          <View style={styles.wrapTypeHousing}>
-            <Text style={styles.textTypeHousing}>
-              {t('select.typeHousing')}
-            </Text>
-            <TypeHousing
-              options={typeHousingOptions}
-              type={'typeHousing'}
+          
+        </View>
+
+        <View style={[styles.row, styles.spaceBetween]}>
+          <Text>Có {dataLength || 0} bất động sản</Text>
+          <View style={styles.boxRealEstate}>
+            <Select
+              buttonStyle={[styles.buttonSelect]}
+              buttonTextStyle={styles.textButtonSelect}
+              rowStyle={styles.buttonSelect}
+              rowTextStyle={styles.rowTextStyle}
               control={control}
-              name="typeHousing"
-              multipleChoice
-              onSelectTypeHousing={onSelectTypeHousing}
-              onShowTypeHousing={onShowTypeHousing}
+              data={sortBy.map(item => ({
+                ...item,
+                label: t(`select.${item?.label}`),
+              }))}
+              defaultButtonText={
+                t('select.sortBy', {
+                  sortBy: t('select.newest'),
+                }) || ''
+              }
+              name="sort_by"
+              onSelect={(val: any) => submitFilter(val, 'sort_by')}
             />
           </View>
         </View>

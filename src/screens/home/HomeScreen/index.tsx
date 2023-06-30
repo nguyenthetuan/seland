@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/themed';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
@@ -25,11 +25,17 @@ import RealEstateForYouCategory from '../components/RealEstateForYouCategory';
 import RealEstateNews from '../components/RealEstateNews';
 import SuggestMenu from '../components/SuggestMenu';
 import styles from './styles';
+import { IDemandId } from '../../../utils/interface/home';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const { navigate }: any = useNavigation();
+
   const dispatch = useDispatch();
+
+  const [isBuyHottest, setIsBuyHottest] = useState(true);
+  const [isBuyForYou, setIsBuyForYou] = useState(true);
+
   const { listRealEstatesForYou, listProject, listRealEstatesHots } =
     useSelector(selectHome);
 
@@ -41,14 +47,46 @@ const HomeScreen = () => {
     dispatchThunk(dispatch, getListNews());
   }, [dispatch]);
 
-  const navigateToListPostsHot = () =>
-    navigate(SCREENS.LIST_POST, {
-      is_hot: 1,
-    });
-  const navigateToListPostsForYou = () =>
-    navigate(SCREENS.LIST_POST, {
-      for_you: 1,
-    });
+  const navigateToListPostsHot = () => {
+    if (isBuyHottest) {
+      navigate(SCREENS.LIST_POST, {
+        is_hot: 1,
+        demand_id: IDemandId.BUY,
+        dataFilters: {
+          demand_id: IDemandId.BUY,
+        },
+      });
+    } else {
+      navigate(SCREENS.LIST_POST, {
+        is_hot: 1,
+        demand_id: IDemandId.LEASE,
+        dataFilters: {
+          demand_id: IDemandId.LEASE,
+        },
+      });
+    }
+  };
+
+  const navigateToListPostsForYou = () => {
+    if (isBuyForYou) {
+      navigate(SCREENS.LIST_POST, {
+        for_you: 1,
+        demand_id: IDemandId.BUY,
+        dataFilters: {
+          demand_id: IDemandId.BUY,
+        },
+      });
+    } else {
+      navigate(SCREENS.LIST_POST, {
+        for_you: 1,
+        demand_id: IDemandId.LEASE,
+        dataFilters: {
+          demand_id: IDemandId.LEASE,
+        },
+      });
+    }
+  };
+
   const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
 
   const navigateToMaps = () => navigate(SCREENS.MAPS);
@@ -95,7 +133,10 @@ const HomeScreen = () => {
             label={t('common.hottestRealEstate')}
             onSeeAll={navigateToListPostsHot}
           >
-            <HottestRealEstateCategory />
+            <HottestRealEstateCategory
+              isBuy={isBuyHottest}
+              setIsBuy={setIsBuyHottest}
+            />
           </Category>
         ) : null}
         {listRealEstatesForYou?.data?.length ? (
@@ -103,7 +144,10 @@ const HomeScreen = () => {
             label={t('common.realEstateForYou')}
             onSeeAll={navigateToListPostsForYou}
           >
-            <RealEstateForYouCategory />
+            <RealEstateForYouCategory
+              isBuy={isBuyForYou}
+              setIsBuy={setIsBuyForYou}
+            />
           </Category>
         ) : null}
         {listProject?.data?.length ? (

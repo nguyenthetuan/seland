@@ -13,6 +13,7 @@
     "message": "Tin nhắn",
     "pendingReview": "Chờ duyệt",
     "publicPosts": "Tin công khai",
+    "public": "Công khai",
     "hidden": "Đã hạ",
     "rejected": "Không duyệt",
     "expired": "Hết hạn",
@@ -68,7 +69,9 @@
     "crateAppoinment": "Tạo lịch hẹn mới",
     "goBack": "Quay lại",
     "addNew": "Thêm mới",
-    "selectTime": "Chọn giờ"
+    "selectTime": "Chọn giờ",
+    "delete": "Xoá",
+    "add": "Thêm mới"
   },
   "checkbox": {
     "rememberLogin": "Nhớ tài khoản",
@@ -77,6 +80,7 @@
     "landlord": "Chủ đất"
   },
   "common": {
+    "updatePost": "Cập nhật bài đăng",
     "forgotPassword": "Quên mật khẩu?",
     "nonmember": "Chưa là thành viên?",
     "signup": "Đăng ký",
@@ -182,7 +186,9 @@
     "care": "Quan tâm",
     "about": "Giới thiệu",
     "deleteSuccess": "Hạ tin thành công",
-    "deleteFail": "Hạ tin thất bại"
+    "deleteFail": "Hạ tin thất bại",
+    "compact": "Thu gọn",
+    "noValue": "Không có dữ liệu"
   },
   "error": {
     "network": "Không thể kết nối với máy chủ",
@@ -243,6 +249,7 @@
     "phoneNumberEmail": "Số điện thoại hoặc email",
     "inputPhoneNumberEmail": "Nhập số điện thoại hoặc email bạn đã dùng để đăng ký",
     "password": "Mật khẩu",
+    "leasePrice": "Giá thuê",
     "passwordConfirmation": "Xác nhận mật khẩu",
     "currentPassword": "Mật khẩu hiện tại",
     "newPassword": "Mật khẩu mới",
@@ -302,7 +309,7 @@
     "ward": "Phường/xã",
     "typeHousing": "Loại nhà đất",
     "area": "Khu vực",
-    "type": "Loại hình",
+    "type": "Loại giao dịch",
     "sortBy": "Sắp xếp theo: {{sortBy}}",
     "sortBySelect": "Sắp xếp theo",
     "newest": "Mới nhất",
@@ -386,7 +393,7 @@
     "yoe": "Số năm kinh nghiệm môi giới BĐS",
     "workZone": "Khu vực đăng ký làm môi giới BĐS",
     "workingYear": "Năm hoạt động",
-    "searchTitle": "Tìm kiếm tiêu đề, khu vực..."
+    "searchTitle": "Tìm kiếm tiêu đề"
   },
   "addAccount": {
     "header": "Thêm mới tài khoản",

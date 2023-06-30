@@ -9,12 +9,16 @@ export const selectUserRealEstates = state => state.userRealEstates;
 
 export const getListRealEstatesUser = createAsyncThunk(
   'getListRealEstatesUser',
-  async (params, { fulfillWithValue, rejectWithValue }) => {
+  async (params, { fulfillWithValue, rejectWithValue }, callback) => {
     try {
-      const { data } = await requestGetListRealEstatesUser(params);
+      const setTotal = params?.setTotal;
+      delete params?.setTotal;
+      const { data, total } = await requestGetListRealEstatesUser(params);
+      // setTotal(total);
+      // callback && callback(data);
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống.');
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (4)');
     }
   }
 );
@@ -23,9 +27,10 @@ export const deleteRealEstatesUser = createAsyncThunk(
   'deleteRealEstatesUser',
   async (id, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await requestDeleteRealEstates(id);
-      return fulfillWithValue(data);
+      const response = await requestDeleteRealEstates(id);
+      return fulfillWithValue(response);
     } catch (error) {
+      console.log('error', error);
       return rejectWithValue(error?.errors);
     }
   }
