@@ -6,12 +6,12 @@ import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DashedButton, Text } from '../../../components';
+import OtpModal from '../../../components/common/ModalPhoneVerify';
 import { COLORS, SCREENS } from '../../../constants';
 import { logout, selectUser } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { AccountMenu } from '../components';
 import styles from './styles';
-import OtpModal from '../../../components/common/ModalPhoneVerify';
 
 const AccountScreen = () => {
   const dispatch = useDispatch();
@@ -46,25 +46,27 @@ const AccountScreen = () => {
 
   const navigateToPersonalPage = () =>
     navigate(SCREENS.PERSONAL_PAGE_SCREEN);
-
+  const navigationToListAppointment = () => {
+    navigate(SCREENS.USERAPPOINMENTSCREEN)
+  }
   const onCloseModal = () => setIsOpenModal(false);
 
   const activityHistory = [
     {
       name: 'viewedPosts',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'favoritePosts',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'contactedPosts',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'message',
-      onPress: () => {},
+      onPress: () => { },
     },
   ];
 
@@ -93,45 +95,45 @@ const AccountScreen = () => {
   const appointmentManagement = [
     {
       name: 'customerAppointments',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'yourAppointments',
-      onPress: () => {},
+      onPress: navigationToListAppointment,
     },
   ];
 
   const transactionManagement = [
     {
       name: 'transactionHistory',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'promotionList',
-      onPress: () => {},
+      onPress: () => { },
     },
   ];
 
   const adsManagement = [
     {
       name: 'createRealEstatePost',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'setBrandLogo',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'setBanner',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'prPosts',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'projectAds',
-      onPress: () => {},
+      onPress: () => { },
     },
   ];
 
@@ -162,11 +164,11 @@ const AccountScreen = () => {
     },
     {
       name: 'notification',
-      onPress: () => {},
+      onPress: () => { },
     },
     {
       name: 'privacy',
-      onPress: () => {},
+      onPress: () => { },
     },
   ];
 
@@ -174,7 +176,7 @@ const AccountScreen = () => {
     if (user?.is_phone_verified === 0 && !isOpenModal) {
       setIsOpenModal(true);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
+  createAppoinmentApi,
   requestGetListNews,
   requestGetListProjects,
   requestGetListRealEstateByLocation,
@@ -74,6 +75,18 @@ export const getListRealEstatesForYou = createAsyncThunk(
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');
+    }
+  }
+);
+
+export const createAppoinment = createAsyncThunk(
+  'createAppoinment',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await createAppoinmentApi(params);
+      return fulfillWithValue(response?.data);
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );

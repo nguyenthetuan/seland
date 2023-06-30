@@ -95,6 +95,10 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
     setValue && setValue('usage_condition_id', information[4]?.children[0].id);
   }, []);
 
+  useEffect(() => {
+    onBlurPrice();
+  }, [state.priceUnit]);
+
   const onBlurPrice = () => {
     const value = getValues && getValues();
     if (value?.area && value?.price) {
@@ -117,12 +121,14 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
       return (pricePerUnit / ONE_MIL).toFixed(2) + ' Triệu/m2';
     }
     if (pricePerUnit >= ONE_THOUSAND) {
-      return (pricePerUnit / ONE_THOUSAND).toFixed(2) + ' Ngàn/m2';
+      return (pricePerUnit / ONE_THOUSAND).toFixed(2) + ' Nghìn/m2';
     }
   };
   const handleSelectUtils = (value: any) => {
     if (utilitiesId.includes(value)) {
-      const array = utilitiesId?.filter((item: any) => item !== value);
+      const array = utilitiesId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setUtilitiesId(array);
       setValue && setValue('utilities_id', array.toString());
     } else {
@@ -133,7 +139,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
 
   const handleFurniture = (value: any) => {
     if (furnitureId.includes(value)) {
-      const array = furnitureId?.filter((item: any) => item !== value);
+      const array = furnitureId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setFurnitureId(array);
       setValue && setValue('furniture_id', array.toString());
     } else {
@@ -144,7 +152,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
 
   const handleSecurity = (value: any) => {
     if (securityId.includes(value)) {
-      const array = securityId?.filter((item: any) => item !== value);
+      const array = securityId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setSecurityId(array);
       setValue && setValue('security_id', array.toString());
     } else {
@@ -155,7 +165,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
 
   const handleRoadType = (value: any) => {
     if (roadTypeId.includes(value)) {
-      const array = roadTypeId?.filter((item: any) => item !== value);
+      const array = roadTypeId?.filter(
+        (item: any, index: number) => item !== value && index !== 0
+      );
       setRoadTypeId(array);
       setValue && setValue('road_type_id', array.toString());
     } else {

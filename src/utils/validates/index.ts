@@ -59,7 +59,7 @@ export const validateName = (value: string) => {
 
 export const validateTitle = (value: string) => {
   if (value) {
-    if (value.length < 5 || value.length > 128) {
+    if (value.trim().length < 40 || value.trim().length > 128) {
       return 'Độ dài tiêu đề: 40-128 kí tự';
     }
   }
@@ -71,6 +71,15 @@ export const validateContent = (value: string) => {
     if (value.length < 100 || value.length > 1024) {
       return 'Độ dài nội dung: 100-1024 kí tự';
     }
+  }
+  return undefined;
+};
+
+export const validateEmail = (value: string) => {
+  if (value) {
+    const validRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa chỉ email';
   }
   return undefined;
 };
