@@ -227,7 +227,7 @@ const PersonalInformationScreen = () => {
     } else {
       return "";
     }
-  }, [user]);
+  }, [user?.phone_number, user?.name, user?.is_phone_verified]);
 
   const onCloseModal = () => setIsOpenModal(false);
   const onOpenModal = () => setIsOpenModal(true);
@@ -316,9 +316,10 @@ const PersonalInformationScreen = () => {
   };
 
   const IconWarningToPress = () => {
+    const isPhoneNotVerified = user?.is_phone_verified === 0;
     return (
-      <TouchableOpacity onPress={textWarning ? onOpenModal : null} style={styles.wrapIcon}>
-        {textWarning ? <IconWarning /> : <IconCheckCircle />}
+      <TouchableOpacity onPress={isPhoneNotVerified ? onOpenModal : null} style={styles.wrapIcon}>
+        {isPhoneNotVerified ? <IconWarning /> : <IconCheckCircle />}
       </TouchableOpacity>
     )
   };
@@ -422,6 +423,7 @@ const PersonalInformationScreen = () => {
             name="phone_number"
             onFocus={() => clearErrors('phone_number')}
             required
+            disabled
             renderErrorMessage={false}
           />
           <Input

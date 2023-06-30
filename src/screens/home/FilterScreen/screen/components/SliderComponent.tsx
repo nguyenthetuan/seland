@@ -16,6 +16,7 @@ interface SliderComponentProps {
   convertDisplay?: Function;
   name: string;
   control?: any;
+  multiple?: boolean;
 }
 
 interface TOptions {
@@ -90,6 +91,7 @@ export const SliderComponent = ({
   convertDisplay,
   name,
   control,
+  multiple = false,
 }: SliderComponentProps) => {
   const {
     field: { onChange, value = defaultValues },
@@ -100,15 +102,26 @@ export const SliderComponent = ({
 
   const handleOnClick = (option: string | number) => {
     let newArrButton = [...buttonSelected];
-    if (buttonSelected.includes(option)) {
-      newArrButton = buttonSelected.filter(i => i !== option);
+    if (multiple) {
+      if (buttonSelected.includes(option)) {
+        newArrButton = buttonSelected.filter(i => i !== option);
+      } else {
+        newArrButton = [...buttonSelected, option];
+      }
     } else {
-      newArrButton = [option];
+      if (buttonSelected?.[0] === option) {
+        newArrButton = [];
+      } else {
+        newArrButton = [option];
+      }
     }
     setButtonSelected(newArrButton);
 
     const arrVal = String(option).split('-');
-    if (arrVal.length === 1) {
+    if (newArrButton.length === 0) {
+      onChange([0, 1])
+    }
+    else if (arrVal.length === 1) {
       onChange([Number(arrVal[0]), Number(arrVal[0])]);
     } else {
       onChange([Number(arrVal[0]), Number(arrVal[1])]);

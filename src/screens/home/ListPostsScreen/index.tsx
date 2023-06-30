@@ -103,21 +103,24 @@ const ListPostsScreen = (props: any) => {
     if (data?.demand_id) {
       res.demand_id = data?.demand_id;
     }
+    if (data?.page) {
+      res.page = data?.page;
+    }
     return res;
   };
 
   const onFilter = (data: any) => {
-    const dataFilter = convertDataFilter(data);
+    const dataFilter = convertDataFilter({...data, page: 1});
     dataFilterRef.current = dataFilter;
     onGetListRealEstates(dataFilter, TYPE.FILTER);
   };
 
   const onFilterTitle = (val: string) => {
     if (dataFilterRef.current) {
-      dataFilterRef.current = { ...dataFilterRef.current, title: val };
+      dataFilterRef.current = { ...dataFilterRef.current, title: val, page: 1 };
       onGetListRealEstates(dataFilterRef.current, TYPE.FILTER);
     } else {
-      onGetListRealEstates({ title: val }, TYPE.FILTER);
+      onGetListRealEstates({ title: val, page: 1 }, TYPE.FILTER);
     }
   };
 
@@ -135,8 +138,7 @@ const ListPostsScreen = (props: any) => {
 
     const callback = (res: any) => {
       setIsLoading(false);
-
-      if (dataListPosts.length > 0 && type === TYPE.LOAD_MORE) {
+      if (Array.isArray(dataListPosts) && type === TYPE.LOAD_MORE) {
         setDataListPosts([...dataListPosts, ...res] as any);
       } else {
         setDataListPosts(res);
@@ -174,7 +176,11 @@ const ListPostsScreen = (props: any) => {
     setPage(page + 1);
     onGetListRealEstates(
       Object.keys(dataFilterRef.current).length === 0
-        ? { ...paramsData, page: page + 1 }
+        ? { ...paramsData,
+          page: page + 1,
+          setTotal: setTotalPost,
+          setTotalPage: setTotalPage,
+          }
         : {
             ...dataFilterRef.current,
             setTotal: setTotalPost,
@@ -206,11 +212,11 @@ const ListPostsScreen = (props: any) => {
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           onEndReached={
-            dataListPosts.length > 0 && isLoading === false ? onLoadMore : null
+            dataListPosts.length > 3 && isLoading === false ? onLoadMore : null
           }
           data={listPosts}
           initialNumToRender={20}
-          renderItem={({ item }) => <ItemRealEstates item={item} />}
+          renderItem={({ item }) => <ItemRealEstates item={item} is_hot={!!(is_hot)} />}
           keyExtractor={(_, index) => `itemPost${index}`}
           ListEmptyComponent={isLoading ? null : <NoResults />}
           ListHeaderComponent={
