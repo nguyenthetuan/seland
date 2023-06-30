@@ -216,6 +216,11 @@ const CreatePostScreen = (props: any) => {
             break;
           case 'youtube_video_link':
             if (value) {
+              setValue('urlVideo', value[0]);
+            }
+            break;
+          case 'real_estate_video_link':
+            if (value) {
               setValue('video', [
                 {
                   uri: value[0],
