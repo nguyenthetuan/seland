@@ -59,7 +59,7 @@ export const validateName = (value: string) => {
 
 export const validateTitle = (value: string) => {
   if (value) {
-    if (value.length < 5 || value.length > 128) {
+    if (value.trim().length < 40 || value.trim().length > 128) {
       return 'Độ dài tiêu đề: 40-128 kí tự';
     }
   }

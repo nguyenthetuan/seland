@@ -34,7 +34,7 @@ ItemInfo.propTypes = {
   icon: PropTypes.node.isRequired,
 };
 
-const ItemRealEstates = ({ item }) => {
+const ItemRealEstates = ({ item, is_hot }) => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
   const onPressCall = () => {
@@ -100,11 +100,21 @@ const ItemRealEstates = ({ item }) => {
         />
         <View style={styles.boxRank}>
           <View>
-            {[2, 3, 4].includes(item?.rank_id) && (
+            {!is_hot && [2, 3, 4].includes(item?.rank_id) && (
               <View style={styles.rank(backgroundRank())}>
                 <Text style={styles.rankName}>{t(rankName())}</Text>
               </View>
             )}
+            {is_hot && 
+              <View style={styles.boxMonopoly}>
+                <Text
+                  style={styles.monopoly}
+                  onPress={() => Alert.alert('ok')}
+                >
+                  {t('common.monopoly')}
+                </Text>
+              </View>
+            }
           </View>
           <TouchableOpacity
             style={styles.call}
@@ -197,10 +207,12 @@ const ItemRealEstates = ({ item }) => {
 
 ItemRealEstates.defaultProps = {
   item: {},
+  is_hot: false,
 };
 
 ItemRealEstates.propTypes = {
   item: PropTypes.object,
+  is_hot: Boolean,
 };
 
 export default ItemRealEstates;

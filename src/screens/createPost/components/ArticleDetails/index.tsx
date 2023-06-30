@@ -212,7 +212,10 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
   }, [typeUpload]);
 
   const handleRemoveVideo = (e: any) => {
-    if (e.nativeEvent.text) setTypeUpload({ ...typeUpload, video: [] });
+    if (e.nativeEvent.text) {
+      setTypeUpload({ ...typeUpload, video: [] });
+      setValue && setValue('video', []);
+    }
   };
 
   return (
@@ -248,7 +251,12 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
         {file.length ? (
           <View style={styles.boxFile}>
             {file?.map(
-              (item: { fileName?: string; uri?: string; fileSize: number }) => {
+              (item: {
+                fileName?: string;
+                uri?: string;
+                fileSize: number;
+                update?: boolean;
+              }) => {
                 return (
                   <View
                     key={`item${typeUpload?.isPhoto ? 'image' : 'video'}${
@@ -262,9 +270,11 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                           source={{ uri: item?.uri }}
                           style={styles.image}
                         />
-                        <Text style={styles.fileSize}>
-                          {`${(item?.fileSize / 1048576).toFixed(2)}/MB`}
-                        </Text>
+                        {item?.update ? null : (
+                          <Text style={styles.fileSize}>{`${(
+                            item?.fileSize / 1048576
+                          ).toFixed(2)}/MB`}</Text>
+                        )}
                       </>
                     ) : (
                       <>
@@ -279,9 +289,11 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                             color={COLORS.GRAY_1}
                           />
                         </View>
-                        <Text style={styles.fileSize}>{`${(
-                          item?.fileSize / 1048576
-                        ).toFixed(2)}/MB`}</Text>
+                        {item?.update ? null : (
+                          <Text style={styles.fileSize}>{`${(
+                            item?.fileSize / 1048576
+                          ).toFixed(2)}/MB`}</Text>
+                        )}
                       </>
                     )}
 
