@@ -38,6 +38,7 @@ interface InputCustomProps extends InputProps {
   rules?: RegisterOptions;
   errorMessage?: string;
   styleInput?: ViewStyle;
+  multiline?: boolean;
 }
 
 const Input = ({
@@ -61,6 +62,7 @@ const Input = ({
   rules,
   errorMessage,
   styleInput,
+  multiline,
   ...props
 }: InputCustomProps) => {
   const {
@@ -101,6 +103,7 @@ const Input = ({
   return (
     <View style={{ flex: 1, ...styleInput }}>
       <RNEInput
+        multiline={multiline}
         style={styles.text}
         errorStyle={StyleSheet.flatten([styles.error, errorStyle])}
         containerStyle={styles.containerInput}

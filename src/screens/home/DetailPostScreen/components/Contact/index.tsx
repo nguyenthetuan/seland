@@ -30,7 +30,7 @@ const Contact: FC<Iprops> = props => {
     {
       label: t('detailPost.book'),
       onPress: () =>
-        navigate(SCREENS.USERAPPOINMENTSCREEN, {
+        navigate(SCREENS.CREATEAPPOIONMENTSCREEN, {
           id: id,
           title: infoDetail?.title,
         }),

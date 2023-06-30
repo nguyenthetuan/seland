@@ -46,7 +46,9 @@ const AccountScreen = () => {
 
   const navigateToPersonalPage = () =>
     navigate(SCREENS.PERSONAL_PAGE_SCREEN);
-
+  const navigationToListAppointment = () => {
+    navigate(SCREENS.USERAPPOINMENTSCREEN)
+  }
   const onCloseModal = () => setIsOpenModal(false);
 
   const activityHistory = [
@@ -97,7 +99,7 @@ const AccountScreen = () => {
     },
     {
       name: 'yourAppointments',
-      onPress: () => { },
+      onPress: navigationToListAppointment,
     },
   ];
 

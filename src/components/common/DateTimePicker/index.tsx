@@ -16,6 +16,8 @@ interface DateTimePickerProps {
   labelStyle: {} | [];
   name: string;
   styleDatePicker?: ViewStyle;
+  mode?: string;
+  disableMaxDate?: boolean;
 }
 
 const DateTimePicker = ({
@@ -24,6 +26,8 @@ const DateTimePicker = ({
   label = '',
   labelStyle = {},
   styleDatePicker,
+  mode,
+  disableMaxDate,
 }: DateTimePickerProps) => {
   const {
     field: { onChange, value },
@@ -65,10 +69,10 @@ const DateTimePicker = ({
         confirmText={t('button.confirm')}
         date={value ? new Date(value) : new Date()}
         locale="vi"
-        maximumDate={new Date()}
+        maximumDate={!disableMaxDate && new Date()}
         minimumDate={new Date('1900-01-01')}
         modal
-        mode="date"
+        mode={mode || 'date'}
         onCancel={handleCancel}
         onConfirm={handleConfirm}
         open={open}
