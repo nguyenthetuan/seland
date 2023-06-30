@@ -88,6 +88,10 @@ const BottomTabNavigator = () => {
       return null;
     }
 
+    if (user?.phone_number && !user?.name) {
+      navigation.navigate(SCREENS.PERSONAL_INFORMATION, { hasGoBack: false });
+    }
+
     return (
       <View style={styles.boxButton}>
         {state?.routes.map((route, index) => {
