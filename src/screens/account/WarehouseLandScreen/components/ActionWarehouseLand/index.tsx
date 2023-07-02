@@ -1,5 +1,5 @@
 import { Tooltip } from '@rneui/themed';
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 import {
@@ -18,7 +18,10 @@ import { IconSvg } from '../../../../../assets/icons/IconSvg';
 import { Text } from '../../../../../components';
 import styles from './styles';
 
-const ActionWarehouseLand = () => {
+interface ActionWarehouseLandProps {
+  onDelete?: Function;
+}
+const ActionWarehouseLand: FC<ActionWarehouseLandProps> = ({ onDelete }) => {
   const [open, setOpen] = React.useState(false);
   const { t } = useTranslation();
 
@@ -26,38 +29,50 @@ const ActionWarehouseLand = () => {
     {
       icon: <IconRepost />,
       label: t('common.repost'),
+      onPress: () => {},
     },
     {
       icon: <IconUpload />,
       label: t('common.pushNews'),
+      onPress: () => {},
     },
     {
       icon: <IconSvg name="edit" />,
       label: t('common.editNews'),
+      onPress: () => {},
     },
     {
       icon: <IconCopy />,
       label: t('common.copyNews'),
+      onPress: () => {},
     },
     {
       icon: <IconPhone />,
       label: t('common.requestContact'),
+      onPress: () => {},
     },
     {
       icon: <IconHistory />,
       label: t('common.history'),
+      onPress: () => {},
     },
     {
       icon: <IconLink />,
       label: t('common.seeNews'),
+      onPress: () => {},
     },
     {
       icon: <IconDownload />,
       label: t('common.lowNews'),
+      onPress: () => {},
     },
     {
       icon: <IconDelete />,
       label: t('common.deleteNews'),
+      onPress: () => {
+        console.log('dmddmdmdmddm');
+        onDelete && onDelete();
+      },
     },
   ];
 
@@ -80,6 +95,10 @@ const ActionWarehouseLand = () => {
                   index === 8 ? styles.itemActionActive : styles.itemAction
                 }
                 key={action.label}
+                onPress={() => {
+                  setOpen(false);
+                  action.onPress();
+                }}
               >
                 <View style={styles.itemIcon}>{action.icon}</View>
                 <Text style={styles.itemActionText}>{action.label}</Text>

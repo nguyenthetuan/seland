@@ -11,7 +11,7 @@ import { dispatchThunk } from '../../../utils';
 import { IModalFilterWarehouse } from '../../../utils/interface/common';
 import HeaderListPosts from '../../home/components/HeaderListPosts';
 import FilterWarehouse from './components/Filter';
-import ItemWarehouseLand from './components/ItemWarehouseLand';
+import ItemWarehouseLand from '../components/ItemWarehouseLand';
 import styles from './styles';
 
 const WarehouseLandScreen = () => {

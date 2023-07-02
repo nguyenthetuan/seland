@@ -22,12 +22,12 @@ import { UserPost } from '../components';
 import styles from './styles';
 import ModalFilterScreen from './components/ModalFilter';
 import PopupConfirm from '../../../components/common/PopupConfirm';
+import ItemWarehouseLand from '../components/ItemWarehouseLand';
 
 const UserPostsScreen = () => {
   const route = useRoute();
   const filterRef = useRef<any>();
   const [loadingList, setLoadingList] = useState(false);
-  const { goBack } = useNavigation();
   const dispatch = useDispatch();
   const { data: userRealEstates } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
@@ -334,6 +334,7 @@ const UserPostsScreen = () => {
 
   const deleteSuccess = () => {
     onGetReFresh();
+    setIdItemDelete('');
   };
 
   const handleConfirm = () => {
@@ -351,9 +352,11 @@ const UserPostsScreen = () => {
   };
 
   const handleCancel = () => {};
+
   const deletePost = (id: any) => {
     setIdItemDelete(id);
-    confirmCancelPaymentRef?.current.openPopup();
+    confirmCancelPaymentRef.current &&
+      confirmCancelPaymentRef?.current?.openPopup();
   };
 
   return (
@@ -382,9 +385,9 @@ const UserPostsScreen = () => {
           data={userRealEstates}
           keyExtractor={(_, index) => `itemPost${index}`}
           renderItem={({ item }) => (
-            <UserPost
+            <ItemWarehouseLand
               item={item}
-              deletePost={deletePost}
+              onDelete={deletePost}
             />
           )}
           ListHeaderComponent={renderHeader()}
