@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
-import React, { useMemo, useState } from 'react';
+import React, { FC, ReactNode, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 
@@ -23,26 +23,20 @@ import { SCREENS } from '../../../../constants';
 import { IDemandId } from '../../../../utils/interface/home';
 import styles from './styles';
 
-const ItemCategory = ({ icon, content, onPress }) => (
+interface ItemCategoryProps {
+  icon?: ReactNode;
+  content?: string;
+  onPress?: Function;
+}
+const ItemCategory: FC<ItemCategoryProps> = ({ icon, content, onPress }) => (
   <TouchableOpacity
     style={styles.boxItemSuggest}
-    onPress={onPress}
+    onPress={() => onPress && onPress()}
   >
     {icon && typeof icon === 'string' ? <Text>{icon}</Text> : icon}
     <Text style={styles.content}>{content}</Text>
   </TouchableOpacity>
 );
-
-ItemCategory.defaultProps = {
-  content: '',
-  onPress: () => {},
-};
-
-ItemCategory.propTypes = {
-  content: PropTypes.string,
-  icon: PropTypes.node.isRequired,
-  onPress: PropTypes.func,
-};
 
 const SuggestMenu = () => {
   const [show, setShow] = useState(false);

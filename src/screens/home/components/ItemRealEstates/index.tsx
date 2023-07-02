@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
 import PropTypes, { any } from 'prop-types';
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
 
@@ -18,23 +18,24 @@ import { Text } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import styles from './styles';
 
-const ItemInfo = ({ value, icon }) => (
+interface ItemInfoProps {
+  value?: string;
+  icon?: ReactNode;
+}
+
+interface ItemRealEstatesProps {
+  item?: any;
+  is_hot?: any;
+}
+
+const ItemInfo: FC<ItemInfoProps> = ({ value, icon }) => (
   <View style={styles.itemInfo}>
     {icon}
     <Text style={styles.valueInfo}>{value}</Text>
   </View>
 );
 
-ItemInfo.defaultProps = {
-  value: '',
-};
-
-ItemInfo.propTypes = {
-  value: PropTypes.string,
-  icon: PropTypes.node.isRequired,
-};
-
-const ItemRealEstates = ({ item, is_hot }) => {
+const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
   const onPressCall = () => {
@@ -54,7 +55,24 @@ const ItemRealEstates = ({ item, is_hot }) => {
     });
   };
 
-  const onToLocation = () => {};
+  const kindRealty = () => {
+    switch (item?.demand_id) {
+      case 1:
+        return 'privateRealEstate';
+      case 2:
+        return 'realEstateRental';
+      default:
+        return 'realEstateRental';
+    }
+  };
+
+  const onToLocation = () => {
+    navigate(SCREENS.MAPS, {
+      realtyID: item?.news_id,
+      latLng: item?.lat_long,
+      kindRealty: kindRealty(),
+    });
+  };
 
   const backgroundRank = () => {
     switch (item?.rank_id) {
@@ -86,9 +104,7 @@ const ItemRealEstates = ({ item, is_hot }) => {
   };
 
   return (
-    <View
-      style={styles.boxItem}
-    >
+    <View style={styles.boxItem}>
       <View style={styles.boxImage}>
         <Image
           style={styles.image}
@@ -105,7 +121,7 @@ const ItemRealEstates = ({ item, is_hot }) => {
                 <Text style={styles.rankName}>{t(rankName())}</Text>
               </View>
             )}
-            {is_hot && 
+            {is_hot && (
               <View style={styles.boxMonopoly}>
                 <Text
                   style={styles.monopoly}
@@ -114,7 +130,7 @@ const ItemRealEstates = ({ item, is_hot }) => {
                   {t('common.monopoly')}
                 </Text>
               </View>
-            }
+            )}
           </View>
           <TouchableOpacity
             style={styles.call}
@@ -203,16 +219,6 @@ const ItemRealEstates = ({ item, is_hot }) => {
       </View>
     </View>
   );
-};
-
-ItemRealEstates.defaultProps = {
-  item: {},
-  is_hot: false,
-};
-
-ItemRealEstates.propTypes = {
-  item: PropTypes.object,
-  is_hot: any,
 };
 
 export default ItemRealEstates;
