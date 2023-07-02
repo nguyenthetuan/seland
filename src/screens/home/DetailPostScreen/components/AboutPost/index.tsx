@@ -40,7 +40,7 @@ const AboutPost: FC<Iprops> = props => {
     {
       label: t('common.acreage'),
       icon: <Acreage />,
-      value: infoDetail?.area,
+      value: infoDetail?.area ? `${infoDetail?.area}m2` : '--',
     },
     {
       label: t('input.length'),
@@ -51,7 +51,7 @@ const AboutPost: FC<Iprops> = props => {
           height={21}
         />
       ),
-      value: infoDetail?.length,
+      value: infoDetail?.length ? `${infoDetail?.length}m` : '--',
     },
     {
       label: t('input.width'),
@@ -62,7 +62,7 @@ const AboutPost: FC<Iprops> = props => {
           height={12}
         />
       ),
-      value: infoDetail?.width,
+      value: infoDetail?.width ? `${infoDetail?.width}m` : '--',
     },
     {
       label: t('common.compass'),
@@ -73,7 +73,7 @@ const AboutPost: FC<Iprops> = props => {
           height={24}
         />
       ),
-      value: infoDetail?.direction,
+      value: infoDetail?.direction || '--',
     },
     {
       label: t('common.bedroom'),
@@ -84,7 +84,7 @@ const AboutPost: FC<Iprops> = props => {
           height={24}
         />
       ),
-      value: infoDetail?.bedroom,
+      value: infoDetail?.bedroom || '--',
     },
     {
       label: t('common.bathroom'),
@@ -95,7 +95,7 @@ const AboutPost: FC<Iprops> = props => {
           height={24}
         />
       ),
-      value: infoDetail?.bathroom,
+      value: infoDetail?.bathroom || '--',
     },
   ];
   const source = {

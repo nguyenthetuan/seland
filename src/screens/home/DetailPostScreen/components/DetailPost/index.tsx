@@ -23,12 +23,12 @@ const DetailPost: FC<Iprops> = props => {
       {
         label: t('common.acreage'),
         icon: <Acreage />,
-        value: infoDetail?.area,
+        value: infoDetail?.area ? `${infoDetail?.area}m2` : '--',
       },
       {
         label: t('input.length'),
         icon: <IconSvg name="length" />,
-        value: infoDetail?.length,
+        value: infoDetail?.length ? `${infoDetail?.length}m` : '--',
       },
     ],
     [
@@ -41,12 +41,12 @@ const DetailPost: FC<Iprops> = props => {
             height={20}
           />
         ),
-        value: infoDetail?.bedroom,
+        value: infoDetail?.bedroom || '--',
       },
       {
         label: t('input.width'),
         icon: <IconSvg name="width" />,
-        value: infoDetail?.width,
+        value: infoDetail?.width ? `${infoDetail?.width}m` : '--',
       },
     ],
     [
@@ -59,7 +59,7 @@ const DetailPost: FC<Iprops> = props => {
             height={15}
           />
         ),
-        value: infoDetail?.bathroom,
+        value: infoDetail?.bathroom || '--',
       },
       {
         label: t('common.currentStatusHouse'),
@@ -94,19 +94,19 @@ const DetailPost: FC<Iprops> = props => {
       {
         label: t('input.laneWidth'),
         icon: <IconRoad />,
-        value: infoDetail?.lane_width,
+        value: infoDetail?.lane_width ? `${infoDetail?.lane_width}m` : '--',
       },
     ],
     [
       {
         label: t('common.numberFloors'),
         icon: <IconFloor />,
-        value: infoDetail?.floor,
+        value: infoDetail?.floor || '--',
       },
       {
         label: t('select.structure'),
         icon: <IconStructure />,
-        value: infoDetail?.structure,
+        value: infoDetail?.structure || '--',
       },
     ],
   ];
