@@ -165,7 +165,6 @@ const FilterWarehouse: FC<Iprops> = props => {
             ...item,
             label: t(`select.${item?.label}`),
           }))}
-          title={`${t('select.sortBySelect')}` || ''}
           name="sort_by"
           onSelect={handleSubmit(onSelect)}
         />
