@@ -22,7 +22,7 @@ import {
 } from '../../../../../features';
 import { formatSelect } from '../../../../../utils/format';
 import ModalFilter from '../../../UserPostsScreen/components/ModalFilter';
-import { COLORS, YOUR_WANT } from '../../../../../constants';
+import { COLORS, sortBy, statuses, YOUR_WANT } from '../../../../../constants';
 import Toast from 'react-native-simple-toast';
 
 interface Iprops {
@@ -49,70 +49,6 @@ const FilterWarehouse: FC<Iprops> = props => {
 
   const filterRef: any = useRef();
 
-  const sortBy = [
-    {
-      label: 'newest',
-      value: 'createdAt',
-    },
-    {
-      label: 'priceAsc',
-      value: 'price_asc',
-    },
-    {
-      label: 'priceDesc',
-      value: 'price_desc',
-    },
-    {
-      label: 'areaAsc',
-      value: 'area_asc',
-    },
-    {
-      label: 'areaDesc',
-      value: 'area_desc',
-    },
-    {
-      label: 'hasVideos',
-      value: 'videos',
-    },
-    {
-      label: 'pricePerM2Asc',
-      value: 'price_per_m_asc',
-    },
-    {
-      label: 'pricePerM2Desc',
-      value: 'price_per_m_desc',
-    },
-  ];
-  const statuses = [
-    {
-      label: 'all',
-      value: null,
-    },
-    {
-      label: 'pendingReview',
-      value: YOUR_WANT.PENDING,
-    },
-    {
-      label: 'publicPosts',
-      value: YOUR_WANT.POST_PUBLIC,
-    },
-    {
-      label: 'hidden',
-      value: YOUR_WANT.DOWN,
-    },
-    {
-      label: 'rejected',
-      value: YOUR_WANT.REJECT,
-    },
-    {
-      label: 'expired',
-      value: YOUR_WANT.INACTIVE,
-    },
-    {
-      label: 'privatePosts',
-      value: YOUR_WANT.SAVE_PRIVATE,
-    },
-  ];
   const { listAllWareHouses, listAgency } = useSelector(selectWareHouses);
 
   const listAllWareHousesConvert = (listAllWareHouses &&
