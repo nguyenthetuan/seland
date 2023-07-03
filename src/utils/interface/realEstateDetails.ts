@@ -1,5 +1,6 @@
 export interface IRealEstateDetails {
   title: string;
+  id: number;
   approved_time: string;
   address: string;
   price_per_square_meter: number;

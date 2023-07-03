@@ -35,9 +35,10 @@ const MapScreen = ({}) => {
   }&latLng=${
     latLong || '16.8018075868834%2C107.28037372286639'
   }&defaultFilter=${route?.params?.defaultFilter || true}&kindRealty=${
-    route?.params?.kindRealty || 'realEstateRental'
+    route?.params?.kindRealty || 'exclusiveRealEstate'
   }`;
 
+  console.log('🚀 ~ file: index.tsx:36 ~ MapScreen ~ uri:', uri);
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>

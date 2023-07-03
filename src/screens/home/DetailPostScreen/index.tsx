@@ -43,7 +43,7 @@ const DetailPostScreen = () => {
         <ScrollView>
           <View style={styles.detailPost}>
             <ImagePost infoDetail={data} />
-            <AboutPost infoDetail={data} />
+            <AboutPost infoDetail={{ ...data, id: id }} />
             <DetailPost infoDetail={data} />
             <Contact
               infoDetail={data}

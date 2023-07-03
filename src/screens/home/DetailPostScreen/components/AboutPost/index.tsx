@@ -118,7 +118,7 @@ const AboutPost: FC<Iprops> = props => {
   };
   const goToMapScreen = () => {
     navigate(SCREENS.MAPS, {
-      realtyID: infoDetail?.news_id,
+      realtyID: infoDetail?.id,
       latLng: infoDetail?.lat_long,
     });
   };
