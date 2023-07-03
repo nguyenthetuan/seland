@@ -28,11 +28,31 @@ const prefixAmount: TPrefixAmount[] = [
   },
   {
     id: 2,
-    value: '500,000',
+    value: '200,000',
   },
   {
     id: 3,
+    value: '300,000',
+  },
+  {
+    id: 4,
+    value: '500,000',
+  },
+  {
+    id: 5,
     value: '1,000,000',
+  },
+  {
+    id: 6,
+    value: '2,000,000',
+  },
+  {
+    id: 7,
+    value: '5,000,000',
+  },
+  {
+    id: 8,
+    value: '10,000,000',
   },
 ];
 
