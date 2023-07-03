@@ -5,6 +5,7 @@ import { Modal, TouchableOpacity, View } from 'react-native';
 
 import { Text } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
+import { IDemandId } from '../../../../utils/interface/home';
 import styles from './styles';
 
 const DrawerMenuHome = forwardRef((props, ref) => {
@@ -15,17 +16,33 @@ const DrawerMenuHome = forwardRef((props, ref) => {
 
   const closeDrawerMenu = () => setVisible(false);
 
-  const navigateToListPost = key => {
-    const params = {
-      dataFilters: {
+  const handleNavigation = (key) => {
+    if (key === 1 || key === 2) {
+      const params = {
+        dataFilters: {
+          demand_id: key,
+        },
         demand_id: key,
-      },
-      demand_id: key,
-    };
-
-    navigate(SCREENS.LIST_POST, params);
+      };
+      navigate(SCREENS.LIST_POST, params);
+    }
+    if (key === 3) {
+      navigate(SCREENS.LIST_PROJECT);
+    }
+    if (key === 6) {
+      navigate(SCREENS.MAPS);
+    }
+    if (key === 5) {
+      navigate(SCREENS.LIST_POST, {
+        is_hot: 1,
+        demand_id: IDemandId.BUY,
+        dataFilters: {
+          demand_id: IDemandId.BUY,
+        },
+      });
+    }
     closeDrawerMenu();
-  };
+  }
 
   useImperativeHandle(ref, () => ({ openDrawerMenu }));
 
@@ -33,16 +50,17 @@ const DrawerMenuHome = forwardRef((props, ref) => {
     {
       name: 'Mua bán nhà đất',
       key: 1,
-      onPress: navigateToListPost,
+      handleOnPress: true
     },
     {
       name: 'Cho thuê nhà đất',
       key: 2,
-      onPress: navigateToListPost,
+      handleOnPress: true,
     },
     {
       name: 'Dự án',
       key: 3,
+      handleOnPress: true,
     },
     {
       name: 'Tin BĐS',
@@ -51,10 +69,12 @@ const DrawerMenuHome = forwardRef((props, ref) => {
     {
       name: 'BĐS độc quyền',
       key: 5,
+      handleOnPress: true,
     },
     {
       name: 'Tra quy hoạch',
       key: 6,
+      handleOnPress: true,
     },
     {
       name: 'Tin tức',
@@ -67,10 +87,6 @@ const DrawerMenuHome = forwardRef((props, ref) => {
     {
       name: 'Trở thành đại lý',
       key: 9,
-    },
-    {
-      name: 'Quy hoạch',
-      key: 10,
     },
   ];
 
@@ -85,7 +101,11 @@ const DrawerMenuHome = forwardRef((props, ref) => {
             <TouchableOpacity
               key={item?.key}
               style={styles.btnMenu}
-              onPress={() => item?.onPress && item?.onPress(item?.key)}
+              onPress={() => {
+                if (item.handleOnPress) {
+                  handleNavigation(item?.key)
+                }
+              }}
             >
               <Text style={styles.textMenu}>{item?.name}</Text>
             </TouchableOpacity>
