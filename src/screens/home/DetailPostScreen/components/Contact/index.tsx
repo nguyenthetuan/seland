@@ -85,9 +85,9 @@ const Contact: FC<Iprops> = props => {
             <Text style={styles.contactNameText}>
               {infoDetail?.contacts?.name_owner}
             </Text>
-            <Text style={styles.contactNameTextSdt}>
+            {/* <Text style={styles.contactNameTextSdt}>
               SĐT: {infoDetail?.contacts?.phone_owner}
-            </Text>
+            </Text> */}
             <TouchableOpacity onPress={goToContact}>
               <Text style={styles.contactSee}>Xem tất cả tin đăng</Text>
             </TouchableOpacity>

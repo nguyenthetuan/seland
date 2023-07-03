@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
@@ -26,28 +26,45 @@ import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import styles from './styles';
 
-const ItemInfo = ({ value, icon }) => (
+const ItemInfo = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={styles.itemInfo}>
     {icon}
     <Text style={styles.valueInfo}>{value}</Text>
   </View>
 );
 
-ItemInfo.defaultProps = {
-  value: '',
-};
-
-ItemInfo.propTypes = {
-  value: PropTypes.string,
-  icon: PropTypes.node.isRequired,
-};
-
-const ItemHottestRealEstate = ({ item, type }) => {
+const ItemHottestRealEstate = ({
+  item,
+  type,
+}: {
+  item: {
+    id: never;
+    images: any;
+    project_name: ReactNode;
+    real_estate_type_name: ReactNode;
+    price_range: any;
+    price_range_per_m: ReactNode;
+    blocks: any;
+    apartment: any;
+    price: any;
+    price_unit_name: any;
+    price_per_m: any;
+    area: any;
+    bedroom: string;
+    bathroom: string;
+    main_direction_name: string;
+    title: ReactNode;
+    location: ReactNode;
+    demand_id: number;
+    phone_number: string;
+  };
+  type: string;
+}) => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
 
   const onPressCall = () => {
-    let phoneNumber = item?.phone_number;
+    let phoneNumber: string = item?.phone_number;
     if (Platform.OS !== 'android') {
       phoneNumber = `telprompt:${item?.phone_number}`;
     } else {
@@ -88,9 +105,7 @@ const ItemHottestRealEstate = ({ item, type }) => {
         />
         <View style={styles.boxRank}>
           <View>
-            {[REAL_ESTATE.REAL_ESTATE_HOSTEST].includes(
-              type
-            ) && (
+            {[REAL_ESTATE.REAL_ESTATE_HOSTEST].includes(type) && (
               <View style={styles.boxMonopoly}>
                 <Text
                   style={styles.monopoly}
@@ -172,15 +187,15 @@ const ItemHottestRealEstate = ({ item, type }) => {
                 icon={<AcreageSmall />}
               />
               <ItemInfo
-                value={`${item?.bedroom}`}
+                value={item?.bedroom || '--'}
                 icon={<Bedroom />}
               />
               <ItemInfo
-                value={`${item?.bathroom}`}
+                value={item?.bathroom || '--'}
                 icon={<Bathroom />}
               />
               <ItemInfo
-                value={`${item?.main_direction_name}`}
+                value={item?.main_direction_name || '--'}
                 icon={<Compass />}
               />
             </View>

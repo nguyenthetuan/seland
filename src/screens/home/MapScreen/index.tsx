@@ -27,6 +27,18 @@ const MapScreen = ({}) => {
     );
   };
 
+  const latLong =
+    route?.params?.latLng && route?.params?.latLng?.replace(/\s/g, '');
+
+  const uri = `https://tamthanh2.vnextglobal.com/checkLandPlaning?realtyID=${
+    route?.params?.realtyID || '185'
+  }&latLng=${
+    latLong || '16.8018075868834%2C107.28037372286639'
+  }&defaultFilter=${route?.params?.defaultFilter || true}&kindRealty=${
+    route?.params?.kindRealty || 'exclusiveRealEstate'
+  }`;
+
+  console.log('🚀 ~ file: index.tsx:36 ~ MapScreen ~ uri:', uri);
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
@@ -39,13 +51,7 @@ const MapScreen = ({}) => {
       </SafeAreaView>
       <WebView
         source={{
-          uri: `https://tamthanh2.vnextglobal.com/checkLandPlaning?realtyID=${
-            route?.params?.realtyID || '185'
-          }&latLng=${
-            route?.params?.latLng || '16.8018075868834%2C107.28037372286639'
-          }&defaultFilter=true&kindRealty=${
-            route?.params?.kindRealty || 'realEstateRental'
-          }`,
+          uri: uri,
           headers: {
             Authorization: `Bearer ${token}`,
           },

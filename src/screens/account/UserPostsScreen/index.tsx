@@ -11,7 +11,7 @@ import DateRangePicker from 'rn-select-date-range';
 import { useNavigation } from '@react-navigation/native';
 
 import { Button, Header, Input, NoResults, Select } from '../../../components';
-import { COLORS } from '../../../constants';
+import { calendar, COLORS, sortBy, statuses } from '../../../constants';
 import {
   getListRealEstatesUser,
   selectUserRealEstates,
@@ -22,12 +22,12 @@ import { UserPost } from '../components';
 import styles from './styles';
 import ModalFilterScreen from './components/ModalFilter';
 import PopupConfirm from '../../../components/common/PopupConfirm';
+import ItemWarehouseLand from '../components/ItemWarehouseLand';
 
 const UserPostsScreen = () => {
   const route = useRoute();
   const filterRef = useRef<any>();
   const [loadingList, setLoadingList] = useState(false);
-  const { goBack } = useNavigation();
   const dispatch = useDispatch();
   const { data: userRealEstates } = useSelector(selectUserRealEstates);
   const { t } = useTranslation();
@@ -133,88 +133,9 @@ const UserPostsScreen = () => {
     if (route?.params?.status) handleSelectStatus(route?.params?.status);
   }, [route?.params?.status]);
 
-  const statuses = [
-    {
-      label: 'all',
-      value: -1,
-    },
-    {
-      label: 'pendingReview',
-      value: 3,
-    },
-    {
-      label: 'publicPosts',
-      value: 1,
-    },
-    {
-      label: 'hidden',
-      value: 6,
-    },
-    {
-      label: 'rejected',
-      value: 5,
-    },
-    {
-      label: 'expired',
-      value: 0,
-    },
-    {
-      label: 'privatePosts',
-      value: 2,
-    },
-  ];
+  const onSubmit = async () => {
+    const data = getValues();
 
-  const calendar = [
-    {
-      label: 'lastWeek',
-      value: 'week',
-    },
-    {
-      label: 'last30Days',
-      value: 'month',
-    },
-    {
-      label: 'dateRange',
-      value: 'date_range',
-    },
-  ];
-
-  const sortBy = [
-    {
-      label: 'newest',
-      value: 'createdAt',
-    },
-    {
-      label: 'priceAsc',
-      value: 'price_asc',
-    },
-    {
-      label: 'priceDesc',
-      value: 'price_desc',
-    },
-    {
-      label: 'areaAsc',
-      value: 'area_asc',
-    },
-    {
-      label: 'areaDesc',
-      value: 'area_desc',
-    },
-    {
-      label: 'hasVideos',
-      value: 'videos',
-    },
-    {
-      label: 'pricePerM2Asc',
-      value: 'price_per_m_asc',
-    },
-    {
-      label: 'pricePerM2Desc',
-      value: 'price_per_m_desc',
-    },
-  ];
-
-  const onSubmit = async (data: any) => {
     const parmas = { ...data, title: data?.title?.trim(), setTotal };
     setLoadingList(true);
 
@@ -334,6 +255,7 @@ const UserPostsScreen = () => {
 
   const deleteSuccess = () => {
     onGetReFresh();
+    setIdItemDelete('');
   };
 
   const handleConfirm = () => {
@@ -351,9 +273,11 @@ const UserPostsScreen = () => {
   };
 
   const handleCancel = () => {};
+
   const deletePost = (id: any) => {
     setIdItemDelete(id);
-    confirmCancelPaymentRef?.current.openPopup();
+    confirmCancelPaymentRef.current &&
+      confirmCancelPaymentRef?.current?.openPopup();
   };
 
   return (
@@ -382,9 +306,9 @@ const UserPostsScreen = () => {
           data={userRealEstates}
           keyExtractor={(_, index) => `itemPost${index}`}
           renderItem={({ item }) => (
-            <UserPost
+            <ItemWarehouseLand
               item={item}
-              deletePost={deletePost}
+              onDelete={deletePost}
             />
           )}
           ListHeaderComponent={renderHeader()}

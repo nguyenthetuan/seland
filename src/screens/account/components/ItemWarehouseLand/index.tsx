@@ -2,18 +2,23 @@ import { Image } from '@rneui/themed';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
-import { IconEyes, IconUploadWhite, Location } from '../../../../../assets';
-import { Button, Text } from '../../../../../components';
-import { IItemWarehouse } from '../../../../../utils/interface/warehouse';
-import ActionWarehouseLand from '../ActionWarehouseLand';
-import DisplayPositionPost from '../DisplayPositionPost';
+import { IconEyes, IconUploadWhite, Location } from '../../../../assets';
+import { Button, Text } from '../../../../components';
+import { IItemWarehouse } from '../../../../utils/interface/warehouse';
+import ActionWarehouseLand from '../../WarehouseLandScreen/components/ActionWarehouseLand';
+import DisplayPositionPost from '../../WarehouseLandScreen/components/DisplayPositionPost';
 import styles from './styles';
 
 interface Iprops {
   item: IItemWarehouse;
+  onDelete?: Function;
 }
-const ItemWarehouseLand: FC<Iprops> = ({ item }) => {
+const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete }) => {
   const { t } = useTranslation();
+
+  const onDeletePost = (id?: number) => {
+    onDelete && onDelete(id);
+  };
 
   return (
     <TouchableOpacity style={styles.boxItem}>
@@ -79,7 +84,7 @@ const ItemWarehouseLand: FC<Iprops> = ({ item }) => {
               {t('common.expirationDate')}: {item?.end_date}
             </Text>
           </View>
-          <ActionWarehouseLand />
+          <ActionWarehouseLand onDelete={() => onDeletePost(item?.id)} />
         </View>
         <DisplayPositionPost />
       </View>

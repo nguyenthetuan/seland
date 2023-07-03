@@ -63,5 +63,6 @@ module.exports = {
     'react-native/sort-styles': 2,
     'simple-import-sort/imports': 2,
     'simple-import-sort/exports': 2,
+    "react-hooks/exhaustive-deps": 'off',
   },
 };
