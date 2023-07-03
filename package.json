@@ -65,6 +65,7 @@
     "react-native-toast-message": "^2.1.6",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
+    "react-native-view-shot": "^3.7.0",
     "react-native-webview": "^13.2.1",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
