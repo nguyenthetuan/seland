@@ -29,9 +29,6 @@ const DrawerMenuHome = forwardRef((props, ref) => {
     if (key === 3) {
       navigate(SCREENS.LIST_PROJECT);
     }
-    if (key === 6) {
-      navigate(SCREENS.MAPS);
-    }
     if (key === 5) {
       navigate(SCREENS.LIST_POST, {
         is_hot: 1,
@@ -40,6 +37,9 @@ const DrawerMenuHome = forwardRef((props, ref) => {
           demand_id: IDemandId.BUY,
         },
       });
+    }
+    if (key === 6) {
+      navigate(SCREENS.MAPS);
     }
     closeDrawerMenu();
   }
