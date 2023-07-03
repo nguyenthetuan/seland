@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { Text } from '../../../components';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { Icon, Input } from '@rneui/themed';
 import { ArrowLeft, Circle, CircleCheck } from '../../../assets';
 import { COLORS } from '../../../constants';
 import QRCode from 'react-native-qrcode-svg';
+import RNFetchBlob from 'react-native-blob-util';
 
 type TPrefixAmount = {
   id: number;
@@ -28,11 +29,31 @@ const prefixAmount: TPrefixAmount[] = [
   },
   {
     id: 2,
-    value: '500,000',
+    value: '200,000',
   },
   {
     id: 3,
+    value: '300,000',
+  },
+  {
+    id: 4,
+    value: '500,000',
+  },
+  {
+    id: 5,
     value: '1,000,000',
+  },
+  {
+    id: 6,
+    value: '2,000,000',
+  },
+  {
+    id: 7,
+    value: '5,000,000',
+  },
+  {
+    id: 8,
+    value: '10,000,000',
   },
 ];
 
@@ -66,6 +87,8 @@ const BankAccount = () => {
   const [vnPaymentType, setVnPaymentType] = useState<boolean>(false);
   const [confirmPay, setConfirmPay] = useState<boolean>(false);
 
+  const qrCodeRef = useRef<any>();
+
   const onChangeAmount = (text: string) => {
     setAmount(text);
   };
@@ -86,6 +109,20 @@ const BankAccount = () => {
   const onPay = () => {};
 
   const onCancel = () => {};
+
+  const callback = async (data: any) => {
+    const base64Data = data && data.replace('data:image/svg+xml;base64,', ''); // Remove data URL prefix
+
+    const filePath = RNFetchBlob.fs.dirs.DocumentDir + '/qrcode.png';
+
+    await RNFetchBlob.fs.writeFile(filePath, base64Data, 'base64'); // Save the PNG to the device's storage
+
+    console.log('QR code downloaded:=======', filePath);
+  };
+
+  const handleDownloadQRCode = () => {
+    const svgData = qrCodeRef?.current?.toDataURL(callback);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
@@ -160,18 +197,27 @@ const BankAccount = () => {
               <Text>VN PAY</Text>
             </TouchableOpacity>
 
-            {listBankAccount
-              .filter(item => item.type === 'VNPay')
-              .map((item: TBankInfo) => {
-                return (
-                  <View style={styles.wrapQRContainer}>
-                    <QRCode
-                      value={item.bankNumber}
-                      size={200}
-                    />
-                  </View>
-                );
-              })}
+            {vnPaymentType &&
+              listBankAccount
+                .filter(item => item.type === 'VNPay')
+                .map((item: TBankInfo) => {
+                  return (
+                    <View style={styles.wrapQRContainer}>
+                      <QRCode
+                        value={item.bankNumber}
+                        size={200}
+                        getRef={ref => (qrCodeRef.current = ref)}
+                      />
+
+                      <TouchableOpacity
+                        style={styles.downloadQr}
+                        onPress={handleDownloadQRCode}
+                      >
+                        <Text style={styles.downloadQrText}>Tải QRCode</Text>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
           </View>
 
           <View style={styles.paymentContainer}>
@@ -186,21 +232,22 @@ const BankAccount = () => {
               <Text>Chuyển khoản</Text>
             </TouchableOpacity>
 
-            {listBankAccount
-              .filter(item => item.type !== 'VNPay')
-              .map((item: TBankInfo) => {
-                return (
-                  <View style={styles.wrapBankContainer}>
-                    <View>
-                      <Text>Ngân hàng {item.type}</Text>
-                      <Text style={styles.title}>STK: {item.bankNumber}</Text>
-                      <Text style={styles.title}>
-                        Chủ tài khoản {item.bankAccount}
-                      </Text>
+            {!vnPaymentType &&
+              listBankAccount
+                .filter(item => item.type !== 'VNPay')
+                .map((item: TBankInfo) => {
+                  return (
+                    <View style={styles.wrapBankContainer}>
+                      <View>
+                        <Text>Ngân hàng {item.type}</Text>
+                        <Text style={styles.title}>STK: {item.bankNumber}</Text>
+                        <Text style={styles.title}>
+                          Chủ tài khoản {item.bankAccount}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                );
-              })}
+                  );
+                })}
           </View>
         </View>
       </ScrollView>
