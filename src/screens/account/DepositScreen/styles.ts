@@ -29,11 +29,12 @@ const styles = StyleSheet.create({
   },
   wrapAmountContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginBottom: 20,
+    flexWrap: 'wrap',
   },
   amountContainer: {
-    width: '30%',
+    width: '27%',
     height: 40,
     backgroundColor: COLORS.WHITE,
     borderRadius: 2,
@@ -41,14 +42,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: COLORS.GRAY_2,
     borderWidth: 1,
+    marginRight: 16,
+    marginBottom: 16,
   },
   selectedAmountContainer: {
-    width: '30%',
+    width: '27%',
     height: 40,
     backgroundColor: COLORS.GREEN_1,
     borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 16,
+    marginBottom: 16,
   },
   selectedTitle: {
     fontWeight: '500',
@@ -124,6 +129,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16,
     color: COLORS.BLACK_1,
+  },
+  downloadQr: {
+    marginTop: 10,
+  },
+  downloadQrText: {
+    color: COLORS.BLUE_2,
+    textDecorationLine: 'underline',
   },
 });
 
