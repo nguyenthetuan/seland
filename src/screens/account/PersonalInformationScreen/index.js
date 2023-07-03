@@ -20,6 +20,7 @@ import {
   Select,
   Text,
 } from '../../../components';
+import OtpModal from '../../../components/common/ModalPhoneVerify';
 import {
   clearCompanyDistricts,
   // clearCompanyWards,
@@ -38,7 +39,6 @@ import {
 } from '../../../features';
 import { dispatchThunk, yup } from '../../../utils';
 import styles from './styles';
-import OtpModal from '../../../components/common/ModalPhoneVerify';
 
 const schema = yup.object({
   name: yup.string().isValidName(),
@@ -180,9 +180,9 @@ const PersonalInformationScreen = () => {
       dispatchThunk(dispatch, getProfile()),
       dispatchThunk(dispatch, getProvinces()),
       province_id &&
-        fetchDistricts({
-          province_code: province_id,
-        }),
+      fetchDistricts({
+        province_code: province_id,
+      }),
       // province_id &&
       //   district_id &&
       //   fetchWards({
@@ -191,9 +191,9 @@ const PersonalInformationScreen = () => {
       //   }),
       dispatchThunk(dispatch, getCompanyProvinces()),
       company_province_id &&
-        fetchCompanyDistricts({
-          province_code: company_province_id,
-        }),
+      fetchCompanyDistricts({
+        province_code: company_province_id,
+      }),
       // company_province_id &&
       //   company_district_id &&
       //   fetchCompanyWards({
@@ -214,19 +214,17 @@ const PersonalInformationScreen = () => {
   }, [user, setValue]);
 
   const textWarning = useMemo(() => {
-    if (user?.phone_number && !user?.name) {
+    if (!user?.name || user.is_phone_verified === 0) {
       if (!user?.name && user?.is_phone_verified === 0) {
         return t(`common.toastVerifyNoName`);
-      } else if (user?.is_phone_verified === 0) {
+      } if (user?.is_phone_verified === 0) {
         return t(`common.toastVerify`);
-      } else if (!user?.name) {
+      } if (!user?.name) {
         return t(`common.toastNoName`);
-      } else {
-        return "";
       }
-    } else {
-      return "";
     }
+    return "";
+
   }, [user?.phone_number, user?.name, user?.is_phone_verified]);
 
   const onCloseModal = () => setIsOpenModal(false);
@@ -326,7 +324,7 @@ const PersonalInformationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header title={t('header.personalInformation')} hasGoBack={true} />
+      <Header title={t('header.personalInformation')} hasGoBack />
       {textWarning && <View style={styles.wrapWarning}>
         <Text style={styles.textWarning}>{textWarning}</Text>
       </View>}
@@ -472,7 +470,7 @@ const PersonalInformationScreen = () => {
                 disabled={loading}
                 labelStyle={styles.inputLabel}
                 name="district_id"
-                // onSelect={handleSelectDistrict}
+              // onSelect={handleSelectDistrict}
               />
             </View>
             {/* </View> */}
@@ -530,7 +528,7 @@ const PersonalInformationScreen = () => {
                 disabled={loading}
                 labelStyle={styles.inputLabel}
                 name="company_district_id"
-                // onSelect={handleSelectCompanyDistrict}
+              // onSelect={handleSelectCompanyDistrict}
               />
             </View>
             {/* </View> */}
