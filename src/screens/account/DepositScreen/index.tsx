@@ -35,9 +35,6 @@ const prefixAmount: TPrefixAmount[] = [
     id: 3,
     value: '300,000',
   },
-];
-
-const prefixAmount1: TPrefixAmount[] = [
   {
     id: 4,
     value: '500,000',
@@ -49,6 +46,14 @@ const prefixAmount1: TPrefixAmount[] = [
   {
     id: 6,
     value: '2,000,000',
+  },
+  {
+    id: 7,
+    value: '5,000,000',
+  },
+  {
+    id: 8,
+    value: '10,000,000',
   },
 ];
 
@@ -118,16 +123,18 @@ const BankAccount = () => {
 
   const onCancel = () => {};
 
-  const handleDownloadQRCode = async () => {
-    const svgData = qrCodeRef?.current && qrCodeRef?.current?.toDataURL && qrCodeRef?.current?.toDataURL();
-
-    const base64Data = svgData && svgData.replace('data:image/svg+xml;base64,', ''); // Remove data URL prefix
+  const callback = async (data: any) => {
+    const base64Data = data && data.replace('data:image/svg+xml;base64,', ''); // Remove data URL prefix
 
     const filePath = RNFetchBlob.fs.dirs.DocumentDir + '/qrcode.png';
 
     await RNFetchBlob.fs.writeFile(filePath, base64Data, 'base64'); // Save the PNG to the device's storage
 
     console.log('QR code downloaded:=======', filePath);
+  };
+
+  const handleDownloadQRCode = () => {
+    const svgData = qrCodeRef?.current?.toDataURL(callback);
   };
 
   return (
@@ -188,7 +195,7 @@ const BankAccount = () => {
           </View>
 
           <View style={styles.wrapAmountContainer}>
-            {prefixAmount1.map((item: TPrefixAmount) => {
+            {prefixAmount.map((item: TPrefixAmount) => {
               return (
                 <TouchableOpacity
                   style={
@@ -253,23 +260,27 @@ const BankAccount = () => {
               <Text>VN PAY</Text>
             </TouchableOpacity>
 
-            {vnPaymentType && listBankAccount
-              .filter(item => item.type === 'VNPay')
-              .map((item: TBankInfo) => {
-                return (
-                  <View style={styles.wrapQRContainer}>
-                    <QRCode
-                      value={item.bankNumber}
-                      size={200}
-                      ref={qrCodeRef}
-                    />
+            {vnPaymentType &&
+              listBankAccount
+                .filter(item => item.type === 'VNPay')
+                .map((item: TBankInfo) => {
+                  return (
+                    <View style={styles.wrapQRContainer}>
+                      <QRCode
+                        value={item.bankNumber}
+                        size={200}
+                        getRef={ref => (qrCodeRef.current = ref)}
+                      />
 
-                    <TouchableOpacity style={styles.downloadQr} onPress={handleDownloadQRCode}>
-                      <Text style={styles.downloadQrText}>Tải QRCode</Text>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
+                      <TouchableOpacity
+                        style={styles.downloadQr}
+                        onPress={handleDownloadQRCode}
+                      >
+                        <Text style={styles.downloadQrText}>Tải QRCode</Text>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
           </View>
 
           <View style={styles.paymentContainer}>
@@ -284,21 +295,22 @@ const BankAccount = () => {
               <Text>Chuyển khoản</Text>
             </TouchableOpacity>
 
-            {!vnPaymentType && listBankAccount
-              .filter(item => item.type !== 'VNPay')
-              .map((item: TBankInfo) => {
-                return (
-                  <View style={styles.wrapBankContainer}>
-                    <View>
-                      <Text>Ngân hàng {item.type}</Text>
-                      <Text style={styles.title}>STK: {item.bankNumber}</Text>
-                      <Text style={styles.title}>
-                        Chủ tài khoản {item.bankAccount}
-                      </Text>
+            {!vnPaymentType &&
+              listBankAccount
+                .filter(item => item.type !== 'VNPay')
+                .map((item: TBankInfo) => {
+                  return (
+                    <View style={styles.wrapBankContainer}>
+                      <View>
+                        <Text>Ngân hàng {item.type}</Text>
+                        <Text style={styles.title}>STK: {item.bankNumber}</Text>
+                        <Text style={styles.title}>
+                          Chủ tài khoản {item.bankAccount}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                );
-              })}
+                  );
+                })}
           </View>
         </View>
       </ScrollView>
