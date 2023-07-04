@@ -12,12 +12,17 @@ import styles from './styles';
 interface Iprops {
   item: IItemWarehouse;
   onDelete?: Function;
+  onEdit?: Function;
 }
-const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete }) => {
+const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete, onEdit }) => {
   const { t } = useTranslation();
 
   const onDeletePost = (id?: number) => {
     onDelete && onDelete(id);
+  };
+
+  const onEditPost = (id?: number) => {
+    onEdit && onEdit(id);
   };
 
   return (
@@ -84,7 +89,10 @@ const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete }) => {
               {t('common.expirationDate')}: {item?.end_date}
             </Text>
           </View>
-          <ActionWarehouseLand onDelete={() => onDeletePost(item?.id)} />
+          <ActionWarehouseLand
+            onDelete={() => onDeletePost(item?.id)}
+            onEdit={() => onEditPost(item?.id)}
+          />
         </View>
         <DisplayPositionPost />
       </View>
