@@ -89,8 +89,7 @@ const Input = ({
     let txt = '';
     switch (inputMode) {
       case 'decimal':
-        txt = text.replace(/[^\d*\.?\d*$]/g, '');
-        console.log('inputMode', inputMode, txt);
+        txt = text.replace(/[^(\d+|\d{1.3})(\.\d+)]/g, '');
         break;
       case 'numeric':
         txt = text.replace(/[^\d]/g, '');
