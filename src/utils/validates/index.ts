@@ -83,3 +83,11 @@ export const validateEmail = (value: string) => {
   }
   return undefined;
 };
+
+export const validateLatLog = (value: string) => {
+  if (value) {
+    const validRegex = /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi;
+    if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa chỉ email';
+  }
+  return undefined;
+};

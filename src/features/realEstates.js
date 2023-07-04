@@ -37,6 +37,18 @@ export const getAllFilter = createAsyncThunk(
   }
 );
 
+export const getListRealEstatesIn = createAsyncThunk(
+  'getListRealEstatesIn',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestGetListRealEstates(params);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (3.1)');
+    }
+  }
+);
+
 const slice = createSlice({
   name: 'realEstates',
   initialState: {
@@ -53,6 +65,7 @@ const slice = createSlice({
     more: [],
     price: [],
     real_estate_type: [],
+    listRealEstatesIn: [],
   },
   extraReducers: builder => {
     builder.addCase(getListRealEstates.pending, state => {
@@ -70,6 +83,9 @@ const slice = createSlice({
     });
     builder.addCase(getAllFilter.pending, state => {
       state.loading = true;
+    });
+    builder.addCase(getListRealEstatesIn.fulfilled, (state, action) => {
+      state.listRealEstatesIn = action.payload;
     });
     builder.addCase(getAllFilter.fulfilled, (state, action) => {
       state.loading = false;
