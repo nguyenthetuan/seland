@@ -40,7 +40,6 @@ const MapScreen = ({}) => {
       route?.params?.kindRealty || 'exclusiveRealEstate'
     }`;
 
-  console.log('🚀 ~ file: index.tsx:36 ~ MapScreen ~ uri:', uri);
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={{ backgroundColor: COLORS.WHITE }}>
