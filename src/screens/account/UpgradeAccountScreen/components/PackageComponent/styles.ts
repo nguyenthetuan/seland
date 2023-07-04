@@ -13,13 +13,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     elevation: 4,
     padding: 40,
-    shadowColor: COLORS.WHITE_4,
+    shadowColor: COLORS.BLACK_4,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    shadowRadius: 8,
     alignItems: 'center',
   },
   itemFeature: {

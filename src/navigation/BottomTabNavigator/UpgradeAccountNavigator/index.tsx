@@ -1,4 +1,7 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {
+  MaterialTopTabBarProps,
+  createMaterialTopTabNavigator,
+} from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +16,9 @@ import {
 import { ArrowLeft } from '../../../assets';
 import { Text } from '../../../components';
 import { SCREENS } from '../../../constants';
-import UpgradeAccountScreen from '../../../screens/account/UpgradeAccountScreen/index';
 import IndividualFeatureScreen from '../../../screens/account/UpgradeAccountScreen/components/IndividualFeatureScreen/index';
 import NotesScreen from '../../../screens/account/UpgradeAccountScreen/components/NotesScreen/index';
+import UpgradeAccountScreen from '../../../screens/account/UpgradeAccountScreen/index';
 import styles from './styles';
 
 const Tab = createMaterialTopTabNavigator();
@@ -24,7 +27,12 @@ const UpgradeAccountTab = () => {
   const { goBack } = useNavigation();
   const { t } = useTranslation();
 
-  const TabBarTitle = ({ state, descriptors, navigation, position }) => (
+  const TabBarTitle = ({
+    state,
+    descriptors,
+    navigation,
+    position,
+  }: MaterialTopTabBarProps) => (
     <View>
       <ScrollView
         horizontal
