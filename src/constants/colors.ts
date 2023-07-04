@@ -2,6 +2,7 @@ const COLORS = {
   BLACK_1: 'rgba(0,0,0, 0.85)',
   BLACK_2: 'rgba(0,0,0, 0.45)',
   BLACK_3: 'rgba(0, 0, 0, 0.25)',
+  BLACK_4: 'rgba(0, 0, 0, 0.15)',
   WHITE_1: 'rgba(255, 255, 255, 0.85)',
   WHITE_2: 'rgba(255, 255, 255, 0.45)',
   WHITE_3: 'rgba(255, 255, 255, 0.25)',
