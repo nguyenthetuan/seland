@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 
@@ -14,7 +14,10 @@ import DrawerMenuHome from '../DrawerMenu';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 
-const HeaderHome = () => {
+interface HeaderHomeProps {
+  openMaps?: Function;
+}
+const HeaderHome: FC<HeaderHomeProps> = ({ openMaps }) => {
   const { t } = useTranslation();
   const drawerRef = useRef();
   const { navigate } = useNavigation();
@@ -22,7 +25,7 @@ const HeaderHome = () => {
   const openDrawer = () => drawerRef.current?.openDrawerMenu();
 
   const navigateMapScreen = () => {
-    navigate(SCREENS.MAPS);
+    openMaps && openMaps();
   };
 
   return (

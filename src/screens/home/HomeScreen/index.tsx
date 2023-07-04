@@ -92,12 +92,12 @@ const HomeScreen = () => {
 
   const navigateToMaps = () =>
     navigate(SCREENS.MAPS, {
-      customerUrl: `${URL_MAP}defaultFilter=false`,
+      customerUrl: `${URL_MAP}defaultFilter=true`,
     });
 
   return (
     <View style={styles.containerScreen}>
-      <HeaderHome />
+      <HeaderHome openMaps={navigateToMaps} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.contentContainer}
@@ -124,10 +124,7 @@ const HomeScreen = () => {
             rightIcon={<Icon name="search" />}
             placeholder={t('input.projectSunriseCity') || ''}
           />
-          <Pressable
-            style={styles.boxLocation}
-            onPress={navigateToMaps}
-          >
+          <Pressable style={styles.boxLocation}>
             <Icon name="my-location" />
           </Pressable>
         </View>
