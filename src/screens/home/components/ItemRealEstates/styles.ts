@@ -144,15 +144,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 27,
   },
-  rank: color => ({
-    backgroundColor: color,
+  rank: {
     borderTopRightRadius: 3,
     borderBottomRightRadius: 3,
     height: 25,
     justifyContent: 'center',
     paddingHorizontal: 5,
     marginTop: 5,
-  }),
+  },
   rankName: {
     color: COLORS.WHITE,
     fontSize: 13,
@@ -166,8 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
-  title: color => ({
-    color,
+  title: {
     fontSize: 15,
     lineHeight: 18,
     marginHorizontal: 10,
@@ -175,7 +173,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 8,
     alignItems: 'center',
-  }),
+  },
   type: {
     color: COLORS.BLUE_1,
     fontSize: 12,

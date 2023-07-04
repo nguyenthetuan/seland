@@ -16,6 +16,7 @@ import {
 import { Text } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import styles from './styles';
+import { rankPost } from '../../../../utils/realEstates';
 
 interface ItemInfoProps {
   value?: string;
@@ -59,29 +60,6 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({
     });
   };
 
-  const backgroundRank = () => {
-    switch (item?.rank_id) {
-      case 1:
-        return COLORS.BLACK_1;
-      case 2:
-        return COLORS.GREEN_3;
-      case 3:
-        return COLORS.ORANGE_5;
-      default:
-        return COLORS.RED_1;
-    }
-  };
-
-  const rankName = () => {
-    switch (item?.rank_id) {
-      case 2:
-        return 'common.vipSilver';
-      case 3:
-        return 'common.vipGold';
-      default:
-        return 'common.vipDiamond';
-    }
-  };
   const onGoDetail = () => {
     navigate(SCREENS.DETAIL_POST, {
       id: item?.id,
@@ -102,8 +80,15 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({
         <View style={styles.boxRank}>
           <View>
             {!is_hot && [2, 3, 4].includes(item?.rank_id) && (
-              <View style={styles.rank(backgroundRank())}>
-                <Text style={styles.rankName}>{t(rankName())}</Text>
+              <View
+                style={[
+                  styles.rank,
+                  { backgroundColor: rankPost(item?.rank_id)?.color },
+                ]}
+              >
+                <Text style={styles.rankName}>
+                  {t(`${rankPost(item?.rank_id)?.nameRank}`)}
+                </Text>
               </View>
             )}
             {is_hot && (
@@ -164,7 +149,7 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({
         />
       </View>
       <TouchableOpacity onPress={onGoDetail}>
-        <Text style={styles.title(backgroundRank())}>
+        <Text style={[styles.title, { color: rankPost(item?.rank_id)?.color }]}>
           {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
         </Text>
       </TouchableOpacity>
