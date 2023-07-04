@@ -97,7 +97,9 @@ const Input = ({
         break;
       default:
         txt =
-          isEmail || isPassword || isWebsite ? text.replace(/\s/g, '') : text;
+          isEmail || isPassword || isWebsite
+            ? text.replace(/\s/g, '')
+            : text.replace(/\s\s+/g, ' ');
         break;
     }
     onChange(txt);
