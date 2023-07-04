@@ -57,19 +57,6 @@ const prefixAmount: TPrefixAmount[] = [
   },
 ];
 
-
-const prefixAmount2: TPrefixAmount[] = [
-  {
-    id: 7,
-    value: '5,000,000',
-  },
-  {
-    id: 8,
-    value: '10,000,000',
-  },
-];
-
-
 const listBankAccount: TBankInfo[] = [
   {
     id: 1,
@@ -196,31 +183,6 @@ const BankAccount = () => {
 
           <View style={styles.wrapAmountContainer}>
             {prefixAmount.map((item: TPrefixAmount) => {
-              return (
-                <TouchableOpacity
-                  style={
-                    selectedAmount === item.id
-                      ? styles.selectedAmountContainer
-                      : styles.amountContainer
-                  }
-                  onPress={() => onSelectedAmount(item)}
-                >
-                  <Text
-                    style={
-                      selectedAmount === item.id
-                        ? styles.selectedTitle
-                        : styles.title
-                    }
-                  >
-                    {item?.value}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-
-          <View style={styles.wrapAmountContainer}>
-            {prefixAmount2.map((item: TPrefixAmount) => {
               return (
                 <TouchableOpacity
                   style={
