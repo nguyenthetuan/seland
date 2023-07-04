@@ -272,47 +272,6 @@ const CreatePostScreen = (props: any) => {
 
   const handleTab = (value: number) => {
     setTab(value);
-    if (
-      currentTab.current === TAB.BASIC_INFORMATION &&
-      value === TAB.REAL_ESTATE_INFORMATION &&
-      tab === TAB.BASIC_INFORMATION
-    ) {
-      currentTab.current = value;
-      return;
-    }
-    if (
-      currentTab.current === TAB.BASIC_INFORMATION &&
-      value === TAB.ARTICLE_DETAILS &&
-      tab === TAB.BASIC_INFORMATION
-    ) {
-      currentTab.current = value;
-      return;
-    }
-
-    if (
-      currentTab.current === TAB.REAL_ESTATE_INFORMATION &&
-      value === TAB.ARTICLE_DETAILS &&
-      tab === TAB.REAL_ESTATE_INFORMATION
-    ) {
-      currentTab.current = value;
-      return;
-    }
-
-    if (
-      currentTab.current === TAB.ARTICLE_DETAILS &&
-      value === TAB.REAL_ESTATE_INFORMATION &&
-      tab === TAB.ARTICLE_DETAILS
-    ) {
-      currentTab.current = value;
-      return;
-    }
-    if (
-      currentTab.current === TAB.ARTICLE_DETAILS &&
-      value === TAB.BASIC_INFORMATION &&
-      tab === TAB.ARTICLE_DETAILS
-    ) {
-      currentTab.current = value;
-    }
   };
 
   const handleSelect = (value: number) => {
@@ -502,28 +461,15 @@ const CreatePostScreen = (props: any) => {
     switch (tab) {
       case TAB.BASIC_INFORMATION:
         scrollViewRef.current?.scrollTo();
-        if (
-          errors.address_detail ||
-          errors.district_id ||
-          errors.province_id ||
-          errors.ward_id ||
-          errors.real_estate_type_id
-        ) {
-          break;
-        } else {
-          setTab(tab + 1);
-          currentTab.current = tab + 1;
-          break;
-        }
+        setTab(tab + 1);
+        currentTab.current = tab + 1;
+        break;
       case TAB.REAL_ESTATE_INFORMATION:
         scrollViewRef.current?.scrollTo();
-        if (errors.area || errors.price || errors.price_unit) {
-          break;
-        } else {
-          setTab(tab + 1);
-          currentTab.current = tab + 1;
-          break;
-        }
+
+        setTab(tab + 1);
+        currentTab.current = tab + 1;
+        break;
       case TAB.ARTICLE_DETAILS:
         if (value?.photo.length === 0) {
           setError('photo', {
@@ -539,16 +485,13 @@ const CreatePostScreen = (props: any) => {
           });
           break;
         }
-        if (errors.title || errors.content) {
-          break;
+
+        if (router.params?.edit) {
+          editPosts(value);
         } else {
-          if (router.params?.edit) {
-            editPosts(value);
-          } else {
-            createPosts(value);
-          }
-          break;
+          createPosts(value);
         }
+        break;
       default:
         navigate(SCREENS.CONFIRM_POST_SCREEN);
         break;
@@ -614,6 +557,18 @@ const CreatePostScreen = (props: any) => {
     }
   };
 
+  const onPressBaseEstateInfo = () => {
+    setTab(TAB.BASIC_INFORMATION);
+  };
+
+  const onPressRealEstateInfo = () => {
+    setTab(TAB.BASIC_INFORMATION);
+  };
+
+  const onPressArticle = () => {
+    setTab(TAB.BASIC_INFORMATION);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Loading
@@ -672,7 +627,7 @@ const CreatePostScreen = (props: any) => {
 
         <View style={styles.line} />
         <View style={styles.boxDotLine}>
-          <Pressable onPress={() => handleTab(TAB.BASIC_INFORMATION)}>
+          <Pressable onPress={handleSubmit(onPressBaseEstateInfo)}>
             <View
               style={styles.dot(
                 [
@@ -688,7 +643,7 @@ const CreatePostScreen = (props: any) => {
               [TAB.REAL_ESTATE_INFORMATION, TAB.ARTICLE_DETAILS].includes(tab)
             )}
           />
-          <Pressable onPress={() => handleTab(TAB.REAL_ESTATE_INFORMATION)}>
+          <Pressable onPress={handleSubmit(onPressRealEstateInfo)}>
             <View
               style={styles.dot(
                 [TAB.REAL_ESTATE_INFORMATION, TAB.ARTICLE_DETAILS].includes(tab)
@@ -696,26 +651,26 @@ const CreatePostScreen = (props: any) => {
             />
           </Pressable>
           <View style={styles.line1(tab === TAB.ARTICLE_DETAILS)} />
-          <Pressable onPress={() => handleTab(TAB.ARTICLE_DETAILS)}>
+          <Pressable onPress={handleSubmit(onPressArticle)}>
             <View style={styles.dot(tab === TAB.ARTICLE_DETAILS)} />
           </Pressable>
         </View>
         <View style={styles.boxTab}>
           <Text
             style={styles.labelTab(tab === TAB.BASIC_INFORMATION)}
-            onPress={() => handleTab(TAB.BASIC_INFORMATION)}
+            onPress={handleSubmit(onPressBaseEstateInfo)}
           >
             Thông tin cơ bản
           </Text>
           <Text
             style={styles.labelTab(tab === TAB.REAL_ESTATE_INFORMATION)}
-            onPress={() => handleTab(TAB.REAL_ESTATE_INFORMATION)}
+            onPress={handleSubmit(onPressRealEstateInfo)}
           >
             Thông tin bổ sung
           </Text>
           <Text
             style={styles.labelTab(tab === TAB.ARTICLE_DETAILS)}
-            onPress={() => handleTab(TAB.ARTICLE_DETAILS)}
+            onPress={handleSubmit(onPressArticle)}
           >
             Chi tiết bài đăng
           </Text>
