@@ -1,6 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
-import PropTypes, { any } from 'prop-types';
 import React, { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
@@ -26,6 +25,7 @@ interface ItemInfoProps {
 interface ItemRealEstatesProps {
   item?: any;
   is_hot?: any;
+  onToLocation?: Function;
 }
 
 const ItemInfo: FC<ItemInfoProps> = ({ value, icon }) => (
@@ -35,9 +35,13 @@ const ItemInfo: FC<ItemInfoProps> = ({ value, icon }) => (
   </View>
 );
 
-const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
+const ItemRealEstates: FC<ItemRealEstatesProps> = ({
+  item,
+  is_hot,
+  onToLocation,
+}) => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const onPressCall = () => {
     let phoneNumber = item?.phone_number;
     if (Platform.OS !== 'android') {
@@ -52,25 +56,6 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
       } else {
         Linking.openURL(phoneNumber);
       }
-    });
-  };
-
-  const kindRealty = () => {
-    switch (item?.demand_id) {
-      case 1:
-        return 'privateRealEstate';
-      case 2:
-        return 'realEstateRental';
-      default:
-        return 'realEstateRental';
-    }
-  };
-
-  const onToLocation = () => {
-    navigate(SCREENS.MAPS, {
-      realtyID: item?.news_id,
-      latLng: item?.lat_long,
-      kindRealty: kindRealty(),
     });
   };
 
@@ -209,7 +194,7 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
           <Text style={styles.time}>2 phút trước</Text>
         </View>
         <View style={styles.row}>
-          <TouchableOpacity onPress={onToLocation}>
+          <TouchableOpacity onPress={() => onToLocation && onToLocation()}>
             <LocationMaps />
           </TouchableOpacity>
           <TouchableOpacity style={styles.love}>

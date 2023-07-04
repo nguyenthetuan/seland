@@ -1,19 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 
 import { LogoZoning } from '../../../../assets';
 import { Input, Text } from '../../../../components';
-import { COLORS, SCREENS } from '../../../../constants';
+import { COLORS } from '../../../../constants';
 import styles from './styles';
 
 interface Iprops {
   control?: Control<any>;
   handleSubmit?: any;
   onChangeSearch?: Function;
+  onOpenMap?: Function;
   getValues?: any;
 }
 
@@ -27,7 +28,7 @@ const HeaderListPosts: FC<Iprops> = props => {
   } = useController({ control, name: 'title' });
 
   const navigateMapScreen = () => {
-    navigate(SCREENS.MAPS);
+    props.onOpenMap && props.onOpenMap();
   };
 
   const submit = () => {
@@ -62,11 +63,11 @@ const HeaderListPosts: FC<Iprops> = props => {
           />
         </View>
 
-        <Icon name="my-location" />
-        <TouchableOpacity
-          style={styles.boxZoning}
+        <Icon
+          name="my-location"
           onPress={navigateMapScreen}
-        >
+        />
+        <TouchableOpacity style={styles.boxZoning}>
           <LogoZoning />
           <Text style={styles.checkZoning}>{t('heading.checkZoning')}</Text>
         </TouchableOpacity>

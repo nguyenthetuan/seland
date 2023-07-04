@@ -1,18 +1,17 @@
-import { useRoute } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  NavigationProp,
+} from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import {
-  ActivityIndicator,
-  FlatList,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { NoResults, Text } from '../../../components';
-import { COLORS } from '../../../constants';
+import { NoResults } from '../../../components';
+import { COLORS, SCREENS } from '../../../constants';
 import {
   getListRealEstates,
   selectRealEstates,
@@ -23,14 +22,21 @@ import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 import TYPE from '../../../constants/types';
+import { KIND_REALTY, URL_MAP } from '../../../utils/maps';
 
 const ListPostsScreen = (props: any) => {
   let dataFilterRef = useRef({});
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const { t } = useTranslation();
   const route: any = useRoute();
   const demand_id = route?.params?.demand_id;
   const is_hot = route?.params?.is_hot;
   const for_you = route?.params?.for_you;
+  const kindRealty = is_hot
+    ? KIND_REALTY.exclusiveRealEstate
+    : demand_id === 1
+    ? KIND_REALTY.buySellRealEstate
+    : KIND_REALTY.realEstateRental;
 
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
@@ -110,7 +116,7 @@ const ListPostsScreen = (props: any) => {
   };
 
   const onFilter = (data: any) => {
-    const dataFilter = convertDataFilter({...data, page: 1});
+    const dataFilter = convertDataFilter({ ...data, page: 1 });
     dataFilterRef.current = dataFilter;
     onGetListRealEstates(dataFilter, TYPE.FILTER);
   };
@@ -176,10 +182,11 @@ const ListPostsScreen = (props: any) => {
     setPage(page + 1);
     onGetListRealEstates(
       Object.keys(dataFilterRef.current).length === 0
-        ? { ...paramsData,
-          page: page + 1,
-          setTotal: setTotalPost,
-          setTotalPage: setTotalPage,
+        ? {
+            ...paramsData,
+            page: page + 1,
+            setTotal: setTotalPost,
+            setTotalPage: setTotalPage,
           }
         : {
             ...dataFilterRef.current,
@@ -195,6 +202,20 @@ const ListPostsScreen = (props: any) => {
     onGetListRealEstates(paramsData);
   }, []);
 
+  const onToLocation = (value: any) => {
+    navigate(SCREENS.MAPS, {
+      realtyID: value?.id,
+      latLng: value?.lat_long,
+      kindRealty: kindRealty,
+    });
+  };
+
+  const onOpenMap = () => {
+    navigate(SCREENS.MAPS, {
+      customerUrl: `${URL_MAP}kindRealty=${kindRealty}&defaultFilter=false`,
+    });
+  };
+
   return (
     <>
       <Loading
@@ -207,6 +228,7 @@ const ListPostsScreen = (props: any) => {
         <HeaderListPosts
           control={control}
           handleSubmit={onFilterTitle}
+          onOpenMap={onOpenMap}
         />
         <FlatList
           style={styles.list}
@@ -216,7 +238,13 @@ const ListPostsScreen = (props: any) => {
           }
           data={listPosts}
           initialNumToRender={20}
-          renderItem={({ item }) => <ItemRealEstates item={item} is_hot={!!(is_hot)} />}
+          renderItem={({ item }) => (
+            <ItemRealEstates
+              item={item}
+              is_hot={!!is_hot}
+              onToLocation={() => onToLocation(item)}
+            />
+          )}
           keyExtractor={(_, index) => `itemPost${index}`}
           ListEmptyComponent={isLoading ? null : <NoResults />}
           ListHeaderComponent={

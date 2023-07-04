@@ -4,14 +4,17 @@ import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { URL_MAP } from '../../../../utils/maps';
 
 const ProjectCategory = () => {
   const { t } = useTranslation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const [isBuy, setIsBuy] = useState(true);
   const { listProject } = useSelector(selectHome);
 
@@ -29,6 +32,12 @@ const ProjectCategory = () => {
     }
     return results;
   }, [isBuy, listProject.data]);
+
+  const onOpenMap = () => {
+    navigate(SCREENS.MAPS, {
+      customerUrl: `${URL_MAP}defaultFilter=false`,
+    });
+  };
 
   if (listProject.loading) {
     return (
@@ -69,6 +78,7 @@ const ProjectCategory = () => {
             key={`ProjectCategory${item?.id}`}
             item={item}
             type={REAL_ESTATE.PROJECT}
+            onOpenMap={() => onOpenMap()}
           />
         ))}
       </ScrollView>

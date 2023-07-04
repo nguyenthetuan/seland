@@ -36,6 +36,7 @@ const ItemInfo = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
 const ItemHottestRealEstate = ({
   item,
   type,
+  onOpenMap,
 }: {
   item: {
     id: never;
@@ -59,6 +60,7 @@ const ItemHottestRealEstate = ({
     phone_number: string;
   };
   type: string;
+  onOpenMap?: Function;
 }) => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
@@ -80,7 +82,10 @@ const ItemHottestRealEstate = ({
     });
   };
 
-  const onToLocation = () => {};
+  const onToLocation = () => {
+    onOpenMap && onOpenMap();
+  };
+
   const onGoDetail = () => {
     if (type !== REAL_ESTATE.PROJECT) {
       navigate(SCREENS.DETAIL_POST, {
