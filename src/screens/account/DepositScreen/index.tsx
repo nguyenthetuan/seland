@@ -180,31 +180,6 @@ const BankAccount = () => {
               );
             })}
           </View>
-
-          <View style={styles.wrapAmountContainer}>
-            {prefixAmount.map((item: TPrefixAmount) => {
-              return (
-                <TouchableOpacity
-                  style={
-                    selectedAmount === item.id
-                      ? styles.selectedAmountContainer
-                      : styles.amountContainer
-                  }
-                  onPress={() => onSelectedAmount(item)}
-                >
-                  <Text
-                    style={
-                      selectedAmount === item.id
-                        ? styles.selectedTitle
-                        : styles.title
-                    }
-                  >
-                    {item?.value}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
         </View>
 
         <View>
