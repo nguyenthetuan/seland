@@ -8,10 +8,16 @@ import Loading from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import DateRangePicker from 'rn-select-date-range';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 import { Button, Header, Input, NoResults, Select } from '../../../components';
-import { calendar, COLORS, sortBy, statuses } from '../../../constants';
+import {
+  calendar,
+  COLORS,
+  SCREENS,
+  sortBy,
+  statuses,
+} from '../../../constants';
 import {
   getListRealEstatesUser,
   selectUserRealEstates,
@@ -27,6 +33,7 @@ const UserPostsScreen = () => {
   const route = useRoute();
   const filterRef = useRef<any>();
   const [loadingList, setLoadingList] = useState(false);
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const dispatch = useDispatch();
   const { data: userRealEstates, page_size } = useSelector(
     selectUserRealEstates
@@ -262,6 +269,10 @@ const UserPostsScreen = () => {
       confirmCancelPaymentRef?.current?.openPopup();
   };
 
+  const navigateToEdit = (item: { id: number | string }) => {
+    navigate(SCREENS.CREATE_POST, { edit: true, id: item.id });
+  };
+
   return (
     <>
       <View style={[styles.flex, styles.whiteBackground]}>
@@ -292,6 +303,7 @@ const UserPostsScreen = () => {
             <ItemWarehouseLand
               item={item}
               onDelete={deletePost}
+              onEdit={() => navigateToEdit(item)}
             />
           )}
           ListHeaderComponent={renderHeader()}
