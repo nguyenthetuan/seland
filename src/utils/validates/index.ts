@@ -101,3 +101,39 @@ export const validateUrlYoutube = (value: string) => {
   }
   return undefined;
 };
+
+export const validateArea = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Diện tích sai định dạng.';
+  }
+  return undefined;
+};
+export const validatePrice = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Giá sai định dạng.';
+  }
+  return undefined;
+};
+export const validateLaneWidth = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Đường rông sai định dạng.';
+  }
+  return undefined;
+};
+export const validateWidth = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Chiều rộng sai định dạng.';
+  }
+  return undefined;
+};
+export const validateLength = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Chiều dài sai định dạng.';
+  }
+  return undefined;
+};
