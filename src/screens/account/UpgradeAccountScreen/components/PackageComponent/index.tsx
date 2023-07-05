@@ -8,10 +8,10 @@ interface IPackageInformationProps {
   title?: string;
   price?: string;
   listFeature?: string[];
-  avatar?: any;
+  avatar?: JSX.Element | any;
 }
 
-const ItemFeature = ({title} : {title: string}) => {
+const ItemFeature = ({ title }: { title: string }) => {
   return (
     <View style={styles.itemFeature}>
       <View style={styles.wrapImage}>
@@ -19,32 +19,25 @@ const ItemFeature = ({title} : {title: string}) => {
       </View>
       <Text style={styles.textItem}>{title}</Text>
     </View>
-  )
-}
+  );
+};
 
-const PackageInformation = ({title, price, listFeature = [], avatar}: IPackageInformationProps) => {
+const PackageInformation = ({
+  title,
+  price,
+  listFeature = [],
+  avatar,
+}: IPackageInformationProps) => {
   return (
     <View style={styles.container}>
-      <View style={styles.wrapImage}>
-        {
-          typeof(avatar) === 'string' 
-          ? 
-            <Image
-              style={styles.avatar}
-              source={{
-                uri: avatar,
-              }}
-            /> 
-          :
-          (avatar || <ProfessionalPackage />)
-        }
-        
-      </View>
+      <View style={styles.wrapImage}>{avatar}</View>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.price}>{price}</Text>
 
       <View>
-        {listFeature.map((item: string) => <ItemFeature title={item} />)}
+        {listFeature.map((item: string) => (
+          <ItemFeature title={item} />
+        ))}
       </View>
     </View>
   );

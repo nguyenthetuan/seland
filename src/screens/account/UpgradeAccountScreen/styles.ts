@@ -19,6 +19,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: COLORS.ORANGE_6,
   },
+  bottomButton: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    paddingHorizontal: 10,
+    marginBottom: 16,
+  },
 });
 
 export default styles;
