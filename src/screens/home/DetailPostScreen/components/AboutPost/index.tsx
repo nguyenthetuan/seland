@@ -25,16 +25,16 @@ import { useNavigation } from '@react-navigation/native';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
+  onOpenMap?: Function;
 }
 
 const AboutPost: FC<Iprops> = props => {
   const { t } = useTranslation();
-  const { infoDetail } = props;
+  const { infoDetail, onOpenMap } = props;
   const { width } = useWindowDimensions();
   const [showMoreContent, setShowMoreContent] = useState(false);
   const [isShowMore, setIsShowMore] = useState(false);
   const [styleShowMore, setStyleShowMore] = useState({});
-  const { navigate } = useNavigation();
 
   const listInfoItem = [
     {
@@ -116,19 +116,13 @@ const AboutPost: FC<Iprops> = props => {
       Linking.openURL(infoDetail?.real_estate_video_link?.[0]);
     }
   };
-  const goToMapScreen = () => {
-    navigate(SCREENS.MAPS, {
-      realtyID: infoDetail?.id,
-      latLng: infoDetail?.lat_long,
-    });
-  };
 
   return (
     <View style={styles.aboutPost}>
       <View style={styles.seeMore}>
         {infoDetail?.news_id && infoDetail?.lat_long && (
           <TouchableOpacity
-            onPress={goToMapScreen}
+            onPress={() => onOpenMap && onOpenMap()}
             style={styles.flex}
           >
             <IconMapWhite color={COLORS.BLUE_2} />

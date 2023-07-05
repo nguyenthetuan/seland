@@ -19,11 +19,12 @@ import FastImage from 'react-native-fast-image';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
+  onOpenMap?: Function;
 }
 
 const ImagePost: FC<Iprops> = props => {
   const { goBack }: any = useNavigation();
-  const { infoDetail } = props;
+  const { infoDetail, onOpenMap } = props;
   const listImage =
     infoDetail?.real_estate_images &&
     Object.values(infoDetail?.real_estate_images);
@@ -34,17 +35,24 @@ const ImagePost: FC<Iprops> = props => {
   const listIcon = [
     {
       icon: <IconHeartWhite />,
+      onPress: () => {},
     },
     {
       icon: <IconPhoneWhite />,
+      onPress: () => {},
     },
     {
       icon: <IconMapWhite color={COLORS.WHITE} />,
+      onPress: () => {
+        onOpenMap && onOpenMap();
+      },
     },
     {
       icon: <IconDotWhite />,
+      onPress: () => {},
     },
   ];
+
   const onSeeDetail = (key: number) => {
     setImageCurrent(listImage?.[key]);
     setCountImage(key);
@@ -82,12 +90,13 @@ const ImagePost: FC<Iprops> = props => {
           <View style={styles.headerRight}>
             {listIcon?.map((i, index) => {
               return (
-                <View
+                <TouchableOpacity
+                  onPress={() => i?.onPress()}
                   style={styles.iconHeaderRight}
                   key={`icon-image-${index}`}
                 >
                   {i.icon}
-                </View>
+                </TouchableOpacity>
               );
             })}
           </View>
