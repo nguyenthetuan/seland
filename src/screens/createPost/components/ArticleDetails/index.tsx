@@ -151,6 +151,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
   // };
 
   const handleSelectFile = () => {
+    const verifyMB = typeUpload.isPhoto ? 0.2 : 1;
     try {
       launchImageLibrary({
         mediaType: typeUpload.isPhoto ? 'photo' : 'video',
@@ -161,7 +162,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             let errorsVideo = '';
             let errorsPhoto = '';
             const arrayImage = result?.assets.filter(item => {
-              if (item?.fileSize && item?.fileSize / MB <= 1) {
+              if (item?.fileSize && item?.fileSize / MB <= verifyMB) {
                 return item;
               } else {
                 errorsPhoto = typeUpload.isPhoto
