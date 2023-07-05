@@ -1,4 +1,8 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  NavigationProp,
+} from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -104,7 +108,7 @@ export const formatDataNameId = (data: any) =>
   }));
 
 const CreatePostScreen = (props: any) => {
-  const { navigate, goBack } = useNavigation();
+  const { navigate, goBack }: NavigationProp<any, any> = useNavigation();
   const router: any = useRoute();
   const {
     control,
@@ -513,7 +517,10 @@ const CreatePostScreen = (props: any) => {
     if (saveType === YOUR_WANT.SAVE_DRAFTS) {
       navigate(SCREENS.DRAFT_POSTS);
     } else {
-      navigate(SCREENS.USER_POSTS, { type: 'createPost', status: saveType });
+      navigate(SCREENS.USER_POSTS, {
+        type: 'createPost',
+        status: saveType,
+      });
     }
   };
 
