@@ -28,7 +28,9 @@ const UserPostsScreen = () => {
   const filterRef = useRef<any>();
   const [loadingList, setLoadingList] = useState(false);
   const dispatch = useDispatch();
-  const { data: userRealEstates } = useSelector(selectUserRealEstates);
+  const { data: userRealEstates, page_size } = useSelector(
+    selectUserRealEstates
+  );
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,10 +48,10 @@ const UserPostsScreen = () => {
     filterRef.current.onOpen();
   };
 
-  const { control, getValues, handleSubmit, setValue } = useForm({
+  const { control, getValues, handleSubmit, setValue, reset } = useForm({
     defaultValues: {
       title: '',
-      date: 'week',
+      date: null,
       sort_by: 'createdAt',
       real_estate_type_id: null,
       area_range_id: null,
@@ -70,48 +72,22 @@ const UserPostsScreen = () => {
 
     setIsLoading(true);
 
-    const callback = (res: any) => {
+    const getListSuccess = () => {
       setIsLoading(false);
-      if (dataUserRealEstates.length > 0) {
-        setDataUserRealEstates([...dataUserRealEstates, ...res]);
-      } else {
-        setDataUserRealEstates(res);
-      }
+      reset();
     };
 
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
         ...obj,
-        setTotal: setTotal,
       }),
-      callback
-    );
-  };
-
-  const onGetReFresh = () => {
-    setIsLoading(true);
-    const { sort_by } = getValues();
-
-    const callback = (res: any) => {
-      setIsLoading(false);
-      setDataUserRealEstates(res);
-    };
-
-    dispatchThunk(
-      dispatch,
-      getListRealEstatesUser({
-        sort_by,
-        page: page,
-        status,
-        setTotal: setTotal,
-      }),
-      callback
+      getListSuccess
     );
   };
 
   const onLoadMore = () => {
-    if (total === dataUserRealEstates.length) return;
+    if (total === page_size) return;
     setPage(page + 1);
   };
 
@@ -130,7 +106,6 @@ const UserPostsScreen = () => {
       dispatch,
       getListRealEstatesUser({
         ...obj,
-        setTotal: setTotal,
       })
     );
     setStatus(value);
@@ -261,7 +236,7 @@ const UserPostsScreen = () => {
   // }
 
   const deleteSuccess = () => {
-    onGetReFresh();
+    onGetListRealEstatesUser();
     setIdItemDelete('');
   };
 
@@ -324,7 +299,15 @@ const UserPostsScreen = () => {
           ListFooterComponent={
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
-          onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
+          onRefresh={onGetListRealEstatesUser}
+          onEndReached={
+            userRealEstates.length > 3 &&
+            page < page_size &&
+            isLoading === false
+              ? onLoadMore
+              : null
+          }
+          refreshing={isLoading}
         />
       </View>
       <View>

@@ -25,25 +25,37 @@ const WarehouseLandScreen = () => {
       district_id: null,
       demand_id: null,
       title: null,
-      status: null,
+      status: -1,
     },
   });
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const onSelect = () => {
-    dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
-  };
   const { listRealEstateWarehouses, loadingRealEstateWarehouses } =
     useSelector(selectWareHouses);
 
+  const onSelect = () => {
+    const obj = getValues();
+    if (obj.status === -1) {
+      delete obj?.status;
+    }
+    dispatchThunk(dispatch, loadRealEstateWarehouses({ ...obj }));
+  };
+
   const onFilterModal = (value: IModalFilterWarehouse) => {
-    dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
+    const obj = getValues();
+    if (obj.status === -1) {
+      delete obj?.status;
+    }
+    dispatchThunk(dispatch, loadRealEstateWarehouses({ ...obj }));
   };
   const onSearch = (value: string) => {
-    dispatchThunk(dispatch, loadRealEstateWarehouses(getValues()));
+    const obj = getValues();
+    if (obj.status === -1) {
+      delete obj?.status;
+    }
+    dispatchThunk(dispatch, loadRealEstateWarehouses({ ...obj }));
   };
 
   const onLoadRealEstateWarehouses = () => {

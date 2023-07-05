@@ -42,7 +42,7 @@ const slice = createSlice({
     total: 0,
     page: 1,
     limit: 10,
-    page_size: 10,
+    page_size: 1,
     error: '',
   },
   extraReducers: builder => {
