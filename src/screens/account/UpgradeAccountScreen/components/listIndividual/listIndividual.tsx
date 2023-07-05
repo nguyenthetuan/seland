@@ -5,7 +5,7 @@ import styles from './listIndividualStyles';
 
 interface IListIndividual {
   id: number;
-  imagePath: string;
+  icon: JSX.Element;
   title: string;
   description: string;
   price: string | number;
@@ -23,13 +23,8 @@ const ListIndividual = (props: IProps) => {
         id={item.id.toString()}
         style={styles.container}
       >
-        <View style={styles.wrapImageContainer}>
-          <Image
-            source={{ uri: item.imagePath }}
-            style={styles.imageContainer}
-          />
-        </View>
-        <Text style={styles.title}>{item.title}</Text>
+        <View style={styles.wrapImageContainer}>{item.icon}</View>
+        <Text style={styles.title}>{item.title.toUpperCase()}</Text>
         <Text style={styles.description}>{item.description}</Text>
         <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText}>{item.price} VND</Text>
