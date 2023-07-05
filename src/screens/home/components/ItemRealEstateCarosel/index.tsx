@@ -246,7 +246,15 @@ const ItemHottestRealEstate = ({
                     {t(item?.demand_id === 1 ? 'common.buy' : 'common.lease')}
                   </Text>
                 </View>
-                <Text style={styles.time}>2 phút trước</Text>
+                <Text
+                  style={[
+                    styles.time,
+                    item?.demand_id === 1 ? {} : { width: '40%' },
+                  ]}
+                  numberOfLines={1}
+                >
+                  2 phút trước
+                </Text>
               </View>
               <View style={styles.row}>
                 <TouchableOpacity onPress={onToLocation}>
