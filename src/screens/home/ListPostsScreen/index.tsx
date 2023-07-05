@@ -51,6 +51,7 @@ const ListPostsScreen = (props: any) => {
   const [page, setPage] = useState<number>(1);
   const [totalPost, setTotalPost] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
+  let stopLoadMore = true;
 
   const convertDataFilter = (data: any) => {
     const res: any = {};
@@ -144,8 +145,11 @@ const ListPostsScreen = (props: any) => {
 
     const callback = (res: any) => {
       setIsLoading(false);
-      if (Array.isArray(dataListPosts) && type === TYPE.LOAD_MORE) {
-        setDataListPosts([...dataListPosts, ...res] as any);
+      if (type === TYPE.LOAD_MORE) {
+        const tout = setTimeout(() => {
+          clearInterval(tout);
+          setDataListPosts([...dataListPosts, ...res] as any);
+        }, 200);
       } else {
         setDataListPosts(res);
       }
@@ -178,24 +182,27 @@ const ListPostsScreen = (props: any) => {
   };
 
   const onLoadMore = () => {
-    if (page === totalPage) return;
-    setPage(page + 1);
-    onGetListRealEstates(
-      Object.keys(dataFilterRef.current).length === 0
-        ? {
-            ...paramsData,
-            page: page + 1,
-            setTotal: setTotalPost,
-            setTotalPage: setTotalPage,
-          }
-        : {
-            ...dataFilterRef.current,
-            setTotal: setTotalPost,
-            setTotalPage: setTotalPage,
-            page: page + 1,
-          },
-      TYPE.LOAD_MORE
-    );
+    if (!stopLoadMore) {
+      if (page === totalPage) return;
+      setPage(page + 1);
+      onGetListRealEstates(
+        Object.keys(dataFilterRef.current).length === 0
+          ? {
+              ...paramsData,
+              page: page + 1,
+              setTotal: setTotalPost,
+              setTotalPage: setTotalPage,
+            }
+          : {
+              ...dataFilterRef.current,
+              setTotal: setTotalPost,
+              setTotalPage: setTotalPage,
+              page: page + 1,
+            },
+        TYPE.LOAD_MORE
+      );
+      stopLoadMore = true;
+    }
   };
 
   useEffect(() => {
@@ -236,7 +243,7 @@ const ListPostsScreen = (props: any) => {
           onEndReached={
             dataListPosts.length > 3 && isLoading === false ? onLoadMore : null
           }
-          data={listPosts}
+          data={dataListPosts}
           initialNumToRender={20}
           renderItem={({ item }) => (
             <ItemRealEstates
@@ -256,13 +263,14 @@ const ListPostsScreen = (props: any) => {
               {...props}
             />
           }
-          // ListFooterComponent={
-          //   isLoading ? <ActivityIndicator size={'small'} /> : null
-          // }
           refreshing={isLoading}
           onRefresh={onPullToRefresh}
           scrollEnabled={enableScroll}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.5}
+          bounces={false}
+          onScrollBeginDrag={() => {
+            stopLoadMore = false;
+          }}
         />
       </View>
     </>
