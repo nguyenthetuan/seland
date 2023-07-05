@@ -38,7 +38,7 @@ const MapScreen = ({}) => {
       latLong || '16.8018075868834%2C107.28037372286639'
     }&defaultFilter=${route?.params?.defaultFilter || false}&kindRealty=${
       route?.params?.kindRealty || 'exclusiveRealEstate'
-    }`;
+    }&token=${token}`;
 
   return (
     <View style={{ flex: 1 }}>
