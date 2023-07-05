@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -26,10 +26,11 @@ import RealEstateNews from '../components/RealEstateNews';
 import SuggestMenu from '../components/SuggestMenu';
 import styles from './styles';
 import { IDemandId } from '../../../utils/interface/home';
+import { URL_MAP } from '../../../utils/maps';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
-  const { navigate }: any = useNavigation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -89,11 +90,14 @@ const HomeScreen = () => {
 
   const navigateToListProject = () => navigate(SCREENS.LIST_PROJECT);
 
-  const navigateToMaps = () => navigate(SCREENS.MAPS);
+  const navigateToMaps = () =>
+    navigate(SCREENS.MAPS, {
+      customerUrl: `${URL_MAP}defaultFilter=true`,
+    });
 
   return (
     <View style={styles.containerScreen}>
-      <HeaderHome />
+      <HeaderHome openMaps={navigateToMaps} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.contentContainer}
@@ -120,10 +124,7 @@ const HomeScreen = () => {
             rightIcon={<Icon name="search" />}
             placeholder={t('input.projectSunriseCity') || ''}
           />
-          <Pressable
-            style={styles.boxLocation}
-            onPress={navigateToMaps}
-          >
+          <Pressable style={styles.boxLocation}>
             <Icon name="my-location" />
           </Pressable>
         </View>

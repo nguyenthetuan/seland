@@ -18,7 +18,6 @@ import {
   deleteRealEstatesUser,
 } from '../../../features';
 import { dispatchThunk } from '../../../utils';
-import { UserPost } from '../components';
 import styles from './styles';
 import ModalFilterScreen from './components/ModalFilter';
 import PopupConfirm from '../../../components/common/PopupConfirm';
@@ -29,7 +28,9 @@ const UserPostsScreen = () => {
   const filterRef = useRef<any>();
   const [loadingList, setLoadingList] = useState(false);
   const dispatch = useDispatch();
-  const { data: userRealEstates } = useSelector(selectUserRealEstates);
+  const { data: userRealEstates, page_size } = useSelector(
+    selectUserRealEstates
+  );
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
@@ -47,65 +48,46 @@ const UserPostsScreen = () => {
     filterRef.current.onOpen();
   };
 
-  const { control, getValues, handleSubmit, setValue } = useForm({
+  const { control, getValues, handleSubmit, setValue, reset } = useForm({
     defaultValues: {
       title: '',
-      date: 'week',
+      date: null,
       sort_by: 'createdAt',
       real_estate_type_id: null,
       area_range_id: null,
       province_id: null,
       type: null,
-      status: '',
+      status: null,
       demand_id: null,
     },
   });
 
   const onGetListRealEstatesUser = () => {
-    // setIsLoading(true);
-    const callback = (res: any) => {
-      // setIsLoading(false);
-      // if (dataUserRealEstates.length > 0) {
-      //   setDataUserRealEstates([...dataUserRealEstates, ...res]);
-      // } else {
-      //   setDataUserRealEstates(res);
-      // }
-    };
+    const obj = getValues();
+    obj.status = status;
+    obj.page = page;
+    if (status === -1) {
+      delete obj?.status;
+    }
 
-    dispatchThunk(
-      dispatch,
-      getListRealEstatesUser({
-        sort_by: 'createdAt',
-        page: page,
-        setTotal: setTotal,
-      }),
-      callback
-    );
-  };
-
-  const onGetReFresh = () => {
     setIsLoading(true);
-    const { sort_by } = getValues();
 
-    const callback = (res: any) => {
+    const getListSuccess = () => {
       setIsLoading(false);
-      setDataUserRealEstates(res);
+      reset();
     };
 
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
-        sort_by,
-        page: page,
-        status,
-        setTotal: setTotal,
+        ...obj,
       }),
-      callback
+      getListSuccess
     );
   };
 
   const onLoadMore = () => {
-    if (total === dataUserRealEstates.length) return;
+    if (total === page_size) return;
     setPage(page + 1);
   };
 
@@ -114,17 +96,17 @@ const UserPostsScreen = () => {
   }, []);
 
   const handleSelectStatus = (value: number) => {
+    const obj = getValues();
+    obj.status = value;
+    obj.page = page;
+    if (value === -1) {
+      delete obj?.status;
+    }
     dispatchThunk(
       dispatch,
-      value >= 0
-        ? getListRealEstatesUser({
-            status: value,
-            setTotal: setTotal,
-          })
-        : getListRealEstatesUser({
-            sort_by: 'createdAt',
-            setTotal: setTotal,
-          })
+      getListRealEstatesUser({
+        ...obj,
+      })
     );
     setStatus(value);
   };
@@ -242,19 +224,19 @@ const UserPostsScreen = () => {
     );
   };
 
-  if (loadingList) {
-    return (
-      <Loading
-        color={COLORS.BLUE_1}
-        textContent={t('common.loading') || ''}
-        textStyle={styles.loadingText}
-        visible={loadingList}
-      />
-    );
-  }
+  // if (loadingList) {
+  //   return (
+  //     <Loading
+  //       color={COLORS.BLUE_1}
+  //       textContent={t('common.loading') || ''}
+  //       textStyle={styles.loadingText}
+  //       visible={loadingList}
+  //     />
+  //   );
+  // }
 
   const deleteSuccess = () => {
-    onGetReFresh();
+    onGetListRealEstatesUser();
     setIdItemDelete('');
   };
 
@@ -304,6 +286,7 @@ const UserPostsScreen = () => {
         <FlatList
           style={styles.list}
           data={userRealEstates}
+          contentContainerStyle={styles.contentContainer}
           keyExtractor={(_, index) => `itemPost${index}`}
           renderItem={({ item }) => (
             <ItemWarehouseLand
@@ -316,7 +299,15 @@ const UserPostsScreen = () => {
           ListFooterComponent={
             isLoading ? <ActivityIndicator size={'small'} /> : null
           }
-          // onEndReached={dataUserRealEstates.length > 0 ? onLoadMore : null}
+          onRefresh={onGetListRealEstatesUser}
+          onEndReached={
+            userRealEstates.length > 3 &&
+            page < page_size &&
+            isLoading === false
+              ? onLoadMore
+              : null
+          }
+          refreshing={isLoading}
         />
       </View>
       <View>

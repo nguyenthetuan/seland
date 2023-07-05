@@ -7,8 +7,21 @@ const styles = StyleSheet.create({
     color: COLORS.BLACK_1,
     fontSize: 15,
     lineHeight: 24,
-    fontWeight: 400,
+    fontWeight: '400',
     marginLeft: 8,
+  },
+  area: {
+    fontWeight: '700',
+    fontSize: 13,
+  },
+  txtAcreage: {
+    color: COLORS.BLACK_1,
+    fontSize: 15,
+    lineHeight: 24,
+    fontWeight: '400',
+    marginLeft: 8,
+    width: 130,
+    textAlign: 'center',
   },
   boxImage: {
     height: 200,
@@ -134,7 +147,6 @@ const styles = StyleSheet.create({
   boxStatus: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.GREEN_5,
     paddingHorizontal: 6,
     paddingVertical: 3,
     borderBottomRightRadius: 3,
@@ -227,6 +239,7 @@ const styles = StyleSheet.create({
   codeTitle: {
     color: COLORS.GRAY_7,
     fontSize: 14,
+    width: 130,
   },
   codeText: {
     fontWeight: '700',

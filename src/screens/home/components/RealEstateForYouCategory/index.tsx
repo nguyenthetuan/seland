@@ -1,16 +1,17 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Button } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
 import { IDemandId } from '../../../../utils/interface/home';
 import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
-
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { KIND_REALTY } from '../../../../utils/maps';
 interface Iprops {
   isBuy: boolean;
   setIsBuy: any;
@@ -18,6 +19,7 @@ interface Iprops {
 
 const RealEstateForYouCategory = ({ isBuy, setIsBuy }: Iprops) => {
   const { t } = useTranslation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const { listRealEstatesForYou } = useSelector(selectHome);
 
   const handleSelectOptions = (value: boolean) => {
@@ -37,6 +39,14 @@ const RealEstateForYouCategory = ({ isBuy, setIsBuy }: Iprops) => {
     }
     return results;
   }, [isBuy, listRealEstatesForYou?.data]);
+
+  const onOpenMap = (value: { id?: number | string; lat_long?: string }) => {
+    navigate(SCREENS.MAPS, {
+      realtyID: value?.id,
+      latLng: value?.lat_long,
+      kindRealty: KIND_REALTY.buySellRealEstate,
+    });
+  };
 
   if (listRealEstatesForYou?.loading) {
     return (
@@ -76,6 +86,7 @@ const RealEstateForYouCategory = ({ isBuy, setIsBuy }: Iprops) => {
             key={`RealEstateForYouCategory${item?.id}-${index}`}
             item={item}
             type={REAL_ESTATE.REAL_ESTATE_FOR_YOU}
+            onOpenMap={() => onOpenMap(item)}
           />
         ))}
       </ScrollView>

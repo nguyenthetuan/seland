@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 10,
   },
+  marker: {
+    position: 'absolute',
+    justifyContent: 'center',
+  },
   locationRealEstate: {
     fontWeight: '700',
     marginTop: 16,
@@ -61,11 +65,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 5,
     height: 158,
-    marginTop: -20,
     width: width - 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   createPostNews: {
-    fontWeight: 500,
+    fontWeight: '500',
   },
   dot: select => ({
     backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
