@@ -126,7 +126,7 @@ const UpgradeAccountScreen = () => {
 
   return (
     <View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Carousel
             data={dataMock}
@@ -138,14 +138,7 @@ const UpgradeAccountScreen = () => {
           />
         </View>
       </ScrollView>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-          paddingHorizontal: 10,
-        }}
-      >
+      <View style={styles.bottomButton}>
         {pagination()}
         <Button
           title="Mua gói ngay"

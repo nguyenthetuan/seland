@@ -2,25 +2,21 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 import { Text } from '../../../../../components';
 import styles from './listNoteStyles';
-
-interface Note {
-  id: number;
-  title: string;
-  description: string;
-}
+import { IconNoteDot } from '../../icon';
+import { INote } from '../NotesScreen/model';
 
 interface IProps {
-  data: Note[];
+  data: INote[];
 }
 
 const ListNote = (props: IProps) => {
   const { data } = props;
 
-  const renderItem = ({ item }: { item: Note }) => {
+  const renderItem = ({ item }: { item: INote }) => {
     return (
       <View style={styles.itemContainer}>
         <View style={styles.wrapTitle}>
-          <View style={styles.circle} />
+          <IconNoteDot />
           <Text style={styles.title}>{item.title}</Text>
         </View>
         <Text style={styles.description}>{item.description}</Text>
@@ -31,6 +27,7 @@ const ListNote = (props: IProps) => {
   return (
     <View style={styles.container}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={data}
         renderItem={renderItem}
       />

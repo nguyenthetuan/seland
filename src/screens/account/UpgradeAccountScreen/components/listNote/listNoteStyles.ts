@@ -3,13 +3,13 @@ import { COLORS } from '../../../../../constants';
 
 const styles = StyleSheet.create({
   container: {
-    padding: 8,
+    padding: 16,
     borderRadius: 4,
     borderWidth: 1,
     borderColor: COLORS.ORANGE_6,
   },
   itemContainer: {
-    marginBottom: 16,
+    marginBottom: 24,
   },
   wrapTitle: {
     flexDirection: 'row',
@@ -26,9 +26,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 14,
     color: COLORS.BLACK_1,
+    paddingLeft: 4,
   },
   description: {
-    marginLeft: 32,
+    paddingLeft: 24,
     fontWeight: '400',
     fontSize: 12,
     color: COLORS.GRAY_7,
