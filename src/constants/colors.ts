@@ -56,6 +56,9 @@ const COLORS = {
   PURPLE_1: '#722ed1',
   PURPLE_2: '#f9f0ff',
   SLIDER_1: '#91D5FF',
+
+  NEUTRAL2: '#FAFAFA',
+  NEUTRAL4: '#F0F0F0',
 };
 
 export default COLORS;

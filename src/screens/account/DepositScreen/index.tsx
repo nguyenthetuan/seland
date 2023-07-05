@@ -1,14 +1,22 @@
-import React, { useRef, useState } from 'react';
-import { View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { Text } from '../../../components';
 import { useNavigation } from '@react-navigation/native';
+import { Input } from '@rneui/themed';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './styles';
-import { Icon, Input } from '@rneui/themed';
-import { ArrowLeft, Circle, CircleCheck } from '../../../assets';
-import { COLORS } from '../../../constants';
-import QRCode from 'react-native-qrcode-svg';
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import RNFetchBlob from 'react-native-blob-util';
+import { ArrowLeft, Circle, CircleCheck, VNPay } from '../../../assets';
+import { Header, Text } from '../../../components';
+import { COLORS } from '../../../constants';
+import PaymentMethod from './PaymentMethod';
+import { IconBank } from './PaymentMethod/icon';
+import styles from './styles';
+import QRCode from 'react-native-qrcode-svg';
 
 type TPrefixAmount = {
   id: number;
@@ -29,31 +37,11 @@ const prefixAmount: TPrefixAmount[] = [
   },
   {
     id: 2,
-    value: '200,000',
-  },
-  {
-    id: 3,
-    value: '300,000',
-  },
-  {
-    id: 4,
     value: '500,000',
   },
   {
-    id: 5,
+    id: 3,
     value: '1,000,000',
-  },
-  {
-    id: 6,
-    value: '2,000,000',
-  },
-  {
-    id: 7,
-    value: '5,000,000',
-  },
-  {
-    id: 8,
-    value: '10,000,000',
   },
 ];
 
@@ -126,26 +114,16 @@ const BankAccount = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
+      <Header
+        hasGoBack
+        title={t('common.topup')}
+      />
       <ScrollView style={styles.container}>
-        <View style={styles.wrapHeader}>
-          <TouchableOpacity
-            style={[
-              styles.wrapHeaderIcon,
-              {
-                height: 24,
-                width: 24,
-                justifyContent: 'center',
-                marginRight: -8,
-              },
-            ]}
-            onPress={goBack}
-          >
-            <ArrowLeft />
-          </TouchableOpacity>
-          <Text style={styles.title}>Nạp tiền</Text>
-        </View>
-
         <View>
+          <Text style={styles.note}>
+            Để nạp tiền, bạn hãy nhập số tiền và chọn bất kỳ 2 phương thức thanh
+            toán bên dưới:
+          </Text>
           <Text style={styles.title}>Nhập số tiền cần nạp</Text>
           <Input
             inputContainerStyle={{ borderBottomWidth: 0 }}
@@ -157,14 +135,16 @@ const BankAccount = () => {
           />
 
           <View style={styles.wrapAmountContainer}>
-            {prefixAmount.map((item: TPrefixAmount) => {
+            {prefixAmount.map((item: TPrefixAmount, index: number) => {
               return (
                 <TouchableOpacity
-                  style={
+                  style={[
+                    { flex: 1 },
                     selectedAmount === item.id
                       ? styles.selectedAmountContainer
-                      : styles.amountContainer
-                  }
+                      : styles.amountContainer,
+                    index !== 0 && { marginLeft: 16 },
+                  ]}
                   onPress={() => onSelectedAmount(item)}
                 >
                   <Text
@@ -180,9 +160,25 @@ const BankAccount = () => {
               );
             })}
           </View>
+          <PaymentMethod
+            icon={<IconBank />}
+            title="Chuyển khoản ngân hàng"
+            onPress={() => {}}
+          />
+          <PaymentMethod
+            icon={
+              <Image
+                source={VNPay}
+                style={{ width: 36, height: 36 }}
+              />
+            }
+            title="VN Pay"
+            onPress={() => {}}
+            style={{ marginTop: 12 }}
+          />
         </View>
 
-        <View>
+        {/* <View>
           <Text style={styles.title}>Chọn hình thức thanh toán</Text>
 
           <View style={styles.selectedPaymentContainer}>
@@ -249,10 +245,10 @@ const BankAccount = () => {
                   );
                 })}
           </View>
-        </View>
+        </View> */}
       </ScrollView>
 
-      <View style={styles.wrapBottomContainer}>
+      {/* <View style={styles.wrapBottomContainer}>
         <TouchableOpacity
           onPress={onConfirmPay}
           style={styles.wrapConfirmPayContainer}
@@ -278,7 +274,7 @@ const BankAccount = () => {
             <Text style={styles.cancelText}>Huỷ</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };

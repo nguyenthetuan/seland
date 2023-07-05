@@ -20,12 +20,15 @@ const styles = StyleSheet.create({
   wrapInputContainer: {
     borderRadius: 1,
     borderWidth: 1,
-    borderColor: COLORS.GREEN_1,
+    borderColor: COLORS.GRAY_2,
     marginLeft: -8,
     marginRight: -8,
     padding: 8,
     marginTop: 20,
     marginBottom: 10,
+    fontSize: 24,
+    lineHeight: 32,
+    color: '#000',
   },
   wrapAmountContainer: {
     flexDirection: 'row',
@@ -34,7 +37,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   amountContainer: {
-    width: '27%',
     height: 40,
     backgroundColor: COLORS.WHITE,
     borderRadius: 2,
@@ -42,17 +44,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: COLORS.GRAY_2,
     borderWidth: 1,
-    marginRight: 16,
     marginBottom: 16,
   },
   selectedAmountContainer: {
-    width: '27%',
     height: 40,
     backgroundColor: COLORS.GREEN_1,
     borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
     marginBottom: 16,
   },
   selectedTitle: {
@@ -125,8 +124,13 @@ const styles = StyleSheet.create({
   paymentContainer: {
     paddingBottom: 150,
   },
-  title: {
+  headerTitle: {
     fontWeight: '500',
+    fontSize: 16,
+    color: COLORS.BLACK_1,
+  },
+  title: {
+    fontWeight: '700',
     fontSize: 16,
     color: COLORS.BLACK_1,
   },
@@ -136,6 +140,12 @@ const styles = StyleSheet.create({
   downloadQrText: {
     color: COLORS.BLUE_2,
     textDecorationLine: 'underline',
+  },
+  note: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '400',
+    paddingVertical: 24,
   },
 });
 
