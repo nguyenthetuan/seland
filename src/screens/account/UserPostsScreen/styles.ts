@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native';
 import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    paddingBottom: 100,
+  },
   dateRangePicker: {
     backgroundColor: COLORS.WHITE,
     borderRadius: 8,

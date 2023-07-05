@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MapView, { Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TickButton } from '../../../../assets';
@@ -26,6 +26,7 @@ import {
   isYear,
   validateApartmentCode,
   validateFormatYear,
+  validateLatLog,
 } from '../../../../utils/validates';
 
 interface BasicInformationProps {
@@ -359,6 +360,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
               Đặt lại
             </Text>
           }
+          rules={{ validate: validateLatLog }}
         />
         <View style={styles.containerMaps}>
           <MapView
@@ -370,11 +372,14 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
               longitudeDelta: 0.21,
             }}
             onRegionChangeComplete={onRegionChangeComplete}
-          >
-            <Marker
-              coordinate={{ latitude: latLong.lat, longitude: latLong.long }}
-            ></Marker>
-          </MapView>
+          ></MapView>
+          <View style={styles.marker}>
+            <Icon
+              name="location-on"
+              size={30}
+              color={COLORS.RED_1}
+            />
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </View>

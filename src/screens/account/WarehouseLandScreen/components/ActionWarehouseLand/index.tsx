@@ -20,8 +20,12 @@ import styles from './styles';
 
 interface ActionWarehouseLandProps {
   onDelete?: Function;
+  onEdit?: Function;
 }
-const ActionWarehouseLand: FC<ActionWarehouseLandProps> = ({ onDelete }) => {
+const ActionWarehouseLand: FC<ActionWarehouseLandProps> = ({
+  onDelete,
+  onEdit,
+}) => {
   const [open, setOpen] = React.useState(false);
   const { t } = useTranslation();
 
@@ -39,7 +43,9 @@ const ActionWarehouseLand: FC<ActionWarehouseLandProps> = ({ onDelete }) => {
     {
       icon: <IconSvg name="edit" />,
       label: t('common.editNews'),
-      onPress: () => {},
+      onPress: () => {
+        onEdit && onEdit();
+      },
     },
     {
       icon: <IconCopy />,
@@ -70,7 +76,6 @@ const ActionWarehouseLand: FC<ActionWarehouseLandProps> = ({ onDelete }) => {
       icon: <IconDelete />,
       label: t('common.deleteNews'),
       onPress: () => {
-        console.log('dmddmdmdmddm');
         onDelete && onDelete();
       },
     },

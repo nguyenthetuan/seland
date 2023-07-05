@@ -89,15 +89,16 @@ const Input = ({
     let txt = '';
     switch (inputMode) {
       case 'decimal':
-        txt = text.replace(/[^\d*\.?\d*$]/g, '');
-        console.log('inputMode', inputMode, txt);
+        txt = text.replace(/[^(\d+|\d{1.3})(\.\d+)]/g, '');
         break;
       case 'numeric':
         txt = text.replace(/[^\d]/g, '');
         break;
       default:
         txt =
-          isEmail || isPassword || isWebsite ? text.replace(/\s/g, '') : text;
+          isEmail || isPassword || isWebsite
+            ? text.replace(/\s/g, '')
+            : text.replace(/\s\s+/g, ' ');
         break;
     }
     onChange(txt);

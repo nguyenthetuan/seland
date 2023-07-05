@@ -9,14 +9,11 @@ export const selectUserRealEstates = state => state.userRealEstates;
 
 export const getListRealEstatesUser = createAsyncThunk(
   'getListRealEstatesUser',
-  async (params, { fulfillWithValue, rejectWithValue }, callback) => {
+  async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const setTotal = params?.setTotal;
       delete params?.setTotal;
-      const { data, total } = await requestGetListRealEstatesUser(params);
-      // setTotal(total);
-      // callback && callback(data);
-      return fulfillWithValue(data);
+      const response = await requestGetListRealEstatesUser(params);
+      return fulfillWithValue(response);
     } catch (error) {
       return rejectWithValue('Hệ thống đang bận. Vui lòng thử lại sau (4)');
     }
@@ -42,9 +39,10 @@ const slice = createSlice({
     loading: false,
     loadingDelete: false,
     data: [],
+    total: 0,
     page: 1,
     limit: 10,
-    page_size: 10,
+    page_size: 1,
     error: '',
   },
   extraReducers: builder => {
@@ -53,7 +51,14 @@ const slice = createSlice({
     });
     builder.addCase(getListRealEstatesUser.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      console.log(
+        '🚀 ~ file: userRealEstates.js:55 ~ builder.addCase ~ action.payload:',
+        action.payload
+      );
+      state.data = action.payload.data;
+      state.total = action.payload.total;
+      state.page = action.payload.page;
+      state.page_size = action.payload.page_size;
       state.error = '';
     });
     builder.addCase(getListRealEstatesUser.rejected, (state, action) => {

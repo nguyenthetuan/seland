@@ -2,22 +2,60 @@ import { Image } from '@rneui/themed';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
-import { IconEyes, IconUploadWhite, Location } from '../../../../assets';
+import {
+  IconEyes,
+  IconUploadWhite,
+  Location,
+  IconEyesBlack,
+} from '../../../../assets';
 import { Button, Text } from '../../../../components';
 import { IItemWarehouse } from '../../../../utils/interface/warehouse';
 import ActionWarehouseLand from '../../WarehouseLandScreen/components/ActionWarehouseLand';
 import DisplayPositionPost from '../../WarehouseLandScreen/components/DisplayPositionPost';
 import styles from './styles';
+import { COLORS } from '../../../../constants';
+import { rankPost } from '../../../../utils/realEstates';
 
 interface Iprops {
   item: IItemWarehouse;
   onDelete?: Function;
+  onEdit?: Function;
 }
-const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete }) => {
+const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete, onEdit }) => {
   const { t } = useTranslation();
 
   const onDeletePost = (id?: number) => {
     onDelete && onDelete(id);
+  };
+
+  const onEditPost = (id?: number) => {
+    onEdit && onEdit(id);
+  };
+
+  const backgroundBoxStatus = () => {
+    let background = '';
+    switch (item?.status) {
+      case 1:
+        background = COLORS.GREEN_1;
+        break;
+      case 2:
+        background = COLORS.PURPLE_2;
+        break;
+      case 3:
+        background = COLORS.YELLOW_8;
+        break;
+      case 5:
+      case 6:
+      case 0:
+        background = COLORS.RED_2;
+        break;
+      default:
+        background = COLORS.GREEN_1;
+        break;
+    }
+    return {
+      backgroundColor: background,
+    };
   };
 
   return (
@@ -34,12 +72,16 @@ const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete }) => {
           }
         />
         <View style={styles.headerImage}>
-          <View style={styles.boxStatus}>
-            <IconEyes />
-            <Text style={styles.boxStatusText}>{item?.status_name}</Text>
-          </View>
-          <View style={styles.boxVirtualNews}>
-            <Text style={styles.boxVirtualText}>Tin ảo</Text>
+          <View style={[styles.boxStatus, backgroundBoxStatus()]}>
+            {item?.status === 2 ? <IconEyesBlack /> : <IconEyes />}
+            <Text
+              style={[
+                styles.boxStatusText,
+                { color: item?.status === 2 ? COLORS.BLACK_1 : COLORS.WHITE },
+              ]}
+            >
+              {item?.status_name}
+            </Text>
           </View>
         </View>
       </View>
@@ -54,18 +96,37 @@ const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete }) => {
             {item?.price} {item?.price_unit_name}
             <Text style={styles.acreage}>{` ${item?.price_per_m}`}</Text>
           </Text>
-          <View style={styles.freeNews}>
-            <Text style={styles.freeNewsText}>{t('common.freeNews')}</Text>
-          </View>
+          {item?.status === 1 && [2, 3, 4].includes(item?.rank_id) && (
+            <View
+              style={[
+                styles.freeNews,
+                { backgroundColor: rankPost(item?.rank_id)?.color },
+              ]}
+            >
+              <Text style={styles.freeNewsText}>
+                {t(`${rankPost(item?.rank_id)?.nameRank}`)}
+              </Text>
+            </View>
+          )}
         </View>
         <Text style={styles.title}>{item?.title}</Text>
         <View style={styles.infoWarehouse}>
           <View style={styles.nameWarehouse}>
             <Text style={styles.nameWarehouseText}>Kho Tân Bình</Text>
           </View>
+          <Text
+            numberOfLines={1}
+            style={styles.txtAcreage}
+          >
+            {t('common.acreage')}:{' '}
+            <Text style={styles.area}>{item?.area}m2</Text>
+          </Text>
           {item?.code && (
-            <Text style={styles.codeTitle}>
-              {t('input.code')}:{''}
+            <Text
+              style={styles.codeTitle}
+              numberOfLines={1}
+            >
+              {t('input.code')}:{' '}
               <Text style={styles.codeText}>{item?.code}</Text>
             </Text>
           )}
@@ -84,7 +145,10 @@ const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete }) => {
               {t('common.expirationDate')}: {item?.end_date}
             </Text>
           </View>
-          <ActionWarehouseLand onDelete={() => onDeletePost(item?.id)} />
+          <ActionWarehouseLand
+            onDelete={() => onDeletePost(item?.id)}
+            onEdit={() => onEditPost(item?.id)}
+          />
         </View>
         <DisplayPositionPost />
       </View>

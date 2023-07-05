@@ -83,7 +83,7 @@ const SliderContainer = (props: {
 export const SliderComponent = ({
   title,
   options = [],
-  defaultValues = [0, 1],
+  defaultValues = [0, 0.01],
   minimumValue = 0,
   maximumValue = 10,
   step = 1,

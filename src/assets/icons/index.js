@@ -22,6 +22,7 @@ export { default as IconDotWhite } from './dotWhite.svg';
 export { default as IconDownload } from './download.svg';
 export { default as IconEdit } from './edit.svg';
 export { default as IconEyes } from './eyes.svg';
+export { default as IconEyesBlack } from './eyesBlack.svg';
 export { default as IconHeartWhite } from './heartWhite.svg';
 export { default as IconHistory } from './history.svg';
 export { default as Icon360 } from './icon-360.svg';

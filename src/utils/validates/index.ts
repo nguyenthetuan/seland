@@ -83,3 +83,21 @@ export const validateEmail = (value: string) => {
   }
   return undefined;
 };
+
+export const validateLatLog = (value: string) => {
+  if (value) {
+    const validRegex = /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi;
+    if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa chỉ email';
+  }
+  return undefined;
+};
+
+export const validateUrlYoutube = (value: string) => {
+  if (value) {
+    // const validRegex = /^(https?\:\/\/)?(youtube\.com|youtu\.be)\/.+$/gi;
+    const validRegex =
+      /^(https?\:\/\/)?(www\.youtube\.com|youtube\.com|youtu\.be)\/.+$/gi;
+    if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa Youtube';
+  }
+  return undefined;
+};

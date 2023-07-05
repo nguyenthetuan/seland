@@ -1,6 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
-import PropTypes, { any } from 'prop-types';
 import React, { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
@@ -17,6 +16,7 @@ import {
 import { Text } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import styles from './styles';
+import { rankPost } from '../../../../utils/realEstates';
 
 interface ItemInfoProps {
   value?: string;
@@ -26,6 +26,7 @@ interface ItemInfoProps {
 interface ItemRealEstatesProps {
   item?: any;
   is_hot?: any;
+  onToLocation?: Function;
 }
 
 const ItemInfo: FC<ItemInfoProps> = ({ value, icon }) => (
@@ -35,9 +36,13 @@ const ItemInfo: FC<ItemInfoProps> = ({ value, icon }) => (
   </View>
 );
 
-const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
+const ItemRealEstates: FC<ItemRealEstatesProps> = ({
+  item,
+  is_hot,
+  onToLocation,
+}) => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const onPressCall = () => {
     let phoneNumber = item?.phone_number;
     if (Platform.OS !== 'android') {
@@ -55,48 +60,6 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
     });
   };
 
-  const kindRealty = () => {
-    switch (item?.demand_id) {
-      case 1:
-        return 'privateRealEstate';
-      case 2:
-        return 'realEstateRental';
-      default:
-        return 'realEstateRental';
-    }
-  };
-
-  const onToLocation = () => {
-    navigate(SCREENS.MAPS, {
-      realtyID: item?.news_id,
-      latLng: item?.lat_long,
-      kindRealty: kindRealty(),
-    });
-  };
-
-  const backgroundRank = () => {
-    switch (item?.rank_id) {
-      case 1:
-        return COLORS.BLACK_1;
-      case 2:
-        return COLORS.GREEN_3;
-      case 3:
-        return COLORS.ORANGE_5;
-      default:
-        return COLORS.RED_1;
-    }
-  };
-
-  const rankName = () => {
-    switch (item?.rank_id) {
-      case 2:
-        return 'common.vipSilver';
-      case 3:
-        return 'common.vipGold';
-      default:
-        return 'common.vipDiamond';
-    }
-  };
   const onGoDetail = () => {
     navigate(SCREENS.DETAIL_POST, {
       id: item?.id,
@@ -117,8 +80,15 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
         <View style={styles.boxRank}>
           <View>
             {!is_hot && [2, 3, 4].includes(item?.rank_id) && (
-              <View style={styles.rank(backgroundRank())}>
-                <Text style={styles.rankName}>{t(rankName())}</Text>
+              <View
+                style={[
+                  styles.rank,
+                  { backgroundColor: rankPost(item?.rank_id)?.color },
+                ]}
+              >
+                <Text style={styles.rankName}>
+                  {t(`${rankPost(item?.rank_id)?.nameRank}`)}
+                </Text>
               </View>
             )}
             {is_hot && (
@@ -179,7 +149,7 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
         />
       </View>
       <TouchableOpacity onPress={onGoDetail}>
-        <Text style={styles.title(backgroundRank())}>
+        <Text style={[styles.title, { color: rankPost(item?.rank_id)?.color }]}>
           {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
         </Text>
       </TouchableOpacity>
@@ -209,7 +179,7 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({ item, is_hot }) => {
           <Text style={styles.time}>2 phút trước</Text>
         </View>
         <View style={styles.row}>
-          <TouchableOpacity onPress={onToLocation}>
+          <TouchableOpacity onPress={() => onToLocation && onToLocation()}>
             <LocationMaps />
           </TouchableOpacity>
           <TouchableOpacity style={styles.love}>

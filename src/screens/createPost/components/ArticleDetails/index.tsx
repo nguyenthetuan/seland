@@ -18,8 +18,10 @@ import {
   validateName,
   validatePhone,
   validateTitle,
+  validateUrlYoutube,
 } from '../../../../utils/validates';
 
+const MB = 1048576;
 const IAm = [
   {
     value: 'landlord',
@@ -90,6 +92,8 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
     photo: [],
     video: [],
     isPhoto: true,
+    errorsPhoto: '',
+    errorsVideo: '',
   });
   const [iam, setIam] = React.useState(1);
   const [typeBroker, setTypeBroker] = React.useState(1);
@@ -147,6 +151,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
   // };
 
   const handleSelectFile = () => {
+    const verifyMB = typeUpload.isPhoto ? 5 : 15;
     try {
       launchImageLibrary({
         mediaType: typeUpload.isPhoto ? 'photo' : 'video',
@@ -154,22 +159,40 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
       })
         .then(result => {
           if (result?.assets) {
+            let errorsVideo = '';
+            let errorsPhoto = '';
+            const arrayImage = result?.assets.filter(item => {
+              if (item?.fileSize && item?.fileSize / MB <= verifyMB) {
+                return item;
+              } else {
+                errorsPhoto = typeUpload.isPhoto
+                  ? 'Ảnh vượt quá giới hạn dung lượng'
+                  : '';
+                errorsVideo = typeUpload.isPhoto
+                  ? ''
+                  : 'Video vượt quá giới hạn dung lượng';
+                return;
+              }
+            });
+
+            console.log('arrayImage', arrayImage);
             if (!typeUpload.isPhoto) {
               setValue && setValue('urlVideo', '');
             }
             if (typeUpload.isPhoto) {
-              setValue &&
-                setValue('photo', [...value?.photo, ...result?.assets]);
+              setValue && setValue('photo', [...value?.photo, ...arrayImage]);
             } else {
-              setValue && setValue('video', [...result?.assets]);
+              setValue && setValue('video', [...arrayImage]);
             }
 
             setTypeUpload({
               ...typeUpload,
+              errorsPhoto: errorsPhoto,
+              errorsVideo: errorsVideo,
               photo: typeUpload.isPhoto
-                ? [...typeUpload.photo, ...result?.assets]
+                ? [...typeUpload.photo, ...arrayImage]
                 : typeUpload.photo,
-              video: typeUpload.isPhoto ? typeUpload.video : result?.assets,
+              video: typeUpload.isPhoto ? typeUpload.video : arrayImage,
             });
           }
         })
@@ -213,11 +236,12 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
 
   const handleRemoveVideo = (e: any) => {
     if (e.nativeEvent.text) {
-      setTypeUpload({ ...typeUpload, video: [] });
+      setTypeUpload({ ...typeUpload, video: [], errorsVideo: '' });
       setValue && setValue('video', []);
     }
   };
 
+  console.log('errors?.photo?.message', errors?.photo?.message);
   return (
     <View>
       <KeyboardAwareScrollView>
@@ -244,6 +268,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             inputContainerStyle={styles.inputContainerStyle}
             name="urlVideo"
             renderErrorMessage={false}
+            rules={{ validate: validateUrlYoutube }}
             onEndEditing={handleRemoveVideo}
           />
         )}
@@ -272,7 +297,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                         />
                         {item?.update ? null : (
                           <Text style={styles.fileSize}>{`${(
-                            item?.fileSize / 1048576
+                            item?.fileSize / MB
                           ).toFixed(2)}/MB`}</Text>
                         )}
                       </>
@@ -291,7 +316,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                         </View>
                         {item?.update ? null : (
                           <Text style={styles.fileSize}>{`${(
-                            item?.fileSize / 1048576
+                            item?.fileSize / MB
                           ).toFixed(2)}/MB`}</Text>
                         )}
                       </>
@@ -340,8 +365,14 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             </Text>
           </TouchableOpacity>
         )}
-        {errors?.photo && (
-          <Text style={styles.errorPhoto}>{errors?.photo?.message || ''}</Text>
+        {(typeUpload?.errorsPhoto ||
+          typeUpload?.errorsVideo ||
+          errors?.photo) && (
+          <Text style={styles.errorPhoto}>
+            {typeUpload.isPhoto
+              ? typeUpload?.errorsPhoto || errors?.photo?.message
+              : typeUpload?.errorsVideo || ''}
+          </Text>
         )}
         <View style={{ marginHorizontal: 10, marginTop: 16 }}>
           <Input
