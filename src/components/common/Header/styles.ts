@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17,
-    fontWeight: 500,
+    fontWeight: '500',
     marginLeft: 4,
   },
 });
