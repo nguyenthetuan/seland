@@ -151,7 +151,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
   // };
 
   const handleSelectFile = () => {
-    const verifyMB = typeUpload.isPhoto ? 0.2 : 1;
+    const verifyMB = typeUpload.isPhoto ? 5 : 15;
     try {
       launchImageLibrary({
         mediaType: typeUpload.isPhoto ? 'photo' : 'video',
