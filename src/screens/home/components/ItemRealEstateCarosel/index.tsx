@@ -17,6 +17,7 @@ import {
   Bathroom,
   Bedroom,
   Compass,
+  IconPreImage,
   LocationMapsSmall,
   LoveSmall,
 } from '../../../../assets';
@@ -137,6 +138,14 @@ const ItemHottestRealEstate = ({
             </TouchableOpacity>
           )}
         </View>
+        {item?.images?.total > 0 && (
+          <View style={styles.boxTotalImage}>
+            <View style={styles.boxTotalIcon}>
+              <IconPreImage />
+            </View>
+            <Text style={styles.boxTotalText}>{item?.images?.total}</Text>
+          </View>
+        )}
       </View>
       <View style={styles.boxContent}>
         {type === REAL_ESTATE.PROJECT ? (
