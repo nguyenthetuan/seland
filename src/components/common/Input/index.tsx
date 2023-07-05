@@ -163,7 +163,12 @@ const Input = ({
         {...props}
       />
       {passwordPolicyVisible && (
-        <Text style={styles.passwordPolicy}>{t('common.passwordPolicy')}</Text>
+        <Text
+          style={styles.passwordPolicy}
+          numberOfLines={1}
+        >
+          {t('common.passwordPolicy')}
+        </Text>
       )}
     </View>
   );
