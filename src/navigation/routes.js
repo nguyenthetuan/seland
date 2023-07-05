@@ -19,6 +19,7 @@ import DepositScreen from '../screens/account/DepositScreen/index';
 import PersonalPageScreen from '../screens/account/PersonalPageScreen';
 import RequestContactScreen from '../screens/account/RequestContactScreen';
 import WarehouseLandScreen from '../screens/account/WarehouseLandScreen';
+import ConfirmPostScreen from '../screens/createPost/ConfirmPostScreen';
 import DetailPostScreen from '../screens/home/DetailPostScreen';
 import FilterScreen from '../screens/home/FilterScreen/screen/index';
 import AgencyInformationTab from './BottomTabNavigator/AgencyInformationNavigator';
@@ -112,6 +113,10 @@ const routes = [
   {
     component: CreateAppoinment,
     name: SCREENS.CREATEAPPOIONMENTSCREEN,
+  },
+  {
+    component: ConfirmPostScreen,
+    name: SCREENS.CONFIRM_POST_SCREEN,
   },
 ];
 

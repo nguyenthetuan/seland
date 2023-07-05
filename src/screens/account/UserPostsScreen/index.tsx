@@ -33,7 +33,7 @@ const UserPostsScreen = () => {
   const route = useRoute();
   const filterRef = useRef<any>();
   const [loadingList, setLoadingList] = useState(false);
-  const { navigate }: NavigationProp<any, any> = useNavigation();
+  const { navigate, goBack, reset }: NavigationProp<any, any> = useNavigation();
   const dispatch = useDispatch();
   const { data: userRealEstates, page_size } = useSelector(
     selectUserRealEstates
@@ -45,7 +45,6 @@ const UserPostsScreen = () => {
     dateStart: '',
     dateEnd: '',
   });
-  const [dataUserRealEstates, setDataUserRealEstates] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const confirmCancelPaymentRef = useRef();
@@ -55,7 +54,13 @@ const UserPostsScreen = () => {
     filterRef.current.onOpen();
   };
 
-  const { control, getValues, handleSubmit, setValue, reset } = useForm({
+  const {
+    control,
+    getValues,
+    handleSubmit,
+    setValue,
+    reset: resetValues,
+  } = useForm({
     defaultValues: {
       title: '',
       date: null,
@@ -81,7 +86,7 @@ const UserPostsScreen = () => {
 
     const getListSuccess = () => {
       setIsLoading(false);
-      reset();
+      resetValues();
     };
 
     dispatchThunk(
@@ -273,10 +278,24 @@ const UserPostsScreen = () => {
     navigate(SCREENS.CREATE_POST, { edit: true, id: item.id });
   };
 
+  const handleBack = () => {
+    if (route?.params?.type === 'createPost') {
+      reset({
+        index: 0,
+        routes: [{ name: 'BottomTabNavigator' }],
+      });
+    } else {
+      goBack();
+    }
+  };
+
   return (
     <>
       <View style={[styles.flex, styles.whiteBackground]}>
-        <Header title={t('header.userPosts')} />
+        <Header
+          title={t('header.userPosts')}
+          onPress={handleBack}
+        />
         <View>
           <FlatList
             style={styles.listButton}

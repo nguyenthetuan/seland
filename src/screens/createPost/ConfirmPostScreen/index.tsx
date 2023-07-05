@@ -1,4 +1,8 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  NavigationProp,
+} from '@react-navigation/native';
 import { CheckBox, Icon } from '@rneui/themed';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,7 +19,7 @@ import Toast from 'react-native-simple-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DateTimePicker, Input, Text } from '../../../components';
-import { COLORS } from '../../../constants';
+import { COLORS, SCREENS } from '../../../constants';
 import { createPayment, getListRank, selectPosts } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ItemConfirm from '../components/ItemConfirm';
@@ -25,7 +29,7 @@ import dayjs from 'dayjs';
 
 const ConfirmPostScreen = () => {
   const route = useRoute();
-  const { goBack, navigate } = useNavigation();
+  const { goBack, navigate }: NavigationProp<any, any> = useNavigation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { rank, createRealEstate, loading } = useSelector(selectPosts);
@@ -64,14 +68,14 @@ const ConfirmPostScreen = () => {
   };
 
   const handleContinue = async (value: any) => {
-    console.log('🚀 ~ file: index.tsx:67 ~ handleContinue ~ value:', value);
     if (!agreeTerms) {
       Toast.show('Vui lòng chọn đồng ý với điều khoản sử dụng');
       return;
     }
     const paramsPayment = {
+      ...value,
+      start_date: dayjs(value?.start_date).format('YYYY-MM-DD'),
       real_estate_id: route?.params?.realEstateId,
-      rank_type_id: 1, // tam thoi fake la 1
     };
     dispatchThunk(dispatch, createPayment(paramsPayment), createSuccess);
   };
@@ -141,7 +145,7 @@ const ConfirmPostScreen = () => {
       (item: { id: number }) => item.id === rankPost
     );
     if (value) {
-      if (value > objectValue?.post_min) {
+      if (value < objectValue?.post_min) {
         return 'Số ngày đăng lớn hơn số ngày đăng tối thiểu.';
       }
     }
@@ -235,6 +239,7 @@ const ConfirmPostScreen = () => {
               <Input
                 control={control}
                 inputMode="numeric"
+                keyboardType="numeric"
                 isNumeric
                 onBlur={onBlur}
                 required
