@@ -91,3 +91,13 @@ export const validateLatLog = (value: string) => {
   }
   return undefined;
 };
+
+export const validateUrlYoutube = (value: string) => {
+  if (value) {
+    // const validRegex = /^(https?\:\/\/)?(youtube\.com|youtu\.be)\/.+$/gi;
+    const validRegex =
+      /^(https?\:\/\/)?(www\.youtube\.com|youtube\.com|youtu\.be)\/.+$/gi;
+    if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa Youtube';
+  }
+  return undefined;
+};

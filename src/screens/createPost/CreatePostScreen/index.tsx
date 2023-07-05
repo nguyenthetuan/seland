@@ -562,11 +562,11 @@ const CreatePostScreen = (props: any) => {
   };
 
   const onPressRealEstateInfo = () => {
-    setTab(TAB.BASIC_INFORMATION);
+    setTab(TAB.REAL_ESTATE_INFORMATION);
   };
 
   const onPressArticle = () => {
-    setTab(TAB.BASIC_INFORMATION);
+    setTab(TAB.ARTICLE_DETAILS);
   };
 
   return (
