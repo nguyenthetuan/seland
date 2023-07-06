@@ -13,13 +13,19 @@ import {
   getDetailRealEstates,
   selectDetailRealEstates,
 } from '../../../features';
-import { useRoute } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  NavigationProp,
+} from '@react-navigation/native';
 import Loading from 'react-native-loading-spinner-overlay';
 import { useTranslation } from 'react-i18next';
-import { COLORS } from '../../../constants';
+import { COLORS, SCREENS } from '../../../constants';
+import { KIND_REALTY, kindRealty } from '../../../utils/maps';
 
 const DetailPostScreen = () => {
   const dispatch = useDispatch();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const { t } = useTranslation();
 
   const route: any = useRoute();
@@ -31,6 +37,18 @@ const DetailPostScreen = () => {
       dispatchThunk(dispatch, getDetailRealEstates(id));
     }
   }, [dispatch]);
+
+  const goToMapScreen = () => {
+    navigate(SCREENS.MAPS, {
+      realtyID: data?.id,
+      latLng: data?.lat_long,
+      kindRealty: kindRealty({
+        demand_id: data?.demand_id,
+        is_hot: route?.params?.is_hot,
+      }),
+    });
+  };
+
   return (
     <View>
       <Loading
@@ -42,8 +60,14 @@ const DetailPostScreen = () => {
       <View style={styles.detailPostWrapper}>
         <ScrollView>
           <View style={styles.detailPost}>
-            <ImagePost infoDetail={data} />
-            <AboutPost infoDetail={{ ...data, id: id }} />
+            <ImagePost
+              infoDetail={data}
+              onOpenMap={goToMapScreen}
+            />
+            <AboutPost
+              infoDetail={{ ...data, id: id }}
+              onOpenMap={goToMapScreen}
+            />
             <DetailPost infoDetail={data} />
             <Contact
               infoDetail={data}

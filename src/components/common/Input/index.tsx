@@ -89,7 +89,7 @@ const Input = ({
     let txt = '';
     switch (inputMode) {
       case 'decimal':
-        txt = text.replace(/[^(\d+|\d{1.3})(\.\d+)]/g, '');
+        txt = text.replace(',', '.');
         break;
       case 'numeric':
         txt = text.replace(/[^\d]/g, '');
@@ -163,7 +163,12 @@ const Input = ({
         {...props}
       />
       {passwordPolicyVisible && (
-        <Text style={styles.passwordPolicy}>{t('common.passwordPolicy')}</Text>
+        <Text
+          style={styles.passwordPolicy}
+          numberOfLines={1}
+        >
+          {t('common.passwordPolicy')}
+        </Text>
       )}
     </View>
   );

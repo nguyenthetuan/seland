@@ -335,7 +335,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
                 );
               }
             )}
-            {typeUpload?.isPhoto && file.length < 11 ? (
+            {typeUpload?.isPhoto && file.length < 12 ? (
               <Pressable
                 style={styles.btnAddImage}
                 onPress={handleSelectFile}

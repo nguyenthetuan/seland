@@ -121,13 +121,6 @@ const FilterWarehouse: FC<Iprops> = props => {
           showsHorizontalScrollIndicator={false}
         />
         <View style={styles.filter}>
-          <TouchableOpacity
-            style={styles.btnFilter}
-            onPress={onOpenFilter}
-          >
-            <Icon name="filter-list" />
-          </TouchableOpacity>
-
           <View style={styles.boxRealEstate}>
             <Select
               buttonStyle={styles.buttonSelect}
@@ -154,6 +147,13 @@ const FilterWarehouse: FC<Iprops> = props => {
               title={`${t('upgradeAccount.agencySelect')}` || ''}
             />
           </View>
+
+          <TouchableOpacity
+            style={styles.btnFilter}
+            onPress={onOpenFilter}
+          >
+            <Icon name="filter-list" />
+          </TouchableOpacity>
         </View>
         <Select
           buttonStyle={[styles.buttonSelect, styles.buttonSort]}

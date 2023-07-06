@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   createPostNews: {
-    fontWeight: 500,
+    fontWeight: '500',
   },
   dot: select => ({
     backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
@@ -144,12 +144,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   }),
   youWant: {
-    fontWeight: 500,
+    fontWeight: '500',
     paddingHorizontal: 10,
   },
   youWantCenter: {
     alignItems: 'center',
-    fontWeight: 500,
+    fontWeight: '500',
     marginTop: 40,
     paddingHorizontal: 10,
     textAlign: 'center',

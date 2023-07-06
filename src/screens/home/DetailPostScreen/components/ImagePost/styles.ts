@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   iconHeader: {
-    width: 31,
-    height: 31,
+    padding: 8,
     backgroundColor: 'rgba(0, 0, 0, 0.45)',
     borderRadius: 100,
     alignContent: 'center',

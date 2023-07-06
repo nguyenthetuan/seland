@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   createPostNews: {
-    fontWeight: 500,
+    fontWeight: '500',
   },
   dot: select => ({
     backgroundColor: select ? COLORS.ORANGE_6 : COLORS.GRAY_5,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   labelTab: select => ({
     color: COLORS.BLACK_1,
-    fontWeight: select ? 'bold' : 400,
+    fontWeight: select ? 'bold' : '400',
   }),
   line: {
     backgroundColor: COLORS.GRAY_5,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   }),
   youWantCenter: {
     alignItems: 'center',
-    fontWeight: 500,
+    fontWeight: '500',
     marginTop: 40,
     paddingHorizontal: 10,
     textAlign: 'center',

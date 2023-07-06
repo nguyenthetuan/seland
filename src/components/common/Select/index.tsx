@@ -98,7 +98,12 @@ const Select = ({
       </View>
 
       {error && (
-        <Text style={{ fontSize: 12, color: 'red' }}>{error.message}</Text>
+        <Text
+          style={{ fontSize: 12, color: 'red' }}
+          numberOfLines={1}
+        >
+          {error.message}
+        </Text>
       )}
     </View>
   );

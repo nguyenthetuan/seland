@@ -22,7 +22,7 @@ import HeaderListPosts from '../components/HeaderListPosts';
 import ItemRealEstates from '../components/ItemRealEstates';
 import styles from './styles';
 import TYPE from '../../../constants/types';
-import { KIND_REALTY, URL_MAP } from '../../../utils/maps';
+import { KIND_REALTY, URL_MAP, kindRealty } from '../../../utils/maps';
 
 const ListPostsScreen = (props: any) => {
   let dataFilterRef = useRef({});
@@ -32,11 +32,6 @@ const ListPostsScreen = (props: any) => {
   const demand_id = route?.params?.demand_id;
   const is_hot = route?.params?.is_hot;
   const for_you = route?.params?.for_you;
-  const kindRealty = is_hot
-    ? KIND_REALTY.exclusiveRealEstate
-    : demand_id === 1
-    ? KIND_REALTY.buySellRealEstate
-    : KIND_REALTY.realEstateRental;
 
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
@@ -117,9 +112,18 @@ const ListPostsScreen = (props: any) => {
   };
 
   const onFilter = (data: any) => {
-    const dataFilter = convertDataFilter({ ...data, page: 1 });
+    const dataFilter = convertDataFilter({
+      ...data,
+      page: 1,
+    });
     dataFilterRef.current = dataFilter;
-    onGetListRealEstates(dataFilter, TYPE.FILTER);
+    onGetListRealEstates(
+      {
+        ...dataFilter,
+        is_hot: is_hot || '',
+      },
+      TYPE.FILTER
+    );
   };
 
   const onFilterTitle = (val: string) => {
@@ -213,13 +217,19 @@ const ListPostsScreen = (props: any) => {
     navigate(SCREENS.MAPS, {
       realtyID: value?.id,
       latLng: value?.lat_long,
-      kindRealty: kindRealty,
+      kindRealty: kindRealty({
+        demand_id,
+        is_hot,
+      }),
     });
   };
 
   const onOpenMap = () => {
     navigate(SCREENS.MAPS, {
-      customerUrl: `${URL_MAP}kindRealty=${kindRealty}&defaultFilter=false`,
+      customerUrl: `${URL_MAP}kindRealty=${kindRealty({
+        demand_id,
+        is_hot,
+      })}&defaultFilter=false&demandId=${dataFilterRef.current?.demand_id}`,
     });
   };
 

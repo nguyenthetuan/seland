@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   }),
   labelTab: select => ({
     color: COLORS.BLACK_1,
-    fontWeight: select ? 'bold' : 400,
+    fontWeight: select ? 'bold' : '400',
   }),
   line: {
     backgroundColor: COLORS.GRAY_5,
@@ -149,12 +149,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   }),
   youWant: {
-    fontWeight: 500,
+    fontWeight: '500',
     paddingHorizontal: 10,
   },
   youWantCenter: {
     alignItems: 'center',
-    fontWeight: 500,
+    fontWeight: '500',
     marginTop: 40,
     textAlign: 'center',
   },

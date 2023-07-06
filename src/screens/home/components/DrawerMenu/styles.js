@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   textMenu: {
     fontSize: 16,
-    fontWeight: 500,
+    fontWeight: '500',
     lineHeight: 24,
   },
 });
