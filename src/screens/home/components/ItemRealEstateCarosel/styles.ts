@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     color: COLORS.WHITE,
     fontSize: 12,
     fontWeight: '400',
-    paddingBottom: 22,
+    top: -3,
   },
 });
 
