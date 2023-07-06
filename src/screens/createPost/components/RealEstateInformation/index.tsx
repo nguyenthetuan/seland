@@ -11,7 +11,14 @@ import { selectPosts } from '../../../../features';
 import { formatDataValueId } from '../../CreatePostScreen';
 import styles from './styles';
 import { Icon } from '@rneui/base';
-import { validateNumberBedroom } from '../../../../utils/validates';
+import {
+  validateNumberBedroom,
+  validateArea,
+  validatePrice,
+  validateLength,
+  validateWidth,
+  validateLaneWidth,
+} from '../../../../utils/validates';
 
 interface RealEstateInformationProps {
   control?: Control;
@@ -206,7 +213,11 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           <Input
             control={control}
             inputMode="decimal"
-            rules={{ required: 'Vui lòng nhập Diện tích' }}
+            keyboardType="decimal-pad"
+            rules={{
+              required: 'Vui lòng nhập Diện tích',
+              validate: validateArea,
+            }}
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.acreage')}
             labelStyle={styles.inputLabel}
@@ -221,7 +232,8 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             <Input
               control={control}
               inputMode="decimal"
-              rules={{ required: 'Vui lòng nhập giá' }}
+              keyboardType="decimal-pad"
+              rules={{ required: 'Vui lòng nhập giá', validate: validatePrice }}
               inputContainerStyle={styles.inputContainerStyle}
               label={
                 demand_id === demands[0]?.id
@@ -243,7 +255,9 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
             buttonStyle={styles.select1}
             control={control}
             data={[...formatDataValueId(unitPrices)]}
-            rules={{ required: 'Vui lòng chọn Đơn vị' }}
+            rules={{
+              required: 'Vui lòng chọn Đơn vị',
+            }}
             defaultButtonText="Please Select"
             label={t('select.unit')}
             labelStyle={styles.inputLabel}
@@ -258,8 +272,8 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           />
           <Input
             control={control}
-            inputMode="decimal"
             isNumeric
+            keyboardType="number-pad"
             inputContainerStyle={[
               styles.inputContainerStyle,
               { marginLeft: 10 },
@@ -276,8 +290,8 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
         <View style={styles.boxSelectAddress}>
           <Input
             control={control}
-            inputMode="decimal"
             isNumeric
+            keyboardType="number-pad"
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.numberBedrooms')}
             labelStyle={styles.inputLabel}
@@ -289,8 +303,8 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           />
           <Input
             control={control}
-            inputMode="decimal"
             isNumeric
+            keyboardType="number-pad"
             inputContainerStyle={[
               styles.inputContainerStyle,
               { marginLeft: 6 },
@@ -330,11 +344,12 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           <Input
             control={control}
             inputMode="decimal"
-            isNumeric
             inputContainerStyle={[
               styles.inputContainerStyle,
               { marginLeft: 12 },
             ]}
+            keyboardType="decimal-pad"
+            rules={{ validate: validateLength }}
             label={t('input.length')}
             labelStyle={styles.inputLabel}
             name="length"
@@ -347,7 +362,8 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           <Input
             control={control}
             inputMode="decimal"
-            isNumeric
+            keyboardType="decimal-pad"
+            rules={{ validate: validateWidth }}
             inputContainerStyle={styles.inputContainerStyle}
             label={t('input.width')}
             labelStyle={styles.inputLabel}
@@ -360,7 +376,8 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
           <Input
             control={control}
             inputMode="decimal"
-            isNumeric
+            keyboardType="decimal-pad"
+            rules={{ validate: validateLaneWidth }}
             inputContainerStyle={[
               styles.inputContainerStyle,
               { marginLeft: 6 },

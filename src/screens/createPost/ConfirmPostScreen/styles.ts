@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   createPostNews: {
-    fontWeight: 500,
+    fontWeight: '500',
     marginLeft: 10,
   },
   dot: {
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 
   selectTimePost: {
     color: COLORS.BLUE_1,
-    fontWeight: 500,
+    fontWeight: '500',
     marginLeft: 10,
     marginVertical: 16,
   },

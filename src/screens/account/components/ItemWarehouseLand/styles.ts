@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   },
   titleButton: {
     marginLeft: 5,
-    fontWeight: 600,
+    fontWeight: '600',
   },
 });
 

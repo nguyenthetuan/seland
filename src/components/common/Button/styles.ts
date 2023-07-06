@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   }),
   title: (color, outline) => ({
     color: outline ? color : COLORS.WHITE,
-    fontWeight: 500,
+    fontWeight: '500',
   }),
   wrap: {
     flexDirection: 'row',
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
   wrapIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 4
-  }
+    marginRight: 4,
+  },
 });
 
 export default styles;

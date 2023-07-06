@@ -7,4 +7,18 @@ const KIND_REALTY = {
   realEstateRental: 'realEstateRental', //Cho thue
 };
 
-export { KIND_REALTY, URL_MAP };
+const kindRealty = ({
+  is_hot,
+  demand_id,
+}: {
+  is_hot?: number;
+  demand_id?: number;
+}) => {
+  return is_hot
+    ? KIND_REALTY.exclusiveRealEstate
+    : demand_id === 1
+    ? KIND_REALTY.buySellRealEstate
+    : KIND_REALTY.realEstateRental;
+};
+
+export { KIND_REALTY, URL_MAP, kindRealty };

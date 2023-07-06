@@ -87,7 +87,7 @@ export const validateEmail = (value: string) => {
 export const validateLatLog = (value: string) => {
   if (value) {
     const validRegex = /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi;
-    if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa chỉ email';
+    if (!value.match(validRegex)) return 'Vui lòng nhập đúng lat long vị trí';
   }
   return undefined;
 };
@@ -98,6 +98,42 @@ export const validateUrlYoutube = (value: string) => {
     const validRegex =
       /^(https?\:\/\/)?(www\.youtube\.com|youtube\.com|youtu\.be)\/.+$/gi;
     if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa Youtube';
+  }
+  return undefined;
+};
+
+export const validateArea = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Diện tích sai định dạng.';
+  }
+  return undefined;
+};
+export const validatePrice = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Giá sai định dạng.';
+  }
+  return undefined;
+};
+export const validateLaneWidth = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Đường rông sai định dạng.';
+  }
+  return undefined;
+};
+export const validateWidth = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Chiều rộng sai định dạng.';
+  }
+  return undefined;
+};
+export const validateLength = (value: string) => {
+  if (value) {
+    const validRegex = /^\d{1,25}(?:\.\d{1,6})?$/gi;
+    if (!value.match(validRegex)) return 'Chiều dài sai định dạng.';
   }
   return undefined;
 };

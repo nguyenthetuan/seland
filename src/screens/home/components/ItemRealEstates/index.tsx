@@ -63,6 +63,7 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({
   const onGoDetail = () => {
     navigate(SCREENS.DETAIL_POST, {
       id: item?.id,
+      is_hot,
     });
   };
 
