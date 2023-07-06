@@ -84,13 +84,15 @@ const styles = StyleSheet.create({
     padding: 3,
     paddingHorizontal: 10,
   },
+  boxEstateTypeName: {
+    flexWrap: 'wrap',
+  },
   boxTypeHouse: {
     backgroundColor: COLORS.PURPLE_2,
     borderRadius: 10,
     marginBottom: 3,
-    paddingTop: 5,
     padding: 3,
-    width: 70,
+    paddingHorizontal: 10,
   },
   call: {
     backgroundColor: COLORS.GREEN_5,

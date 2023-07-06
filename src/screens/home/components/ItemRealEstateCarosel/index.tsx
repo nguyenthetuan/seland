@@ -185,13 +185,12 @@ const ItemHottestRealEstate = ({
                 <Text style={styles.acreage}>{`${item?.price_per_m}`}</Text>
               </Text>
             </View>
-            <View style={styles.boxTypeHouse}>
-              <Text
-                style={styles.typeHouse}
-                numberOfLines={1}
-              >
-                {item?.real_estate_type_name}
-              </Text>
+            <View style={styles.boxEstateTypeName}>
+              <View style={styles.boxTypeHouse}>
+                <Text style={styles.typeHouse}>
+                  {item?.real_estate_type_name}
+                </Text>
+              </View>
             </View>
             <View style={styles.row}>
               <ItemInfo

@@ -128,24 +128,26 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({
           <Text style={styles.acreage}>{item?.price_per_m}</Text>
         </Text>
       </View>
-      <View style={styles.boxTypeHouse}>
-        <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
+      <View style={styles.boxEstateTypeName}>
+        <View style={styles.boxTypeHouse}>
+          <Text style={styles.typeHouse}>{item?.real_estate_type_name}</Text>
+        </View>
       </View>
       <View style={styles.row}>
         <ItemInfo
-          value={`${item?.area || '---'}${t('m2')}`}
+          value={`${item?.area || '--'}${t('m2')}`}
           icon={<Acreage />}
         />
         <ItemInfo
-          value={`${item?.bedroom || '---'}`}
+          value={`${item?.bedroom || '--'}`}
           icon={<Bedroom />}
         />
         <ItemInfo
-          value={`${item?.bathroom || '---'}`}
+          value={`${item?.bathroom || '--'}`}
           icon={<Bathroom />}
         />
         <ItemInfo
-          value={`${item?.main_direction_name || '---'}`}
+          value={`${item?.main_direction_name || '--'}`}
           icon={<Compass />}
         />
       </View>
