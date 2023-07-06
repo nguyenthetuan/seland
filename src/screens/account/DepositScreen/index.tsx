@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NativeSyntheticEvent, SafeAreaView, View } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import RNFetchBlob from 'react-native-blob-util';
 import { Header } from '../../../components';
 import { COLORS } from '../../../constants';
@@ -44,23 +49,17 @@ const BankAccount = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.WHITE }}>
+    <SafeAreaView style={styles.container}>
       <Header
         hasGoBack
         title={generateHeader()}
       />
-      <View style={{ paddingHorizontal: 16, flex: 1 }}>
-        <View
-          style={{
-            height: 4,
-            backgroundColor: COLORS.BLUE_2,
-            marginBottom: 24,
-          }}
-        ></View>
+      <View style={styles.view}>
+        <View style={styles.pagerView}></View>
         <PagerView
           onPageSelected={onPageSelected}
           ref={pagerRef}
-          style={{ flex: 1 }}
+          style={styles.pager}
         >
           <PaymentOption
             onNext={handleNext}
@@ -74,3 +73,14 @@ const BankAccount = () => {
 };
 
 export default BankAccount;
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: COLORS.WHITE },
+  view: { paddingHorizontal: 16, flex: 1 },
+  pagerView: {
+    height: 4,
+    backgroundColor: COLORS.BLUE_2,
+    marginBottom: 24,
+  },
+  pager: { flex: 1 },
+});
