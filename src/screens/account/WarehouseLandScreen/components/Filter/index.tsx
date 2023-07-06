@@ -112,7 +112,7 @@ const FilterWarehouse: FC<Iprops> = props => {
           horizontal
           renderItem={({ item }) => (
             <Button
-              buttonStyle={[styles.marginHorizontal, styles.postButton]}
+              buttonStyle={[styles.postButton]}
               onPress={() => handleSelectStatus(item?.value)}
               outline={item?.value !== value}
               title={t(`button.${item?.label}`)}
