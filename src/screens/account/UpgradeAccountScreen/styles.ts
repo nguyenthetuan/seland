@@ -20,11 +20,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.ORANGE_6,
   },
   bottomButton: {
+    backgroundColor: COLORS.WHITE,
     position: 'absolute',
     bottom: 0,
     width: '100%',
     paddingHorizontal: 10,
-    marginBottom: 16,
+    paddingBottom: 16,
   },
 });
 

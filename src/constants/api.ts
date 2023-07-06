@@ -10,6 +10,7 @@ export const VERIFY_OTP_ROUTE = '/verifyOtp';
 export const FORGOT_PASSWORD_ROUTE = '/forgotPassword';
 export const CHANGE_PASSWORD_ROUTE = '/auth/changePassword';
 export const GET_PROFILE_ROUTE = '/auth/getProfile';
+export const GET_LIST_ACCOUNT_PACKAGE = '/getListAccountPackage';
 export const UPDATE_PROFILE_ROUTE = 'auth/updateUserDetail';
 export const GET_PROVINCES_ROUTE = '/getProvinces';
 export const GET_DISTRICTS_ROUTE = '/getDistricts';

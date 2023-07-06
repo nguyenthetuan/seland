@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetProfile, requestUpdateProfile } from '../api';
+import { requestGetListAccountPackage, requestGetProfile, requestUpdateProfile } from '../api';
 
 export const selectUser = state => state.user;
 
@@ -21,6 +21,18 @@ export const updateProfile = createAsyncThunk(
   async (input, { fulfillWithValue, rejectWithValue }) => {
     try {
       const { data } = await requestUpdateProfile(input);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error?.data?.error);
+    }
+  }
+);
+
+export const getListAccountPackage = createAsyncThunk(
+  'getListAccountPackage',
+  async (_, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestGetListAccountPackage();
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error?.data?.error);
@@ -81,6 +93,18 @@ const slice = createSlice({
       state.error = '';
     });
     builder.addCase(updateProfile.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(getListAccountPackage.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(getListAccountPackage.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+      state.error = '';
+    });
+    builder.addCase(getListAccountPackage.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

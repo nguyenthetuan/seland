@@ -3,7 +3,7 @@ import {
   createMaterialTopTabNavigator,
 } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Animated,
@@ -15,7 +15,7 @@ import {
 
 import { ArrowLeft } from '../../../assets';
 import { Text } from '../../../components';
-import { SCREENS } from '../../../constants';
+import { COLORS, SCREENS } from '../../../constants';
 import IndividualFeatureScreen from '../../../screens/account/UpgradeAccountScreen/components/IndividualFeatureScreen/index';
 import NotesScreen from '../../../screens/account/UpgradeAccountScreen/components/NotesScreen/index';
 import UpgradeAccountScreen from '../../../screens/account/UpgradeAccountScreen/index';
@@ -105,7 +105,7 @@ const UpgradeAccountTab = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={goBack}

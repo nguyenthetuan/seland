@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Button } from '../../../components';
@@ -7,115 +7,48 @@ import PackageInformation from './components/PackageComponent';
 import styles from './styles';
 import { Free, ProfessionalPackage } from '../../../assets';
 import { IconAgency, IconProfessionalLease, IconSpecial } from './icon';
-
-const dataMock = [
-  {
-    title: 'Miễn phí',
-    price: '0 VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <Free />,
-  },
-  {
-    title: 'Chuyên nghiệp',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ mua bán',
-      'Nhận thông tin quỹ bđs hot 10',
-      'Dẫn đường',
-      'Lọc trên bản đồ',
-      'Lọc trên kho hàng',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <ProfessionalPackage />,
-  },
-  {
-    title: 'Cho thuê chuyên nghiệp',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ cho thuê',
-      'Nhận thông tin quỹ thuê hot 20',
-      'Dẫn đường',
-      'Lọc trên kho hàng',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <IconProfessionalLease />,
-  },
-  {
-    title: 'Đại lý',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ mua bán',
-      'Tạo tài khoản cấp dưới',
-      'Quản lý tài khoản cấp dưới',
-      'Phân quyền tài khoản cấp dưới',
-      'Nhận thông tin quỹ bđs hot 20',
-      'Dẫn đường',
-      'Lọc trên bản đồ',
-      'Lọc trên kho hàng',
-      'Xem chính sách phí môi giới',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <IconAgency />,
-  },
-  {
-    title: 'Đặc biệt',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ mua bán',
-      'Tạo tài khoản cấp dưới',
-      'Quản lý tài khoản cấp dưới',
-      'Phân quyền tài khoản cấp dưới',
-      'Nhận thông tin quỹ bđs hot 20',
-      'Dẫn đường',
-      'Lọc trên bản đồ',
-      'Lọc trên kho hàng',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <IconSpecial />,
-  },
-];
+import { useDispatch } from 'react-redux';
+import { dispatchThunk } from '../../../utils';
+import { getListAccountPackage } from '../../../features';
+import {
+  AccountPackage,
+  Package,
+  PackageFunction,
+  generateListAccountPackage,
+} from './model';
 
 const { width } = Dimensions.get('screen');
 
 const UpgradeAccountScreen = () => {
   const [activeSlide, setActiveSlide] = useState<number>(0);
+  const dispatch = useDispatch();
+  const [accountPackages, setAccountPackage] = useState<Array<Package>>([]);
 
-  const renderItem = ({ item, index }: { item: any; index: number }) => (
+  useEffect(() => {
+    dispatchThunk(dispatch, getListAccountPackage(), (res: any) => {
+      setAccountPackage(
+        generateListAccountPackage(
+          res.account_packages as AccountPackage[],
+          res.package_function as PackageFunction[]
+        )
+      );
+    });
+  }, []);
+
+  const renderItem = ({ item, index }: { item: Package; index: number }) => (
     <PackageInformation
       key={index}
-      title={item?.title}
+      title={item?.value}
       price={item?.price}
-      listFeature={item?.listFeature}
-      avatar={item?.avatar}
+      listFeature={item?.feature}
+      avatar={<IconProfessionalLease />}
     />
   );
 
   const pagination = () => {
     return (
       <Pagination
-        dotsLength={dataMock.length}
+        dotsLength={accountPackages.length}
         activeDotIndex={activeSlide}
         dotStyle={styles.dotStyle}
         inactiveDotStyle={styles.inactiveDotStyle}
@@ -125,11 +58,11 @@ const UpgradeAccountScreen = () => {
   };
 
   return (
-    <View>
+    <View style={{ backgroundColor: COLORS.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Carousel
-            data={dataMock}
+            data={accountPackages}
             renderItem={renderItem}
             onSnapToItem={(idx: any) => setActiveSlide(idx)}
             windowSize={1}
