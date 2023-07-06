@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';
@@ -64,7 +64,7 @@ const ItemHottestRealEstate = ({
   onOpenMap?: Function;
 }) => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
 
   const onPressCall = () => {
     let phoneNumber: string = item?.phone_number;
