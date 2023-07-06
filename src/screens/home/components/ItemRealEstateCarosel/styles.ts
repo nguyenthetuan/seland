@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
   boxContent: {
     paddingHorizontal: 10,
   },
+  boxTotalIcon: {
+    marginRight: 2,
+  },
   boxFooterProject: {
     flexDirection: 'row',
     flex: 1,
@@ -213,6 +216,24 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 15,
     marginLeft: 4,
+  },
+  boxTotalImage: {
+    alignItems: 'center',
+    backgroundColor: COLORS.WHITE_2,
+    borderRadius: 4,
+    bottom: 4,
+    flexDirection: 'row',
+    height: 18,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 4,
+    width: 30,
+  },
+  boxTotalText: {
+    color: COLORS.WHITE,
+    fontSize: 12,
+    fontWeight: '400',
+    paddingBottom: 22,
   },
 });
 
