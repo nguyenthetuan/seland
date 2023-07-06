@@ -4,8 +4,8 @@ export const rankPost = (rank_id: number) => {
   switch (rank_id) {
     case 1:
       return {
-        color: COLORS.BLACK_1,
-        nameRank: '',
+        color: COLORS.YELLOW_1,
+        nameRank: 'common.freeNews',
       };
     case 2:
       return {
@@ -21,6 +21,11 @@ export const rankPost = (rank_id: number) => {
       return {
         color: COLORS.RED_1,
         nameRank: 'common.vipDiamond',
+      };
+    default:
+      return {
+        color: COLORS.YELLOW_1,
+        nameRank: 'common.freeNews',
       };
   }
 };

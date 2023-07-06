@@ -96,16 +96,14 @@ const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete, onEdit }) => {
             {item?.price} {item?.price_unit_name}
             <Text style={styles.acreage}>{` ${item?.price_per_m}`}</Text>
           </Text>
-          {item?.status === 1 && [2, 3, 4].includes(item?.rank_id) && (
+          {item?.status === 1 && [1, 2, 3, 4].includes(item?.rank_id) && (
             <View
               style={[
                 styles.freeNews,
                 { backgroundColor: rankPost(item?.rank_id)?.color },
               ]}
             >
-              <Text style={styles.freeNewsText}>
-                {t(`${rankPost(item?.rank_id)?.nameRank}`)}
-              </Text>
+              <Text style={styles.freeNewsText}>{item?.rank_name}</Text>
             </View>
           )}
         </View>
