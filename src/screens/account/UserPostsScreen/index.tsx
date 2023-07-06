@@ -109,6 +109,7 @@ const UserPostsScreen = () => {
 
   const handleSelectStatus = (value: number) => {
     const obj = getValues();
+    setValue && setValue('status', value);
     obj.status = value;
     obj.page = page;
     if (value === -1) {
@@ -129,7 +130,9 @@ const UserPostsScreen = () => {
 
   const onSubmit = async () => {
     const data = getValues();
-
+    if (data.status === -1) {
+      delete data?.status;
+    }
     const parmas = { ...data, title: data?.title?.trim(), setTotal };
     setLoadingList(true);
 
