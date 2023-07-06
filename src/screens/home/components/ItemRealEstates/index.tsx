@@ -168,7 +168,12 @@ const ItemRealEstates: FC<ItemRealEstatesProps> = ({
           name="location-on"
           color={COLORS.GRAY_7}
         />
-        <Text style={styles.location}>{item?.location}</Text>
+        <Text
+          style={styles.location}
+          numberOfLines={1}
+        >
+          {item?.location}
+        </Text>
       </View>
       <View style={styles.footer}>
         <View style={styles.row}>
