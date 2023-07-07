@@ -16,7 +16,7 @@ import { VNPay } from '../../../../assets';
 import { useNavigation } from '@react-navigation/native';
 
 interface Props {
-  onNext: () => void;
+  onNext: (isBank?: boolean) => void;
 }
 const PaymentOption = (props: Props) => {
   const { onNext } = props;
@@ -76,7 +76,7 @@ const PaymentOption = (props: Props) => {
         <PaymentMethod
           icon={<IconBank />}
           title="Chuyển khoản ngân hàng"
-          onPress={onNext}
+          onPress={() => onNext(true)}
         />
         <PaymentMethod
           icon={
@@ -86,7 +86,7 @@ const PaymentOption = (props: Props) => {
             />
           }
           title="VN Pay"
-          onPress={() => {}}
+          onPress={() => onNext(false)}
           style={{ marginTop: 12 }}
         />
       </View>

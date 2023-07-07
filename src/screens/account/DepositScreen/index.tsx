@@ -14,13 +14,15 @@ import PagerView, {
   PagerViewOnPageSelectedEventData,
 } from 'react-native-pager-view';
 import PaymentOption from './PaymentOption';
-import BankPayment from './BankPayment';
+import BankPaymentSuccess from './BankPaymentSuccess';
+import Payment from './Payment';
 
 const BankAccount = () => {
   const { t } = useTranslation();
   const qrCodeRef = useRef<any>();
   const pagerRef = useRef<PagerView>(null);
   const [pageIndex, setPageIndex] = useState(0);
+  const [isBank, setIsBank] = useState(true);
 
   const callback = async (data: any) => {
     const base64Data = data && data.replace('data:image/svg+xml;base64,', ''); // Remove data URL prefix
@@ -32,8 +34,9 @@ const BankAccount = () => {
     console.log('QR code downloaded:=======', filePath);
   };
 
-  const handleNext = () => {
+  const handleNext = (isBank?: boolean) => {
     pagerRef.current?.setPage(pageIndex + 1);
+    setIsBank(isBank ?? false);
   };
 
   const onPageSelected = (
@@ -45,6 +48,7 @@ const BankAccount = () => {
   const generateHeader = (): string => {
     if (pageIndex === 0) return 'Nạp tiền';
     if (pageIndex === 1) return 'Chuyển khoản ngân hàng';
+    if (pageIndex === 2) return 'Kết quả giao dịch';
     return 'Nạp tiền';
   };
 
@@ -65,7 +69,8 @@ const BankAccount = () => {
             onNext={handleNext}
             key="1"
           />
-          <BankPayment />
+          <Payment isBank={isBank} />
+          <BankPaymentSuccess />
         </PagerView>
       </View>
     </SafeAreaView>
