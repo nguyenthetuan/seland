@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   NativeSyntheticEvent,
@@ -23,6 +23,7 @@ const BankAccount = () => {
   const pagerRef = useRef<PagerView>(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [isBank, setIsBank] = useState(true);
+  const [amount, setAmount] = useState(0);
 
   const callback = async (data: any) => {
     const base64Data = data && data.replace('data:image/svg+xml;base64,', ''); // Remove data URL prefix
@@ -61,16 +62,22 @@ const BankAccount = () => {
       <View style={styles.view}>
         <View style={styles.pagerView}></View>
         <PagerView
+          scrollEnabled={false}
           onPageSelected={onPageSelected}
           ref={pagerRef}
           style={styles.pager}
         >
           <PaymentOption
+            setAmountProps={setAmount}
             onNext={handleNext}
             key="1"
           />
-          <Payment isBank={isBank} />
-          <BankPaymentSuccess />
+          <Payment
+            amount={amount}
+            onNext={handleNext}
+            isBank={isBank}
+          />
+          <BankPaymentSuccess doMore={() => pagerRef.current?.setPage(0)} />
         </PagerView>
       </View>
     </SafeAreaView>

@@ -1,6 +1,6 @@
 export type TPrefixAmount = {
   id: number;
-  value: string;
+  value: number;
 };
 
 export type TBankInfo = {
@@ -13,15 +13,15 @@ export type TBankInfo = {
 export const prefixAmount: TPrefixAmount[] = [
   {
     id: 1,
-    value: '100,000',
+    value: 100000,
   },
   {
     id: 2,
-    value: '500,000',
+    value: 500000,
   },
   {
     id: 3,
-    value: '1,000,000',
+    value: 1000000,
   },
 ];
 export const listBankAccount: TBankInfo[] = [

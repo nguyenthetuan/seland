@@ -1,21 +1,70 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Techcombank, Vietcombank } from '../../../../assets';
 import { Button, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import { IconCopy, IconInformation } from '../icon';
 import WebView from 'react-native-webview';
 import { generateVNPayUrl } from './model';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTransaction, selectUser } from '../../../../features';
+import { dispatchThunk } from '../../../../utils';
+import moment from 'moment';
 
 interface Props {
   isBank: boolean;
+  onNext: () => void;
+  amount: number;
 }
 
 const Payment = (props: Props) => {
-  const { isBank } = props;
+  const { isBank, onNext, amount } = props;
+  const { goBack } = useNavigation();
+  const { data: user } = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const content = `"Nap tien ${user?.phone_number}"`;
+  const contentBody = `Nap tien ${user?.phone_number}`;
+
   useEffect(() => {
     generateVNPayUrl();
   }, []);
+
+  const copy = (content: string) => {
+    Clipboard.setString(content);
+    Toast.show({
+      text1: 'Copy thành công',
+    });
+  };
+
+  const handleCancel = () => {
+    goBack();
+  };
+
+  const confirm = () => {
+    const params = {
+      title: contentBody,
+      note: 4,
+      status: 2,
+      transaction_date: moment().format('yyyy-MM-DD HH:mm:ss'),
+      phone_number: user?.phone_number,
+      transaction_amount: amount,
+    };
+    dispatchThunk(dispatch, createTransaction(params), createSuccess);
+  };
+
+  const createSuccess = () => {
+    onNext();
+  };
+
   return (
     <View style={styles.container}>
       {isBank ? (
@@ -49,7 +98,9 @@ const Payment = (props: Props) => {
                 <Text style={styles.bankOwnerTitle}>Số tài khoản</Text>
                 <View style={styles.row}>
                   <Text style={styles.bankOwner}>4296888888</Text>
-                  <IconCopy />
+                  <TouchableOpacity onPress={() => copy('4296888888')}>
+                    <IconCopy />
+                  </TouchableOpacity>
                 </View>
               </View>
               <Button
@@ -80,7 +131,9 @@ const Payment = (props: Props) => {
                 <Text style={styles.bankOwnerTitle}>Số tài khoản</Text>
                 <View style={styles.row}>
                   <Text style={styles.bankOwner}>4296888888</Text>
-                  <IconCopy />
+                  <TouchableOpacity onPress={() => copy('4296888888')}>
+                    <IconCopy />
+                  </TouchableOpacity>
                 </View>
               </View>
               <Button
@@ -105,9 +158,11 @@ const Payment = (props: Props) => {
                 <Text style={styles.bankDescription}>
                   Nội dung chuyển khoản<Text style={styles.red}>*</Text>
                 </Text>
-                <Text style={styles.bankContent}>{`"Nap tien {SĐT}"`}</Text>
+                <Text style={styles.bankContent}>{content}</Text>
               </View>
-              <IconCopy />
+              <TouchableOpacity onPress={() => copy(content)}>
+                <IconCopy />
+              </TouchableOpacity>
             </View>
 
             <View style={[styles.informationCard, styles.marginT12]}>
@@ -119,8 +174,12 @@ const Payment = (props: Props) => {
             </View>
           </ScrollView>
           <View style={styles.bottom}>
-            <Button title="Xác nhận chuyển khoản" />
             <Button
+              title="Xác nhận chuyển khoản"
+              onPress={confirm}
+            />
+            <Button
+              onPress={handleCancel}
               titleStyle={styles.btnCancelTitle}
               buttonStyle={styles.btnCancel}
               title="Huỷ"

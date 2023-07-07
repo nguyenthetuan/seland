@@ -4,7 +4,12 @@ import { COLORS } from '../../../../constants';
 import { IconInformation, IconRetweet } from '../icon';
 import { Button, Text } from '../../../../components';
 
-const BankPaymentSuccess = () => {
+interface Props {
+  doMore: () => void;
+}
+
+const BankPaymentSuccess = (props: Props) => {
+  const { doMore } = props;
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.scrollviewContainer}>
@@ -24,6 +29,7 @@ const BankPaymentSuccess = () => {
       <View style={styles.bottom}>
         <Button title="Quản lý giao dịch" />
         <Button
+          onPress={doMore}
           titleStyle={styles.btnCancelTitle}
           buttonStyle={styles.btnCancel}
           title="Nạp thêm"

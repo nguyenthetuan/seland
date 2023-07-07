@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -14,22 +14,29 @@ import PaymentMethod from '../PaymentMethod';
 import { IconBank } from '../PaymentMethod/icon';
 import { VNPay } from '../../../../assets';
 import { useNavigation } from '@react-navigation/native';
+import { formatMoney } from '../../../../utils/format';
 
 interface Props {
   onNext: (isBank?: boolean) => void;
+  setAmountProps: (amount: number) => void;
 }
 const PaymentOption = (props: Props) => {
-  const { onNext } = props;
+  const { onNext, setAmountProps } = props;
   const { navigate } = useNavigation();
-  const [amount, setAmount] = useState<string>(prefixAmount[0].value);
+  const [amount, setAmount] = useState<number>(prefixAmount[0].value);
+  const [amountFormatted, setAmountFormatted] = useState<string>('');
   const [selectedAmount, setSelectedAmount] = useState<number>(1);
   const onChangeAmount = (text: string) => {
-    setAmount(text);
+    const re = new RegExp(',', 'g');
+    setAmount(parseInt(text.replace(re, '')));
   };
   const onSelectedAmount = (item: TPrefixAmount) => {
     setSelectedAmount(item.id);
     setAmount(item.value);
   };
+  useEffect(() => {
+    setAmountFormatted(formatMoney(amount) ?? '');
+  }, [amount]);
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -42,9 +49,10 @@ const PaymentOption = (props: Props) => {
           inputContainerStyle={{ borderBottomWidth: 0 }}
           style={styles.wrapInputContainer}
           onChangeText={text => onChangeAmount(text)}
-          value={amount}
+          value={amountFormatted}
           renderErrorMessage={false}
           cursorColor={COLORS.BLACK_1}
+          inputMode="numeric"
         />
 
         <View style={styles.wrapAmountContainer}>
@@ -56,7 +64,7 @@ const PaymentOption = (props: Props) => {
                   selectedAmount === item.id
                     ? styles.selectedAmountContainer
                     : styles.amountContainer,
-                  index !== 0 && { marginLeft: 16 },
+                  index !== 0 && styles.marginL16,
                 ]}
                 onPress={() => onSelectedAmount(item)}
               >
@@ -67,7 +75,7 @@ const PaymentOption = (props: Props) => {
                       : styles.title
                   }
                 >
-                  {item?.value}
+                  {formatMoney(item?.value)}
                 </Text>
               </TouchableOpacity>
             );
@@ -76,18 +84,21 @@ const PaymentOption = (props: Props) => {
         <PaymentMethod
           icon={<IconBank />}
           title="Chuyển khoản ngân hàng"
-          onPress={() => onNext(true)}
+          onPress={() => {
+            onNext(true);
+            setAmountProps(amount);
+          }}
         />
         <PaymentMethod
           icon={
             <Image
               source={VNPay}
-              style={{ width: 36, height: 36 }}
+              style={styles.img}
             />
           }
           title="VN Pay"
           onPress={() => onNext(false)}
-          style={{ marginTop: 12 }}
+          style={styles.marginT12}
         />
       </View>
     </ScrollView>
@@ -240,4 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     paddingBottom: 24,
   },
+  marginT12: { marginTop: 12 },
+  marginL16: { marginLeft: 16 },
+  img: { width: 36, height: 36 },
 });
