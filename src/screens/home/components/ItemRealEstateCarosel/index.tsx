@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
 import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';
@@ -64,7 +64,7 @@ const ItemHottestRealEstate = ({
   onOpenMap?: Function;
 }) => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
 
   const onPressCall = () => {
     let phoneNumber: string = item?.phone_number;
@@ -185,13 +185,12 @@ const ItemHottestRealEstate = ({
                 <Text style={styles.acreage}>{`${item?.price_per_m}`}</Text>
               </Text>
             </View>
-            <View style={styles.boxTypeHouse}>
-              <Text
-                style={styles.typeHouse}
-                numberOfLines={1}
-              >
-                {item?.real_estate_type_name}
-              </Text>
+            <View style={styles.boxEstateTypeName}>
+              <View style={styles.boxTypeHouse}>
+                <Text style={styles.typeHouse}>
+                  {item?.real_estate_type_name}
+                </Text>
+              </View>
             </View>
             <View style={styles.row}>
               <ItemInfo

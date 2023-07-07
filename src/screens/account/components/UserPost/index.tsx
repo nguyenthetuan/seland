@@ -180,9 +180,12 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
           <Text style={styles.acreage}>{item?.price_per_m}</Text>
         </Text>
       </View>
-      <View style={styles.typeContainer}>
-        <Text style={styles.type}>{item?.real_estate_type_name}</Text>
+      <View style={styles.boxEstateTypeName}>
+        <View style={styles.typeContainer}>
+          <Text style={styles.type}>{item?.real_estate_type_name}</Text>
+        </View>
       </View>
+
       <View style={styles.row}>
         <Info
           value={`${item?.area}${t('m2')}`}

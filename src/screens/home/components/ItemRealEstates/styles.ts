@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     height: 200,
     width: '100%',
   },
+  boxEstateTypeName: {
+    flexWrap: 'wrap',
+  },
   boxItem: {
     borderColor: COLORS.BLACK_3,
     borderRadius: 5,
@@ -22,6 +25,7 @@ const styles = StyleSheet.create({
   boxLocation: {
     flexDirection: 'row',
     paddingHorizontal: 6,
+    width: '90%',
   },
   boxMonopoly: {
     backgroundColor: COLORS.ORANGE_5,
@@ -87,7 +91,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 3,
     paddingHorizontal: 8,
-    width: 80,
   },
   call: {
     backgroundColor: COLORS.GREEN_5,
