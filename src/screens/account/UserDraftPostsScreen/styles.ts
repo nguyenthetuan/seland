@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
   whiteBackground: {
     backgroundColor: COLORS.WHITE,
   },
+  boxEstateTypeName: {
+    flexWrap: 'wrap',
+  },
 });
 
 export default styles;

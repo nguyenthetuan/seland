@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingVertical: 0,
     width: 150,
+    marginRight: 10,
   },
 
   boxButton: {

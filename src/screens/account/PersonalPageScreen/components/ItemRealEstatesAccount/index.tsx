@@ -1,41 +1,24 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon, Image } from '@rneui/themed';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Linking, Platform, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
-import {
-  Acreage,
-  Bathroom,
-  Bedroom,
-  Compass,
-  LocationMaps,
-  Love,
-} from '../../../../../assets';
+import { Acreage, Bathroom, Bedroom, Compass } from '../../../../../assets';
 import { Text } from '../../../../../components';
 import { COLORS, SCREENS } from '../../../../../constants';
 import styles from './styles';
 
-const ItemInfo = ({ value, icon }: any) => (
+const ItemInfo = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   <View style={styles.itemInfo}>
     {icon}
     <Text style={styles.valueInfo}>{value}</Text>
   </View>
 );
 
-ItemInfo.defaultProps = {
-  value: '',
-};
-
-ItemInfo.propTypes = {
-  value: PropTypes.string,
-  icon: PropTypes.node.isRequired,
-};
-
 const ItemRealEstatesAccount = ({ item }: any) => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
 
   const onGoDetail = () => {
     navigate(SCREENS.DETAIL_POST, {
@@ -63,7 +46,11 @@ const ItemRealEstatesAccount = ({ item }: any) => {
 
       <View style={styles.rightContent}>
         <Text style={styles.title}>
-          {`${item?.title?.length > 30 ? item?.title?.slice(0,26) + "..." : item?.title }`}
+          {`${
+            item?.title?.length > 30
+              ? item?.title?.slice(0, 26) + '...'
+              : item?.title
+          }`}
         </Text>
 
         <View style={styles.row}>
@@ -95,13 +82,12 @@ const ItemRealEstatesAccount = ({ item }: any) => {
 
         <View style={styles.boxPrice}>
           <Text style={styles.price}>
-            {`${item?.price} ${item?.price_unit_name}`} {' '} 
+            {`${item?.price} ${item?.price_unit_name}`}{' '}
             <Text style={styles.acreage}>{item?.price_per_m}</Text>
           </Text>
           <Text style={styles.time}>2 phút trước</Text>
         </View>
       </View>
-
     </TouchableOpacity>
   );
 };

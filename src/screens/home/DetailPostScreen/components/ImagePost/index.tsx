@@ -110,52 +110,58 @@ const ImagePost: FC<Iprops> = props => {
         presentationStyle="overFullScreen"
       >
         <View style={styles.sliderWrapper}>
+          <FastImage
+            style={styles.image}
+            source={{
+              uri: imageCurrent,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+          <View style={styles.slider}>
+            {countImage !== 0 ? (
+              <TouchableOpacity
+                onPress={onPreImage}
+                style={styles.pre}
+              >
+                <IconSvg
+                  name="pre"
+                  color={COLORS.WHITE}
+                  width={40}
+                  height={40}
+                />
+              </TouchableOpacity>
+            ) : (
+              <View />
+            )}
+
+            {countImage + 1 !== listImage?.length && (
+              <TouchableOpacity
+                onPress={onNextImage}
+                style={styles.next}
+              >
+                <IconSvg
+                  name="next"
+                  color={COLORS.WHITE}
+                  width={40}
+                  height={40}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
           <TouchableOpacity
             onPress={() => setOpent(false)}
             style={styles.close}
           >
-            <IconSvg name="close" />
-          </TouchableOpacity>
-          <View style={styles.slider}>
-            <View style={styles.pre}>
-              {countImage !== 0 && (
-                <TouchableOpacity onPress={onPreImage}>
-                  <IconSvg
-                    name="pre"
-                    color={COLORS.WHITE}
-                    width={26}
-                    height={26}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-
-            <FastImage
-              style={styles.image}
-              source={{
-                uri: imageCurrent,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.cover}
+            <IconSvg
+              name="close"
+              width={35}
+              height={35}
             />
-            <View style={styles.next}>
-              {countImage + 1 !== listImage?.length && (
-                <TouchableOpacity onPress={onNextImage}>
-                  <IconSvg
-                    name="next"
-                    color={COLORS.WHITE}
-                    width={26}
-                    height={26}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-          <View>
-            <Text style={styles.text}>{`${countImage + 1}/${
-              listImage?.length
-            }`}</Text>
-          </View>
+          </TouchableOpacity>
+          <Text style={styles.text}>{`${countImage + 1}/${
+            listImage?.length
+          }`}</Text>
         </View>
       </Modal>
     </>

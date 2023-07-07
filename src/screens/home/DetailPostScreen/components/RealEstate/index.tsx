@@ -43,7 +43,7 @@ const RealEstate: FC<Iprops> = props => {
         })
       );
     }
-  }, []);
+  }, [infoDetail?.province_id]);
 
   const handleSelectOptions = (value: any) => {
     setIsBuy(value);
