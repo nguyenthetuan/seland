@@ -51,16 +51,16 @@ const RealEstateInformation: React.FC<RealEstateInformationProps> = ({
   const ONE_MIL = ONE_THOUSAND * 1000;
   const ONE_BIL = ONE_MIL * 1000;
   const [utilitiesId, setUtilitiesId] = useState(
-    utilities_id.split(',').map(Number) || []
+    utilities_id ? utilities_id.split(',').map(Number) : []
   );
   const [furnitureId, setFurnitureId] = useState<any[]>(
-    furniture_id.split(',').map(Number) || []
+    furniture_id ? furniture_id.split(',').map(Number) : []
   );
   const [securityId, setSecurityId] = useState<any[]>(
-    security_id.split(',').map(Number) || []
+    security_id ? security_id.split(',').map(Number) : []
   );
   const [roadTypeId, setRoadTypeId] = useState<any[]>(
-    road_type_id.split(',').map(Number) || []
+    road_type_id ? road_type_id.split(',').map(Number) : []
   );
   const [state, setState] = useState({
     legalDocumentsId: legal_documents_id || information[2]?.children[0].id,
