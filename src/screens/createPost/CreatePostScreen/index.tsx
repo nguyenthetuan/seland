@@ -366,9 +366,7 @@ const CreatePostScreen = (props: any) => {
     dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
   };
 
-  const editSuccess = () => {
-    goBack();
-    Toast.show('Cập nhật tin thành công.');
+  const editSuccess = (value: any) => {
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
@@ -379,6 +377,16 @@ const CreatePostScreen = (props: any) => {
         sort_by: 'createdAt',
       })
     );
+    if (saveType === YOUR_WANT.POST_PUBLIC) {
+      navigate(SCREENS.CONFIRM_POST_SCREEN, {
+        realEstateId: router.params.id,
+      });
+    } else {
+      goBack();
+      Toast.show('Cập nhật tin thành công.');
+    }
+    reset();
+    setTab(TAB.BASIC_INFORMATION);
   };
 
   const editPosts = async (value: any) => {
