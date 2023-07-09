@@ -10,3 +10,4 @@ export { default as Screen } from './Screen';
 export { default as Select } from './Select';
 export { default as Text } from './Text';
 export { default as PopupConfirm } from './PopupConfirm';
+export { default as ItemRealEstateCarousel } from './ItemRealEstateCarousel';
