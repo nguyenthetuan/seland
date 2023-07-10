@@ -33,6 +33,7 @@ interface Iprops {
   getValues?: any;
   onShowTypeHousing?: () => void;
   dataLength?: number;
+  setTitleValue?: any;
 }
 
 const projectOptions = [
@@ -62,7 +63,14 @@ const initValues = {
 };
 
 const HeaderFilterPosts: FC<Iprops> = props => {
-  const { onSelect, onFilter, route, onShowTypeHousing, dataLength } = props;
+  const {
+    onSelect,
+    onFilter,
+    route,
+    onShowTypeHousing,
+    dataLength,
+    setTitleValue,
+  } = props;
 
   const { t } = useTranslation();
   const { navigate } = useNavigation();
@@ -71,14 +79,21 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   const dataFilters = params?.dataFilters;
   const { control, handleSubmit, setValue, getValues } = useForm({
     defaultValues: dataFilters
-      ? Object.assign({...initValues}, dataFilters ? {...dataFilters} : null)
+      ? Object.assign(
+          { ...initValues },
+          dataFilters ? { ...dataFilters } : null
+        )
       : initValues,
   });
-
   useEffect(() => {
     if (dataFilters) {
+<<<<<<< Updated upstream
       Object.entries(dataFilters).forEach(
         ([key, value]) => setValue(key, value)
+=======
+      Object.entries(dataFilters).forEach(([key, value]) =>
+        setValue(key, value)
+>>>>>>> Stashed changes
       );
     }
   }, [dataFilters]);
@@ -233,6 +248,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               navigate(SCREENS.FILTER_SCREEN, {
                 onSubmit,
                 dataFilters: getValues(),
+                setTitleValue,
               });
             }}
           >
@@ -279,7 +295,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
               onSelectTypeHousing={onSelectTypeHousing}
               onShowTypeHousing={onShowTypeHousing}
               brief={true}
-              placeHolder={t('select.typeHousing') || ""}
+              placeHolder={t('select.typeHousing') || ''}
             />
           </View>
         </View>
@@ -332,9 +348,7 @@ const HeaderFilterPosts: FC<Iprops> = props => {
           </View>
         </View> */}
 
-        <View style={styles.row}>
-          
-        </View>
+        <View style={styles.row}></View>
 
         <View style={[styles.row, styles.spaceBetween]}>
           <Text>Có {dataLength || 0} bất động sản</Text>
