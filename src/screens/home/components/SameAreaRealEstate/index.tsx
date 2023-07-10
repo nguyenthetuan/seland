@@ -12,7 +12,6 @@ const SameAreaRealEstate = () => {
   const { t } = useTranslation();
   const [isBuy, setIsBuy] = useState(true);
   const { data: listPosts, loading } = useSelector(selectRealEstates);
-  console.log('🚀 ~ file: index.tsx:15 ~ listPosts:', listPosts);
 
   const handleSelectOptions = (value: any) => {
     setIsBuy(value);
@@ -65,7 +64,6 @@ const SameAreaRealEstate = () => {
         showsHorizontalScrollIndicator={false}
       >
         {data.map((item: any, index: number) => {
-          console.log('🚀 ~ file: index.tsx:67 ~ {data.map ~ item:', item);
           return (
             <ItemRealEstateCarousel
               key={`ItemHottestRealEstate${index}`}
