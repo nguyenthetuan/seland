@@ -50,6 +50,8 @@ const TAB = {
   ARTICLE_DETAILS: 2,
 };
 
+const TIME = 30;
+
 const initInfo = {
   status: 2,
 
@@ -127,20 +129,15 @@ const CreatePostScreen = (props: any) => {
   const scrollViewRef = useRef();
   const confirmPostRef = useRef();
   const currentTab = useRef<any>();
+  const [time, setTime] = React.useState(TIME);
 
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
   const [saveType, setSaveType] = useState(
     (getValues && getValues().status) || YOUR_WANT.SAVE_PRIVATE
   );
   const dispatch = useDispatch();
-  const {
-    loading,
-    basicInformation,
-    realEstateInformation,
-    createRealEstate,
-    unitPrices,
-    information,
-  } = useSelector(selectPosts);
+  const { loading, createRealEstate, unitPrices, information } =
+    useSelector(selectPosts);
   const emptyUnitPrices = {
     label: t('select.structure'),
     value: null,
@@ -234,8 +231,12 @@ const CreatePostScreen = (props: any) => {
                 },
               ]);
             }
-
             break;
+          case 'status':
+            if (value) {
+              setValue('status', value);
+              setSaveType(value);
+            }
           default:
             value && setValue(key, value);
             break;
@@ -245,10 +246,7 @@ const CreatePostScreen = (props: any) => {
 
     dispatchThunk(
       dispatch,
-      getDistricts({ province_code: response.province_id }),
-      response => {
-        console.log('responsexx', response);
-      }
+      getDistricts({ province_code: response.province_id })
     );
     dispatchThunk(
       dispatch,
@@ -274,117 +272,13 @@ const CreatePostScreen = (props: any) => {
     goBack();
   };
 
-  const handleTab = (value: number) => {
-    setTab(value);
-  };
-
   const handleSelect = (value: number) => {
     setValue('status', value);
     setSaveType(value);
   };
 
-  const createSuccess = (value: any) => {
-    if (value?.real_estate_id) {
-      if (saveType === YOUR_WANT.POST_PUBLIC) {
-        navigate(SCREENS.CONFIRM_POST_SCREEN, {
-          realEstateId: value?.real_estate_id,
-        });
-      } else {
-        confirmPostRef.current.openPopup();
-      }
-      reset();
-      setTab(TAB.BASIC_INFORMATION);
-    }
-  };
-
-  const createPosts = (value: any) => {
+  const getFormData = async (value: any) => {
     const params = {
-      ...value,
-    };
-    const formData = new FormData();
-    Object.keys(params).forEach((key, value) => {
-      if (
-        key === 'isPhoto' ||
-        key === 'photo' ||
-        key === 'video' ||
-        key === 'urlVideo'
-      )
-        return;
-      const information = [
-        'legal_documents_id',
-        'house_status_id',
-        'usage_condition_id',
-        'location_type_id',
-      ];
-      const land_information = [
-        'utilities_id',
-        'furniture_id',
-        'security_id',
-        'road_type_id',
-      ];
-
-      if (params[key]) {
-        if (information.includes(key)) {
-          formData.append(`information[${key}]`, params[key]);
-        } else if (land_information.includes(key)) {
-          formData.append(`land_information[${key}]`, params[key]);
-        } else {
-          formData.append(key, params[key]);
-        }
-      }
-    });
-
-    // append image to form
-    if (params?.photo?.length) {
-      params?.photo.forEach(
-        (item: { uri: any; fileName: any; type: any }, index: any) => {
-          const file = {
-            uri: item.uri,
-            name: item.fileName,
-            type: item.type,
-          };
-          formData.append(`images[${index}]`, file);
-        }
-      );
-    }
-    // append video to form
-    if (params?.video?.length) {
-      params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
-        const file = {
-          uri: item.uri,
-          name: item.fileName,
-          type: item.type,
-        };
-        formData.append(`video`, file);
-      });
-    }
-
-    if (params?.urlVideo) {
-      formData.append(`video`, params?.urlVideo);
-    }
-
-    dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
-  };
-
-  const editSuccess = () => {
-    goBack();
-    Toast.show('Cập nhật tin thành công.');
-    dispatchThunk(
-      dispatch,
-      getListRealEstatesUser({
-        status:
-          router.params?.type === 'DRAFT'
-            ? YOUR_WANT.SAVE_DRAFTS
-            : YOUR_WANT.SAVE_PRIVATE,
-        sort_by: 'createdAt',
-      })
-    );
-  };
-
-  const editPosts = async (value: any) => {
-    const params = {
-      ...basicInformation,
-      ...realEstateInformation,
       ...value,
       status: saveType,
     };
@@ -454,12 +348,99 @@ const CreatePostScreen = (props: any) => {
       formData.append(`video`, params?.urlVideo);
     }
 
+    return formData;
+  };
+
+  const createSuccess = (value: any) => {
+    if (value?.real_estate_id) {
+      if (saveType === YOUR_WANT.POST_PUBLIC) {
+        navigate(SCREENS.CONFIRM_POST_SCREEN, {
+          realEstateId: value?.real_estate_id,
+        });
+      } else {
+        confirmPostRef.current.openPopup();
+      }
+      reset();
+      setTab(TAB.BASIC_INFORMATION);
+    }
+  };
+
+  const createPosts = async (value: any) => {
+    const formData = await getFormData(value);
+
+    await dispatchThunk(dispatch, createRealEstates(formData), createSuccess);
+  };
+
+  const editSuccess = (value: any) => {
     dispatchThunk(
+      dispatch,
+      getListRealEstatesUser({
+        status:
+          router.params?.type === 'DRAFT'
+            ? YOUR_WANT.SAVE_DRAFTS
+            : YOUR_WANT.SAVE_PRIVATE,
+        sort_by: 'createdAt',
+      })
+    );
+    if (saveType === YOUR_WANT.POST_PUBLIC) {
+      navigate(SCREENS.CONFIRM_POST_SCREEN, {
+        realEstateId: router.params.id,
+      });
+    } else {
+      goBack();
+      Toast.show('Cập nhật tin thành công.');
+    }
+    reset();
+    setTab(TAB.BASIC_INFORMATION);
+  };
+
+  const editPosts = async (value: any) => {
+    const formData = await getFormData(value);
+    await dispatchThunk(
       dispatch,
       editRealEstates({ id: router.params.id, formData }),
       editSuccess
     );
   };
+
+  const autoSave = async (value: any) => {
+    if (value?.photo.length === 0) {
+      setError('photo', {
+        type: 'manual',
+        message: 'Vui lòng chọn hình ảnh BĐS',
+      });
+      return;
+    }
+    if (value?.photo.length <= 2) {
+      setError('photo', {
+        type: 'manual',
+        message: 'Đăng từ 3 tới 12 hình ảnh khác nhau của bất động sản',
+      });
+      return;
+    }
+    const formData = await getFormData(value);
+    await dispatchThunk(
+      dispatch,
+      editRealEstates({ id: router.params.id, formData })
+    );
+  };
+
+  const getValueAutoSave = handleSubmit(autoSave);
+
+  useEffect(() => {
+    if (router.params?.type === 'DRAFT') {
+      const intervalId = setInterval(() => {
+        if (time === 0) {
+          setTime(TIME);
+          getValueAutoSave();
+          return;
+        }
+        setTime(time - 1);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [time]);
 
   const handleContinue = async (value: { photo: string | any[] }) => {
     switch (tab) {

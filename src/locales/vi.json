@@ -302,6 +302,7 @@
   },
   "select": {
     "sex": "Giới tính",
+    "default": "Mặc định",
     "male": "Nam",
     "female": "Nữ",
     "province": "Tỉnh/thành phố",

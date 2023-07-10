@@ -31,13 +31,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   buy: {
-    width: 37,
     height: 20,
     backgroundColor: COLORS.GREEN_4,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
+    paddingLeft: 4,
+    paddingRight: 4,
   },
   buyText: {
     fontSize: 12,

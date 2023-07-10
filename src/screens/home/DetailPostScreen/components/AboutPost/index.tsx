@@ -148,7 +148,9 @@ const AboutPost: FC<Iprops> = props => {
       <Text style={styles.aboutPostTitle}>{infoDetail?.title}</Text>
       <View style={styles.boxBuy}>
         <View style={styles.buy}>
-          <Text style={styles.buyText}>{t('button.buy')}</Text>
+          <Text style={styles.buyText}>
+            {t(infoDetail?.demand_id === 1 ? 'common.buy' : 'common.lease')}
+          </Text>
         </View>
         <Text style={styles.buyTime}>2 phút trước</Text>
       </View>

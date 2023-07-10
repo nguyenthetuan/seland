@@ -59,6 +59,11 @@ const UserPostsScreen = () => {
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
+  const emptyProject = {
+    label: 'default',
+    value: null,
+  };
+  const calendarOptions = [emptyProject, ...calendar];
 
   const {
     control,
@@ -205,11 +210,12 @@ const UserPostsScreen = () => {
             <Select
               buttonStyle={styles.selectButton}
               control={control}
-              data={calendar.map(item => ({
+              data={calendarOptions.map(item => ({
                 ...item,
                 label: t(`select.${item?.label}`),
               }))}
               name="date"
+              defaultButtonText={'Mặc định'}
               onSelect={handleSelectDate}
               rowStyle={styles.selectButton}
             />

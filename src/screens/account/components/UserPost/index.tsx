@@ -145,7 +145,10 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
   };
 
   return (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity
+      style={styles.item}
+      onPress={navigateToEdit}
+    >
       <Image
         style={styles.image}
         source={{

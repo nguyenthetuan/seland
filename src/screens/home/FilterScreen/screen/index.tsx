@@ -144,9 +144,10 @@ const FilterScreen = (props: any) => {
   const { navigate, goBack } = useNavigation();
 
   const dataFilters = params?.dataFilters;
-
-  const defaultVal: any = Object.assign({...initValues}, dataFilters ? {...dataFilters}: null);
-
+  const defaultVal: any = Object.assign(
+    { ...initValues },
+    dataFilters ? { ...dataFilters } : null
+  );
   const { control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: defaultVal,
   });
@@ -207,18 +208,19 @@ const FilterScreen = (props: any) => {
 
   const onSubmit = (data: any) => {
     navigate(SCREENS.LIST_POST, {
-      dataFilters: data
+      dataFilters: data,
     });
     params?.onSubmit && params?.onSubmit(data);
   };
 
   const clearForm = () => {
-    Object.entries(initValues).forEach(
-      ([key, value]: any) => {
-        value && setValue(key, value)
-      }
-    );
+    Object.entries(initValues).forEach(([key, value]: any) => {
+      value && setValue(key, value);
+    });
     setValue('address', '');
+    setValue('province_id', null);
+    setValue('district_id', null);
+    setValue('ward_id', null);
     // params?.onSubmit &&
     //   params?.onSubmit(initValues);
     // navigate(SCREENS.LIST_POST, {...initValues});
@@ -235,12 +237,15 @@ const FilterScreen = (props: any) => {
     setValue('ward_id', null);
 
     const { value } = selectedItem;
-
+    setValue('province_id', value);
     if (value) {
       fetchDistricts({
         province_code: selectedItem.value,
       });
     } else {
+      // fetchDistricts({
+      //   province_code: null,
+      // });
       dispatch(clearDistricts());
       dispatch(clearWards());
     }
@@ -260,9 +265,7 @@ const FilterScreen = (props: any) => {
   };
 
   const refresh = async () => {
-    await Promise.all([
-      dispatchThunk(dispatch, getProvinces()),
-    ]);
+    await Promise.all([dispatchThunk(dispatch, getProvinces())]);
   };
 
   const onShowTypeHousing = (data: boolean) => {

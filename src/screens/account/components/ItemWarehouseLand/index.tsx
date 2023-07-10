@@ -13,8 +13,9 @@ import { IItemWarehouse } from '../../../../utils/interface/warehouse';
 import ActionWarehouseLand from '../../WarehouseLandScreen/components/ActionWarehouseLand';
 import DisplayPositionPost from '../../WarehouseLandScreen/components/DisplayPositionPost';
 import styles from './styles';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import { rankPost } from '../../../../utils/realEstates';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 interface Iprops {
   item: IItemWarehouse;
@@ -23,7 +24,7 @@ interface Iprops {
 }
 const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete, onEdit }) => {
   const { t } = useTranslation();
-
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const onDeletePost = (id?: number) => {
     onDelete && onDelete(id);
   };
@@ -58,8 +59,17 @@ const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete, onEdit }) => {
     };
   };
 
+  const onGoDetail = () => {
+    navigate(SCREENS.DETAIL_POST, {
+      id: item?.id,
+    });
+  };
+
   return (
-    <TouchableOpacity style={styles.boxItem}>
+    <TouchableOpacity
+      style={styles.boxItem}
+      onPress={onGoDetail}
+    >
       <View style={styles.boxImage}>
         <Image
           style={styles.image}
