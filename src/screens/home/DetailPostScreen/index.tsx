@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import AboutPost from './components/AboutPost';
 import Contact from './components/Contact';
@@ -22,21 +22,31 @@ import Loading from 'react-native-loading-spinner-overlay';
 import { useTranslation } from 'react-i18next';
 import { COLORS, SCREENS } from '../../../constants';
 import { KIND_REALTY, kindRealty } from '../../../utils/maps';
+import { requestGetDetailRealEstates } from '../../../api';
 
 const DetailPostScreen = () => {
   const dispatch = useDispatch();
   const { navigate }: NavigationProp<any, any> = useNavigation();
+  const [loading, setLoading] = useState<boolean>(true);
   const { t } = useTranslation();
-
+  const [data, setData] = useState<any>();
   const route: any = useRoute();
   const id = route?.params?.id;
-  const { data, loading } = useSelector(selectDetailRealEstates);
+  const getDetailReal = async () => {
+    const response = await requestGetDetailRealEstates(id);
+
+    if (response?.data) {
+      setData(response?.data);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (id) {
-      dispatchThunk(dispatch, getDetailRealEstates(id));
+      setLoading(true);
+      getDetailReal();
     }
-  }, [dispatch]);
+  }, []);
 
   const goToMapScreen = () => {
     navigate(SCREENS.MAPS, {

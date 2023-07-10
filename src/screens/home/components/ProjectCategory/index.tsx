@@ -3,11 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { Button } from '../../../../components';
+import { Button, ItemRealEstateCarousel } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
-import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { URL_MAP } from '../../../../utils/maps';
@@ -74,7 +73,7 @@ const ProjectCategory = () => {
         showsHorizontalScrollIndicator={false}
       >
         {listProjectRealEstate.map(item => (
-          <ItemHottestRealEstate
+          <ItemRealEstateCarousel
             key={`ProjectCategory${item?.id}`}
             item={item}
             type={REAL_ESTATE.PROJECT}

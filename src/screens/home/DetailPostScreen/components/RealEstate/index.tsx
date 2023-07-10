@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,8 +13,11 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { SCREENS } from '../../../../../constants';
 import SameAreaRealEstate from '../../../components/SameAreaRealEstate';
 import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
-import { Button, Text } from '../../../../../components';
-import ItemHottestRealEstate from '../../../components/ItemRealEstateCarosel';
+import {
+  Button,
+  ItemRealEstateCarousel,
+  Text,
+} from '../../../../../components';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
@@ -90,7 +93,7 @@ const RealEstate: FC<Iprops> = props => {
               showsHorizontalScrollIndicator={false}
             >
               {listPosts.map((item: any, index: number) => (
-                <ItemHottestRealEstate
+                <ItemRealEstateCarousel
                   key={`ItemHottestRealEstate${index}`}
                   item={item}
                 />
@@ -108,7 +111,39 @@ const RealEstate: FC<Iprops> = props => {
         onSeeAll={navigateToListPosts}
         isSeeAll={listPosts?.length > 0 ? true : false}
       >
-        {listPosts?.length > 0 && <SameAreaRealEstate />}
+        {listPosts?.length > 0 && (
+          <>
+            <View style={styles.boxSelect}>
+              <Button
+                buttonStyle={styles.btnSelect}
+                titleStyle={styles.txtSelect}
+                onPress={() => handleSelectOptions(true)}
+                title={t('button.buySell')}
+                outline={!isBuy}
+                radius={5}
+              />
+              <Button
+                buttonStyle={styles.btnSelect}
+                titleStyle={styles.txtSelect}
+                onPress={() => handleSelectOptions(false)}
+                title={t('button.lease')}
+                outline={isBuy}
+                radius={5}
+              />
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            >
+              {listPosts.map((item: any, index: number) => (
+                <ItemRealEstateCarousel
+                  key={`ItemHottestRealEstate${index}`}
+                  item={item}
+                />
+              ))}
+            </ScrollView>
+          </>
+        )}
         {listPosts?.length === 0 && (
           <Text style={styles.textNoValue}>{t('common.noValue')}</Text>
         )}

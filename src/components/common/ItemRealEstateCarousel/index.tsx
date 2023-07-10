@@ -1,7 +1,6 @@
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
-import PropTypes from 'prop-types';
-import React, { ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
@@ -20,11 +19,11 @@ import {
   IconPreImage,
   LocationMapsSmall,
   LoveSmall,
-} from '../../../../assets';
-import { IconSvg } from '../../../../assets/icons/IconSvg';
-import { Text } from '../../../../components';
-import { COLORS, SCREENS } from '../../../../constants';
-import REAL_ESTATE from '../../../../constants/realEstate';
+} from '../../../assets';
+import { IconSvg } from '../../../assets/icons/IconSvg';
+import { Text } from '../..';
+import { COLORS, SCREENS } from '../../../constants';
+import REAL_ESTATE from '../../../constants/realEstate';
 import styles from './styles';
 
 const ItemInfo = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
@@ -34,11 +33,7 @@ const ItemInfo = ({ value, icon }: { value?: string; icon?: ReactNode }) => (
   </View>
 );
 
-const ItemHottestRealEstate = ({
-  item,
-  type,
-  onOpenMap,
-}: {
+interface ItemRealEstateCarouselProps {
   item: {
     id: never;
     images: any;
@@ -60,11 +55,16 @@ const ItemHottestRealEstate = ({
     demand_id: number;
     phone_number: string;
   };
-  type: string;
+  type?: string;
   onOpenMap?: Function;
+}
+const ItemRealEstateCarousel: FC<ItemRealEstateCarouselProps> = ({
+  item,
+  type,
+  onOpenMap,
 }) => {
   const { t } = useTranslation();
-  const { navigate }: NavigationProp<any, any> = useNavigation();
+  const { push }: NavigationProp<any, any> = useNavigation();
 
   const onPressCall = () => {
     let phoneNumber: string = item?.phone_number;
@@ -88,11 +88,9 @@ const ItemHottestRealEstate = ({
   };
 
   const onGoDetail = () => {
-    if (type !== REAL_ESTATE.PROJECT) {
-      navigate(SCREENS.DETAIL_POST, {
-        id: item?.id,
-      });
-    }
+    push(SCREENS.DETAIL_POST, {
+      id: item?.id,
+    });
   };
 
   return (
@@ -280,14 +278,4 @@ const ItemHottestRealEstate = ({
   );
 };
 
-ItemHottestRealEstate.defaultProps = {
-  item: {},
-  type: '',
-};
-
-ItemHottestRealEstate.propTypes = {
-  type: PropTypes.string,
-  item: PropTypes.object,
-};
-
-export default ItemHottestRealEstate;
+export default ItemRealEstateCarousel;

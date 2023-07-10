@@ -87,7 +87,8 @@ export const validateEmail = (value: string) => {
 export const validateLatLog = (value: string) => {
   if (value) {
     const validRegex = /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi;
-    if (!value.match(validRegex)) return 'Vui lòng nhập đúng lat long vị trí';
+    if (!value.match(validRegex))
+      return 'Vị trí trên bản đồ không đúng định dạng';
   }
   return undefined;
 };
