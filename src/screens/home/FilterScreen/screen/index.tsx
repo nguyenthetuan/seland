@@ -207,10 +207,10 @@ const FilterScreen = (props: any) => {
   };
 
   const onSubmit = (data: any) => {
+    params?.onSubmit && params?.onSubmit(data);
     navigate(SCREENS.LIST_POST, {
       dataFilters: data,
     });
-    params?.onSubmit && params?.onSubmit(data);
   };
 
   const clearForm = () => {
