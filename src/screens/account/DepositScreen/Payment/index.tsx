@@ -20,34 +20,39 @@ import { Button, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import {
   createTransaction,
+  getVNPayUrl,
   selectPayment,
   selectUser,
 } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import { requestReadAndWritePermission } from '../../../../utils/permission';
 import { IconCopy, IconInformation } from '../icon';
-import { generateVNPayUrl } from './model';
+import PopupInformation from './PopupInformation';
 
 interface Props {
   isBank: boolean;
   onNext: () => void;
   amount: number;
+  currentIndex: number;
 }
 
 const Payment = (props: Props) => {
-  const { isBank, onNext, amount } = props;
+  const { isBank, onNext, amount, currentIndex } = props;
   const { goBack } = useNavigation();
   const { data: user } = useSelector(selectUser);
-  const { loadingCreateTransaction } = useSelector(selectPayment);
+  const { loadingCreateTransaction, vnPayUrl } = useSelector(selectPayment);
   const dispatch = useDispatch();
   const content = `"Nap tien ${user?.phone_number}"`;
   const contentBody = `Nap tien ${user?.phone_number}`;
 
   const qrRef = useRef<QRCode | null>(null);
+  const popupRef = useRef<PopupInformation>(null);
 
   useEffect(() => {
-    generateVNPayUrl();
-  }, []);
+    if (!isBank && amount > 0) {
+      dispatchThunk(dispatch, getVNPayUrl(amount));
+    }
+  }, [amount, isBank]);
 
   const copy = (content: string) => {
     Clipboard.setString(content);
@@ -59,6 +64,12 @@ const Payment = (props: Props) => {
   const handleCancel = () => {
     goBack();
   };
+
+  useEffect(() => {
+    if (isBank && currentIndex === 1) {
+      popupRef.current?.openPopup();
+    }
+  }, [isBank, currentIndex]);
 
   const confirm = () => {
     const params = {
@@ -94,6 +105,16 @@ const Payment = (props: Props) => {
           });
       });
     }
+  };
+
+  const getValueInUrl = (url: string, paramName: string) => {
+    const regex = /[?&]([^=#]+)=([^&#]*)/g;
+    const params = {};
+    let match;
+    while ((match = regex.exec(url))) {
+      params[match[1]] = match[2];
+    }
+    return params[paramName];
   };
 
   return (
@@ -222,8 +243,18 @@ const Payment = (props: Props) => {
         </View>
       ) : (
         <WebView
+          onNavigationStateChange={e => {
+            //console.log(decodeURIComponent(e.url));
+            if (e.url.includes('paymentStatus')) {
+              const callback = getValueInUrl(
+                decodeURIComponent(e.url),
+                'callbackUrl'
+              );
+              //console.log(getValueInUrl(callback, 'paymentStatus'));
+            }
+          }}
           source={{
-            uri: generateVNPayUrl(),
+            uri: vnPayUrl,
           }}
         />
       )}
@@ -234,6 +265,7 @@ const Payment = (props: Props) => {
           }}
         />
       </View>
+      <PopupInformation ref={popupRef} />
     </View>
   );
 };

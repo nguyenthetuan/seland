@@ -77,3 +77,17 @@ export const IconRetweet = (props: SvgProps) => (
     />
   </Svg>
 );
+
+export const IconPopupInformation = (props: SvgProps) => (
+  <Svg
+    width={48}
+    height={48}
+    fill="none"
+    {...props}
+  >
+    <Path
+      fill="#1D4279"
+      d="M24 3C12.403 3 3 12.403 3 24s9.403 21 21 21 21-9.403 21-21S35.597 3 24 3Zm-1.5 10.875c0-.206.169-.375.375-.375h2.25c.206 0 .375.169.375.375v12.75a.376.376 0 0 1-.375.375h-2.25a.376.376 0 0 1-.375-.375v-12.75ZM24 34.5a2.25 2.25 0 0 1 0-4.5 2.25 2.25 0 0 1 0 4.5Z"
+    />
+  </Svg>
+);

@@ -1,4 +1,7 @@
-import { CREATE_TRANSACTION } from "../constants";
-import { post } from "../utils";
+import { CREATE_TRANSACTION, GET_VNPAY_URL } from "../constants";
+import { get, post } from "../utils";
 
 export const requestCreateTransaction = (params) => post(CREATE_TRANSACTION, params);
+
+export const requestGetVNPayURL = amount => get(`${GET_VNPAY_URL}?amount=${amount}`);
+

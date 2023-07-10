@@ -38,7 +38,10 @@ const BankAccount = () => {
 
   const generateHeader = (): string => {
     if (pageIndex === 0) return 'Nạp tiền';
-    if (pageIndex === 1) return 'Chuyển khoản ngân hàng';
+    if (pageIndex === 1) {
+      if (isBank) return 'Chuyển khoản ngân hàng';
+      return 'VN Pay';
+    }
     if (pageIndex === 2) return 'Kết quả giao dịch';
     return 'Nạp tiền';
   };
@@ -75,6 +78,7 @@ const BankAccount = () => {
             amount={amount}
             onNext={handleNext}
             isBank={isBank}
+            currentIndex={pageIndex}
           />
           <BankPaymentSuccess doMore={() => pagerRef.current?.setPage(0)} />
         </PagerView>

@@ -15,6 +15,7 @@ import { IconBank } from '../PaymentMethod/icon';
 import { VNPay } from '../../../../assets';
 import { useNavigation } from '@react-navigation/native';
 import { formatMoney } from '../../../../utils/format';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 interface Props {
   onNext: (isBank?: boolean) => void;
@@ -28,7 +29,7 @@ const PaymentOption = (props: Props) => {
   const [selectedAmount, setSelectedAmount] = useState<number>(1);
   const onChangeAmount = (text: string) => {
     const re = new RegExp(',', 'g');
-    setAmount(parseInt(text.replace(re, '')));
+    setAmount(text.length > 0 ? parseInt(text.replace(re, '')) : 0);
   };
   const onSelectedAmount = (item: TPrefixAmount) => {
     setSelectedAmount(item.id);
@@ -85,6 +86,13 @@ const PaymentOption = (props: Props) => {
           icon={<IconBank />}
           title="Chuyển khoản ngân hàng"
           onPress={() => {
+            if (amount <= 0) {
+              Toast.show({
+                text1: 'Số tiền phải lớn hơn 0 VND',
+                type: 'error',
+              });
+              return;
+            }
             onNext(true);
             setAmountProps(amount);
           }}
@@ -97,7 +105,10 @@ const PaymentOption = (props: Props) => {
             />
           }
           title="VN Pay"
-          onPress={() => onNext(false)}
+          onPress={() => {
+            onNext(false);
+            setAmountProps(amount);
+          }}
           style={styles.marginT12}
         />
       </View>
