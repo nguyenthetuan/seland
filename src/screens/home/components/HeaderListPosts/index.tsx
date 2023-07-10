@@ -16,6 +16,7 @@ interface Iprops {
   onChangeSearch?: Function;
   onOpenMap?: Function;
   getValues?: any;
+  setValue?: any;
 }
 
 const HeaderListPosts: FC<Iprops> = props => {
@@ -23,6 +24,7 @@ const HeaderListPosts: FC<Iprops> = props => {
   const { goBack, navigate } = useNavigation();
   const { handleSubmit } = props;
   const control = props?.control;
+  const setValue = props?.setValue;
   const {
     field: { onChange, value },
   } = useController({ control, name: 'title' });
@@ -32,6 +34,7 @@ const HeaderListPosts: FC<Iprops> = props => {
   };
 
   const submit = () => {
+    setValue('title', value);
     handleSubmit && handleSubmit(value);
   };
 

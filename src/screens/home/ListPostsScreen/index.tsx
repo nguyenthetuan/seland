@@ -36,7 +36,7 @@ const ListPostsScreen = (props: any) => {
   const dispatch = useDispatch();
   const { data: listPosts, loading: loadingListPost } =
     useSelector(selectRealEstates);
-  const { control } = useForm({
+  const { control, setValue, getValues } = useForm({
     defaultValues: {},
   });
 
@@ -51,7 +51,6 @@ const ListPostsScreen = (props: any) => {
   const convertDataFilter = (data: any) => {
     const res: any = {};
     res.sort_by = 'asc';
-    res.demand_id = route?.params?.demand_id;
     res.page = page;
     res.setTotal = setTotalPost;
 
@@ -93,46 +92,20 @@ const ListPostsScreen = (props: any) => {
     if (data?.location > 0) {
       res.location_id = data?.location.join(',');
     }
-    if (data?.province_id) {
-      res.province_id = data?.province_id;
-    }
+    res.province_id = data?.province_id;
     if (data?.ward_id) {
       res.ward_id = data?.ward_id;
     }
     if (data?.district_id) {
       res.district_id = data?.district_id;
     }
-    if (data?.demand_id) {
-      res.demand_id = data?.demand_id;
-    }
+    res.demand_id = data?.demand_id
+      ? data?.demand_id
+      : route?.params?.demand_id;
     if (data?.page) {
       res.page = data?.page;
     }
     return res;
-  };
-
-  const onFilter = (data: any) => {
-    const dataFilter = convertDataFilter({
-      ...data,
-      page: 1,
-    });
-    dataFilterRef.current = dataFilter;
-    onGetListRealEstates(
-      {
-        ...dataFilter,
-        is_hot: is_hot || '',
-      },
-      TYPE.FILTER
-    );
-  };
-
-  const onFilterTitle = (val: string) => {
-    if (dataFilterRef.current) {
-      dataFilterRef.current = { ...dataFilterRef.current, title: val, page: 1 };
-      onGetListRealEstates(dataFilterRef.current, TYPE.FILTER);
-    } else {
-      onGetListRealEstates({ title: val, page: 1 }, TYPE.FILTER);
-    }
   };
 
   let paramsData = {
@@ -142,6 +115,50 @@ const ListPostsScreen = (props: any) => {
     page: page,
     setTotal: setTotalPost,
     setTotalPage: setTotalPage,
+  };
+
+  const onFilter = (data: any) => {
+    const dataFilter = convertDataFilter({
+      ...data,
+      page: 1,
+    });
+    dataFilterRef.current = {
+      title: getValues()?.title,
+      ...dataFilter,
+    };
+    onGetListRealEstates(
+      {
+        ...dataFilterRef.current,
+        is_hot: is_hot || '',
+      },
+      TYPE.FILTER
+    );
+  };
+
+  const onFilterTitle = (val: string) => {
+    let params;
+
+    if (Object.keys(dataFilterRef.current).length > 0) {
+      params = {
+        ...dataFilterRef.current,
+        title: val,
+        page: 1,
+        setTotal: setTotalPost,
+        setTotalPage: setTotalPage,
+      };
+    } else {
+      params = {
+        ...paramsData,
+        title: val,
+        page: 1,
+        setTotal: setTotalPost,
+        setTotalPage: setTotalPage,
+      };
+    }
+
+    dataFilterRef.current = params;
+
+    onGetListRealEstates(params, TYPE.FILTER);
   };
 
   const onGetListRealEstates = (params?: any, type?: string) => {
@@ -246,6 +263,7 @@ const ListPostsScreen = (props: any) => {
           control={control}
           handleSubmit={onFilterTitle}
           onOpenMap={onOpenMap}
+          setValue={setValue}
         />
         <FlatList
           style={styles.list}
@@ -270,6 +288,7 @@ const ListPostsScreen = (props: any) => {
               onFilter={onFilter}
               onShowTypeHousing={onShowTypeHousing}
               dataLength={totalPost}
+              setTitleValue={setValue}
               {...props}
             />
           }

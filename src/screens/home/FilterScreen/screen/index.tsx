@@ -215,8 +215,9 @@ const FilterScreen = (props: any) => {
 
   const clearForm = () => {
     Object.entries(initValues).forEach(([key, value]: any) => {
-      value && setValue(key, value);
+      setValue(key, value);
     });
+    params?.setTitleValue('title', null);
     setValue('address', '');
     setValue('province_id', null);
     setValue('district_id', null);
