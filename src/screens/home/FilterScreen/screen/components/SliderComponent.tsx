@@ -119,9 +119,8 @@ export const SliderComponent = ({
 
     const arrVal = String(option).split('-');
     if (newArrButton.length === 0) {
-      onChange([0, 1])
-    }
-    else if (arrVal.length === 1) {
+      onChange([0, 0.01]);
+    } else if (arrVal.length === 1) {
       onChange([Number(arrVal[0]), Number(arrVal[0])]);
     } else {
       onChange([Number(arrVal[0]), Number(arrVal[1])]);
@@ -130,7 +129,7 @@ export const SliderComponent = ({
 
   useEffect(() => {
     if (value) {
-      setButtonSelected([value[0].toString() + '-' + value[1].toString()])
+      setButtonSelected([value[0].toString() + '-' + value[1].toString()]);
     }
   }, [value]);
 
