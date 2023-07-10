@@ -129,6 +129,7 @@ const CreatePostScreen = (props: any) => {
   const scrollViewRef = useRef();
   const confirmPostRef = useRef();
   const currentTab = useRef<any>();
+  const currentPost = useRef<any>();
   const [time, setTime] = React.useState(TIME);
 
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
@@ -237,6 +238,7 @@ const CreatePostScreen = (props: any) => {
             break;
           case 'status':
             if (value) {
+              currentPost.current = value;
               setValue('status', value);
               setSaveType(value);
             }
@@ -413,11 +415,14 @@ const CreatePostScreen = (props: any) => {
         status:
           router.params?.type === 'DRAFT'
             ? YOUR_WANT.SAVE_DRAFTS
-            : YOUR_WANT.SAVE_PRIVATE,
+            : currentPost.current,
         sort_by: 'createdAt',
       })
     );
-    if (saveType === YOUR_WANT.POST_PUBLIC) {
+    if (
+      saveType === YOUR_WANT.POST_PUBLIC &&
+      currentPost.current !== YOUR_WANT.POST_PUBLIC
+    ) {
       navigate(SCREENS.CONFIRM_POST_SCREEN, {
         realEstateId: router.params.id,
       });
@@ -632,6 +637,9 @@ const CreatePostScreen = (props: any) => {
               buttonStyle={styles.btnYouWant}
               icon="save"
               outline
+              disabled={
+                currentPost.current === YOUR_WANT.POST_PUBLIC ? true : false
+              }
               onPress={() => handleSelect(item.key)}
             >
               <Icon
