@@ -42,7 +42,12 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatchThunk(dispatch, getListRealEstatesHots());
-    dispatchThunk(dispatch, getListRealEstatesForYou());
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesForYou({
+        demand_id: IDemandId.BUY,
+      })
+    );
     dispatchThunk(dispatch, getListRealEstateByLocation());
     dispatchThunk(dispatch, getListProjects());
     dispatchThunk(dispatch, getListNews());
