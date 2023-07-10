@@ -1,4 +1,8 @@
-import React, { useEffect } from 'react';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import Clipboard from '@react-native-clipboard/clipboard';
+import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
+import React, { useEffect, useRef } from 'react';
 import {
   Image,
   ScrollView,
@@ -6,19 +10,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import RNFS from 'react-native-fs';
+import QRCode from 'react-native-qrcode-svg';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import WebView from 'react-native-webview';
+import { useDispatch, useSelector } from 'react-redux';
 import { Techcombank, Vietcombank } from '../../../../assets';
 import { Button, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
-import { IconCopy, IconInformation } from '../icon';
-import WebView from 'react-native-webview';
-import { generateVNPayUrl } from './model';
-import Clipboard from '@react-native-clipboard/clipboard';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { createTransaction, selectUser } from '../../../../features';
+import {
+  createTransaction,
+  selectPayment,
+  selectUser,
+} from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
-import moment from 'moment';
+import { requestReadAndWritePermission } from '../../../../utils/permission';
+import { IconCopy, IconInformation } from '../icon';
+import { generateVNPayUrl } from './model';
 
 interface Props {
   isBank: boolean;
@@ -30,9 +38,12 @@ const Payment = (props: Props) => {
   const { isBank, onNext, amount } = props;
   const { goBack } = useNavigation();
   const { data: user } = useSelector(selectUser);
+  const { loadingCreateTransaction } = useSelector(selectPayment);
   const dispatch = useDispatch();
   const content = `"Nap tien ${user?.phone_number}"`;
   const contentBody = `Nap tien ${user?.phone_number}`;
+
+  const qrRef = useRef<QRCode | null>(null);
 
   useEffect(() => {
     generateVNPayUrl();
@@ -63,6 +74,26 @@ const Payment = (props: Props) => {
 
   const createSuccess = () => {
     onNext();
+  };
+
+  const saveQR = async () => {
+    const qrName = '/QR' + moment().valueOf() + '.png';
+    console.log(qrName);
+    if (await requestReadAndWritePermission()) {
+      qrRef.current?.toDataURL((data: any) => {
+        RNFS.writeFile(RNFS.CachesDirectoryPath + qrName, data, 'base64')
+          .then(success => {
+            return CameraRoll.save(RNFS.CachesDirectoryPath + qrName, {
+              type: 'photo',
+            });
+          })
+          .then(() => {
+            Toast.show({
+              text1: 'Lưu ảnh QR thành công',
+            });
+          });
+      });
+    }
   };
 
   return (
@@ -104,6 +135,7 @@ const Payment = (props: Props) => {
                 </View>
               </View>
               <Button
+                onPress={saveQR}
                 buttonStyle={styles.btnSaveQR}
                 title="Lưu mã QR thanh toán"
                 titleStyle={styles.btnSaveQRTitle}
@@ -137,6 +169,7 @@ const Payment = (props: Props) => {
                 </View>
               </View>
               <Button
+                onPress={saveQR}
                 buttonStyle={styles.btnSaveQR}
                 title="Lưu mã QR thanh toán"
                 titleStyle={styles.btnSaveQRTitle}
@@ -175,6 +208,7 @@ const Payment = (props: Props) => {
           </ScrollView>
           <View style={styles.bottom}>
             <Button
+              loading={loadingCreateTransaction}
               title="Xác nhận chuyển khoản"
               onPress={confirm}
             />
@@ -193,6 +227,13 @@ const Payment = (props: Props) => {
           }}
         />
       )}
+      <View style={styles.qr}>
+        <QRCode
+          getRef={c => {
+            qrRef.current = c;
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -277,4 +318,5 @@ const styles = StyleSheet.create({
   btnCancelTitle: { color: COLORS.BLUE_1 },
   row: { flexDirection: 'row' },
   scrollView: { paddingBottom: 120 },
+  qr: { height: 0, width: 0 },
 });

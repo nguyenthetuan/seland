@@ -36,6 +36,7 @@ const slice = createSlice({
     error: '',
     data: {},
     transaction: {},
+    loadingCreateTransaction: false,
   },
   extraReducers: builder => {
     builder.addCase(createPayment.pending, state => {
@@ -50,14 +51,14 @@ const slice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(createTransaction.pending, state => {
-      state.loading = true;
+      state.loadingCreateTransaction = true;
     });
     builder.addCase(createTransaction.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingCreateTransaction = false;
       state.transaction = action.payload;
     });
     builder.addCase(createTransaction.rejected, (state, action) => {
-      state.loading = false;
+      state.loadingCreateTransaction = false;
       state.error = action.payload;
     });
   },

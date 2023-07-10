@@ -28,6 +28,7 @@ target 'SeLand' do
   flags = get_default_flags()
 
   rn_maps_path = '../node_modules/react-native-maps'
+  permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'Firebase', :modular_headers => true
   pod 'FirebaseCoreInternal', :modular_headers => true
@@ -35,6 +36,7 @@ target 'SeLand' do
   pod 'FirebaseCore', :modular_headers => true
   pod 'react-native-blob-util',
     :path => '../node_modules/react-native-blob-util'
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
     
   use_react_native!(
     :path => config[:reactNativePath],

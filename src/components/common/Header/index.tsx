@@ -26,14 +26,16 @@ const Header = ({
   return (
     <SafeAreaView style={styles.header}>
       <View style={styles.headerLeft}>
-        {hasGoBack && <Icon
-          name={icon}
-          onPress={onPress || goBack}
-          size={16}
-        />}
+        {hasGoBack && (
+          <Icon
+            name={icon}
+            onPress={onPress || goBack}
+            size={16}
+          />
+        )}
         <Text style={styles.title}>{title}</Text>
       </View>
-      {right}
+      <View style={styles.right}>{right}</View>
     </SafeAreaView>
   );
 };

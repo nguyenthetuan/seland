@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import RNFetchBlob from 'react-native-blob-util';
-import { Header } from '../../../components';
+import { Header, Text } from '../../../components';
 import { COLORS } from '../../../constants';
 import PagerView, {
   PagerViewOnPageSelectedEvent,
@@ -24,16 +24,6 @@ const BankAccount = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [isBank, setIsBank] = useState(true);
   const [amount, setAmount] = useState(0);
-
-  const callback = async (data: any) => {
-    const base64Data = data && data.replace('data:image/svg+xml;base64,', ''); // Remove data URL prefix
-
-    const filePath = RNFetchBlob.fs.dirs.DocumentDir + '/qrcode.png';
-
-    await RNFetchBlob.fs.writeFile(filePath, base64Data, 'base64'); // Save the PNG to the device's storage
-
-    console.log('QR code downloaded:=======', filePath);
-  };
 
   const handleNext = (isBank?: boolean) => {
     pagerRef.current?.setPage(pageIndex + 1);
@@ -58,9 +48,18 @@ const BankAccount = () => {
       <Header
         hasGoBack
         title={generateHeader()}
+        right={<Text>{pageIndex + 1 + '/3'}</Text>}
       />
       <View style={styles.view}>
-        <View style={styles.pagerView}></View>
+        <View style={styles.pagerView}>
+          <View style={styles.defaultIndicator}></View>
+          <View
+            style={[styles.indicator, pageIndex >= 1 && styles.indicatorBlue]}
+          ></View>
+          <View
+            style={[styles.indicator, pageIndex >= 2 && styles.indicatorBlue]}
+          ></View>
+        </View>
         <PagerView
           scrollEnabled={false}
           onPageSelected={onPageSelected}
@@ -91,8 +90,11 @@ const styles = StyleSheet.create({
   view: { paddingHorizontal: 16, flex: 1 },
   pagerView: {
     height: 4,
-    backgroundColor: COLORS.BLUE_2,
     marginBottom: 24,
+    flexDirection: 'row',
   },
   pager: { flex: 1 },
+  indicator: { flex: 1, backgroundColor: COLORS.NEUTRAL4, marginLeft: 4 },
+  indicatorBlue: { backgroundColor: COLORS.BLUE_2 },
+  defaultIndicator: { flex: 1, backgroundColor: COLORS.BLUE_2 },
 });
