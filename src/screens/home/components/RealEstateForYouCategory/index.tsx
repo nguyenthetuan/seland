@@ -1,16 +1,17 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, ItemRealEstateCarousel } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
-import { selectHome } from '../../../../features';
+import { getListRealEstatesForYou, selectHome } from '../../../../features';
 import { IDemandId } from '../../../../utils/interface/home';
 import styles from './styles';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { KIND_REALTY } from '../../../../utils/maps';
+import { dispatchThunk } from '../../../../utils';
 interface Iprops {
   isBuy: boolean;
   setIsBuy: any;
@@ -18,26 +19,19 @@ interface Iprops {
 
 const RealEstateForYouCategory = ({ isBuy, setIsBuy }: Iprops) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { navigate }: NavigationProp<any, any> = useNavigation();
   const { listRealEstatesForYou } = useSelector(selectHome);
 
   const handleSelectOptions = (value: boolean) => {
     setIsBuy(value);
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesForYou({
+        demand_id: value ? IDemandId.BUY : IDemandId.LEASE,
+      })
+    );
   };
-  const listHottestRealEstate = useMemo(() => {
-    let results = [];
-
-    if (isBuy) {
-      results = listRealEstatesForYou?.data
-        ?.filter((item: any) => item.demand_id === IDemandId.BUY)
-        ?.slice(0, 3);
-    } else {
-      results = listRealEstatesForYou?.data
-        ?.filter((item: any) => item.demand_id === IDemandId.LEASE)
-        ?.slice(0, 3);
-    }
-    return results;
-  }, [isBuy, listRealEstatesForYou?.data]);
 
   const onOpenMap = (value: { id?: number | string; lat_long?: string }) => {
     navigate(SCREENS.MAPS, {
@@ -80,7 +74,7 @@ const RealEstateForYouCategory = ({ isBuy, setIsBuy }: Iprops) => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map((item: any, index: number) => (
+        {listRealEstatesForYou?.data.map((item: any, index: number) => (
           <ItemRealEstateCarousel
             key={`RealEstateForYouCategory${item?.id}-${index}`}
             item={item}

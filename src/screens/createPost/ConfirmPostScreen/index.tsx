@@ -26,6 +26,7 @@ import ItemConfirm from '../components/ItemConfirm';
 import PopupConfirm from '../../../components/common/PopupConfirm';
 import styles from './styles';
 import dayjs from 'dayjs';
+import { formatPrice } from '../../../utils/format';
 
 const ConfirmPostScreen = () => {
   const route = useRoute();
@@ -36,7 +37,17 @@ const ConfirmPostScreen = () => {
   const [rankPost, setRankPost] = useState<number>(1);
   const [refreshForm, setRefresh] = useState<boolean>(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-
+  const [infoPaymentSuccess, setInfoPaymentSuccess] = useState<{
+    balance?: string;
+    balancePromotion?: number;
+    code?: string;
+    paymentCode?: string;
+  }>({
+    balance: '',
+    balancePromotion: 0,
+    code: '',
+    paymentCode: '',
+  });
   const confirmPaymentSuccessRef = useRef();
   const confirmCancelPaymentRef = useRef();
 
@@ -63,8 +74,14 @@ const ConfirmPostScreen = () => {
     refresh();
   }, []);
 
-  const createSuccess = () => {
-    confirmPaymentSuccessRef.current.openPopup();
+  const createSuccess = (value: any) => {
+    console.log('🚀 ~ file: index.tsx:67 ~ createSuccess ~ value:', value);
+    if (value) {
+      setInfoPaymentSuccess({
+        ...value,
+      });
+      confirmPaymentSuccessRef.current.openPopup();
+    }
   };
 
   const handleContinue = async (value: any) => {
@@ -330,17 +347,38 @@ const ConfirmPostScreen = () => {
               <View style={styles.boxCodePost}>
                 <Text style={{ fontWeight: '500' }}>Mã tin đăng</Text>
                 <View style={styles.boxCode}>
-                  <Text style={styles.code}>346582154</Text>
+                  <Text style={styles.code}>{infoPaymentSuccess.code}</Text>
                 </View>
               </View>
-              <ItemConfirm
-                label="Thanh toán"
-                value="Vip Bạc"
-              />
-              <ItemConfirm
-                label="Đơn giá/ ngày"
-                value="50,000 VNĐ"
-              />
+              <View style={styles.boxItem}>
+                <View style={styles.item}>
+                  <View style={styles.boxLabelItem}>
+                    <Text>{t('common.balance')} </Text>
+                    <Icon
+                      color={COLORS.ORANGE_2}
+                      name="monetization-on"
+                      size={20}
+                    />
+                  </View>
+                  <Text style={styles.valueSurplus}>{`${formatPrice(
+                    infoPaymentSuccess?.balance
+                  )} đ`}</Text>
+                </View>
+                <View style={styles.line} />
+                <View style={styles.item}>
+                  <View style={styles.boxLabelItem}>
+                    <Text>{t('common.promotion')} </Text>
+                    <Icon
+                      color={COLORS.GREEN_1}
+                      name="redeem"
+                      size={20}
+                    />
+                  </View>
+                  <Text style={styles.valuePromotion}>{`${formatPrice(
+                    infoPaymentSuccess?.balancePromotion
+                  )} đ`}</Text>
+                </View>
+              </View>
             </View>
           }
         />

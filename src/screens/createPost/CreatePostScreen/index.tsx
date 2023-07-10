@@ -129,6 +129,7 @@ const CreatePostScreen = (props: any) => {
   const scrollViewRef = useRef();
   const confirmPostRef = useRef();
   const currentTab = useRef<any>();
+  const currentPost = useRef<any>();
   const [time, setTime] = React.useState(TIME);
 
   const [tab, setTab] = useState(TAB.BASIC_INFORMATION);
@@ -150,7 +151,10 @@ const CreatePostScreen = (props: any) => {
         key === 'district_id' ||
         key === 'ward_id' ||
         key === 'area' ||
-        key === 'price'
+        key === 'price' ||
+        key === 'floor' ||
+        key === 'bedroom' ||
+        key === 'bathroom'
       ) {
         value && setValue(key, `${value}`);
       } else {
@@ -234,9 +238,42 @@ const CreatePostScreen = (props: any) => {
             break;
           case 'status':
             if (value) {
+              currentPost.current = value;
               setValue('status', value);
               setSaveType(value);
             }
+            break;
+          case 'furniture':
+            const furniture = Object.keys(response?.furniture).map(key => {
+              return key;
+            });
+            setValue('furniture_id', furniture.toString());
+            break;
+          case 'nearby_amenities':
+            const nearby_amenities = Object.keys(
+              response?.nearby_amenities
+            ).map(key => {
+              return key;
+            });
+            setValue('utilities_id', nearby_amenities.toString());
+            break;
+          case 'real_estate_entrance':
+            const real_estate_entrance = Object.keys(
+              response?.real_estate_entrance
+            ).map(key => {
+              return key;
+            });
+            setValue('road_type_id', real_estate_entrance.toString());
+            break;
+          case 'securities':
+            const securities = Object.keys(response?.securities).map(key => {
+              return key;
+            });
+            setValue('security_id', securities.toString());
+            break;
+          case 'direction':
+            // setValue('main_door_direction_id', value);
+            break;
           default:
             value && setValue(key, value);
             break;
@@ -378,11 +415,14 @@ const CreatePostScreen = (props: any) => {
         status:
           router.params?.type === 'DRAFT'
             ? YOUR_WANT.SAVE_DRAFTS
-            : YOUR_WANT.SAVE_PRIVATE,
+            : currentPost.current,
         sort_by: 'createdAt',
       })
     );
-    if (saveType === YOUR_WANT.POST_PUBLIC) {
+    if (
+      saveType === YOUR_WANT.POST_PUBLIC &&
+      currentPost.current !== YOUR_WANT.POST_PUBLIC
+    ) {
       navigate(SCREENS.CONFIRM_POST_SCREEN, {
         realEstateId: router.params.id,
       });
@@ -597,6 +637,9 @@ const CreatePostScreen = (props: any) => {
               buttonStyle={styles.btnYouWant}
               icon="save"
               outline
+              disabled={
+                currentPost.current === YOUR_WANT.POST_PUBLIC ? true : false
+              }
               onPress={() => handleSelect(item.key)}
             >
               <Icon

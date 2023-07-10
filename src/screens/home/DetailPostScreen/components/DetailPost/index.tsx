@@ -119,8 +119,14 @@ const DetailPost: FC<Iprops> = props => {
         [],
     },
     {
-      title: t('detailPost.neighbor'),
-      list: ['Thân thiện'],
+      title: 'Nội thất tiện nghi',
+      list:
+        (infoDetail?.furniture && Object.values(infoDetail?.furniture)) || [],
+    },
+    {
+      title: 'An ninh',
+      list:
+        (infoDetail?.securities && Object.values(infoDetail?.securities)) || [],
     },
     {
       title: t('detailPost.roadToRealEstate'),
