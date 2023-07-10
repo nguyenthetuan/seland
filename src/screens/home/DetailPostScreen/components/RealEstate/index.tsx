@@ -69,37 +69,17 @@ const RealEstate: FC<Iprops> = props => {
         isSeeAll={listPosts?.length > 0 ? true : false}
       >
         {listPosts?.length > 0 && (
-          <>
-            <View style={styles.boxSelect}>
-              <Button
-                buttonStyle={styles.btnSelect}
-                titleStyle={styles.txtSelect}
-                onPress={() => handleSelectOptions(true)}
-                title={t('button.buySell')}
-                outline={!isBuy}
-                radius={5}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {listPosts.map((item: any, index: number) => (
+              <ItemRealEstateCarousel
+                key={`ItemHottestRealEstate${index}`}
+                item={item}
               />
-              <Button
-                buttonStyle={styles.btnSelect}
-                titleStyle={styles.txtSelect}
-                onPress={() => handleSelectOptions(false)}
-                title={t('button.lease')}
-                outline={isBuy}
-                radius={5}
-              />
-            </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            >
-              {listPosts.map((item: any, index: number) => (
-                <ItemRealEstateCarousel
-                  key={`ItemHottestRealEstate${index}`}
-                  item={item}
-                />
-              ))}
-            </ScrollView>
-          </>
+            ))}
+          </ScrollView>
         )}
         {listPosts?.length === 0 && (
           <Text style={styles.textNoValue}>{t('common.noValue')}</Text>
@@ -112,37 +92,17 @@ const RealEstate: FC<Iprops> = props => {
         isSeeAll={listPosts?.length > 0 ? true : false}
       >
         {listPosts?.length > 0 && (
-          <>
-            <View style={styles.boxSelect}>
-              <Button
-                buttonStyle={styles.btnSelect}
-                titleStyle={styles.txtSelect}
-                onPress={() => handleSelectOptions(true)}
-                title={t('button.buySell')}
-                outline={!isBuy}
-                radius={5}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {listPosts.map((item: any, index: number) => (
+              <ItemRealEstateCarousel
+                key={`ItemHottestRealEstate${index}`}
+                item={item}
               />
-              <Button
-                buttonStyle={styles.btnSelect}
-                titleStyle={styles.txtSelect}
-                onPress={() => handleSelectOptions(false)}
-                title={t('button.lease')}
-                outline={isBuy}
-                radius={5}
-              />
-            </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            >
-              {listPosts.map((item: any, index: number) => (
-                <ItemRealEstateCarousel
-                  key={`ItemHottestRealEstate${index}`}
-                  item={item}
-                />
-              ))}
-            </ScrollView>
-          </>
+            ))}
+          </ScrollView>
         )}
         {listPosts?.length === 0 && (
           <Text style={styles.textNoValue}>{t('common.noValue')}</Text>
