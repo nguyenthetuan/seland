@@ -51,12 +51,13 @@ export const getListNews = createAsyncThunk(
 
 export const getListRealEstatesHots = createAsyncThunk(
   'getListRealEstatesHots',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+  async (params, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const params = {
+      const value = {
+        ...params,
         is_hot: 1,
       };
-      const { data } = await requestGetListRealEstatesHots(params);
+      const { data } = await requestGetListRealEstatesHots(value);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống.');

@@ -41,7 +41,12 @@ const HomeScreen = () => {
     useSelector(selectHome);
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListRealEstatesHots());
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesHots({
+        demand_id: IDemandId.BUY,
+      })
+    );
     dispatchThunk(
       dispatch,
       getListRealEstatesForYou({

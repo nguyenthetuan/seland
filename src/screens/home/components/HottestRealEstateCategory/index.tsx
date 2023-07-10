@@ -1,40 +1,33 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, ItemRealEstateCarousel } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
-import { selectHome } from '../../../../features';
+import { getListRealEstatesHots, selectHome } from '../../../../features';
 import { IDemandId } from '../../../../utils/interface/home';
 import styles from './styles';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { KIND_REALTY } from '../../../../utils/maps';
+import { dispatchThunk } from '../../../../utils';
 
 const HottestRealEstateCategory = ({ isBuy, setIsBuy }: any) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { navigate }: NavigationProp<any, any> = useNavigation();
   const { listRealEstatesHots } = useSelector(selectHome);
 
   const handleSelectOptions = (value: boolean) => {
     setIsBuy(value);
+    dispatchThunk(
+      dispatch,
+      getListRealEstatesHots({
+        demand_id: value ? IDemandId.BUY : IDemandId.LEASE,
+      })
+    );
   };
-
-  const listHottestRealEstate = useMemo(() => {
-    let results = [];
-
-    if (isBuy) {
-      results = listRealEstatesHots?.data
-        ?.filter((item: any) => item.demand_id === IDemandId.BUY)
-        ?.slice(0, 3);
-    } else {
-      results = listRealEstatesHots?.data
-        ?.filter((item: any) => item.demand_id === IDemandId.LEASE)
-        ?.slice(0, 3);
-    }
-    return results;
-  }, [isBuy, listRealEstatesHots?.data]);
 
   const onOpenMap = (value: { id?: number | string; lat_long?: string }) => {
     navigate(SCREENS.MAPS, {
@@ -77,7 +70,7 @@ const HottestRealEstateCategory = ({ isBuy, setIsBuy }: any) => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {listHottestRealEstate.map((item: any, index: number) => (
+        {listRealEstatesHots?.data.map((item: any, index: number) => (
           <ItemRealEstateCarousel
             key={`ItemHottestRealEstate${item?.id}-${index}`}
             item={item}
