@@ -26,7 +26,6 @@ interface PopupPaymentErrorProps {
 
 const PopupPaymentError: React.FC<PopupPaymentErrorProps> = forwardRef(
   ({ data, onSavePrivate }, ref) => {
-    console.log('data', data);
     const [visible, setVisible] = useState(false);
 
     const openPopup = () => {

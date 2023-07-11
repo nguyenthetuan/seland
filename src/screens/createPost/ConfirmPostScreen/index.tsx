@@ -97,7 +97,6 @@ const ConfirmPostScreen = () => {
   }, []);
 
   const createSuccess = (value: any) => {
-    console.log('🚀 ~ file: index.tsx:67 ~ createSuccess ~ value:', value);
     if (value) {
       setInfoPaymentSuccess({
         ...value,

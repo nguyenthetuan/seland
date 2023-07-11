@@ -217,7 +217,6 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     latitude: number | string;
     longitude: number | string;
   }) => {
-    console.log('value?.latitude', typeof value?.latitude);
     setLatLong({
       lat: value?.latitude,
       long: value?.longitude,
