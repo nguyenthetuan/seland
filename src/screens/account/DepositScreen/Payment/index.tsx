@@ -244,13 +244,14 @@ const Payment = (props: Props) => {
       ) : (
         <WebView
           onNavigationStateChange={e => {
-            //console.log(decodeURIComponent(e.url));
+            console.log(decodeURIComponent(e.url));
             if (e.url.includes('paymentStatus')) {
               const callback = getValueInUrl(
                 decodeURIComponent(e.url),
                 'callbackUrl'
               );
-              //console.log(getValueInUrl(callback, 'paymentStatus'));
+              console.log(getValueInUrl(callback, 'paymentStatus'));
+              //TODO: direct to last screen
             }
           }}
           source={{
