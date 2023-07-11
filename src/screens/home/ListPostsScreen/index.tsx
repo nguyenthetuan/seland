@@ -296,7 +296,6 @@ const ListPostsScreen = (props: any) => {
           onRefresh={onPullToRefresh}
           scrollEnabled={enableScroll}
           onEndReachedThreshold={0.5}
-          bounces={false}
           onScrollBeginDrag={() => {
             stopLoadMore = false;
           }}
