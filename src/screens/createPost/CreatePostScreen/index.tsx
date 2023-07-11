@@ -386,20 +386,23 @@ const CreatePostScreen = (props: any) => {
     }
     // append video to form
     if (params?.video?.length) {
-      params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
-        const file = {
-          uri: item.uri,
-          name: item.fileName,
-          type: item.type,
-        };
-        formData.append(`video`, file);
-      });
+      params?.video.forEach(
+        (item: { uri: any; fileName: any; type: any; update?: boolean }) => {
+          const file = {
+            uri: item.uri,
+            name: item.fileName,
+            type: item.type,
+          };
+          formData.append(`video`, item?.update ? item.uri : file);
+        }
+      );
     }
 
     if (params?.urlVideo) {
       formData.append(`video`, params?.urlVideo);
     }
 
+    console.log('🚀 ~ file: index.tsx:410 ~ getFormData ~ formData:', formData);
     return formData;
   };
 

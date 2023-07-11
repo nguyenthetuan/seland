@@ -256,13 +256,13 @@ const ConfirmPostScreen = () => {
     // append video to form
     if (route?.params?.data?.video?.length) {
       route?.params?.data?.video.forEach(
-        (item: { uri: any; fileName: any; type: any }) => {
+        (item: { uri: any; fileName: any; type: any; update?: boolean }) => {
           const file = {
             uri: item.uri,
             name: item.fileName,
             type: item.type,
           };
-          formData.append(`video`, file);
+          formData.append(`video`, item?.update ? item.uri : file);
         }
       );
     }
