@@ -24,6 +24,7 @@ const BankAccount = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [isBank, setIsBank] = useState(true);
   const [amount, setAmount] = useState(0);
+  const [vnPayResult, setVNPayResult] = useState(false);
 
   const handleNext = (isBank?: boolean) => {
     pagerRef.current?.setPage(pageIndex + 1);
@@ -44,6 +45,11 @@ const BankAccount = () => {
     }
     if (pageIndex === 2) return 'Kết quả giao dịch';
     return 'Nạp tiền';
+  };
+
+  const handleResult = (result: boolean) => {
+    setVNPayResult(result);
+    pagerRef.current?.setPage(pageIndex + 1);
   };
 
   return (
@@ -79,8 +85,13 @@ const BankAccount = () => {
             onNext={handleNext}
             isBank={isBank}
             currentIndex={pageIndex}
+            onVNPayResult={handleResult}
           />
-          <BankPaymentSuccess doMore={() => pagerRef.current?.setPage(0)} />
+          <BankPaymentSuccess
+            isBank={isBank}
+            doMore={() => pagerRef.current?.setPage(0)}
+            vnPayResult={vnPayResult}
+          />
         </PagerView>
       </View>
     </SafeAreaView>

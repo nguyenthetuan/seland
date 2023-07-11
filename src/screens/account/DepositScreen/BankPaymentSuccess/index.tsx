@@ -6,35 +6,45 @@ import { Button, Text } from '../../../../components';
 
 interface Props {
   doMore: () => void;
+  isBank: boolean;
+  vnPayResult?: boolean;
 }
 
 const BankPaymentSuccess = (props: Props) => {
-  const { doMore } = props;
+  const { doMore, isBank, vnPayResult } = props;
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.scrollviewContainer}>
-        <IconRetweet />
-        <Text style={styles.handling}>Đang xử lý giao dịch...</Text>
-        <Text style={styles.content}>
-          Cảm ơn bạn đã sử dụng dịch vụ. Hãy lưu ý rằng thời gian xử lý giao
-          dịch sẽ giao động từ 4 đến 6 tiếng
-        </Text>
-        <View style={styles.informationCard}>
-          <IconInformation />
-          <Text style={styles.informationText}>
-            Nếu cần hỗ trợ, vui lòng gọi số: 09xxxxx để được hỗ trợ.
-          </Text>
+      {isBank ? (
+        <View>
+          <View style={styles.scrollviewContainer}>
+            <IconRetweet />
+            <Text style={styles.handling}>Đang xử lý giao dịch...</Text>
+            <Text style={styles.content}>
+              Cảm ơn bạn đã sử dụng dịch vụ. Hãy lưu ý rằng thời gian xử lý giao
+              dịch sẽ giao động từ 4 đến 6 tiếng
+            </Text>
+            <View style={styles.informationCard}>
+              <IconInformation />
+              <Text style={styles.informationText}>
+                Nếu cần hỗ trợ, vui lòng gọi số: 09xxxxx để được hỗ trợ.
+              </Text>
+            </View>
+          </View>
+          <View style={styles.bottom}>
+            <Button title="Quản lý giao dịch" />
+            <Button
+              onPress={doMore}
+              titleStyle={styles.btnCancelTitle}
+              buttonStyle={styles.btnCancel}
+              title="Nạp thêm"
+            />
+          </View>
         </View>
-      </View>
-      <View style={styles.bottom}>
-        <Button title="Quản lý giao dịch" />
-        <Button
-          onPress={doMore}
-          titleStyle={styles.btnCancelTitle}
-          buttonStyle={styles.btnCancel}
-          title="Nạp thêm"
-        />
-      </View>
+      ) : (
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text>{vnPayResult ? 'Thành công' : 'Thất bại'}</Text>
+        </View>
+      )}
     </ScrollView>
   );
 };

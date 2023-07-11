@@ -34,10 +34,11 @@ interface Props {
   onNext: () => void;
   amount: number;
   currentIndex: number;
+  onVNPayResult: (result: boolean) => void;
 }
 
 const Payment = (props: Props) => {
-  const { isBank, onNext, amount, currentIndex } = props;
+  const { isBank, onNext, amount, currentIndex, onVNPayResult } = props;
   const { goBack } = useNavigation();
   const { data: user } = useSelector(selectUser);
   const { loadingCreateTransaction, vnPayUrl } = useSelector(selectPayment);
@@ -250,8 +251,9 @@ const Payment = (props: Props) => {
                 decodeURIComponent(e.url),
                 'callbackUrl'
               );
-              console.log(getValueInUrl(callback, 'paymentStatus'));
-              //TODO: direct to last screen
+              onVNPayResult(
+                getValueInUrl(callback, 'paymentStatus') === '1' ? true : false
+              );
             }
           }}
           source={{
