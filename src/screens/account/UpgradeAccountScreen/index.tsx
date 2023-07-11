@@ -60,7 +60,11 @@ const UpgradeAccountScreen = () => {
   };
 
   const navigateToBuyPackage = (item: Package) =>
-    navigate(SCREENS.BUY_PACKAGE, { packageId: item.id, price: item.price });
+    navigate(SCREENS.BUY_PACKAGE, {
+      packageId: item.id,
+      price: item.price,
+      name: item.value,
+    });
 
   return (
     <View style={{ backgroundColor: COLORS.WHITE, flex: 1 }}>

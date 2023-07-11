@@ -62,6 +62,7 @@ const COLORS = {
   NEUTRAL2: '#FAFAFA',
   NEUTRAL4: '#F0F0F0',
   TITLE: '#3B4144',
+  LOCAL_LIGHT: '#F6F6F6',
 };
 
 export default COLORS;
