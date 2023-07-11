@@ -123,7 +123,9 @@ const ListPostsScreen = (props: any) => {
       page: 1,
     });
     dataFilterRef.current = {
-      title: getValues()?.title,
+      title: getValues()?.title
+        ? getValues()?.title
+        : dataFilterRef.current?.title,
       ...dataFilter,
     };
     onGetListRealEstates(
