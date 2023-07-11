@@ -106,6 +106,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
   };
 
   const getLocationCurrent = async () => {
+    return;
     const permissionStatus = await check(locationPermission);
     switch (permissionStatus) {
       case RESULTS.DENIED:

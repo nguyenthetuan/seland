@@ -207,7 +207,7 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
           icon={<Compass />}
         />
       </View>
-      <Text style={styles.title(rankBackground())}>
+      <Text style={styles.title}>
         {`${item?.rank_id === 4 ? '★ ' : ''}${item?.title}`}
       </Text>
       {[2, 3, 4].includes(item?.rank_id) && (

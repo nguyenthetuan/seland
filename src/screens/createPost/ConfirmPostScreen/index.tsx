@@ -13,28 +13,49 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import Toast from 'react-native-simple-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DateTimePicker, Input, Text } from '../../../components';
-import { COLORS, SCREENS } from '../../../constants';
-import { createPayment, getListRank, selectPosts } from '../../../features';
+import { COLORS, SCREENS, YOUR_WANT } from '../../../constants';
+import {
+  createPayment,
+  editRealEstates,
+  getListRank,
+  getListRealEstatesUser,
+  selectPosts,
+} from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import ItemConfirm from '../components/ItemConfirm';
 import PopupConfirm from '../../../components/common/PopupConfirm';
 import styles from './styles';
 import dayjs from 'dayjs';
 import { formatPrice } from '../../../utils/format';
+import RenderHtml from 'react-native-render-html';
+import PopupPaymentError from '../components/PopupPaymentError';
 
 const ConfirmPostScreen = () => {
   const route = useRoute();
   const { goBack, navigate }: NavigationProp<any, any> = useNavigation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const confirmPostErrorRef = React.useRef();
   const { rank, createRealEstate, loading } = useSelector(selectPosts);
   const [rankPost, setRankPost] = useState<number>(1);
+  const [error, setError] = useState<{
+    balance: number;
+    balancePromotion: number;
+    message: string;
+    paymentCode: number;
+  }>({
+    balance: 0,
+    balancePromotion: 0,
+    message: '',
+    paymentCode: 0,
+  });
   const [refreshForm, setRefresh] = useState<boolean>(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [infoPaymentSuccess, setInfoPaymentSuccess] = useState<{
@@ -50,6 +71,7 @@ const ConfirmPostScreen = () => {
   });
   const confirmPaymentSuccessRef = useRef();
   const confirmCancelPaymentRef = useRef();
+  const { width } = useWindowDimensions();
 
   const {
     control,
@@ -61,7 +83,7 @@ const ConfirmPostScreen = () => {
     defaultValues: {
       real_estate_id: null,
       start_date: new Date(),
-      count_date: '',
+      count_date: '1',
       rank_type_id: null,
     },
   });
@@ -84,6 +106,11 @@ const ConfirmPostScreen = () => {
     }
   };
 
+  const createError = (error: any) => {
+    setError(error);
+    confirmPostErrorRef.current.openPopup();
+  };
+
   const handleContinue = async (value: any) => {
     if (!agreeTerms) {
       Toast.show('Vui lòng chọn đồng ý với điều khoản sử dụng');
@@ -94,7 +121,12 @@ const ConfirmPostScreen = () => {
       start_date: dayjs(value?.start_date).format('YYYY-MM-DD'),
       real_estate_id: route?.params?.realEstateId,
     };
-    dispatchThunk(dispatch, createPayment(paramsPayment), createSuccess);
+    dispatchThunk(
+      dispatch,
+      createPayment(paramsPayment),
+      createSuccess,
+      createError
+    );
   };
 
   const toggleCheck = () => setAgreeTerms(!agreeTerms);
@@ -169,6 +201,98 @@ const ConfirmPostScreen = () => {
     return undefined;
   };
 
+  const onSavePrivate = async () => {
+    // TODO: tạm thời dùng gọi như này, sau có api xử lý lại
+    const formData = new FormData();
+    Object.keys(route?.params?.data).forEach((key, value) => {
+      if (
+        key === 'isPhoto' ||
+        key === 'photo' ||
+        key === 'video' ||
+        key === 'urlVideo'
+      )
+        return;
+      const information = [
+        'legal_documents_id',
+        'house_status_id',
+        'usage_condition_id',
+        'location_type_id',
+      ];
+      const land_information = [
+        'utilities_id',
+        'furniture_id',
+        'security_id',
+        'road_type_id',
+      ];
+
+      if (route?.params?.data[key]) {
+        if (information.includes(key)) {
+          formData.append(`information[${key}]`, route?.params?.data[key]);
+        } else if (land_information.includes(key)) {
+          formData.append(`land_information[${key}]`, route?.params?.data[key]);
+        } else if (key === 'status') {
+          formData.append('status', YOUR_WANT.SAVE_PRIVATE);
+        } else {
+          formData.append(key, route?.params?.data[key]);
+        }
+      }
+    });
+
+    // append image to form
+    if (route?.params?.data?.photo?.length) {
+      route?.params?.data?.photo.forEach(
+        (
+          item: { uri: any; fileName: any; type: any; update?: boolean },
+          index: any
+        ) => {
+          const file = {
+            uri: item.uri,
+            name: item.fileName,
+            type: item.type,
+          };
+          formData.append(`images[${index}]`, item?.update ? item.uri : file);
+        }
+      );
+    }
+    // append video to form
+    if (route?.params?.data?.video?.length) {
+      route?.params?.data?.video.forEach(
+        (item: { uri: any; fileName: any; type: any }) => {
+          const file = {
+            uri: item.uri,
+            name: item.fileName,
+            type: item.type,
+          };
+          formData.append(`video`, file);
+        }
+      );
+    }
+
+    const editSuccess = (value: any) => {
+      dispatchThunk(
+        dispatch,
+        getListRealEstatesUser({
+          status: route?.params?.saveType,
+          sort_by: 'createdAt',
+        })
+      );
+      if (route?.params?.saveType === YOUR_WANT.SAVE_DRAFTS) {
+        navigate(SCREENS.DRAFT_POSTS);
+      } else {
+        navigate(SCREENS.USER_POSTS, {
+          type: 'createPost',
+          status: route?.params?.saveType,
+        });
+      }
+      Toast.show('Lưu tin riêng tư thành công.');
+    };
+    await dispatchThunk(
+      dispatch,
+      editRealEstates({ id: route?.params?.realEstateId, formData }),
+      editSuccess
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Loading
@@ -221,7 +345,12 @@ const ConfirmPostScreen = () => {
                       <View style={styles.line1} />
                       <View style={styles.line1} />
                       <View style={styles.line1} />
-                      <Text style={styles.txtTitle}>{item?.title}</Text>
+                      <RenderHtml
+                        contentWidth={width}
+                        source={{
+                          html: item?.title,
+                        }}
+                      />
                     </View>
                     <Text style={styles.txtTimeLimitPost}>{item?.sapo}</Text>
                     <View style={styles.boxShowDown}>
@@ -274,7 +403,9 @@ const ConfirmPostScreen = () => {
                 control={control}
                 label="Ngày bắt đầu"
                 labelStyle={styles.labelStyle}
+                disableMaxDate={true}
                 name="start_date"
+                minimumDate={new Date(dayjs().format('DD-MM-YYYY'))}
               />
             </View>
           </View>
@@ -333,6 +464,14 @@ const ConfirmPostScreen = () => {
           titleButtonRight="Xác nhận"
           label="Huỷ thanh toán!"
           description="Khi huỷ thanh toán, bài đăng tự động lưu vào tin nháp."
+        />
+        <PopupPaymentError
+          ref={confirmPostErrorRef}
+          data={{
+            ...error,
+            ...infoPayment,
+          }}
+          onSavePrivate={onSavePrivate}
         />
         <PopupConfirm
           ref={confirmPaymentSuccessRef}
