@@ -87,13 +87,8 @@ const HeaderFilterPosts: FC<Iprops> = props => {
   });
   useEffect(() => {
     if (dataFilters) {
-<<<<<<< Updated upstream
-      Object.entries(dataFilters).forEach(
-        ([key, value]) => setValue(key, value)
-=======
       Object.entries(dataFilters).forEach(([key, value]) =>
         setValue(key, value)
->>>>>>> Stashed changes
       );
     }
   }, [dataFilters]);
