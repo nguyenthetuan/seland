@@ -302,6 +302,7 @@
   },
   "select": {
     "sex": "Giới tính",
+    "default": "Mặc định",
     "male": "Nam",
     "female": "Nữ",
     "province": "Tỉnh/thành phố",
@@ -326,8 +327,8 @@
     "hasVideos": "Tin có video",
     "pricePerM2Asc": "Giá /m2 thấp",
     "pricePerM2Desc": "Giá /m2 cao",
-    "lastWeek": "1 tuần qua",
-    "last30Days": "30 ngày qua",
+    "lastWeek": "1 tuần trước",
+    "last30Days": "30 ngày trước",
     "dateRange": "Tuỳ chọn"
   },
   "upgradeAccount": {

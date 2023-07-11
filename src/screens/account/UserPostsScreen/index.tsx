@@ -3,7 +3,13 @@ import { Icon } from '@rneui/themed';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, FlatList, Pressable, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,6 +59,11 @@ const UserPostsScreen = () => {
   const onOpenFilter = () => {
     filterRef.current.onOpen();
   };
+  const emptyProject = {
+    label: 'default',
+    value: null,
+  };
+  const calendarOptions = [emptyProject, ...calendar];
 
   const {
     control,
@@ -109,6 +120,7 @@ const UserPostsScreen = () => {
 
   const handleSelectStatus = (value: number) => {
     const obj = getValues();
+    setValue && setValue('status', value);
     obj.status = value;
     obj.page = page;
     if (value === -1) {
@@ -129,7 +141,9 @@ const UserPostsScreen = () => {
 
   const onSubmit = async () => {
     const data = getValues();
-
+    if (data.status === -1) {
+      delete data?.status;
+    }
     const parmas = { ...data, title: data?.title?.trim(), setTotal };
     setLoadingList(true);
 
@@ -196,27 +210,22 @@ const UserPostsScreen = () => {
             <Select
               buttonStyle={styles.selectButton}
               control={control}
-              data={calendar.map(item => ({
+              data={calendarOptions.map(item => ({
                 ...item,
                 label: t(`select.${item?.label}`),
               }))}
               name="date"
+              defaultButtonText={'Mặc định'}
               onSelect={handleSelectDate}
               rowStyle={styles.selectButton}
             />
           </View>
-          <Button
-            buttonStyle={styles.filterButton}
-            icon={
-              <Icon
-                color={COLORS.WHITE}
-                name="filter-alt"
-                size={16}
-              />
-            }
-            title={t('button.filter')}
+          <TouchableOpacity
+            style={styles.btnFilter}
             onPress={onOpenFilter}
-          />
+          >
+            <Icon name="filter-list" />
+          </TouchableOpacity>
         </View>
         <View style={styles.sort}>
           <Select
@@ -303,7 +312,7 @@ const UserPostsScreen = () => {
             horizontal
             renderItem={({ item: { label, value } }) => (
               <Button
-                buttonStyle={[styles.marginHorizontal, styles.postButton]}
+                buttonStyle={styles.postButton}
                 onPress={() => handleSelectStatus(value)}
                 outline={value !== status}
                 title={t(`button.${label}`)}

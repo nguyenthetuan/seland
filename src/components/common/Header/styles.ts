@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginLeft: 4,
   },
+  right: {
+    marginRight: 10,
+  },
 });
 
 export default styles;

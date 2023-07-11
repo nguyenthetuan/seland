@@ -141,10 +141,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 3,
     paddingHorizontal: 8,
-    width: 80,
   },
   value: {
     marginLeft: 7,
+  },
+  boxEstateTypeName: {
+    flexWrap: 'wrap',
   },
 });
 

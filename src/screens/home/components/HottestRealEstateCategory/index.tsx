@@ -3,12 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { Button } from '../../../../components';
+import { Button, ItemRealEstateCarousel } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import REAL_ESTATE from '../../../../constants/realEstate';
 import { selectHome } from '../../../../features';
 import { IDemandId } from '../../../../utils/interface/home';
-import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { KIND_REALTY } from '../../../../utils/maps';
@@ -79,7 +78,7 @@ const HottestRealEstateCategory = ({ isBuy, setIsBuy }: any) => {
         showsHorizontalScrollIndicator={false}
       >
         {listHottestRealEstate.map((item: any, index: number) => (
-          <ItemHottestRealEstate
+          <ItemRealEstateCarousel
             key={`ItemHottestRealEstate${item?.id}-${index}`}
             item={item}
             type={REAL_ESTATE.REAL_ESTATE_HOSTEST}

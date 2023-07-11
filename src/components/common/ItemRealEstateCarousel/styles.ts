@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLORS } from '../../../../constants';
+import { COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   acreage: {
@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
   },
   boxContent: {
     paddingHorizontal: 10,
+  },
+  boxTotalIcon: {
+    marginRight: 2,
   },
   boxFooterProject: {
     flexDirection: 'row',
@@ -81,13 +84,15 @@ const styles = StyleSheet.create({
     padding: 3,
     paddingHorizontal: 10,
   },
+  boxEstateTypeName: {
+    flexWrap: 'wrap',
+  },
   boxTypeHouse: {
     backgroundColor: COLORS.PURPLE_2,
     borderRadius: 10,
     marginBottom: 3,
-    paddingTop: 5,
     padding: 3,
-    width: 70,
+    paddingHorizontal: 10,
   },
   call: {
     backgroundColor: COLORS.GREEN_5,
@@ -213,6 +218,24 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 15,
     marginLeft: 4,
+  },
+  boxTotalImage: {
+    alignItems: 'center',
+    backgroundColor: COLORS.WHITE_2,
+    borderRadius: 4,
+    bottom: 4,
+    flexDirection: 'row',
+    height: 18,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 4,
+    width: 30,
+  },
+  boxTotalText: {
+    color: COLORS.WHITE,
+    fontSize: 12,
+    fontWeight: '400',
+    top: -3,
   },
 });
 

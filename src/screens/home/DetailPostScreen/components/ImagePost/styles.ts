@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   image: {
-    width: deviceWidth - 130,
-    height: deviceHeight / 2,
+    width: deviceWidth,
+    height: deviceHeight,
   },
   headerAction: {
     position: 'absolute',
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   sliderWrapper: {
     width: deviceWidth,
     height: deviceHeight,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    // alignItems: 'center',
+    // justifyContent: 'flex-start',
     backgroundColor: COLORS.BLACK_1,
   },
   modalDetailImage: {
@@ -66,28 +66,39 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.BLACK_1,
   },
   slider: {
+    width: deviceWidth,
+    height: deviceHeight,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 15,
-    marginBottom: 10,
+    position: 'absolute',
   },
   text: {
     color: COLORS.WHITE,
+    position: 'absolute',
+    bottom: 30,
+    textAlign: 'center',
+    alignSelf: 'center',
   },
   pre: {
-    width: 50,
-    marginRight: 5,
-    height: 50,
+    backgroundColor: COLORS.BLACK_2,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   next: {
-    width: 50,
-    marginLeft: 5,
-    alignItems: 'flex-end',
-    height: 50,
+    backgroundColor: COLORS.BLACK_2,
+    borderRadius: 30,
+    justifyContent: 'center',
   },
   close: {
-    marginBottom: 10,
-    marginTop: 50,
+    marginTop: 40,
+    position: 'absolute',
+    top: 5,
+    left: 10,
+    backgroundColor: COLORS.BLACK_2,
+    borderRadius: 30,
   },
 });
 

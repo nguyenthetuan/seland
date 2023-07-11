@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { Button } from '../../../../components';
+import { Button, ItemRealEstateCarousel } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import { selectRealEstates } from '../../../../features';
-import ItemHottestRealEstate from '../ItemRealEstateCarosel';
 import styles from './styles';
 
 const SameAreaRealEstate = () => {
@@ -64,12 +63,14 @@ const SameAreaRealEstate = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {data.map((item: any, index: number) => (
-          <ItemHottestRealEstate
-            key={`ItemHottestRealEstate${index}`}
-            item={item}
-          />
-        ))}
+        {data.map((item: any, index: number) => {
+          return (
+            <ItemRealEstateCarousel
+              key={`ItemHottestRealEstate${index}`}
+              item={item}
+            />
+          );
+        })}
       </ScrollView>
     </View>
   );
