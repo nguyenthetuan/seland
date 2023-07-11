@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     flexDirection: 'row',
-    marginBottom: 26,
-    marginTop: 20,
+    marginVertical: 20,
   },
   boxInformation: {
     borderColor: COLORS.ORANGE_6,
@@ -149,6 +148,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 22,
     textAlign: 'center',
+  },
+  boxItem: {
+    borderColor: COLORS.GRAY_4,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginBottom: 26,
+  },
+  boxLabelItem: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  valueSurplus: {
+    color: COLORS.ORANGE_2,
+    fontWeight: 'bold',
+  },
+  line: {
+    backgroundColor: COLORS.GRAY_4,
+    height: 1,
+    marginHorizontal: 10,
+    width: '95%',
+  },
+  valuePromotion: {
+    color: COLORS.GREEN_1,
+    fontWeight: 'bold',
   },
 });
 
