@@ -32,7 +32,7 @@ const PackageInformation = ({
     <View style={styles.container}>
       <View style={styles.wrapImage}>{avatar}</View>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.price}>{price}</Text>
+      <Text style={styles.price}>{price} VND</Text>
 
       <View>
         {listFeature.map((item: string) => (

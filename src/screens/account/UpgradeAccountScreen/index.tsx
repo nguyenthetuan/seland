@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Button } from '../../../components';
-import { COLORS } from '../../../constants';
+import { COLORS, SCREENS } from '../../../constants';
 import PackageInformation from './components/PackageComponent';
 import styles from './styles';
 import { Free, ProfessionalPackage } from '../../../assets';
@@ -16,6 +16,7 @@ import {
   PackageFunction,
   generateListAccountPackage,
 } from './model';
+import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('screen');
 
@@ -23,6 +24,7 @@ const UpgradeAccountScreen = () => {
   const [activeSlide, setActiveSlide] = useState<number>(0);
   const dispatch = useDispatch();
   const [accountPackages, setAccountPackage] = useState<Array<Package>>([]);
+  const { navigate } = useNavigation();
 
   useEffect(() => {
     dispatchThunk(dispatch, getListAccountPackage(), (res: any) => {
@@ -57,6 +59,9 @@ const UpgradeAccountScreen = () => {
     );
   };
 
+  const navigateToBuyPackage = (item: Package) =>
+    navigate(SCREENS.BUY_PACKAGE, { packageId: item.id, price: item.price });
+
   return (
     <View style={{ backgroundColor: COLORS.WHITE, flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -74,6 +79,7 @@ const UpgradeAccountScreen = () => {
       <View style={styles.bottomButton}>
         {pagination()}
         <Button
+          onPress={() => navigateToBuyPackage(accountPackages[activeSlide])}
           title="Mua gói ngay"
           color={COLORS.ORANGE_6}
         />

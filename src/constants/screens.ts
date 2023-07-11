@@ -32,6 +32,7 @@ const SCREENS = {
   REQUEST_CONTACT_SCREEN: 'RequestContactScreen',
   USERAPPOINMENTSCREEN: 'UserAppoinmentScreen',
   CREATEAPPOIONMENTSCREEN: 'CreatetAppoinmentScreen',
+  BUY_PACKAGE: 'BuyPackage',
 };
 
 export default SCREENS;
