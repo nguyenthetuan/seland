@@ -78,7 +78,7 @@ const Input = ({
   const [passwordPolicyVisible, setPasswordPolicyVisible] =
     useState<boolean>(false);
 
-  const handleBlur = () => {
+  const handleBlur = (e: any) => {
     onBlur();
     if (showPasswordPolicy) setPasswordPolicyVisible(false);
     setIsFocused(false);
