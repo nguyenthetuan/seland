@@ -1,12 +1,12 @@
 import { Icon } from '@rneui/themed';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { Linking, Platform, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MapView from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import { TickButton } from '../../../../assets';
 import { Button, Input, Select, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
@@ -28,12 +28,19 @@ import {
   validateFormatYear,
   validateLatLog,
 } from '../../../../utils/validates';
+import Geolocation from 'react-native-geolocation-service';
+import { optionsGeolocation } from '../../../../utils/maps';
 
 interface BasicInformationProps {
   control?: Control;
   setValue?: Function;
   getValues?: Function;
 }
+
+const locationPermission =
+  Platform.OS === 'ios'
+    ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+    : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
 const BasicInformation: React.FC<BasicInformationProps> = ({
   control,
@@ -42,7 +49,12 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
 }) => {
   const { t } = useTranslation();
   const { realEstateType, projects, demands } = useSelector(selectPosts);
+  const refMaps = useRef();
   const [latLong, setLatLong] = useState({
+    lat: 21.0227523,
+    long: 105.9530334,
+  });
+  const [currentLatLng, setCurrentLatLng] = useState({
     lat: 21.0227523,
     long: 105.9530334,
   });
@@ -86,8 +98,47 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     ]);
   };
 
+  const getCurrentLoc = ({
+    coords: { latitude, longitude },
+  }: Geolocation.GeoPosition) => {
+    setLatLong({ lat: latitude, long: longitude });
+    setCurrentLatLng({ lat: latitude, long: longitude });
+  };
+
+  const getLocationCurrent = async () => {
+    return;
+    const permissionStatus = await check(locationPermission);
+    switch (permissionStatus) {
+      case RESULTS.DENIED:
+        request(locationPermission).then(status => {
+          if (status === 'granted') {
+            return true;
+          }
+          return false;
+        });
+        break;
+      case RESULTS.UNAVAILABLE:
+      case RESULTS.BLOCKED:
+        Linking.openSettings();
+        return false;
+      case RESULTS.LIMITED:
+      case RESULTS.GRANTED:
+        if (Platform.OS === 'ios') {
+          Geolocation.getCurrentPosition(info => getCurrentLoc(info));
+        } else {
+          Geolocation.getCurrentPosition(
+            info => getCurrentLoc(info),
+            e => console.log(e),
+            optionsGeolocation
+          );
+        }
+        return true;
+    }
+  };
+
   useEffect(() => {
     refresh();
+    getLocationCurrent();
   }, []);
 
   const handleSelectRealEstateType = (value: { value?: number }) => {
@@ -170,11 +221,37 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
       lat: value?.latitude,
       long: value?.longitude,
     });
-    setValue && setValue('lat_long', `${value?.latitude}, ${value?.longitude}`);
+    setValue && setValue('lat_long', `${value?.latitude},${value?.longitude}`);
   };
 
   const handleReset = () => {
-    setValue && setValue('lat_long', `${21.0227523}, ${105.9530334}`);
+    refMaps.current?.setNativeProps({
+      region: {
+        latitude: currentLatLng.lat,
+        longitude: currentLatLng.long,
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.21,
+      },
+    });
+    setValue &&
+      setValue('lat_long', `${currentLatLng.lat},${currentLatLng.long}`);
+  };
+
+  const onEndEditing = async (e: any) => {
+    const value = e.nativeEvent.text.split(',');
+
+    if (value.length === 2) {
+      refMaps.current?.setNativeProps({
+        region: {
+          latitude: Number(value[0]),
+          longitude: Number(value[1]),
+          latitudeDelta: 0.5,
+          longitudeDelta: 0.21,
+        },
+      });
+      setValue &&
+        setValue('lat_long', `${Number(value[0])}, ${Number(value[1])}`);
+    }
   };
 
   const validateFormatHandorverYear = (value: string) => {
@@ -360,14 +437,16 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
               Đặt lại
             </Text>
           }
+          onEndEditing={onEndEditing}
           rules={{ validate: validateLatLog }}
         />
         <View style={styles.containerMaps}>
           <MapView
+            ref={refMaps}
             style={styles.map}
             region={{
-              latitude: 21.0227523,
-              longitude: 105.9530334,
+              latitude: latLong.lat,
+              longitude: latLong.long,
               latitudeDelta: 0.5,
               longitudeDelta: 0.21,
             }}

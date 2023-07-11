@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View, ViewStyle } from 'react-native';
-import DatePicker from 'react-native-date-picker';
+import DatePicker, { DatePickerProps } from 'react-native-date-picker';
 
 import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-interface DateTimePickerProps {
+interface DateTimePickerProps extends DatePickerProps {
   control: any;
   label: string;
   labelStyle: {} | [];
@@ -18,6 +18,7 @@ interface DateTimePickerProps {
   styleDatePicker?: ViewStyle;
   mode?: string;
   disableMaxDate?: boolean;
+  minimumDate?: any;
 }
 
 const DateTimePicker = ({
@@ -28,6 +29,7 @@ const DateTimePicker = ({
   styleDatePicker,
   mode,
   disableMaxDate,
+  minimumDate,
 }: DateTimePickerProps) => {
   const {
     field: { onChange, value },
@@ -70,7 +72,7 @@ const DateTimePicker = ({
         date={value ? new Date(value) : new Date()}
         locale="vi"
         maximumDate={!disableMaxDate && new Date()}
-        minimumDate={new Date('1900-01-01')}
+        minimumDate={minimumDate || new Date('1900-01-01')}
         modal
         mode={mode || 'date'}
         onCancel={handleCancel}

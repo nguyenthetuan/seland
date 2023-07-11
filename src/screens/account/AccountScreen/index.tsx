@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Avatar, Icon } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,17 +6,17 @@ import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DashedButton, Text } from '../../../components';
-import OtpModal from '../../../components/common/ModalPhoneVerify';
 import { COLORS, SCREENS } from '../../../constants';
 import { logout, selectUser } from '../../../features';
 import { dispatchThunk } from '../../../utils';
+import { formatPrice } from '../../../utils/format';
 import { AccountMenu } from '../components';
 import styles from './styles';
 
 const AccountScreen = () => {
   const dispatch = useDispatch();
   const { data: user } = useSelector(selectUser);
-  const { navigate } = useNavigation();
+  const { navigate }: NavigationProp<any, any> = useNavigation();
   const { t } = useTranslation();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -27,7 +27,8 @@ const AccountScreen = () => {
 
   const navigateToUserPosts = () => navigate(SCREENS.USER_POSTS);
   const navigateToDraftUserPosts = () => navigate(SCREENS.DRAFT_POSTS);
-  const navigateToAgencyInformation = () => navigate(SCREENS.AGENCY_INFORMATION_TAB);
+  const navigateToAgencyInformation = () =>
+    navigate(SCREENS.AGENCY_INFORMATION_TAB);
   const navigateToUpgradeAccount = () => navigate(SCREENS.UPGRADE_ACCOUNT_TAB);
 
   const navigateToPersonalInformation = () =>
@@ -37,36 +38,35 @@ const AccountScreen = () => {
 
   const navigateToChangePassword = () => navigate(SCREENS.CHANGE_PASSWORD);
 
-  const navigateToRequestContact = () => navigate(SCREENS.REQUEST_CONTACT_SCREEN);
+  const navigateToRequestContact = () =>
+    navigate(SCREENS.REQUEST_CONTACT_SCREEN);
 
   const navigateToDepositScreen = () => navigate(SCREENS.DEPOSIT_SCREEN);
 
   const navigateToCollaboratorInformation = () =>
     navigate(SCREENS.COLLABORATOR_SCREEN);
 
-  const navigateToPersonalPage = () =>
-    navigate(SCREENS.PERSONAL_PAGE_SCREEN);
+  const navigateToPersonalPage = () => navigate(SCREENS.PERSONAL_PAGE_SCREEN);
   const navigationToListAppointment = () => {
-    navigate(SCREENS.USERAPPOINMENTSCREEN)
-  }
-  const onCloseModal = () => setIsOpenModal(false);
+    navigate(SCREENS.USERAPPOINMENTSCREEN);
+  };
 
   const activityHistory = [
     {
       name: 'viewedPosts',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'favoritePosts',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'contactedPosts',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'message',
-      onPress: () => { },
+      onPress: () => {},
     },
   ];
 
@@ -95,7 +95,7 @@ const AccountScreen = () => {
   const appointmentManagement = [
     {
       name: 'customerAppointments',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'yourAppointments',
@@ -106,34 +106,34 @@ const AccountScreen = () => {
   const transactionManagement = [
     {
       name: 'transactionHistory',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'promotionList',
-      onPress: () => { },
+      onPress: () => {},
     },
   ];
 
   const adsManagement = [
     {
       name: 'createRealEstatePost',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'setBrandLogo',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'setBanner',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'prPosts',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'projectAds',
-      onPress: () => { },
+      onPress: () => {},
     },
   ];
 
@@ -164,11 +164,11 @@ const AccountScreen = () => {
     },
     {
       name: 'notification',
-      onPress: () => { },
+      onPress: () => {},
     },
     {
       name: 'privacy',
-      onPress: () => { },
+      onPress: () => {},
     },
   ];
 
@@ -239,7 +239,9 @@ const AccountScreen = () => {
                 size={20}
               />
             </View>
-            <Text style={styles.valueSurplus}>2,450,000 đ</Text>
+            <Text style={styles.valueSurplus}>{`${formatPrice(
+              user?.balance
+            )} đ`}</Text>
           </View>
           <View style={styles.line} />
           <View style={styles.item}>
@@ -251,7 +253,9 @@ const AccountScreen = () => {
                 size={20}
               />
             </View>
-            <Text style={styles.valuePromotion}>50,000 đ</Text>
+            <Text style={styles.valuePromotion}>{`${formatPrice(
+              user?.balance_promotion
+            )} đ`}</Text>
           </View>
           <TouchableOpacity
             style={styles.payment}

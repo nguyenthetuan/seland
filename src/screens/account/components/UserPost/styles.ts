@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
-  title: color => ({
-    color,
+  title: {
+    color: COLORS.BLACK_1,
     fontSize: 15,
     lineHeight: 18,
     marginHorizontal: 10,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 8,
     alignItems: 'center',
-  }),
+  },
   type: {
     color: COLORS.PURPLE_1,
     fontSize: 12,

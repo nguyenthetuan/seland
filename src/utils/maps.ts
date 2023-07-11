@@ -21,4 +21,9 @@ const kindRealty = ({
     : KIND_REALTY.realEstateRental;
 };
 
-export { KIND_REALTY, URL_MAP, kindRealty };
+const optionsGeolocation = {
+  enableHighAccuracy: true,
+  maximumAge: 10000,
+};
+
+export { KIND_REALTY, URL_MAP, kindRealty, optionsGeolocation };
