@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DashedButton, Text } from '../../../components';
 import { COLORS, SCREENS } from '../../../constants';
-import { getProfile, logout, selectUser } from '../../../features';
+import { logout, selectAuth, selectUser, getProfile } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { formatPrice } from '../../../utils/format';
 import { AccountMenu } from '../components';
@@ -22,12 +22,19 @@ const AccountScreen = () => {
   const { data: user } = useSelector(selectUser);
   const { navigate }: NavigationProp<any, any> = useNavigation();
   const { t } = useTranslation();
+  const { loadingLogout } = useSelector(selectAuth);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleLogout = () => dispatchThunk(dispatch, logout());
 
-  const navigateToCreatePost = () => navigate('CreatePostNavigator');
+  const navigateToCreatePost = () => {
+    if (user?.is_phone_verified === 1 && user?.name) {
+      navigate('CreatePostNavigator');
+    } else {
+      navigate(SCREENS.PERSONAL_INFORMATION);
+    }
+  };
 
   const navigateToUserPosts = () => navigate(SCREENS.USER_POSTS);
   const navigateToDraftUserPosts = () => navigate(SCREENS.DRAFT_POSTS);
@@ -313,6 +320,7 @@ const AccountScreen = () => {
           title={t('button.logout')}
           outline
           radius={5}
+          loading={loadingLogout}
         />
       </ScrollView>
 

@@ -168,36 +168,47 @@ const DetailPost: FC<Iprops> = props => {
           })}
         </View>
       </View>
-      <View style={styles.detailPost}>
-        {listUtilities?.map(info => {
-          return (
-            <View
-              key={info.title}
-              style={styles.utilitiesItem}
-            >
-              <Text style={styles.title}>{info.title}</Text>
-              <View style={styles.listContent}>
-                {info.list.map((i: string) => {
-                  return (
-                    <View
-                      style={styles.itemContent}
-                      key={i}
-                    >
-                      <View style={styles.itemDot} />
-                      <Text
-                        key={i}
-                        style={styles.itemContentText}
-                      >
-                        {i}
-                      </Text>
+      {(infoDetail?.real_estate_entrance ||
+        infoDetail?.securities ||
+        infoDetail?.furniture ||
+        infoDetail?.nearby_amenities) && (
+        <View style={styles.detailPost}>
+          {listUtilities?.map(info => {
+            return (
+              <>
+                {info.list?.length ? (
+                  <View
+                    key={info.title}
+                    style={styles.utilitiesItem}
+                  >
+                    <Text style={styles.title}>{info.title}</Text>
+                    <View style={styles.listContent}>
+                      {info.list.map((i: string) => {
+                        return (
+                          <View
+                            style={styles.itemContent}
+                            key={i}
+                          >
+                            <View style={styles.itemDot} />
+                            <Text
+                              key={i}
+                              style={styles.itemContentText}
+                            >
+                              {i}
+                            </Text>
+                          </View>
+                        );
+                      })}
                     </View>
-                  );
-                })}
-              </View>
-            </View>
-          );
-        })}
-      </View>
+                  </View>
+                ) : (
+                  <View />
+                )}
+              </>
+            );
+          })}
+        </View>
+      )}
     </View>
   );
 };

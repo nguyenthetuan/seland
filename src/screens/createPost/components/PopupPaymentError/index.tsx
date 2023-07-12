@@ -3,9 +3,10 @@ import { Modal, View } from 'react-native';
 
 import styles from './styles';
 import { Button, Text } from '../../../../components';
-import { COLORS } from '../../../../constants';
+import { COLORS, SCREENS } from '../../../../constants';
 import ItemConfirm from '../ItemConfirm';
 import { formatPrice } from '../../../../utils/format';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 interface PopupPaymentErrorProps {
   data?: {
@@ -27,6 +28,7 @@ interface PopupPaymentErrorProps {
 const PopupPaymentError: React.FC<PopupPaymentErrorProps> = forwardRef(
   ({ data, onSavePrivate }, ref) => {
     const [visible, setVisible] = useState(false);
+    const { push }: NavigationProp<any, any> = useNavigation();
 
     const openPopup = () => {
       setVisible(true);
@@ -36,6 +38,7 @@ const PopupPaymentError: React.FC<PopupPaymentErrorProps> = forwardRef(
 
     const handleButtonLeft = () => {
       setVisible(false);
+      push(SCREENS.DEPOSIT_SCREEN);
     };
 
     const handleButtonRight = () => {
@@ -43,6 +46,7 @@ const PopupPaymentError: React.FC<PopupPaymentErrorProps> = forwardRef(
     };
 
     const handleSavePrivate = () => {
+      setVisible(false);
       onSavePrivate && onSavePrivate();
     };
 

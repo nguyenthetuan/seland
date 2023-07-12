@@ -112,6 +112,8 @@ const ListPostsScreen = (props: any) => {
     demand_id: demand_id,
     is_hot: is_hot ? is_hot : null,
     for_you: for_you ? for_you : null,
+    province_id: route?.params?.province_id ? route?.params?.province_id : null,
+    district_id: route?.params?.district_id ? route?.params?.district_id : null,
     page: page,
     setTotal: setTotalPost,
     setTotalPage: setTotalPage,
@@ -245,10 +247,10 @@ const ListPostsScreen = (props: any) => {
 
   const onOpenMap = () => {
     navigate(SCREENS.MAPS, {
-      customerUrl: `${URL_MAP}kindRealty=${kindRealty({
+      customerUrl: `${URL_MAP}kind_realty=${kindRealty({
         demand_id,
         is_hot,
-      })}&defaultFilter=false&demandId=${dataFilterRef.current?.demand_id}`,
+      })}&defaultFilter=false&demand_id=${dataFilterRef.current?.demand_id}`,
     });
   };
 
@@ -266,6 +268,8 @@ const ListPostsScreen = (props: any) => {
           handleSubmit={onFilterTitle}
           onOpenMap={onOpenMap}
           setValue={setValue}
+          isShowIconLocation={true}
+          isShowZone={true}
         />
         <FlatList
           style={styles.list}

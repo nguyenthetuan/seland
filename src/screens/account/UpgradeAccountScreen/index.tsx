@@ -7,7 +7,7 @@ import Loading from 'react-native-loading-spinner-overlay';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { useSelector } from 'react-redux';
 import { Button } from '../../../components';
-import { COLORS } from '../../../constants';
+import { COLORS, SCREENS } from '../../../constants';
 import { selectUser } from '../../../features';
 import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
 import PackageInformation from './components/PackageComponent';

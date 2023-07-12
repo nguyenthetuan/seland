@@ -195,15 +195,15 @@ const UserPost = ({ item, type, deletePost }: UserPostProps) => {
           icon={<Acreage />}
         />
         <Info
-          value={`${item?.bedroom}`}
+          value={item?.bedroom || '--'}
           icon={<Bedroom />}
         />
         <Info
-          value={`${item?.bathroom}`}
+          value={item?.bathroom || '--'}
           icon={<Bathroom />}
         />
         <Info
-          value={`${item?.main_direction_name}`}
+          value={item?.main_direction_name || '--'}
           icon={<Compass />}
         />
       </View>

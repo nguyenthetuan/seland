@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { requestGetListAccountPackage, requestGetProfile, requestUpdateProfile } from '../api';
+import {
+  requestGetListAccountPackage,
+  requestGetProfile,
+  requestUpdateProfile,
+} from '../api';
 
 export const selectUser = state => state.user;
 
@@ -69,7 +73,7 @@ const slice = createSlice({
     loading: false,
     data: initialUser,
     error: '',
-    packages: undefined
+    packages: undefined,
   },
   extraReducers: builder => {
     builder.addCase(getProfile.pending, state => {

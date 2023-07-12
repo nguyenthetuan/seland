@@ -163,7 +163,20 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
             let errorsPhoto = '';
             const arrayImage = result?.assets.filter(item => {
               if (item?.fileSize && item?.fileSize / MB <= verifyMB) {
-                return item;
+                if (typeUpload.isPhoto) {
+                  return item;
+                }
+                if (
+                  item?.uri?.includes('.mp4') ||
+                  item?.uri?.includes('.mpk')
+                ) {
+                  return item;
+                } else {
+                  errorsVideo = typeUpload.isPhoto
+                    ? ''
+                    : 'Video Không đúng định dạng';
+                  return;
+                }
               } else {
                 errorsPhoto = typeUpload.isPhoto
                   ? 'Ảnh vượt quá giới hạn dung lượng'
@@ -175,7 +188,6 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
               }
             });
 
-            console.log('arrayImage', arrayImage);
             if (!typeUpload.isPhoto) {
               setValue && setValue('urlVideo', '');
             }
@@ -391,6 +403,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = ({
           <Input
             control={control}
             label={t('input.content')}
+            style={styles.input}
             labelStyle={styles.inputLabel}
             name="content"
             multiline

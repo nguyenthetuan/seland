@@ -10,6 +10,7 @@ import Text from '../../../../../../../components/common/Text';
 import styles from './styles';
 import { Input } from '../../../../../../../components';
 import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
 
 type IProps = {
   visible: boolean;
@@ -24,6 +25,18 @@ type IItem = {
 const ModalAdvise = (props: IProps) => {
   const { visible, setVisible } = props;
   const { t } = useTranslation();
+
+  const {
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      phone_number: '',
+      note: '',
+      youAre: '',
+    },
+  });
 
   const [chooseType, setChooseType] = useState<IItem>();
   console.log('chooseType: ', chooseType);
@@ -54,21 +67,7 @@ const ModalAdvise = (props: IProps) => {
       animationType="fade"
       onRequestClose={onPressCancel}
     >
-      <View
-        style={{
-          height: '100%',
-          width: '100%',
-          backgroundColor: 'black',
-          opacity: 0.5,
-        }}
-      />
-      <Modal
-        visible={visible}
-        animationType="slide"
-        transparent={true}
-        presentationStyle="overFullScreen"
-        onRequestClose={onPressCancel}
-      >
+      <View style={styles.modal}>
         <View style={styles.container}>
           <View style={styles.modalContentContainer}>
             <Text style={styles.title}>Yêu cầu tư vấn</Text>
@@ -80,55 +79,53 @@ const ModalAdvise = (props: IProps) => {
             <View style={styles.wrapTypeContainer}>
               <Text style={styles.label}>Bạn đang là</Text>
 
-              <View style={{ flex: 1 }}>
-                <FlatList
-                  data={type}
-                  numColumns={2}
-                  horizontal={false}
-                  renderItem={item => {
-                    return (
-                      <TouchableOpacity
-                        style={
-                          item.item.value === chooseType?.value
-                            ? styles.isChooseWrapItemContainer
-                            : styles.wrapItemContainer
-                        }
-                        onPress={() => onPressChooseType(item.item)}
-                      >
-                        <Text>{item.item.value}</Text>
-                      </TouchableOpacity>
-                    );
-                  }}
-                />
-              </View>
+              <FlatList
+                data={type}
+                numColumns={2}
+                horizontal={false}
+                contentContainerStyle={styles.youAre}
+                renderItem={item => {
+                  return (
+                    <TouchableOpacity
+                      style={
+                        item.item.value === chooseType?.value
+                          ? styles.isChooseWrapItemContainer
+                          : styles.wrapItemContainer
+                      }
+                      onPress={() => onPressChooseType(item.item)}
+                    >
+                      <Text>{item.item.value}</Text>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
             </View>
 
             <View style={styles.wrapTypeContainer}>
               <Text style={styles.label}>Họ và tên</Text>
-
-              <View style={{ flex: 1, minHeight: 40 }}>
-                <TextInput
-                  style={styles.textInputContainer}
-                  multiline={true}
-                  numberOfLines={3}
-                />
-              </View>
+              <Input
+                control={control}
+                name="name"
+                renderErrorMessage={false}
+              />
             </View>
 
             <View style={styles.wrapTypeContainer}>
               <Text style={styles.label}>SĐT</Text>
-
-              <View style={{ flex: 1, minHeight: 40 }}>
-                <TextInput style={styles.textInputContainer} />
-              </View>
+              <Input
+                control={control}
+                name="phone_number"
+                renderErrorMessage={false}
+              />
             </View>
 
             <View style={styles.wrapTypeContainer}>
               <Text style={styles.label}>Lời nhắn</Text>
-
-              <View style={{ flex: 1, minHeight: 40 }}>
-                <TextInput style={styles.textInputContainer} />
-              </View>
+              <Input
+                control={control}
+                name="note"
+                renderErrorMessage={false}
+              />
             </View>
 
             <View style={styles.wrapButtonContainer}>
@@ -147,7 +144,7 @@ const ModalAdvise = (props: IProps) => {
             </View>
           </View>
         </View>
-      </Modal>
+      </View>
     </Modal>
   );
 };

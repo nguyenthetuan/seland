@@ -13,7 +13,7 @@ import { IItemWarehouse } from '../../../../utils/interface/warehouse';
 import ActionWarehouseLand from '../../WarehouseLandScreen/components/ActionWarehouseLand';
 import DisplayPositionPost from '../../WarehouseLandScreen/components/DisplayPositionPost';
 import styles from './styles';
-import { COLORS, SCREENS } from '../../../../constants';
+import { COLORS, SCREENS, YOUR_WANT } from '../../../../constants';
 import { rankPost } from '../../../../utils/realEstates';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
@@ -154,7 +154,11 @@ const ItemWarehouseLand: FC<Iprops> = ({ item, onDelete, onEdit }) => {
             </Text>
           </View>
           <ActionWarehouseLand
-            onDelete={() => onDeletePost(item?.id)}
+            onDelete={() =>
+              [YOUR_WANT.POST_PUBLIC].includes(item?.status)
+                ? {}
+                : onDeletePost(item?.id)
+            }
             onEdit={() => onEditPost(item?.id)}
           />
         </View>

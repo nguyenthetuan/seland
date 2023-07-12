@@ -32,11 +32,11 @@ const MapScreen = ({}) => {
 
   const uri =
     route?.params?.customerUrl ||
-    `https://tamthanh2.vnextglobal.com/checkLandPlaning?realtyID=${
+    `https://tamthanh2.vnextglobal.com/checkLandPlaning?realty_id=${
       route?.params?.realtyID || '185'
     }&latLng=${
       latLong || '16.8018075868834%2C107.28037372286639'
-    }&defaultFilter=${route?.params?.defaultFilter || false}&kindRealty=${
+    }&defaultFilter=${route?.params?.defaultFilter || false}&kind_realty=${
       route?.params?.kindRealty || 'exclusiveRealEstate'
     }&checkLandPlaningKey=${token}`;
 

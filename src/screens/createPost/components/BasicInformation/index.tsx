@@ -68,11 +68,26 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
   const dispatch = useDispatch();
   const { provinces, districts, wards } = useSelector(selectCommon);
 
+  const emptyProvinceOption = {
+    label: t('select.province'),
+    value: null,
+  };
+  const emptyDistrictOption = {
+    label: t('select.district'),
+    value: null,
+  };
+  const emptyWardOption = {
+    label: t('select.ward'),
+    value: null,
+  };
   const emptyProject = {
     label: t('select.nameProject'),
     value: null,
   };
 
+  const provinceOptions = [emptyProvinceOption, ...provinces];
+  const districtOptions = [emptyDistrictOption, ...districts];
+  const wardOptions = [emptyWardOption, ...wards];
   const projectOptions = [emptyProject, ...formatDataNameId(projects)];
 
   const fetchDistricts = (params: any, callback?: Function) =>
@@ -175,17 +190,19 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
   }) => {
     setValue && setValue('ward_id', null);
     const { value } = selectedItem;
-    const address_detail = getValues && getValues().address_detail;
     if (value) {
-      const address_detail_array = address_detail?.split(',');
+      const province_id = getValues && getValues().province_id;
+      const provinceName = provinces?.find(
+        (item: any) => item?.value === province_id
+      );
 
       setValue &&
         setValue(
           'address_detail',
-          `${selectedItem.label}, ${address_detail_array[0]}`
+          `${selectedItem.label}, ${provinceName?.label}`
         );
       fetchWards({
-        province_code: getValues && getValues().province_id,
+        province_code: province_id,
         district_code: value,
       });
     } else {
@@ -198,15 +215,20 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
     label: string;
   }) => {
     const { value } = selectedItem;
-    const address_detail = getValues && getValues().address_detail;
     if (value) {
-      const address_detail_array = address_detail?.split(',');
+      const province_id = getValues && getValues().province_id;
+      const district_id = getValues && getValues().district_id;
+      const provinceName = provinces?.find(
+        (item: any) => item?.value === province_id
+      );
+      const districtsName = districts?.find(
+        (item: any) => item?.value === district_id
+      );
+
       setValue &&
         setValue(
           'address_detail',
-          `${
-            selectedItem.label
-          }, ${address_detail_array[1]?.trim()}, ${address_detail_array[0]?.trim()}`
+          `${selectedItem.label}, ${districtsName?.label}, ${provinceName?.label}`
         );
     } else {
       dispatch(clearWards());
@@ -370,7 +392,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={provinces}
+            data={provinceOptions}
             defaultButtonText={t('select.province')}
             rules={{ required: 'Vui lòng chọn Thành phố' }}
             label={t('select.province')}
@@ -382,7 +404,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
           <Select
             buttonStyle={styles.select1}
             control={control}
-            data={districts}
+            data={districtOptions}
             rules={{ required: 'Vui lòng chọn Quận/huyện' }}
             defaultButtonText={t('select.district')}
             label={t('select.district')}
@@ -395,7 +417,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({
         <Select
           buttonStyle={styles.select1}
           control={control}
-          data={wards}
+          data={wardOptions}
           defaultButtonText={t('select.ward')}
           label={t('select.ward')}
           rules={{ required: 'Vui lòng chọn Phường/xã' }}

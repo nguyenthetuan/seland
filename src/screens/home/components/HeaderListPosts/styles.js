@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     height: 40,
-    width: '60%',
+    flex: 1,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   inputSearch: {
     borderColor: COLORS.GRAY_2,

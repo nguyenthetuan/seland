@@ -19,6 +19,7 @@ interface DateTimePickerProps extends DatePickerProps {
   mode?: string;
   disableMaxDate?: boolean;
   minimumDate?: any;
+  onConfirm?: () => void;
 }
 
 const DateTimePicker = ({
@@ -30,6 +31,7 @@ const DateTimePicker = ({
   mode,
   disableMaxDate,
   minimumDate,
+  onConfirm,
 }: DateTimePickerProps) => {
   const {
     field: { onChange, value },
@@ -42,7 +44,8 @@ const DateTimePicker = ({
 
   const handleConfirm = (date: string) => {
     onChange(dayjs(date).format('YYYY-MM-DD'));
-    handleCancel();
+    setOpen(false);
+    onConfirm && onConfirm();
   };
 
   return (
