@@ -19,6 +19,7 @@ import {
   generateListAccountPackage,
 } from './model';
 import styles from './styles';
+import { appStyles } from '../../../constants/appStyles';
 
 const { width } = Dimensions.get('screen');
 
@@ -72,7 +73,7 @@ const UpgradeAccountScreen = () => {
   };
 
   return (
-    <View style={{ backgroundColor: COLORS.WHITE, flex: 1 }}>
+    <View style={appStyles.background}>
       {loading ? (
         <Loading
           color={COLORS.BLUE_1}
