@@ -207,16 +207,17 @@ const FilterScreen = (props: any) => {
   };
 
   const onSubmit = (data: any) => {
+    params?.onSubmit && params?.onSubmit(data);
     navigate(SCREENS.LIST_POST, {
       dataFilters: data,
     });
-    params?.onSubmit && params?.onSubmit(data);
   };
 
   const clearForm = () => {
     Object.entries(initValues).forEach(([key, value]: any) => {
-      value && setValue(key, value);
+      setValue(key, value);
     });
+    params?.setTitleValue('title', null);
     setValue('address', '');
     setValue('province_id', null);
     setValue('district_id', null);
