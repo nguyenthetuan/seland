@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { appStyles } from './constants/appStyles';
 import RootNavigator from './navigation';
 import { persistor, store } from './redux';
 import { i18n, Toast } from './utils';
@@ -13,7 +14,7 @@ import { i18n, Toast } from './utils';
 LogBox.ignoreAllLogs();
 
 const App = () => (
-  <GestureHandlerRootView style={{ flex: 1 }}>
+  <GestureHandlerRootView style={appStyles.flex}>
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
         <PersistGate
@@ -28,7 +29,6 @@ const App = () => (
       </Provider>
     </I18nextProvider>
   </GestureHandlerRootView>
-
 );
 
 export default App;

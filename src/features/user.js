@@ -69,7 +69,7 @@ const slice = createSlice({
     loading: false,
     data: initialUser,
     error: '',
-    packages: {}
+    packages: undefined
   },
   extraReducers: builder => {
     builder.addCase(getProfile.pending, state => {

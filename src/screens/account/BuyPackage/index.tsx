@@ -17,7 +17,7 @@ import { COLORS } from '../../../constants';
 import { buyPackage, selectPayment } from '../../../features';
 import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
 import { dispatchThunk } from '../../../utils';
-import { formatPrice } from '../../../utils/format';
+import { formatPriceBuyPackage } from '../../../utils/format';
 import MonthPicker from './component/MonthPicker';
 import PackInfoRow from './component/PackInfoRow';
 import PromotionPicker from './component/PromotionPicker';
@@ -37,7 +37,7 @@ const BuyPackage = () => {
   const promotionPickerRef = useRef<BottomSheet>(null);
 
   const generateTotalAmount = (): string => {
-    return formatPrice((parseInt(price) * month).toString());
+    return formatPriceBuyPackage((parseInt(price) * month).toString());
   };
 
   const openMonthPicker = () => {
@@ -98,7 +98,7 @@ const BuyPackage = () => {
           )}
           <PackInfoRow
             leftText="Đơn giá/ tháng"
-            rightText={formatPrice(price) + ' đ'}
+            rightText={formatPriceBuyPackage(price) + ' đ'}
           />
           <PackInfoRow
             leftText="Khuyến mãi"

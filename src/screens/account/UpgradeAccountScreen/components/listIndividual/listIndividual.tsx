@@ -4,7 +4,7 @@ import React from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { Text } from '../../../../../components';
 import { ScreenStackParamList } from '../../../../../navigation/ScreenStackParam';
-import { formatPrice } from '../../../../../utils/format';
+import { formatPriceBuyPackage } from '../../../../../utils/format';
 import { IndividualIcon } from '../../icon';
 import { Package } from '../../model';
 import styles from './listIndividualStyles';
@@ -40,7 +40,9 @@ const ListIndividual = (props: IProps) => {
           onPress={() => navigateToBuyPackage(item)}
           style={styles.buttonContainer}
         >
-          <Text style={styles.buttonText}>{formatPrice(item.price)} VND</Text>
+          <Text style={styles.buttonText}>
+            {formatPriceBuyPackage(item.price)} VND
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -48,13 +50,7 @@ const ListIndividual = (props: IProps) => {
 
   const EmptyIndividualList = () => {
     return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 250,
-        }}
-      >
+      <View style={styles.emptyList}>
         <Text>Không có tính năng lẻ khả dụng</Text>
       </View>
     );

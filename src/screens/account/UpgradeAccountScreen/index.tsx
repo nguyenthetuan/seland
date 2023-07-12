@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions, ScrollView, View } from 'react-native';
@@ -6,9 +7,9 @@ import Loading from 'react-native-loading-spinner-overlay';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { useSelector } from 'react-redux';
 import { Button } from '../../../components';
-import { COLORS, SCREENS } from '../../../constants';
+import { COLORS } from '../../../constants';
 import { selectUser } from '../../../features';
-import { BuyPackageParam } from '../BuyPackage/model';
+import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
 import PackageInformation from './components/PackageComponent';
 import { IconProfessionalLease } from './icon';
 import {
@@ -18,8 +19,6 @@ import {
   generateListAccountPackage,
 } from './model';
 import styles from './styles';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
 
 const { width } = Dimensions.get('screen');
 
@@ -32,7 +31,7 @@ const UpgradeAccountScreen = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (packages) {
+    if (packages !== undefined) {
       setAccountPackage(
         generateListAccountPackage(
           packages.account_packages as AccountPackage[],

@@ -34,7 +34,6 @@ const BottomSheet = forwardRef<BottomSheet, Props>((props: Props, ref) => {
   useImperativeHandle(ref, () => ({ open, close }));
 
   const handlePressOutside = () => {
-    console.log(closeOnPressOutside);
     if (closeOnPressOutside) {
       close();
     }
