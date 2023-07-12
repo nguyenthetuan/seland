@@ -1,5 +1,6 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useRef, useState } from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -9,26 +10,69 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Header, Text } from '../../../components';
-import { COLORS } from '../../../constants';
-import { formatMoney } from '../../../utils/format';
-import PackInfoRow from './component/PackInfoRow';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import BottomSheet from '../../../components/common/BottomSheet';
+import { COLORS } from '../../../constants';
+import { buyPackage, selectPayment } from '../../../features';
+import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
+import { dispatchThunk } from '../../../utils';
+import { formatPrice } from '../../../utils/format';
 import MonthPicker from './component/MonthPicker';
+import PackInfoRow from './component/PackInfoRow';
+import PromotionPicker from './component/PromotionPicker';
+import { BuyPackageParam } from './model';
+import moment from 'moment';
 
 const BuyPackage = () => {
-  const { packageId, price, name } = useRoute().params;
+  const { packageId, price, name } = useRoute().params as BuyPackageParam;
   const insets = useSafeAreaInsets();
-  const bottomRef = useRef<BottomSheet>(null);
+  const monthPickerRef = useRef<BottomSheet>(null);
+  const [month, setMonth] = useState(0);
+  const dispatch = useDispatch();
+  const { navigate, goBack } =
+    useNavigation<NativeStackNavigationProp<ScreenStackParamList>>();
+  const { loading } = useSelector(selectPayment);
 
-  const formatPrice = (price: string): string => {
-    return formatMoney(price.split('.')[0]) + '';
+  const promotionPickerRef = useRef<BottomSheet>(null);
+
+  const generateTotalAmount = (): string => {
+    return formatPrice((parseInt(price) * month).toString());
   };
 
-  useEffect(() => {
-    bottomRef.current?.open();
-  }, []);
+  const openMonthPicker = () => {
+    monthPickerRef.current?.open();
+  };
+
+  const handleSelectMonth = (months: number) => {
+    setMonth(months);
+    monthPickerRef.current?.close();
+  };
+
+  const openPromotionPicker = () => {
+    promotionPickerRef.current?.open();
+  };
+
+  const handlePromotionSelect = () => {
+    promotionPickerRef.current?.close();
+  };
+
+  const buy = () => {
+    const param = { time: month, account_package_id: packageId };
+    dispatchThunk(dispatch, buyPackage(param), (res: any) => {
+      navigate('BuyPackageResult', {
+        paymentCode: res.paymentCode,
+        balance: res.balance,
+        balancePromotion: res.balancePromotion,
+      });
+    });
+  };
+
+  const generateDuration = (): string => {
+    const from = moment().format('DD/MM/YYYY');
+    const to = moment().add(month, 'M').format('DD/MM/YYYY');
+    return `(Từ ${from} đến ${to})`;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,7 +80,7 @@ const BuyPackage = () => {
       <KeyboardAwareScrollView>
         <View style={styles.priceCtn}>
           <Text style={styles.total}>Tổng tiền</Text>
-          <Text style={styles.price}>{formatPrice(price)} VNĐ</Text>
+          <Text style={styles.price}>{generateTotalAmount()} VNĐ</Text>
         </View>
         <View style={styles.infoCtn}>
           <Text style={styles.infoTitle}>Thông tin giao dịch</Text>
@@ -46,9 +90,12 @@ const BuyPackage = () => {
           />
           <PackInfoRow
             leftText="Thời gian"
-            rightText="Chọn số tháng"
-            onPressEdit={() => {}}
+            rightText={month > 0 ? month + ' Tháng' : 'Chọn số tháng'}
+            onPressEdit={openMonthPicker}
           />
+          {month > 0 && (
+            <Text style={styles.duration}>{generateDuration()}</Text>
+          )}
           <PackInfoRow
             leftText="Đơn giá/ tháng"
             rightText={formatPrice(price) + ' đ'}
@@ -56,11 +103,15 @@ const BuyPackage = () => {
           <PackInfoRow
             leftText="Khuyến mãi"
             rightText="Áp dụng"
-            onPressEdit={() => {}}
+            onPressEdit={openPromotionPicker}
           />
           <PackInfoRow
             leftText="Tổng tiền"
-            rightText="TODO"
+            rightText={
+              month > 0
+                ? generateTotalAmount() + ' đ'
+                : 'Vui lòng chọn thời gian'
+            }
           />
         </View>
         <Text style={styles.infoCtn}>Nội dung</Text>
@@ -73,20 +124,33 @@ const BuyPackage = () => {
       </KeyboardAwareScrollView>
       <View style={[styles.bottom, { marginBottom: insets.bottom }]}>
         <Button
+          onPress={goBack}
           buttonStyle={styles.btnCancel}
           titleStyle={styles.btnCancelTitle}
           title="Huỷ"
         />
         <Button
+          onPress={buy}
           buttonStyle={styles.btnPay}
           title="Thanh toán"
+          disable={month < 1}
+          loading={loading}
         />
       </View>
       <BottomSheet
         height={230}
-        ref={bottomRef}
+        ref={monthPickerRef}
       >
-        <MonthPicker />
+        <MonthPicker
+          defaultMonth={month}
+          onMonthSelect={handleSelectMonth}
+        />
+      </BottomSheet>
+      <BottomSheet
+        height={200}
+        ref={promotionPickerRef}
+      >
+        <PromotionPicker onPromotionSelect={handlePromotionSelect} />
       </BottomSheet>
     </SafeAreaView>
   );
@@ -153,4 +217,5 @@ const styles = StyleSheet.create({
   },
   btnCancelTitle: { color: COLORS.GRAY_7 },
   btnPay: { width: Dimensions.get('screen').width / 2 - 15 },
+  duration: { fontSize: 14, color: COLORS.RED_1 },
 });

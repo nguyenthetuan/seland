@@ -33,6 +33,7 @@ const SCREENS = {
   USERAPPOINMENTSCREEN: 'UserAppoinmentScreen',
   CREATEAPPOIONMENTSCREEN: 'CreatetAppoinmentScreen',
   BUY_PACKAGE: 'BuyPackage',
+  BUY_PACKAGE_RESULT: 'BuyPackageResult',
 };
 
 export default SCREENS;

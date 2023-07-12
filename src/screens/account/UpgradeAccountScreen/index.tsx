@@ -1,41 +1,46 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Dimensions, ScrollView, View } from 'react-native';
+import Loading from 'react-native-loading-spinner-overlay';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import { Button } from '../../../components';
 import { COLORS, SCREENS } from '../../../constants';
+import { selectUser } from '../../../features';
+import { BuyPackageParam } from '../BuyPackage/model';
 import PackageInformation from './components/PackageComponent';
-import styles from './styles';
-import { Free, ProfessionalPackage } from '../../../assets';
-import { IconAgency, IconProfessionalLease, IconSpecial } from './icon';
-import { useDispatch } from 'react-redux';
-import { dispatchThunk } from '../../../utils';
-import { getListAccountPackage } from '../../../features';
+import { IconProfessionalLease } from './icon';
 import {
   AccountPackage,
   Package,
   PackageFunction,
   generateListAccountPackage,
 } from './model';
-import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
 
 const { width } = Dimensions.get('screen');
 
 const UpgradeAccountScreen = () => {
   const [activeSlide, setActiveSlide] = useState<number>(0);
-  const dispatch = useDispatch();
   const [accountPackages, setAccountPackage] = useState<Array<Package>>([]);
-  const { navigate } = useNavigation();
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<ScreenStackParamList>>();
+  const { packages, loading } = useSelector(selectUser);
+  const { t } = useTranslation();
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListAccountPackage(), (res: any) => {
+    if (packages) {
       setAccountPackage(
         generateListAccountPackage(
-          res.account_packages as AccountPackage[],
-          res.package_function as PackageFunction[]
+          packages.account_packages as AccountPackage[],
+          packages.package_function as PackageFunction[]
         )
       );
-    });
-  }, []);
+    }
+  }, [packages]);
 
   const renderItem = ({ item, index }: { item: Package; index: number }) => (
     <PackageInformation
@@ -59,33 +64,45 @@ const UpgradeAccountScreen = () => {
     );
   };
 
-  const navigateToBuyPackage = (item: Package) =>
-    navigate(SCREENS.BUY_PACKAGE, {
+  const navigateToBuyPackage = (item: Package) => {
+    navigate('BuyPackage', {
       packageId: item.id,
       price: item.price,
       name: item.value,
     });
+  };
 
   return (
     <View style={{ backgroundColor: COLORS.WHITE, flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <Carousel
-            data={accountPackages}
-            renderItem={renderItem}
-            onSnapToItem={(idx: any) => setActiveSlide(idx)}
-            windowSize={1}
-            sliderWidth={width - 20}
-            itemWidth={width - 20}
-          />
-        </View>
-      </ScrollView>
+      {loading ? (
+        <Loading
+          color={COLORS.BLUE_1}
+          textContent={`${t('common.loading')}`}
+          textStyle={styles.loadingText}
+          visible={loading}
+        />
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
+            <Carousel
+              data={accountPackages}
+              renderItem={renderItem}
+              onSnapToItem={(idx: any) => setActiveSlide(idx)}
+              windowSize={1}
+              sliderWidth={width - 20}
+              itemWidth={width - 20}
+            />
+          </View>
+        </ScrollView>
+      )}
+
       <View style={styles.bottomButton}>
         {pagination()}
         <Button
           onPress={() => navigateToBuyPackage(accountPackages[activeSlide])}
           title="Mua gói ngay"
           color={COLORS.ORANGE_6}
+          disable={parseInt(accountPackages[activeSlide]?.price) <= 0 ?? false}
         />
       </View>
     </View>

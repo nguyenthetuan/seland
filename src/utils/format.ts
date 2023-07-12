@@ -60,3 +60,7 @@ export const formatMoney = (
     console.log(e);
   }
 };
+
+export const formatPrice = (price: string): string => {
+  return formatMoney(price.split('.')[0]) + '';
+};

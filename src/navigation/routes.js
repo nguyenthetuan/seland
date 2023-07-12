@@ -15,6 +15,7 @@ import AddAccountScreen from '../screens/account/AgencyInformationScreen/compone
 import ChangeStatusScreen from '../screens/account/AgencyInformationScreen/components/ChangeStatusScreen';
 import StaffInformationScreen from '../screens/account/AgencyInformationScreen/components/StaffInformationScreen';
 import BuyPackage from '../screens/account/BuyPackage';
+import BuyPackageResult from '../screens/account/BuyPackage/BuyPackageResult';
 import CollaboratorInformationScreen from '../screens/account/CollaboratorInformationScreen';
 import DepositScreen from '../screens/account/DepositScreen/index';
 import PersonalPageScreen from '../screens/account/PersonalPageScreen';
@@ -122,6 +123,10 @@ const routes = [
   {
     component: BuyPackage,
     name: SCREENS.BUY_PACKAGE,
+  },
+  {
+    component: BuyPackageResult,
+    name: SCREENS.BUY_PACKAGE_RESULT,
   },
 ];
 

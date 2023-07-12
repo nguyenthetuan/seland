@@ -1,27 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Button, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import moment from 'moment';
 
-const MonthPicker = () => {
+interface Props {
+  onMonthSelect: (months: number) => void;
+  defaultMonth: number;
+}
+
+const MonthPicker = (props: Props) => {
+  const { onMonthSelect, defaultMonth } = props;
   const insets = useSafeAreaInsets();
+  const [month, setMonth] = useState(1);
+
+  const generateDuration = (): string => {
+    const from = moment().format('DD/MM/YYYY');
+    const to = moment().add(month, 'M').format('DD/MM/YYYY');
+    return `(Từ ${from} đến ${to})`;
+  };
+
+  const onPlus = () => {
+    setMonth(month + 1);
+    generateDuration();
+  };
+
+  const onMinus = () => {
+    if (month <= 1) return;
+    setMonth(month - 1);
+    generateDuration();
+  };
+
+  useEffect(() => {
+    if (defaultMonth >= 1) {
+      setMonth(defaultMonth);
+    }
+  }, [defaultMonth]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chọn thời gian</Text>
       <View style={styles.row}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onMinus}>
           <Text style={styles.button}>-</Text>
         </TouchableOpacity>
 
-        <Text style={styles.content}>1 Tháng</Text>
-        <TouchableOpacity>
+        <Text style={styles.content}>{month} Tháng</Text>
+        <TouchableOpacity onPress={onPlus}>
           <Text style={styles.button}>+</Text>
         </TouchableOpacity>
       </View>
-      <Text>(Từ 15/02/2023 đến 14/04/2023)</Text>
+      <Text style={styles.duration}>{generateDuration()}</Text>
       <View style={[styles.bottom, { marginBottom: insets.bottom }]}>
         <Button
+          onPress={() => onMonthSelect(month)}
           buttonStyle={styles.btnConfirm}
           title="Xác nhận"
         />
@@ -60,4 +93,5 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   btnConfirm: { width: Dimensions.get('screen').width - 40, marginLeft: 20 },
+  duration: { fontSize: 14, color: COLORS.RED_1, marginTop: 12 },
 });

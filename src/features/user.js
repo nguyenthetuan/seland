@@ -69,6 +69,7 @@ const slice = createSlice({
     loading: false,
     data: initialUser,
     error: '',
+    packages: {}
   },
   extraReducers: builder => {
     builder.addCase(getProfile.pending, state => {
@@ -101,7 +102,7 @@ const slice = createSlice({
     });
     builder.addCase(getListAccountPackage.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.packages = action.payload;
       state.error = '';
     });
     builder.addCase(getListAccountPackage.rejected, (state, action) => {

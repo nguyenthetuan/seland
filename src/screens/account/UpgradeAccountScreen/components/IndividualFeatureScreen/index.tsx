@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { getListAccountPackage } from '../../../../../features';
-import { dispatchThunk } from '../../../../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../../../../features';
+import {
+  AccountPackage,
+  Package,
+  PackageFunction,
+  generateListAccountPackage,
+} from '../../model';
 import ListIndividual from '../listIndividual/listIndividual';
-import { IListIndividual } from './model';
 import styles from './styles';
 
 const IndividualFeatureScreen = () => {
-  const dispatch = useDispatch();
-  const [packages, setPackages] = useState<Array<IListIndividual>>([]);
+  const [individualPackages, setPackages] = useState<Array<Package>>([]);
+  const { packages } = useSelector(selectUser);
 
   useEffect(() => {
-    dispatchThunk(dispatch, getListAccountPackage(), (res: any) => {
-      setPackages(res.extra_package as IListIndividual[]);
-    });
-  }, []);
+    if (packages) {
+      setPackages(
+        generateListAccountPackage(
+          packages.extra_package as AccountPackage[],
+          packages.package_function as PackageFunction[]
+        )
+      );
+    }
+  }, [packages]);
 
   return (
     <View style={styles.container}>
-      <ListIndividual data={packages} />
+      <ListIndividual data={individualPackages} />
     </View>
   );
 };

@@ -10,7 +10,7 @@ interface HeaderProps {
   icon?: string;
   onPress?: () => void;
   right?: ReactNode;
-  title: string;
+  title?: string;
   hasGoBack?: boolean;
 }
 

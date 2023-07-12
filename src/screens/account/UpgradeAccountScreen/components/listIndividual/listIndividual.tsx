@@ -1,17 +1,31 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { FlatList, Image, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { Text } from '../../../../../components';
-import styles from './listIndividualStyles';
-import { IListIndividual } from '../IndividualFeatureScreen/model';
+import { ScreenStackParamList } from '../../../../../navigation/ScreenStackParam';
+import { formatPrice } from '../../../../../utils/format';
 import { IndividualIcon } from '../../icon';
+import { Package } from '../../model';
+import styles from './listIndividualStyles';
 
 interface IProps {
-  data: IListIndividual[];
+  data: Package[];
 }
 
 const ListIndividual = (props: IProps) => {
   const { data } = props;
-  const renderItem = ({ item }: { item: IListIndividual }) => {
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<ScreenStackParamList>>();
+
+  const navigateToBuyPackage = (item: Package) => {
+    navigate('BuyPackage', {
+      packageId: item.id,
+      price: item.price,
+      name: item.value,
+    });
+  };
+  const renderItem = ({ item }: { item: Package }) => {
     return (
       <View
         id={item.id.toString()}
@@ -21,10 +35,27 @@ const ListIndividual = (props: IProps) => {
           <IndividualIcon />
         </View>
         <Text style={styles.title}>{item.value.toUpperCase()}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>{item.price} VND</Text>
+        <Text style={styles.description}>{item.feature}</Text>
+        <TouchableOpacity
+          onPress={() => navigateToBuyPackage(item)}
+          style={styles.buttonContainer}
+        >
+          <Text style={styles.buttonText}>{formatPrice(item.price)} VND</Text>
         </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const EmptyIndividualList = () => {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 250,
+        }}
+      >
+        <Text>Không có tính năng lẻ khả dụng</Text>
       </View>
     );
   };
@@ -34,6 +65,7 @@ const ListIndividual = (props: IProps) => {
       data={data}
       renderItem={renderItem}
       showsVerticalScrollIndicator={false}
+      ListEmptyComponent={EmptyIndividualList}
     />
   );
 };

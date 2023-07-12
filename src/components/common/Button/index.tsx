@@ -6,7 +6,7 @@ import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
 
-interface ButtonProps {
+interface ButtonProps extends Button {
   buttonStyle?: {};
   color?: string;
   loading?: boolean;
@@ -16,6 +16,7 @@ interface ButtonProps {
   onPress?: () => void;
   icon?: any;
   radius?: number;
+  disable?: boolean;
 }
 
 const Button = ({
@@ -26,21 +27,20 @@ const Button = ({
   title = '',
   titleStyle,
   icon,
+  disable = false,
   ...props
 }: ButtonProps) => (
   <RNEButton
     buttonStyle={StyleSheet.flatten([styles.outline(color), buttonStyle])}
     color={outline ? COLORS.WHITE : color}
-    disabled={loading}
+    disabled={loading || disable}
     disabledStyle={styles.disabled}
     loading={loading}
     radius={props?.radius}
     title={
       <View style={styles.wrap}>
-        {icon && <View style={styles.wrapIcon}>
-          {icon}
-        </View>}
-        
+        {icon && <View style={styles.wrapIcon}>{icon}</View>}
+
         <Text
           style={StyleSheet.flatten([styles.title(color, outline), titleStyle])}
         >

@@ -1,27 +1,35 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import { Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import { IconEdit } from '../../../../assets';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   leftText: string;
   rightText: string;
   onPressEdit?: () => void;
+  rowStyle?: ViewStyle;
 }
 const PackInfoRow = (props: Props) => {
-  const { leftText, rightText, onPressEdit } = props;
+  const { leftText, rightText, onPressEdit, rowStyle } = props;
   return (
-    <View style={styles.rowSpace}>
+    <View style={[styles.rowSpace, rowStyle]}>
       <Text style={styles.left}>{leftText}</Text>
-      <View style={styles.row}>
-        <Text style={styles.right}>{rightText}</Text>
-        {onPressEdit && (
-          <View style={styles.marginL6}>
-            <IconEdit />
+      {onPressEdit ? (
+        <TouchableOpacity onPress={onPressEdit}>
+          <View style={styles.row}>
+            <Text style={styles.right}>{rightText}</Text>
+            <View style={styles.marginL6}>
+              <IconEdit />
+            </View>
           </View>
-        )}
-      </View>
+        </TouchableOpacity>
+      ) : (
+        <View>
+          <Text style={styles.right}>{rightText}</Text>
+        </View>
+      )}
     </View>
   );
 };

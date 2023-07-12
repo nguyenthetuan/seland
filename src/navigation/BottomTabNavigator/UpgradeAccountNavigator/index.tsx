@@ -3,7 +3,7 @@ import {
   createMaterialTopTabNavigator,
 } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Animated,
@@ -13,12 +13,15 @@ import {
   View,
 } from 'react-native';
 
+import { useDispatch } from 'react-redux';
 import { ArrowLeft } from '../../../assets';
 import { Text } from '../../../components';
-import { COLORS, SCREENS } from '../../../constants';
+import { SCREENS } from '../../../constants';
+import { getListAccountPackage } from '../../../features';
 import IndividualFeatureScreen from '../../../screens/account/UpgradeAccountScreen/components/IndividualFeatureScreen/index';
 import NotesScreen from '../../../screens/account/UpgradeAccountScreen/components/NotesScreen/index';
 import UpgradeAccountScreen from '../../../screens/account/UpgradeAccountScreen/index';
+import { dispatchThunk } from '../../../utils';
 import styles from './styles';
 
 const Tab = createMaterialTopTabNavigator();
@@ -26,6 +29,11 @@ const Tab = createMaterialTopTabNavigator();
 const UpgradeAccountTab = () => {
   const { goBack } = useNavigation();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatchThunk(dispatch, getListAccountPackage());
+  }, []);
 
   const TabBarTitle = ({
     state,

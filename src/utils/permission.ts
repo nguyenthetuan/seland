@@ -42,7 +42,6 @@ export const requestReadAndWritePermission = async () => {
       .then(results => {
         for (const permission of permissions) {
           const result = results[permission];
-          console.log(result);
           if (result === 'denied' || result === 'blocked') {
             Alert.alert(
               'Không có quyền truy cập',

@@ -35,3 +35,4 @@ export const CRATE_APPOINTMENT = '/appointment';
 export const CREATE_OR_UPDATE_WARE_HOUSE = '/auth/createOrUpdateWarehouse';
 export const CREATE_TRANSACTION = '/auth/createTransaction';
 export const GET_VNPAY_URL = '/auth/createPaymentUrl';
+export const BUY_ACCOUNT_PACKAGE = '/auth/buyAccountPackage';

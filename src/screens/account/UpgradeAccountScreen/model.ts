@@ -23,7 +23,6 @@ export const generateListAccountPackage = (
   let result: Package[] = [];
   let packages = [...accountPackage];
   packages.forEach(element => {
-    console.log(element.function);
     let tempFunc = packageFunction.filter(item =>
       element.function.includes(item.id)
     );
