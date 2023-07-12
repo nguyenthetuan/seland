@@ -1,13 +1,17 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  NavigationProp,
+} from '@react-navigation/native';
 import { Avatar, Icon } from '@rneui/themed';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, DashedButton, Text } from '../../../components';
 import { COLORS, SCREENS } from '../../../constants';
-import { logout, selectUser } from '../../../features';
+import { getProfile, logout, selectUser } from '../../../features';
 import { dispatchThunk } from '../../../utils';
 import { formatPrice } from '../../../utils/format';
 import { AccountMenu } from '../components';
@@ -178,6 +182,12 @@ const AccountScreen = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatchThunk(dispatch, getProfile());
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.safe}>

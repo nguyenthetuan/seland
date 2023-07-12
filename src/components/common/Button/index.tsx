@@ -8,17 +8,17 @@ import { StyleSheet, View } from 'react-native';
 import { COLORS } from '../../../constants';
 import Text from '../Text';
 import styles from './styles';
-
 interface ButtonProps extends RNButtonProps {
   buttonStyle?: {};
   color?: string;
   loading?: boolean;
   outline?: boolean;
-  title?: string | null;
+  title?: string;
   titleStyle?: {};
   onPress?: () => void;
   icon?: any;
   radius?: number;
+  disable?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -29,12 +29,13 @@ const Button: FC<ButtonProps> = ({
   title = '',
   titleStyle,
   icon,
+  disable = false,
   ...props
 }) => (
   <RNEButton
     buttonStyle={StyleSheet.flatten([styles.outline(color), buttonStyle])}
     color={outline ? COLORS.WHITE : color}
-    disabled={loading}
+    disabled={loading || disable}
     disabledStyle={styles.disabled}
     loading={loading}
     radius={props?.radius}

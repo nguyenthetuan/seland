@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
   },
+  emptyList: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 250,
+  },
 });
 
 export default styles;

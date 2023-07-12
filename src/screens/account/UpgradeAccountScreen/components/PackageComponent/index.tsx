@@ -3,6 +3,7 @@ import { Image, View } from 'react-native';
 import styles from './styles';
 import { Check, ProfessionalPackage } from '../../../../../assets';
 import { Text } from '../../../../../components';
+import { formatMoney } from '../../../../../utils/format';
 
 interface IPackageInformationProps {
   title?: string;
@@ -28,11 +29,14 @@ const PackageInformation = ({
   listFeature = [],
   avatar,
 }: IPackageInformationProps) => {
+  const formatPrice = (price: string): string => {
+    return formatMoney(price.split('.')[0]) + '';
+  };
   return (
     <View style={styles.container}>
       <View style={styles.wrapImage}>{avatar}</View>
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.price}>{price}</Text>
+      <Text style={styles.price}>{formatPrice(price ?? '0')} VND</Text>
 
       <View>
         {listFeature.map((item: string) => (

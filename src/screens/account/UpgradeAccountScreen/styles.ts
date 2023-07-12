@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingTop: 40,
-    paddingBottom: 100,
+    paddingBottom: 130,
   },
   inactiveDotStyle: {
     width: 8,
@@ -20,11 +20,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.ORANGE_6,
   },
   bottomButton: {
+    backgroundColor: COLORS.WHITE,
     position: 'absolute',
     bottom: 0,
     width: '100%',
     paddingHorizontal: 10,
-    marginBottom: 16,
+  },
+  loadingText: {
+    color: COLORS.BLUE_1,
+    fontSize: 16,
+    lineHeight: 24,
   },
 });
 

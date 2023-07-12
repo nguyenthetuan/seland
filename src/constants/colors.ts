@@ -58,10 +58,11 @@ const COLORS = {
   PURPLE_1: '#722ed1',
   PURPLE_2: '#f9f0ff',
   SLIDER_1: '#91D5FF',
-
+  NORMAL: '#7E8990',
   NEUTRAL2: '#FAFAFA',
   NEUTRAL4: '#F0F0F0',
   TITLE: '#3B4144',
+  LOCAL_LIGHT: '#F6F6F6',
 };
 
 export default COLORS;

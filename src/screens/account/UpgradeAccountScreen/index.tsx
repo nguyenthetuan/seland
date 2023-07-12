@@ -1,121 +1,61 @@
-import React, { useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Dimensions, ScrollView, View } from 'react-native';
+import Loading from 'react-native-loading-spinner-overlay';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import { Button } from '../../../components';
 import { COLORS } from '../../../constants';
+import { selectUser } from '../../../features';
+import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
 import PackageInformation from './components/PackageComponent';
+import { IconProfessionalLease } from './icon';
+import {
+  AccountPackage,
+  Package,
+  PackageFunction,
+  generateListAccountPackage,
+} from './model';
 import styles from './styles';
-import { Free, ProfessionalPackage } from '../../../assets';
-import { IconAgency, IconProfessionalLease, IconSpecial } from './icon';
-
-const dataMock = [
-  {
-    title: 'Miễn phí',
-    price: '0 VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <Free />,
-  },
-  {
-    title: 'Chuyên nghiệp',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ mua bán',
-      'Nhận thông tin quỹ bđs hot 10',
-      'Dẫn đường',
-      'Lọc trên bản đồ',
-      'Lọc trên kho hàng',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <ProfessionalPackage />,
-  },
-  {
-    title: 'Cho thuê chuyên nghiệp',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ cho thuê',
-      'Nhận thông tin quỹ thuê hot 20',
-      'Dẫn đường',
-      'Lọc trên kho hàng',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <IconProfessionalLease />,
-  },
-  {
-    title: 'Đại lý',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ mua bán',
-      'Tạo tài khoản cấp dưới',
-      'Quản lý tài khoản cấp dưới',
-      'Phân quyền tài khoản cấp dưới',
-      'Nhận thông tin quỹ bđs hot 20',
-      'Dẫn đường',
-      'Lọc trên bản đồ',
-      'Lọc trên kho hàng',
-      'Xem chính sách phí môi giới',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <IconAgency />,
-  },
-  {
-    title: 'Đặc biệt',
-    price: 'XX VND',
-    listFeature: [
-      'Đăng tin rao vặt',
-      'Tìm kiếm BĐS trên bản đồ quy hoạch',
-      'Vẽ ranh trên bản đồ quy hoạch',
-      'Tìm kiếm BĐS xung quanh',
-      'Xem giá trên bản đồ quỹ mua bán',
-      'Tạo tài khoản cấp dưới',
-      'Quản lý tài khoản cấp dưới',
-      'Phân quyền tài khoản cấp dưới',
-      'Nhận thông tin quỹ bđs hot 20',
-      'Dẫn đường',
-      'Lọc trên bản đồ',
-      'Lọc trên kho hàng',
-      'Quản lý, so sánh bđs đã lưu (thêm, sửa, xóa)',
-    ],
-    avatar: <IconSpecial />,
-  },
-];
+import { appStyles } from '../../../constants/appStyles';
 
 const { width } = Dimensions.get('screen');
 
 const UpgradeAccountScreen = () => {
   const [activeSlide, setActiveSlide] = useState<number>(0);
+  const [accountPackages, setAccountPackage] = useState<Array<Package>>([]);
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<ScreenStackParamList>>();
+  const { packages, loading } = useSelector(selectUser);
+  const { t } = useTranslation();
 
-  const renderItem = ({ item, index }: { item: any; index: number }) => (
+  useEffect(() => {
+    if (packages !== undefined) {
+      setAccountPackage(
+        generateListAccountPackage(
+          packages.account_packages as AccountPackage[],
+          packages.package_function as PackageFunction[]
+        )
+      );
+    }
+  }, [packages]);
+
+  const renderItem = ({ item, index }: { item: Package; index: number }) => (
     <PackageInformation
       key={index}
-      title={item?.title}
+      title={item?.value}
       price={item?.price}
-      listFeature={item?.listFeature}
-      avatar={item?.avatar}
+      listFeature={item?.feature}
+      avatar={<IconProfessionalLease />}
     />
   );
 
   const pagination = () => {
     return (
       <Pagination
-        dotsLength={dataMock.length}
+        dotsLength={accountPackages.length}
         activeDotIndex={activeSlide}
         dotStyle={styles.dotStyle}
         inactiveDotStyle={styles.inactiveDotStyle}
@@ -124,25 +64,45 @@ const UpgradeAccountScreen = () => {
     );
   };
 
+  const navigateToBuyPackage = (item: Package) => {
+    navigate('BuyPackage', {
+      packageId: item.id,
+      price: item.price,
+      name: item.value,
+    });
+  };
+
   return (
-    <View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <Carousel
-            data={dataMock}
-            renderItem={renderItem}
-            onSnapToItem={(idx: any) => setActiveSlide(idx)}
-            windowSize={1}
-            sliderWidth={width - 20}
-            itemWidth={width - 20}
-          />
-        </View>
-      </ScrollView>
+    <View style={appStyles.background}>
+      {loading ? (
+        <Loading
+          color={COLORS.BLUE_1}
+          textContent={`${t('common.loading')}`}
+          textStyle={styles.loadingText}
+          visible={loading}
+        />
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
+            <Carousel
+              data={accountPackages}
+              renderItem={renderItem}
+              onSnapToItem={(idx: any) => setActiveSlide(idx)}
+              windowSize={1}
+              sliderWidth={width - 20}
+              itemWidth={width - 20}
+            />
+          </View>
+        </ScrollView>
+      )}
+
       <View style={styles.bottomButton}>
         {pagination()}
         <Button
+          onPress={() => navigateToBuyPackage(accountPackages[activeSlide])}
           title="Mua gói ngay"
           color={COLORS.ORANGE_6}
+          disable={parseInt(accountPackages[activeSlide]?.price) <= 0 ?? false}
         />
       </View>
     </View>

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { requestPostPayment } from '../api';
-import { requestCreateTransaction, requestGetVNPayURL } from '../api/payment';
+import { requestBuyPackage, requestCreateTransaction, requestGetVNPayURL } from '../api/payment';
 
 export const selectPayment = state => state.payment;
 
@@ -35,6 +35,18 @@ export const getVNPayUrl = createAsyncThunk(
     try {
       const { data } = await requestGetVNPayURL(amount);
       return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue('Lỗi hệ thống, vui lòng thử lại sau.');
+    }
+  }
+);
+
+export const buyPackage = createAsyncThunk(
+  'buyPackage',
+  async (params, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const { data } = await requestBuyPackage(params);
+      return fulfillWithValue({ ...data });
     } catch (error) {
       return rejectWithValue('Lỗi hệ thống, vui lòng thử lại sau.');
     }
@@ -82,6 +94,16 @@ const slice = createSlice({
       state.vnPayUrl = action.payload;
     });
     builder.addCase(getVNPayUrl.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(buyPackage.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(buyPackage.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(buyPackage.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

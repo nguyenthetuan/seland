@@ -50,16 +50,16 @@ export const formatMoney = (
       i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousands) +
       (decimalCount
         ? decimal +
-        // @ts-ignore
-        Math.abs(amount - i)
-          .toFixed(decimalCount)
-          .slice(2)
+          // @ts-ignore
+          Math.abs(amount - i)
+            .toFixed(decimalCount)
+            .slice(2)
         : '');
     return result;
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 export const formatPrice = (price: string) => {
   if (!price) {
@@ -68,4 +68,8 @@ export const formatPrice = (price: string) => {
     const round = Math.round(parseFloat(price));
     return round.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
+};
+
+export const formatPriceBuyPackage = (price: string): string => {
+  return formatMoney(price.split('.')[0]) + '';
 };

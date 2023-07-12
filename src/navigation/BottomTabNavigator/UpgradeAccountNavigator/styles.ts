@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 30,
   },
+  container: { flex: 1, backgroundColor: COLORS.WHITE },
 });
 
 export default styles;
