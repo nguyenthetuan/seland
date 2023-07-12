@@ -39,6 +39,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+  	<string></string>
+  	<key>NSPhotoLibraryAddUsageDescription</key>
+  	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -58,6 +62,18 @@
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Chúng tôi cần sử dụng vị trí của bạn để lấy tìm kiếm dữ liệu</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Chúng tôi sử dụng vị trí của bạn để ...</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Chúng tôi sử dụng vị trí của bạn để ...</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+  	<string></string>
+  	<key>NSPhotoLibraryAddUsageDescription</key>
+  	<string></string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

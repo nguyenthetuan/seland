@@ -65,6 +65,7 @@ const LoginScreen = () => {
           disabled={loading}
           errorMessage={errors.phone_number?.message}
           inputMode="numeric"
+          keyboardType="number-pad"
           isNumeric
           label={t('input.phoneNumber')}
           name="phone_number"

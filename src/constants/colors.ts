@@ -13,6 +13,7 @@ const COLORS = {
   BLUE_4: '#264275',
   BLUE_5: '#232536',
   BLUE_6: '#1890FF',
+  BLUE_7: '#F0F5FF',
   GRAY_1: '#666',
   GRAY_2: '#d9d9d9',
   GRAY_3: '#8c8c8c',
@@ -24,6 +25,7 @@ const COLORS = {
   GRAY_9: '#6d6e76',
   GRAY_10: '#fafafa',
   GRAY_11: '#999999',
+  LOCAL_GRAY: '#868686',
 
   GREEN_1: '#389e0d',
   GREEN_2: '#ebf6e7',
@@ -56,6 +58,10 @@ const COLORS = {
   PURPLE_1: '#722ed1',
   PURPLE_2: '#f9f0ff',
   SLIDER_1: '#91D5FF',
+
+  NEUTRAL2: '#FAFAFA',
+  NEUTRAL4: '#F0F0F0',
+  TITLE: '#3B4144',
 };
 
 export default COLORS;

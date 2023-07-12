@@ -28,6 +28,10 @@ target 'SeLand' do
   flags = get_default_flags()
 
   rn_maps_path = '../node_modules/react-native-maps'
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+  pod 'Permission-PhotoLibraryAddOnly', :path => "#{permissions_path}/PhotoLibraryAddOnly"
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'Firebase', :modular_headers => true
   pod 'FirebaseCoreInternal', :modular_headers => true
@@ -35,13 +39,14 @@ target 'SeLand' do
   pod 'FirebaseCore', :modular_headers => true
   pod 'react-native-blob-util',
     :path => '../node_modules/react-native-blob-util'
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
     
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
     # Upcoming versions of React Native may rely on get_default_flags(), but
     # we make it explicit here to aid in the React Native upgrade process.
-    :hermes_enabled => true,
+    :hermes_enabled => false,
     :fabric_enabled => flags[:fabric_enabled],
     :flipper_configuration => FlipperConfiguration.enabled,
     # Enables Flipper.

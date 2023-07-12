@@ -32,3 +32,5 @@ export const DELETE_REAL_ESTATE = '/auth/delete/realEstate';
 export const EDIT_REAL_STATE = '/auth/realEstate';
 export const CRATE_APPOINTMENT = '/appointment';
 export const CREATE_OR_UPDATE_WARE_HOUSE = '/auth/createOrUpdateWarehouse';
+export const CREATE_TRANSACTION = '/auth/createTransaction';
+export const GET_VNPAY_URL = '/auth/createPaymentUrl';

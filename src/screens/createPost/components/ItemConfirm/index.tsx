@@ -1,25 +1,18 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import { View } from 'react-native';
 
 import { Text } from '../../../../components';
 import styles from './styles';
 
-const ItemConfirm = ({ value, label }) => (
+interface ItemConfirmProps {
+  value?: ReactNode | string;
+  label?: string;
+}
+const ItemConfirm: FC<ItemConfirmProps> = ({ value, label }) => (
   <View style={styles.boxItem}>
     <Text style={styles.labelItem}>{label}</Text>
     <Text style={styles.valueItem}>{value}</Text>
   </View>
 );
-
-ItemConfirm.defaultProps = {
-  label: '',
-  value: '',
-};
-
-ItemConfirm.propTypes = {
-  value: PropTypes.string,
-  label: PropTypes.string,
-};
 
 export default ItemConfirm;

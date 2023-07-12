@@ -52,7 +52,7 @@ const TAB = {
 
 const TIME = 30;
 
-const initInfo = {
+export const initInfoPost = {
   status: 2,
 
   // base infor
@@ -110,7 +110,8 @@ export const formatDataNameId = (data: any) =>
   }));
 
 const CreatePostScreen = (props: any) => {
-  const { navigate, goBack }: NavigationProp<any, any> = useNavigation();
+  const { navigate, goBack, replace }: NavigationProp<any, any> =
+    useNavigation();
   const router: any = useRoute();
   const {
     control,
@@ -122,7 +123,7 @@ const CreatePostScreen = (props: any) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: initInfo,
+    defaultValues: initInfoPost,
   });
 
   const { t } = useTranslation();
@@ -315,9 +316,23 @@ const CreatePostScreen = (props: any) => {
   };
 
   const getFormData = async (value: any) => {
+    let _status = null;
+
+    if (router.params?.edit) {
+      _status = [YOUR_WANT.SAVE_DRAFTS, YOUR_WANT.SAVE_PRIVATE].includes(
+        saveType
+      )
+        ? saveType === YOUR_WANT.POST_PUBLIC
+          ? currentPost.current
+          : saveType
+        : currentPost.current;
+    } else {
+      _status =
+        saveType === YOUR_WANT.POST_PUBLIC ? YOUR_WANT.SAVE_DRAFTS : saveType;
+    }
     const params = {
       ...value,
-      status: saveType,
+      status: _status,
     };
     const formData = new FormData();
 
@@ -371,20 +386,23 @@ const CreatePostScreen = (props: any) => {
     }
     // append video to form
     if (params?.video?.length) {
-      params?.video.forEach((item: { uri: any; fileName: any; type: any }) => {
-        const file = {
-          uri: item.uri,
-          name: item.fileName,
-          type: item.type,
-        };
-        formData.append(`video`, file);
-      });
+      params?.video.forEach(
+        (item: { uri: any; fileName: any; type: any; update?: boolean }) => {
+          const file = {
+            uri: item.uri,
+            name: item.fileName,
+            type: item.type,
+          };
+          formData.append(`video`, item?.update ? item.uri : file);
+        }
+      );
     }
 
     if (params?.urlVideo) {
       formData.append(`video`, params?.urlVideo);
     }
 
+    console.log('🚀 ~ file: index.tsx:410 ~ getFormData ~ formData:', formData);
     return formData;
   };
 
@@ -393,6 +411,8 @@ const CreatePostScreen = (props: any) => {
       if (saveType === YOUR_WANT.POST_PUBLIC) {
         navigate(SCREENS.CONFIRM_POST_SCREEN, {
           realEstateId: value?.real_estate_id,
+          data: getValues(),
+          saveType: saveType,
         });
       } else {
         confirmPostRef.current.openPopup();
@@ -423,8 +443,10 @@ const CreatePostScreen = (props: any) => {
       saveType === YOUR_WANT.POST_PUBLIC &&
       currentPost.current !== YOUR_WANT.POST_PUBLIC
     ) {
-      navigate(SCREENS.CONFIRM_POST_SCREEN, {
+      replace(SCREENS.CONFIRM_POST_SCREEN, {
         realEstateId: router.params.id,
+        data: getValues(),
+        saveType: currentPost.current,
       });
     } else {
       goBack();
@@ -468,18 +490,18 @@ const CreatePostScreen = (props: any) => {
   const getValueAutoSave = handleSubmit(autoSave);
 
   useEffect(() => {
-    if (router.params?.type === 'DRAFT') {
-      const intervalId = setInterval(() => {
-        if (time === 0) {
-          setTime(TIME);
-          getValueAutoSave();
-          return;
-        }
-        setTime(time - 1);
-      }, 1000);
-
-      return () => clearInterval(intervalId);
-    }
+    // TODO: comment auto save
+    // if (router.params?.type === 'DRAFT') {
+    //   const intervalId = setInterval(() => {
+    //     if (time === 0) {
+    //       setTime(TIME);
+    //       getValueAutoSave();
+    //       return;
+    //     }
+    //     setTime(time - 1);
+    //   }, 1000);
+    //   return () => clearInterval(intervalId);
+    // }
   }, [time]);
 
   const handleContinue = async (value: { photo: string | any[] }) => {
