@@ -14,10 +14,12 @@ import {
   Text,
 } from '../..';
 import { RESEND_OTP_TIMEOUT } from '../../../constants';
-import { generateOtp, login, verifyOtp } from '../../../features';
+import { generateOtp, getProfile, login, verifyOtp } from '../../../features';
 import { selectAuth } from '../../../features/auth';
 import { dispatchThunk } from '../../../utils';
 import styles from './styles';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { toastConfig } from '../../../utils/toast';
 
 interface IProps {
   isOpen: boolean;
@@ -49,15 +51,28 @@ const OtpModal = ({isOpen, phoneNumber, onCloseModal}: IProps) => {
     return () => clearInterval(interval);
   }, [seconds]);
 
-  const handleVerifyOtp = () =>
+  const handleWhenVerifySuccess = () => {
+    dispatchThunk(dispatch, getProfile());
+    onCloseModal && onCloseModal();
+  };
+
+  const handleVerifyOtp = () => {
+    if (!otp || otp.length === 0) {
+      Toast.show({
+        text1: t('heading.inputOtp') || "",
+      });
+      return;
+    }
+
     dispatchThunk(
       dispatch,
       verifyOtp({
         phone_number: phoneNumber,
         otp,
       }),
-      onCloseModal
+      handleWhenVerifySuccess
     );
+  }
 
   return (
     <Modal visible={isOpen} >
@@ -111,6 +126,11 @@ const OtpModal = ({isOpen, phoneNumber, onCloseModal}: IProps) => {
           )}
         </View>
       </Container>
+
+      <Toast
+        config={toastConfig}
+        position="bottom"
+      />
     </Modal>
   );
 };

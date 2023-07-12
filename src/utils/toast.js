@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const toastConfig = {
+export const toastConfig = {
   success: props => (
     <SuccessToast
       {...props}
