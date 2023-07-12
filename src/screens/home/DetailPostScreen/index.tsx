@@ -7,12 +7,6 @@ import ImagePost from './components/ImagePost';
 import RealEstate from './components/RealEstate';
 import styles from './styles';
 import CallAndChat from './components/CallAndChat';
-import { useDispatch, useSelector } from 'react-redux';
-import { dispatchThunk } from '../../../utils';
-import {
-  getDetailRealEstates,
-  selectDetailRealEstates,
-} from '../../../features';
 import {
   useNavigation,
   useRoute,
@@ -21,11 +15,10 @@ import {
 import Loading from 'react-native-loading-spinner-overlay';
 import { useTranslation } from 'react-i18next';
 import { COLORS, SCREENS } from '../../../constants';
-import { KIND_REALTY, kindRealty } from '../../../utils/maps';
+import { kindRealty } from '../../../utils/maps';
 import { requestGetDetailRealEstates } from '../../../api';
 
 const DetailPostScreen = () => {
-  const dispatch = useDispatch();
   const { navigate }: NavigationProp<any, any> = useNavigation();
   const [loading, setLoading] = useState<boolean>(true);
   const { t } = useTranslation();

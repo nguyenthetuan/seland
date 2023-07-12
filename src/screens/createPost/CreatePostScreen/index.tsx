@@ -272,8 +272,8 @@ const CreatePostScreen = (props: any) => {
             });
             setValue('security_id', securities.toString());
             break;
-          case 'direction':
-            // setValue('main_door_direction_id', value);
+          case 'direction_id':
+            setValue('main_door_direction_id', value);
             break;
           default:
             value && setValue(key, value);
@@ -432,10 +432,7 @@ const CreatePostScreen = (props: any) => {
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
-        status:
-          router.params?.type === 'DRAFT'
-            ? YOUR_WANT.SAVE_DRAFTS
-            : currentPost.current,
+        status: currentPost.current,
         sort_by: 'createdAt',
       })
     );
@@ -447,6 +444,7 @@ const CreatePostScreen = (props: any) => {
         realEstateId: router.params.id,
         data: getValues(),
         saveType: currentPost.current,
+        type: 'EDIT',
       });
     } else {
       goBack();

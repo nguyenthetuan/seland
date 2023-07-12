@@ -113,6 +113,7 @@ const slice = createSlice({
   name: 'auth',
   initialState: {
     loading: false,
+    loadingLogout: false,
     token: '',
     error: '',
     deviceId: '',
@@ -146,14 +147,14 @@ const slice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(logout.pending, state => {
-      state.loading = true;
+      state.loadingLogout = true;
     });
     builder.addCase(logout.fulfilled, state => {
-      state.loading = false;
+      state.loadingLogout = false;
       state.token = '';
     });
     builder.addCase(logout.rejected, state => {
-      state.loading = false;
+      state.loadingLogout = false;
       state.token = '';
     });
     builder.addCase(generateOtp.pending, state => {

@@ -98,7 +98,7 @@ export const validateUrlYoutube = (value: string) => {
     // const validRegex = /^(https?\:\/\/)?(youtube\.com|youtu\.be)\/.+$/gi;
     const validRegex =
       /^(https?\:\/\/)?(www\.youtube\.com|youtube\.com|youtu\.be)\/.+$/gi;
-    if (!value.match(validRegex)) return 'Vui lòng nhập đúng địa Youtube';
+    if (!value.match(validRegex)) return 'Vui lòng nhập đúng url Youtube';
   }
   return undefined;
 };

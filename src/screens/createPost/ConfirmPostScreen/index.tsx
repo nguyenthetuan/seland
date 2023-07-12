@@ -36,6 +36,7 @@ import dayjs from 'dayjs';
 import { formatPrice } from '../../../utils/format';
 import RenderHtml from 'react-native-render-html';
 import PopupPaymentError from '../components/PopupPaymentError';
+import Carousel from 'react-native-snap-carousel';
 
 const ConfirmPostScreen = () => {
   const route = useRoute();
@@ -84,7 +85,7 @@ const ConfirmPostScreen = () => {
       real_estate_id: null,
       start_date: new Date(),
       count_date: '1',
-      rank_type_id: null,
+      rank_type_id: 1,
     },
   });
 
@@ -138,7 +139,13 @@ const ConfirmPostScreen = () => {
     navigate(SCREENS.USER_POSTS, { type: 'createPost' });
   };
 
-  const handleBack = () => confirmCancelPaymentRef.current.openPopup();
+  const handleBack = () => {
+    if (route.params?.type === 'EDIT') {
+      goBack();
+    } else {
+      confirmCancelPaymentRef.current.openPopup();
+    }
+  };
 
   const handleCancel = () => {};
 
@@ -275,14 +282,11 @@ const ConfirmPostScreen = () => {
           sort_by: 'createdAt',
         })
       );
-      if (route?.params?.saveType === YOUR_WANT.SAVE_DRAFTS) {
-        navigate(SCREENS.DRAFT_POSTS);
-      } else {
-        navigate(SCREENS.USER_POSTS, {
-          type: 'createPost',
-          status: route?.params?.saveType,
-        });
-      }
+
+      navigate(SCREENS.USER_POSTS, {
+        type: 'createPost',
+        status: YOUR_WANT.SAVE_PRIVATE,
+      });
       Toast.show('Lưu tin riêng tư thành công.');
     };
     await dispatchThunk(
@@ -311,71 +315,73 @@ const ConfirmPostScreen = () => {
           </Text>
         </View>
         <ScrollView contentContainerStyle={styles.scroll}>
-          <ScrollView
-            contentContainerStyle={styles.scrollViewContainerStyle}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-          >
-            {rank &&
-              rank?.map(
-                (item: {
-                  id: number;
-                  value: string | undefined;
-                  title: string | undefined;
-                  post_min?: number;
-                  price?: number;
-                  sapo?: string;
-                }) => (
-                  <Pressable
-                    key={`rank${item?.id}`}
-                    style={StyleSheet.flatten([
-                      styles.boxRank,
-                      {
-                        borderColor:
-                          item?.id === rankPost ? COLORS.BLUE_1 : COLORS.GRAY_6,
-                      },
-                    ])}
-                    onPress={() => onSelectRank(item?.id)}
-                  >
-                    <Text style={styles.txtValueRank}>{item?.value}</Text>
-                    <View style={styles.boxTitleRank}>
-                      <View style={[styles.line1, { height: 50 }]} />
-                      <View style={styles.line1} />
-                      <View style={styles.line1} />
-                      <View style={styles.line1} />
-                      <RenderHtml
-                        contentWidth={width}
-                        source={{
-                          html: item?.title,
-                        }}
+          <Carousel
+            data={rank}
+            renderItem={({
+              item,
+            }: {
+              item: {
+                id: number;
+                value: string | undefined;
+                title: string | undefined;
+                post_min?: number;
+                price?: number;
+                sapo?: string;
+              };
+            }) => {
+              return (
+                <Pressable
+                  key={`rank${item?.id}`}
+                  style={StyleSheet.flatten([
+                    styles.boxRank,
+                    {
+                      borderColor:
+                        item?.id === rankPost ? COLORS.BLUE_1 : COLORS.GRAY_6,
+                    },
+                  ])}
+                  onPress={() => onSelectRank(item?.id)}
+                >
+                  <Text style={styles.txtValueRank}>{item?.value}</Text>
+                  <View style={styles.boxTitleRank}>
+                    <View style={[styles.line1, { height: 50 }]} />
+                    <View style={styles.line1} />
+                    <View style={styles.line1} />
+                    <View style={styles.line1} />
+                    <RenderHtml
+                      contentWidth={width}
+                      source={{
+                        html: item?.title,
+                      }}
+                    />
+                  </View>
+                  <Text style={styles.txtTimeLimitPost}>{item?.sapo}</Text>
+                  <View style={styles.boxShowDown}>
+                    <Icon
+                      name="arrow-forward"
+                      size={20}
+                    />
+                    <View>
+                      <View style={styles.line2} />
+                      <View style={styles.line2} />
+                      <View
+                        style={[
+                          styles.line2,
+                          { backgroundColor: COLORS.BLUE_1 },
+                        ]}
                       />
                     </View>
-                    <Text style={styles.txtTimeLimitPost}>{item?.sapo}</Text>
-                    <View style={styles.boxShowDown}>
-                      <Icon
-                        name="arrow-forward"
-                        size={20}
-                      />
-                      <View>
-                        <View style={styles.line2} />
-                        <View style={styles.line2} />
-                        <View
-                          style={[
-                            styles.line2,
-                            { backgroundColor: COLORS.BLUE_1 },
-                          ]}
-                        />
-                      </View>
-                    </View>
-                    <Text style={styles.txtTimeLimitPost}>
-                      {`Đăng tối thiểu ${item?.post_min} ngày`}
-                    </Text>
-                    <Button title={`Từ ${item?.price}đ/ngày`} />
-                  </Pressable>
-                )
-              )}
-          </ScrollView>
+                  </View>
+                  <Text style={styles.txtTimeLimitPost}>
+                    {`Đăng tối thiểu ${item?.post_min} ngày`}
+                  </Text>
+                  <Button title={`Từ ${formatPrice(item?.price)}đ/ngày`} />
+                </Pressable>
+              );
+            }}
+            windowSize={1}
+            sliderWidth={width}
+            itemWidth={width}
+          />
           <Text style={styles.selectTimePost}>
             {t('Chọn thời gian đăng tin')}
           </Text>
@@ -402,9 +408,10 @@ const ConfirmPostScreen = () => {
                 control={control}
                 label="Ngày bắt đầu"
                 labelStyle={styles.labelStyle}
-                disableMaxDate={true}
+                disableMaxDate
                 name="start_date"
-                minimumDate={new Date(dayjs().format('DD-MM-YYYY'))}
+                onConfirm={onBlur}
+                minimumDate={new Date(dayjs().format('YYYY-MM-DD'))}
               />
             </View>
           </View>
@@ -420,7 +427,9 @@ const ConfirmPostScreen = () => {
             />
             <ItemConfirm
               label="Đơn giá/ ngày"
-              value={`${infoPayment?.price || 0} VNĐ`}
+              value={`${
+                infoPayment?.price ? formatPrice(infoPayment?.price) : 0
+              } VNĐ`}
             />
             <ItemConfirm
               label="Thời gian đăng tin"
@@ -432,7 +441,11 @@ const ConfirmPostScreen = () => {
             />
             <ItemConfirm
               label="Tổng tiền"
-              value={`${infoPayment?.totalPrice || 0} VNĐ`}
+              value={`${
+                infoPayment?.totalPrice
+                  ? formatPrice(infoPayment?.totalPrice)
+                  : 0
+              } VNĐ`}
             />
           </View>
           <View>

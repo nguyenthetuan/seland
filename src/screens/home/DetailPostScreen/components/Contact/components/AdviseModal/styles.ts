@@ -1,14 +1,20 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { COLORS } from '../../../../../../../constants';
-const screenHeight = Dimensions.get('window').height;
+const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  modal: {
+    height: '100%',
+    width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-    padding: 16,
+    backgroundColor: COLORS.BLACK_2,
+    paddingBottom: '20%',
+  },
+  container: {
+    width: width * 0.9,
+  },
+  youAre: {
+    marginBottom: 16,
   },
   modalContentContainer: {
     margin: 20,
@@ -42,11 +48,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
     width: '30%',
+    marginTop: 7,
   },
   wrapTypeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
   },
   textInputContainer: {
     flex: 1,

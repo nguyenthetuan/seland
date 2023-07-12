@@ -2,7 +2,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Icon, Image, Input, Text } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View, RefreshControl } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -36,6 +36,7 @@ const HomeScreen = () => {
 
   const [isBuyHottest, setIsBuyHottest] = useState(true);
   const [isBuyForYou, setIsBuyForYou] = useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const { listRealEstatesForYou, listProject, listRealEstatesHots } =
     useSelector(selectHome);
@@ -56,7 +57,9 @@ const HomeScreen = () => {
     dispatchThunk(dispatch, getListRealEstateByLocation());
     dispatchThunk(dispatch, getListProjects());
     dispatchThunk(dispatch, getListNews());
-  }, [dispatch]);
+
+    setRefreshing(false);
+  }, [dispatch, refreshing]);
 
   const navigateToListPostsHot = () => {
     if (isBuyHottest) {
@@ -105,12 +108,22 @@ const HomeScreen = () => {
       customerUrl: `${URL_MAP}defaultFilter=true`,
     });
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+  }, []);
+
   return (
     <View style={styles.containerScreen}>
       <HeaderHome openMaps={navigateToMaps} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.contentContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       >
         <SliderBox
           autoplay

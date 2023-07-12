@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,13 +11,8 @@ import styles from './styles';
 import Category from '../../../components/Category';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { SCREENS } from '../../../../../constants';
-import SameAreaRealEstate from '../../../components/SameAreaRealEstate';
 import { IRealEstateDetails } from '../../../../../utils/interface/realEstateDetails';
-import {
-  Button,
-  ItemRealEstateCarousel,
-  Text,
-} from '../../../../../components';
+import { ItemRealEstateCarousel, Text } from '../../../../../components';
 
 interface Iprops {
   infoDetail: IRealEstateDetails;
@@ -27,13 +22,18 @@ const RealEstate: FC<Iprops> = props => {
   const { t } = useTranslation();
   const { infoDetail } = props;
   const dispatch = useDispatch();
-  const [isBuy, setIsBuy] = useState(true);
 
   const { navigate }: NavigationProp<any, any> = useNavigation();
   const { listRealEstatesIn: listPosts } = useSelector(selectRealEstates);
   const params = {
-    province_id: infoDetail?.province_id || null,
-    district_id: infoDetail?.district_id || null,
+    demand_id: infoDetail?.demand_id,
+    province_id: infoDetail?.province_id,
+    district_id: infoDetail?.district_id,
+    dataFilters: {
+      demand_id: infoDetail?.demand_id,
+      province_id: infoDetail?.province_id || null,
+      district_id: infoDetail?.district_id || null,
+    },
   };
 
   useEffect(() => {
@@ -42,22 +42,10 @@ const RealEstate: FC<Iprops> = props => {
         dispatch,
         getListRealEstatesIn({
           ...params,
-          demand_id: 1,
         })
       );
     }
   }, [infoDetail?.province_id]);
-
-  const handleSelectOptions = (value: any) => {
-    setIsBuy(value);
-    dispatchThunk(
-      dispatch,
-      getListRealEstatesIn({
-        ...params,
-        params: isBuy ? 1 : 2,
-      })
-    );
-  };
 
   const navigateToListPosts = () => navigate(SCREENS.LIST_POSTS, params);
 

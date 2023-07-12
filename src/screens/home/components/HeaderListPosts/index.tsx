@@ -17,6 +17,8 @@ interface Iprops {
   onOpenMap?: Function;
   getValues?: any;
   setValue?: any;
+  isShowIconLocation?: boolean;
+  isShowZone?: boolean;
 }
 
 const HeaderListPosts: FC<Iprops> = props => {
@@ -66,14 +68,16 @@ const HeaderListPosts: FC<Iprops> = props => {
           />
         </View>
 
-        <Icon name="my-location" />
-        <TouchableOpacity
-          style={styles.boxZoning}
-          onPress={navigateMapScreen}
-        >
-          <LogoZoning />
-          <Text style={styles.checkZoning}>{t('heading.checkZoning')}</Text>
-        </TouchableOpacity>
+        {props?.isShowIconLocation && <Icon name="my-location" />}
+        {props?.isShowZone && (
+          <TouchableOpacity
+            style={styles.boxZoning}
+            onPress={navigateMapScreen}
+          >
+            <LogoZoning />
+            <Text style={styles.checkZoning}>{t('heading.checkZoning')}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
   );

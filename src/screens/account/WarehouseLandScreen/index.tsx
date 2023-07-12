@@ -73,6 +73,8 @@ const WarehouseLandScreen = () => {
           control={control}
           handleSubmit={onSearch}
           getValues={getValues}
+          isShowIconLocation={false}
+          isShowZone={false}
         />
         <Loading
           visible={loadingRealEstateWarehouses}

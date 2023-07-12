@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     padding: 10,
-    width: width * 0.91,
+    width: width * 0.94,
   },
   boxShowDown: {
     alignItems: 'flex-end',

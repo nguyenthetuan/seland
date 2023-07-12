@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
   boxCheck: {
     flexDirection: 'row',
   },
+  input: {
+    paddingTop: 7,
+    alignSelf: 'flex-start',
+  },
   boxDate: {
     flexDirection: 'row',
     marginBottom: 16,
