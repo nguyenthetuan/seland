@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '../../../components';
-import { COLORS } from '../../../constants';
-import { IconEdit } from '../../../assets';
+import { Text } from '../../../../components';
+import { COLORS } from '../../../../constants';
+import { IconEdit } from '../../../../assets';
 
 interface Props {
   leftText: string;

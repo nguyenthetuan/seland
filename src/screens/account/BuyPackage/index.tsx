@@ -1,4 +1,5 @@
-import React, { useMemo, useRef } from 'react';
+import { useRoute } from '@react-navigation/native';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -6,14 +7,15 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Button, Header, Text } from '../../../components';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { COLORS } from '../../../constants';
-import { formatMoney } from '../../../utils/format';
-import PackInfoRow from './PackInfoRow';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import BottomSheet from '@gorhom/bottom-sheet';
+import { Button, Header, Text } from '../../../components';
+import { COLORS } from '../../../constants';
+import { formatMoney } from '../../../utils/format';
+import PackInfoRow from './component/PackInfoRow';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import BottomSheet from '../../../components/common/BottomSheet';
+import MonthPicker from './component/MonthPicker';
 
 const BuyPackage = () => {
   const { packageId, price, name } = useRoute().params;
@@ -24,11 +26,8 @@ const BuyPackage = () => {
     return formatMoney(price.split('.')[0]) + '';
   };
 
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
-
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+  useEffect(() => {
+    bottomRef.current?.open();
   }, []);
 
   return (
@@ -84,12 +83,10 @@ const BuyPackage = () => {
         />
       </View>
       <BottomSheet
+        height={230}
         ref={bottomRef}
-        handleIndicatorStyle={null}
-        index={1}
-        snapPoints={snapPoints}
       >
-        <Text>ABC</Text>
+        <MonthPicker />
       </BottomSheet>
     </SafeAreaView>
   );
