@@ -97,13 +97,13 @@ const UserPostsScreen = () => {
 
     const getListSuccess = () => {
       setIsLoading(false);
-      resetValues();
     };
 
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
         ...obj,
+        ...dateRange,
       }),
       getListSuccess
     );
@@ -168,9 +168,10 @@ const UserPostsScreen = () => {
     dispatchThunk(
       dispatch,
       getListRealEstatesUser({
+        ...dateRange,
         title: getValues().title,
         sort_by: getValues().sort_by,
-        dateRange,
+
         setTotal: setTotal,
       })
     );

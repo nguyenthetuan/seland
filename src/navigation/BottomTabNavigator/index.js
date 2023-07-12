@@ -88,9 +88,9 @@ const BottomTabNavigator = () => {
       return null;
     }
 
-    if (user?.phone_number && !user?.name) {
-      navigation.navigate(SCREENS.PERSONAL_INFORMATION, { hasGoBack: false });
-    }
+    // if (user?.phone_number && !user?.name) {
+    //   navigation.navigate(SCREENS.PERSONAL_INFORMATION, { hasGoBack: false });
+    // }
 
     return (
       <View style={styles.boxButton}>
@@ -104,7 +104,7 @@ const BottomTabNavigator = () => {
             });
 
             if (!isFocused && !event.defaultPrevented) {
-              if (route.name === 'CreatePostNavigator') {
+              if (route.name === 'CreatePostNavigator' || route.name === SCREENS.CREATE_POST) {
                 if (user?.name && user?.is_phone_verified === 1) {
                   navigation.navigate(route.name);
                 } else {

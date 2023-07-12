@@ -12,7 +12,7 @@ export const createPayment = createAsyncThunk(
       const { data } = await requestPostPayment(params);
       return fulfillWithValue({ ...data });
     } catch (error) {
-      return rejectWithValue('Loi tao bai dang');
+      return rejectWithValue(error?.data);
     }
   }
 );

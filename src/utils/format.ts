@@ -50,14 +50,23 @@ export const formatMoney = (
       i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousands) +
       (decimalCount
         ? decimal +
-          // @ts-ignore
-          Math.abs(amount - i)
-            .toFixed(decimalCount)
-            .slice(2)
+        // @ts-ignore
+        Math.abs(amount - i)
+          .toFixed(decimalCount)
+          .slice(2)
         : '');
     return result;
   } catch (e) {
     console.log(e);
+  }
+}
+
+export const formatPrice = (price: string) => {
+  if (!price) {
+    return '0';
+  } else {
+    const round = Math.round(parseFloat(price));
+    return round.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 };
 

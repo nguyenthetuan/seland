@@ -99,6 +99,7 @@ export const SliderComponent = ({
   const [buttonSelected, setButtonSelected] = useState<Array<string | number>>([
     defaultValues[0].toString() + '-' + defaultValues[1].toString(),
   ]);
+  const [valueDisplay, setValueDisplay] = useState<Array<string | number>>(value || defaultValues);
 
   const handleOnClick = (option: string | number) => {
     let newArrButton = [...buttonSelected];
@@ -119,18 +120,22 @@ export const SliderComponent = ({
 
     const arrVal = String(option).split('-');
     if (newArrButton.length === 0) {
-      onChange([0, 1])
-    }
-    else if (arrVal.length === 1) {
+      onChange([0, 0.01]);
+    } else if (arrVal.length === 1) {
       onChange([Number(arrVal[0]), Number(arrVal[0])]);
     } else {
       onChange([Number(arrVal[0]), Number(arrVal[1])]);
     }
   };
 
+  const handleSlide = (val: any) => {
+    onChange(val);
+    setValueDisplay(val);
+  }
+
   useEffect(() => {
     if (value) {
-      setButtonSelected([value[0].toString() + '-' + value[1].toString()])
+      setButtonSelected([value[0].toString() + '-' + value[1].toString()]);
     }
   }, [value]);
 
@@ -146,7 +151,7 @@ export const SliderComponent = ({
           maximumTrackTintColor={COLORS.GRAY_5}
           thumbTintColor={COLORS.SLIDER_1}
           thumbImage={ThumbSlider}
-          onSlidingComplete={val => onChange(val)}
+          onSlidingComplete={val => handleSlide(val)}
           thumbStyle={{ width: 15, height: 15 }}
         />
       </SliderContainer>
@@ -179,10 +184,10 @@ export const SliderComponent = ({
       </ScrollView>
       {renderSlider()}
       <Text style={styles.txtValue}>
-        {String(value?.[0]).slice(0, 4) || ''}
+        {String(valueDisplay?.[0]).slice(0, 4) || ''}
         {(convertDisplay
-          ? ' - ' + convertDisplay(value?.[1])
-          : ' - ' + value?.[1]) || ''}
+          ? ' - ' + convertDisplay(valueDisplay?.[1])
+          : ' - ' + valueDisplay?.[1]) || ''}
       </Text>
     </View>
   );
