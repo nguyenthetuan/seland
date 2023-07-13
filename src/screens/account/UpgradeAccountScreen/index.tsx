@@ -28,7 +28,7 @@ const UpgradeAccountScreen = () => {
   const [accountPackages, setAccountPackage] = useState<Array<Package>>([]);
   const { navigate } =
     useNavigation<NativeStackNavigationProp<ScreenStackParamList>>();
-  const { packages, loading } = useSelector(selectUser);
+  const { packages, loading, user } = useSelector(selectUser);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -72,6 +72,10 @@ const UpgradeAccountScreen = () => {
     });
   };
 
+  console.log(user);
+
+  const isHadThisPackage = (item: Package) => {};
+
   return (
     <View style={appStyles.background}>
       {loading ? (
@@ -102,7 +106,7 @@ const UpgradeAccountScreen = () => {
           onPress={() => navigateToBuyPackage(accountPackages[activeSlide])}
           title="Mua gói ngay"
           color={COLORS.ORANGE_6}
-          disable={parseInt(accountPackages[activeSlide]?.price) <= 0 ?? false}
+          disable={accountPackages[activeSlide]?.id === 1}
         />
       </View>
     </View>

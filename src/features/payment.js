@@ -48,7 +48,7 @@ export const buyPackage = createAsyncThunk(
       const { data } = await requestBuyPackage(params);
       return fulfillWithValue({ ...data });
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống, vui lòng thử lại sau.');
+      return rejectWithValue(error?.data?.message);
     }
   }
 );

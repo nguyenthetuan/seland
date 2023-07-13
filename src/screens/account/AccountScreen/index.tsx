@@ -187,6 +187,8 @@ const AccountScreen = () => {
     if (user?.is_phone_verified === 0 && !isOpenModal) {
       setIsOpenModal(true);
     }
+
+    console.log(user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
@@ -243,7 +245,7 @@ const AccountScreen = () => {
           </View>
           <View>
             <Text style={styles.label}>{t('common.accountRank')}</Text>
-            <DashedButton title={t('common.professionalAccount')} />
+            <DashedButton title={user.account_package_title} />
           </View>
         </View>
         <View style={styles.boxItem}>
