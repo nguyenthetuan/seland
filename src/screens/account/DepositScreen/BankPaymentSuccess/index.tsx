@@ -44,9 +44,6 @@ const BankPaymentSuccess = (props: Props) => {
     );
   };
 
-  useEffect(() => {
-    console.log(vnPayResult);
-  }, [vnPayResult]);
   return (
     <View style={appStyles.background}>
       <ScrollView contentContainerStyle={styles.container}>
