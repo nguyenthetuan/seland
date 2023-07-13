@@ -187,8 +187,6 @@ const AccountScreen = () => {
     if (user?.is_phone_verified === 0 && !isOpenModal) {
       setIsOpenModal(true);
     }
-
-    console.log(user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
