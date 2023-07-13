@@ -1,35 +1,52 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   NativeSyntheticEvent,
   SafeAreaView,
   StyleSheet,
   View,
 } from 'react-native';
-import RNFetchBlob from 'react-native-blob-util';
-import { Header, Text } from '../../../components';
-import { COLORS } from '../../../constants';
 import PagerView, {
-  PagerViewOnPageSelectedEvent,
   PagerViewOnPageSelectedEventData,
 } from 'react-native-pager-view';
-import PaymentOption from './PaymentOption';
+import { Header, Text } from '../../../components';
+import { COLORS } from '../../../constants';
 import BankPaymentSuccess from './BankPaymentSuccess';
 import Payment from './Payment';
+import PaymentOption from './PaymentOption';
+import { PaymentNote, PaymentStatus, VNPayStatus } from './model';
+import { dispatchThunk } from '../../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTransaction, getVNPayUrl, selectUser } from '../../../features';
+import moment from 'moment';
 
 const BankAccount = () => {
-  const { t } = useTranslation();
-  const qrCodeRef = useRef<any>();
+  const { goBack } = useNavigation();
+  const dispatch = useDispatch();
+  const { data: user } = useSelector(selectUser);
   const pagerRef = useRef<PagerView>(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [isBank, setIsBank] = useState(true);
   const [amount, setAmount] = useState(0);
-  const [vnPayResult, setVNPayResult] = useState(false);
+  const [vnPayResult, setVNPayResult] = useState<VNPayStatus>('processing');
+  const [isCreatedVNPayRecord, setCreated] = useState(false);
 
   const handleNext = (isBank?: boolean) => {
     pagerRef.current?.setPage(pageIndex + 1);
-    setIsBank(isBank ?? false);
+    if (isBank !== undefined) {
+      setIsBank(isBank);
+    }
   };
+
+  useEffect(() => {
+    if (pageIndex === 1 && !isBank && amount >= 10000) {
+      dispatchThunk(dispatch, getVNPayUrl(amount));
+    }
+  }, [pageIndex, amount, isBank]);
+
+  useEffect(() => {
+    if (pageIndex === 0) setCreated(false);
+  }, [pageIndex]);
 
   const onPageSelected = (
     e: NativeSyntheticEvent<PagerViewOnPageSelectedEventData>
@@ -47,9 +64,33 @@ const BankAccount = () => {
     return 'Nạp tiền';
   };
 
-  const handleResult = (result: boolean) => {
+  const handleResult = (result: VNPayStatus) => {
     setVNPayResult(result);
-    pagerRef.current?.setPage(pageIndex + 1);
+    pagerRef.current?.setPage(2);
+    if (result === 'success' && !isCreatedVNPayRecord) {
+      confirm();
+    }
+  };
+
+  const confirm = () => {
+    setCreated(true);
+    const params = {
+      title: 'Nap tien VNPay',
+      note: PaymentNote['Nạp tiền qua VNPay'],
+      status: PaymentStatus.COMPLETED_STATUS,
+      transaction_date: moment().format('yyyy-MM-DD HH:mm:ss'),
+      phone_number: user?.phone_number,
+      transaction_amount: amount,
+    };
+    dispatchThunk(dispatch, createTransaction(params));
+  };
+
+  const handleBackPress = () => {
+    if (pageIndex === 1) {
+      pagerRef.current?.setPage(0);
+    } else {
+      goBack();
+    }
   };
 
   return (
@@ -58,6 +99,7 @@ const BankAccount = () => {
         hasGoBack
         title={generateHeader()}
         right={<Text>{pageIndex + 1 + '/3'}</Text>}
+        onPress={handleBackPress}
       />
       <View style={styles.view}>
         <View style={styles.pagerView}>

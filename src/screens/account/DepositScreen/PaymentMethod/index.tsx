@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
-import { IconArrowRight, IconBank } from './icon';
 import { COLORS } from '../../../../constants';
 import { Text } from '../../../../components';
 import { StyleProp } from 'react-native';
+import { IconArrowRight } from '../icon';
 
 interface Props {
   title: string;

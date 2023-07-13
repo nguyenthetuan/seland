@@ -36,7 +36,7 @@ export const getVNPayUrl = createAsyncThunk(
       const { data } = await requestGetVNPayURL(amount);
       return fulfillWithValue(data);
     } catch (error) {
-      return rejectWithValue('Lỗi hệ thống, vui lòng thử lại sau.');
+      return rejectWithValue(error.message);
     }
   }
 );

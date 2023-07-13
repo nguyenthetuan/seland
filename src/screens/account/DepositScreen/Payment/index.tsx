@@ -20,13 +20,13 @@ import { Button, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import {
   createTransaction,
-  getVNPayUrl,
   selectPayment,
   selectUser,
 } from '../../../../features';
 import { dispatchThunk } from '../../../../utils';
 import { requestReadAndWritePermission } from '../../../../utils/permission';
 import { IconCopy, IconInformation } from '../icon';
+import { PaymentNote, PaymentStatus, VNPayStatus } from '../model';
 import PopupInformation from './PopupInformation';
 
 interface Props {
@@ -34,7 +34,7 @@ interface Props {
   onNext: () => void;
   amount: number;
   currentIndex: number;
-  onVNPayResult: (result: boolean) => void;
+  onVNPayResult: (result: VNPayStatus) => void;
 }
 
 const Payment = (props: Props) => {
@@ -48,12 +48,6 @@ const Payment = (props: Props) => {
 
   const qrRef = useRef<QRCode | null>(null);
   const popupRef = useRef<PopupInformation>(null);
-
-  useEffect(() => {
-    if (!isBank && amount > 0) {
-      dispatchThunk(dispatch, getVNPayUrl(amount));
-    }
-  }, [amount, isBank]);
 
   const copy = (content: string) => {
     Clipboard.setString(content);
@@ -75,8 +69,8 @@ const Payment = (props: Props) => {
   const confirm = () => {
     const params = {
       title: contentBody,
-      note: 4,
-      status: 2,
+      note: PaymentNote['Chuyển khoản qua ngân hàng'],
+      status: PaymentStatus.PROCESSING_STATUS,
       transaction_date: moment().format('yyyy-MM-DD HH:mm:ss'),
       phone_number: user?.phone_number,
       transaction_amount: amount,
@@ -245,15 +239,17 @@ const Payment = (props: Props) => {
       ) : (
         <WebView
           onNavigationStateChange={e => {
-            console.log(decodeURIComponent(e.url));
             if (e.url.includes('paymentStatus')) {
               const callback = getValueInUrl(
                 decodeURIComponent(e.url),
                 'callbackUrl'
               );
-              onVNPayResult(
-                getValueInUrl(callback, 'paymentStatus') === '1' ? true : false
-              );
+              if (getValueInUrl(callback, 'paymentStatus') === '1') {
+                onVNPayResult('success');
+              }
+              if (getValueInUrl(callback, 'paymentStatus') === '3') {
+                onVNPayResult('fail');
+              }
             }
           }}
           source={{
