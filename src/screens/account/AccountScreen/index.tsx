@@ -243,7 +243,7 @@ const AccountScreen = () => {
           </View>
           <View>
             <Text style={styles.label}>{t('common.accountRank')}</Text>
-            <DashedButton title={t('common.professionalAccount')} />
+            <DashedButton title={user.account_package_title} />
           </View>
         </View>
         <View style={styles.boxItem}>

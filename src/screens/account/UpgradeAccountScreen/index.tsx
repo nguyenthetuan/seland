@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions, ScrollView, View } from 'react-native';
 import Loading from 'react-native-loading-spinner-overlay';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { useSelector } from 'react-redux';
-import { Button } from '../../../components';
+import { Button, PopupConfirm } from '../../../components';
 import { COLORS, SCREENS } from '../../../constants';
 import { selectUser } from '../../../features';
 import { ScreenStackParamList } from '../../../navigation/ScreenStackParam';
@@ -28,8 +28,9 @@ const UpgradeAccountScreen = () => {
   const [accountPackages, setAccountPackage] = useState<Array<Package>>([]);
   const { navigate } =
     useNavigation<NativeStackNavigationProp<ScreenStackParamList>>();
-  const { packages, loading } = useSelector(selectUser);
+  const { packages, loading, data: user } = useSelector(selectUser);
   const { t } = useTranslation();
+  const popupRef = useRef(null);
 
   useEffect(() => {
     if (packages !== undefined) {
@@ -69,7 +70,28 @@ const UpgradeAccountScreen = () => {
       packageId: item.id,
       price: item.price,
       name: item.value,
+      end_date: getEndDate(item.id),
     });
+  };
+
+  const getEndDate = (id: number) => {
+    return user?.account_packages?.find(e => e.account_package_id === id)
+      ?.end_date;
+  };
+
+  const isHadThisPackage = (item: Package): boolean => {
+    if (user?.account_packages?.some(e => e.account_package_id === item?.id)) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleBuy = (item: Package) => {
+    if (user?.account_packages?.length > 0 && !isHadThisPackage(item)) {
+      popupRef.current?.openPopup();
+    } else {
+      navigateToBuyPackage(accountPackages[activeSlide]);
+    }
   };
 
   return (
@@ -99,12 +121,27 @@ const UpgradeAccountScreen = () => {
       <View style={styles.bottomButton}>
         {pagination()}
         <Button
-          onPress={() => navigateToBuyPackage(accountPackages[activeSlide])}
-          title="Mua gói ngay"
+          onPress={() => handleBuy(accountPackages[activeSlide])}
+          title={
+            isHadThisPackage(accountPackages[activeSlide])
+              ? 'Gia hạn'
+              : 'Mua gói ngay'
+          }
           color={COLORS.ORANGE_6}
-          disable={parseInt(accountPackages[activeSlide]?.price) <= 0 ?? false}
+          disable={accountPackages[activeSlide]?.id === 1}
         />
       </View>
+      <PopupConfirm
+        ref={popupRef}
+        label="Lưu ý"
+        description="Khi chọn gói thấp hơn quý khách sẽ không còn sử dụng được các tính năng của gói hiện tại. Quý khách chắc chắn chứ?"
+        titleButtonLeft="Huỷ bỏ"
+        titleButtonRight="Đồng ý"
+        onPressButtonLeft={() => {}}
+        onPressButtonRight={() => {
+          navigateToBuyPackage(accountPackages[activeSlide]);
+        }}
+      />
     </View>
   );
 };

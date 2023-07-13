@@ -8,5 +8,6 @@ export type ScreenStackParamList = {
     packageId: number;
     price: string;
     name: string;
+    end_date: string | undefined;
   };
 };

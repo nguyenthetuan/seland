@@ -65,6 +65,8 @@ const initialUser = {
   tax_code: '',
   website: '',
   is_phone_verified: 0,
+  account_package_title: '',
+  account_packages: []
 };
 
 const slice = createSlice({

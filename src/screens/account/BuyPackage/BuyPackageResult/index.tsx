@@ -7,7 +7,7 @@ import { Button, Header, Text } from '../../../../components';
 import { COLORS, SCREENS } from '../../../../constants';
 import { ScreenStackParamList } from '../../../../navigation/ScreenStackParam';
 import PackInfoRow from '../component/PackInfoRow';
-import { IconCheckSuccess } from '../icon';
+import { IconCircleSuccess } from '../icon';
 
 type Props = NativeStackScreenProps<ScreenStackParamList, 'BuyPackageResult'>;
 
@@ -24,7 +24,7 @@ const BuyPackageResult = (props: Props) => {
       <Header />
       <ScrollView>
         <View style={styles.content}>
-          <IconCheckSuccess />
+          <IconCircleSuccess />
           <Text style={styles.title}>Nâng cấp tài khoản thành công</Text>
           <Text style={styles.text}>Cảm ơn quý khách đã sử dụng dịch vụ</Text>
         </View>

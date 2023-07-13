@@ -10,7 +10,7 @@ interface PopupConfirmProps {
   onPressButtonLeft: Function;
   onPressButtonRight: Function;
   label: string;
-  content: string;
+  content?: string;
   description: string;
   titleButtonLeft: string;
   titleButtonRight: string;

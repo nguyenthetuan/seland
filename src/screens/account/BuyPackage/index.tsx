@@ -22,10 +22,11 @@ import MonthPicker from './component/MonthPicker';
 import PackInfoRow from './component/PackInfoRow';
 import PromotionPicker from './component/PromotionPicker';
 import { BuyPackageParam } from './model';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 
 const BuyPackage = () => {
-  const { packageId, price, name } = useRoute().params as BuyPackageParam;
+  const { packageId, price, name, end_date } = useRoute()
+    .params as BuyPackageParam;
   const insets = useSafeAreaInsets();
   const monthPickerRef = useRef<BottomSheet>(null);
   const [month, setMonth] = useState(0);
@@ -69,8 +70,14 @@ const BuyPackage = () => {
   };
 
   const generateDuration = (): string => {
-    const from = moment().format('DD/MM/YYYY');
-    const to = moment().add(month, 'M').format('DD/MM/YYYY');
+    let fromObject: Moment;
+    if (end_date) {
+      fromObject = moment(end_date, 'YYYY-MM-DD hh:mm:ss');
+    } else {
+      fromObject = moment();
+    }
+    const from = fromObject.format('DD/MM/YYYY');
+    const to = fromObject.add(month, 'M').format('DD/MM/YYYY');
     return `(Từ ${from} đến ${to})`;
   };
 
@@ -144,6 +151,7 @@ const BuyPackage = () => {
         <MonthPicker
           defaultMonth={month}
           onMonthSelect={handleSelectMonth}
+          end_date={end_date}
         />
       </BottomSheet>
       <BottomSheet

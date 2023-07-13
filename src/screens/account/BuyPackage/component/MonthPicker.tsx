@@ -3,21 +3,28 @@ import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Button, Text } from '../../../../components';
 import { COLORS } from '../../../../constants';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 
 interface Props {
   onMonthSelect: (months: number) => void;
   defaultMonth: number;
+  end_date: string | undefined;
 }
 
 const MonthPicker = (props: Props) => {
-  const { onMonthSelect, defaultMonth } = props;
+  const { onMonthSelect, defaultMonth, end_date } = props;
   const insets = useSafeAreaInsets();
   const [month, setMonth] = useState(1);
 
   const generateDuration = (): string => {
-    const from = moment().format('DD/MM/YYYY');
-    const to = moment().add(month, 'M').format('DD/MM/YYYY');
+    let fromObject: Moment;
+    if (end_date) {
+      fromObject = moment(end_date, 'YYYY-MM-DD hh:mm:ss');
+    } else {
+      fromObject = moment();
+    }
+    const from = fromObject.format('DD/MM/YYYY');
+    const to = fromObject.add(month, 'M').format('DD/MM/YYYY');
     return `(Từ ${from} đến ${to})`;
   };
 
