@@ -1,3 +1,4 @@
+import { CheckBox, Input } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import {
   Image,
@@ -6,16 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Text } from '../../../../components';
-import { Input } from '@rneui/themed';
-import { COLORS } from '../../../../constants';
-import { TPrefixAmount, prefixAmount } from './model';
-import PaymentMethod from '../PaymentMethod';
-import { IconBank } from '../PaymentMethod/icon';
-import { VNPay } from '../../../../assets';
-import { useNavigation } from '@react-navigation/native';
-import { formatMoney } from '../../../../utils/format';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { VNPay } from '../../../../assets';
+import { Text } from '../../../../components';
+import { COLORS } from '../../../../constants';
+import { formatMoney } from '../../../../utils/format';
+import PaymentMethod from '../PaymentMethod';
+import { TPrefixAmount, prefixAmount } from './model';
+import { IconBank } from '../icon';
 
 interface Props {
   onNext: (isBank?: boolean) => void;
@@ -23,10 +22,10 @@ interface Props {
 }
 const PaymentOption = (props: Props) => {
   const { onNext, setAmountProps } = props;
-  const { navigate } = useNavigation();
   const [amount, setAmount] = useState<number>(prefixAmount[0].value);
   const [amountFormatted, setAmountFormatted] = useState<string>('');
   const [selectedAmount, setSelectedAmount] = useState<number>(1);
+  const [checked, setChecked] = useState(false);
   const onChangeAmount = (text: string) => {
     const re = new RegExp(',', 'g');
     setAmount(text.length > 0 ? parseInt(text.replace(re, '')) : 0);
@@ -38,6 +37,26 @@ const PaymentOption = (props: Props) => {
   useEffect(() => {
     setAmountFormatted(formatMoney(amount) ?? '');
   }, [amount]);
+
+  const handleMethodPress = (isBank: boolean) => {
+    if (amount < 10000) {
+      Toast.show({
+        text1: 'Số tiền phải lớn hơn 10000đ',
+        type: 'error',
+      });
+      return;
+    }
+    if (!checked) {
+      Toast.show({
+        text1: 'Vui lòng đồng ý điều khoản',
+        type: 'error',
+      });
+      return;
+    }
+    onNext(isBank);
+    setAmountProps(amount);
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -82,20 +101,25 @@ const PaymentOption = (props: Props) => {
             );
           })}
         </View>
+        <TouchableOpacity
+          style={{ marginLeft: -20 }}
+          onPress={() => setChecked(!checked)}
+        >
+          <CheckBox
+            textStyle={{ fontSize: 16, fontWeight: '400' }}
+            title={'Đồng ý với điều khoản và xác nhận thanh toán'}
+            checked={checked}
+            onPress={() => setChecked(!checked)}
+            iconType="material-community"
+            checkedIcon="checkbox-outline"
+            uncheckedIcon="checkbox-blank-outline"
+          />
+        </TouchableOpacity>
+
         <PaymentMethod
           icon={<IconBank />}
           title="Chuyển khoản ngân hàng"
-          onPress={() => {
-            if (amount <= 0) {
-              Toast.show({
-                text1: 'Số tiền phải lớn hơn 0 VND',
-                type: 'error',
-              });
-              return;
-            }
-            onNext(true);
-            setAmountProps(amount);
-          }}
+          onPress={() => handleMethodPress(true)}
         />
         <PaymentMethod
           icon={
@@ -105,10 +129,7 @@ const PaymentOption = (props: Props) => {
             />
           }
           title="VN Pay"
-          onPress={() => {
-            onNext(false);
-            setAmountProps(amount);
-          }}
+          onPress={() => handleMethodPress(false)}
           style={styles.marginT12}
         />
       </View>

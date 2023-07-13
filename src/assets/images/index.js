@@ -1,3 +1,4 @@
+export { default as IconCircleFail } from './failed.png';
 export { default as Free } from './free.svg';
 export { default as NoResultsImage } from './noResults.png';
 export { default as ProfessionalPackage } from './professionalPackage.svg';

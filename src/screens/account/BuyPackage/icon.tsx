@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Svg, { SvgProps, Circle, Path } from 'react-native-svg';
-export const IconCheckSuccess = (props: SvgProps) => (
+export const IconCircleSuccess = (props: SvgProps) => (
   <Svg
     width={80}
     height={80}

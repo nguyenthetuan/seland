@@ -1,64 +1,91 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { COLORS } from '../../../../constants';
 import { IconInformation, IconRetweet } from '../icon';
 import { Button, Text } from '../../../../components';
+import { appStyles } from '../../../../constants/appStyles';
+import { IconCircleSuccess } from '../../BuyPackage/icon';
+import { IconCircleFail } from '../../../../assets';
+import { VNPayStatus } from '../model';
 
 interface Props {
   doMore: () => void;
   isBank: boolean;
-  vnPayResult?: boolean;
+  vnPayResult?: VNPayStatus;
 }
 
 const BankPaymentSuccess = (props: Props) => {
   const { doMore, isBank, vnPayResult } = props;
+
+  const generateTitle = (): string => {
+    if (isBank || vnPayResult === 'processing') {
+      return 'Đang xử lý giao dịch...';
+    }
+    if (vnPayResult === 'success') {
+      return 'Giao dịch thành công';
+    }
+    return 'Giao dịch thất bại';
+  };
+
+  const generateMessage = (): string => {
+    return isBank
+      ? 'Cảm ơn bạn đã sử dụng dịch vụ. Hãy lưu ý rằng thời gian xử lý giao dịch sẽ giao động từ 4 đến 6 tiếng'
+      : 'Cảm ơn bạn đã sử dụng dịch vụ.';
+  };
+
+  const generateIcon = () => {
+    if (isBank || vnPayResult === 'processing') return <IconRetweet />;
+    if (vnPayResult === 'success') return <IconCircleSuccess />;
+    return (
+      <Image
+        style={styles.img}
+        source={IconCircleFail}
+      />
+    );
+  };
+
+  useEffect(() => {
+    console.log(vnPayResult);
+  }, [vnPayResult]);
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {isBank ? (
-        <View>
-          <View style={styles.scrollviewContainer}>
-            <IconRetweet />
-            <Text style={styles.handling}>Đang xử lý giao dịch...</Text>
-            <Text style={styles.content}>
-              Cảm ơn bạn đã sử dụng dịch vụ. Hãy lưu ý rằng thời gian xử lý giao
-              dịch sẽ giao động từ 4 đến 6 tiếng
+    <View style={appStyles.background}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.scrollviewContainer}>
+          {generateIcon()}
+          <Text style={styles.handling}>{generateTitle()}</Text>
+          <Text style={styles.content}>{generateMessage()}</Text>
+          <View style={styles.informationCard}>
+            <IconInformation />
+            <Text style={styles.informationText}>
+              Nếu cần hỗ trợ, vui lòng gọi số: 09xxxxx để được hỗ trợ.
             </Text>
-            <View style={styles.informationCard}>
-              <IconInformation />
-              <Text style={styles.informationText}>
-                Nếu cần hỗ trợ, vui lòng gọi số: 09xxxxx để được hỗ trợ.
-              </Text>
-            </View>
-          </View>
-          <View style={styles.bottom}>
-            <Button title="Quản lý giao dịch" />
-            <Button
-              onPress={doMore}
-              titleStyle={styles.btnCancelTitle}
-              buttonStyle={styles.btnCancel}
-              title="Nạp thêm"
-            />
           </View>
         </View>
-      ) : (
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text>{vnPayResult ? 'Thành công' : 'Thất bại'}</Text>
-        </View>
-      )}
-    </ScrollView>
+      </ScrollView>
+      <View style={styles.bottom}>
+        <Button title="Quản lý giao dịch" />
+        <Button
+          onPress={doMore}
+          titleStyle={styles.btnCancelTitle}
+          buttonStyle={styles.btnCancel}
+          title="Nạp thêm"
+        />
+      </View>
+    </View>
   );
 };
 
 export default BankPaymentSuccess;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.WHITE, paddingBottom: 120 },
+  container: { paddingBottom: 120 },
   scrollviewContainer: { alignItems: 'center', marginTop: 102 },
   handling: {
     fontSize: 24,
     fontWeight: 'bold',
     color: COLORS.TITLE,
     marginTop: 24,
+    lineHeight: 32,
   },
   content: { textAlign: 'center', marginTop: 8, color: COLORS.TITLE },
   informationCard: {
@@ -91,4 +118,5 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   btnCancelTitle: { color: COLORS.BLUE_1 },
+  img: { width: 80, height: 80 },
 });
